@@ -1,0 +1,23 @@
+﻿CREATE TABLE [dbo].[Cutting_Recpt_Mas]
+(
+	[CuttingRecptId] INT IDENTITY(1,1) NOT NULL,
+	[CuttingRecptNo] [varchar](20) NULL,
+	[CuttingRecptDate] [datetime] NULL,
+	[Ref_No] [varchar](15) NULL,
+	[Ref_Date] [datetime] NULL,
+	[CuttingOrdId] [int] NULL,
+	[ShiftId] [int] NULL,
+	[ETime] [numeric](5, 2) NULL,
+	[Remarks] [varchar](1500) NULL,
+	[ConvType] [char](1) NOT NULL Default('K'),
+	[ToStoreid] [int] NULL,
+	[Buy_Ord_Ship] [varchar](8) NULL,
+	[CreatedBy] [int] NULL,
+	[FLineID] [int] NULL,
+	CONSTRAINT [PK_CuttinRecptid] PRIMARY KEY ([CuttingRecptId]),
+	--CONSTRAINT [FK_Buyordshipref] FOREIGN KEY ([Buy_Ord_Ship]) REFERENCES [buy_ord_ship]([Buy_Ord_Ship]),
+	CONSTRAINT [FK_Cuttingordmas] FOREIGN KEY ([CuttingOrdId]) REFERENCES [Cutting_Order_Mas]([CuttingOrdid]),
+	--CONSTRAINT [FK_Cuttingshiftmas] FOREIGN KEY ([ShiftId]) REFERENCES [Cutting_Order_Mas]([CuttingOrdid]),
+	CONSTRAINT [FK_CuttingcreatedId] FOREIGN KEY (CreatedBy) REFERENCES [Employee]([EmployeeId]),
+	CONSTRAINT [FK_CuttingstoreId] FOREIGN KEY (ToStoreid) REFERENCES [StoreUnit]([StoreunitId]),
+)

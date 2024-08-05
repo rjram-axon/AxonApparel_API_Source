@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3fe7b222efbb4be4a77aae315080f55a" Name="Diagram1" ZoomLevel="15">
+        <EntityTypeShape EntityType="PurchaseModel.ItemTransDet" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PurchaseModel.ItemTransMas" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemTransDet_TransMasId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PurchaseModel.CSPReceiptDet" Width="1.5" PointX="4.89562075813097" PointY="22.103031898896692" />
+        <EntityTypeShape EntityType="PurchaseModel.CSPReceiptMas" Width="1.5" PointX="5.4772674671734061" PointY="17.157437749745995" />
+        <EntityTypeShape EntityType="PurchaseModel.General_Memo_det" Width="1.5" PointX="8.2478064765444987" PointY="22.304792354956639" />
+        <EntityTypeShape EntityType="PurchaseModel.General_Memo_mas" Width="1.5" PointX="7.7406320607944537" PointY="29.884501173107186" />
+        <AssociationConnector Association="PurchaseModel.fk_cspreceiptdet_receiptid" />
+        <AssociationConnector Association="PurchaseModel.fk_Gen_Memo_det_MasId" />
+        <EntityTypeShape EntityType="PurchaseModel.Gen_MemoRet_det" Width="1.5" PointX="11.006346523299044" PointY="0.091457963032395562" />
+        <EntityTypeShape EntityType="PurchaseModel.Gen_MemoRet_mas" Width="1.5" PointX="9.35451446536673" PointY="5.1423255378111854" />
+        <EntityTypeShape EntityType="PurchaseModel.LotSplitDet" Width="1.5" PointX="2.9422072930923697" PointY="8.5471968243584016" />
+        <EntityTypeShape EntityType="PurchaseModel.LotSplitMas" Width="1.5" PointX="9.82747817683382" PointY="24.405220668951618" />
+        <AssociationConnector Association="PurchaseModel.FK_LotSplitDet_LotSplitMas" />
+        <EntityTypeShape EntityType="PurchaseModel.Item_stock_outward" Width="1.5" PointX="3.901960805012826" PointY="18.611226120316996" />
+        <EntityTypeShape EntityType="PurchaseModel.Open_Debit_Addless" Width="1.5" PointX="2.9243038720098808" PointY="3.934173943444236" />
+        <EntityTypeShape EntityType="PurchaseModel.OpenDebitItemDet" Width="1.5" PointX="6.6235471305547042" PointY="20.176094645716294" />
+        <EntityTypeShape EntityType="PurchaseModel.OpenDebitMas" Width="1.5" PointX="3.1758070230371351" PointY="7.8348998314863536" />
+        <AssociationConnector Association="PurchaseModel.FK_Open_Debit_Addless_OpenDebitMas" />
+        <AssociationConnector Association="PurchaseModel.FK_OpenDebitItemDet_OpenDebitMas" />
+        <EntityTypeShape EntityType="PurchaseModel.OpenInvoice_Addless" Width="1.5" PointX="2.7916559962516914" PointY="30.534639432343951" />
+        <EntityTypeShape EntityType="PurchaseModel.OpenInvoice_Det" Width="1.5" PointX="9.1366479588377523" PointY="12.010980179538475" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Debit_ItemDet" Width="1.5" PointX="9.90608163639255" PointY="3.8502924311208968" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Debit_Mas" Width="1.5" PointX="5.2586765798082" PointY="24.836265799047549" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Debit_Others" Width="1.5" PointX="11.800137966778193" PointY="22.363665084523923" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Inv_Det" Width="1.5" PointX="3.5212529578810803" PointY="10.434413601846627" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Inv_Ord_det" Width="1.5" PointX="0.21215228373750683" PointY="21.422458241424735" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Debit_ItemDet_Pur_Debit_Mas" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Debit_Others_Pur_Debit_Mas" />
+        <EntityTypeShape EntityType="PurchaseModel.PurchaseCost_Defn_Bom_First" Width="1.5" PointX="3.6500429341802576" PointY="19.003837013153284" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Grn_Mas" Width="1.5" PointX="5.8381286216145982" PointY="12.700731521798639" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Grn_Order" Width="1.5" PointX="5.5179577178871062" PointY="3.3937976972171096" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Ord_AddLess" Width="1.5" PointX="0.55984726201735779" PointY="14.830196670643145" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Ord_BuyJob" Width="1.5" PointX="2.0999289649072703" PointY="6.1855882733061858" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Inv_Det_Pur_Grn_Mas" />
+        <EntityTypeShape EntityType="PurchaseModel.Indent_Mas" Width="1.5" PointX="9.9839629111736841" PointY="21.083720380945" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Ord_Mas" Width="1.5" PointX="6.32082575667688" PointY="29.680415048115147" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Ord_AddLess_Pur_Ord_Mas" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Ord_BuyJob_Pur_Ord_Mas" />
+        <EntityTypeShape EntityType="PurchaseModel.PurchaseBuy_Ord_BOMDet" Width="1.5" PointX="1.0660849721478694" PointY="16.788119130203555" />
+        <EntityTypeShape EntityType="PurchaseModel.PurchaseBuy_Ord_BOMMas" Width="1.5" PointX="5.2991171727418509" PointY="22.356316040435953" />
+        <EntityTypeShape EntityType="PurchaseModel.PurchaseColor" Width="1.5" PointX="3.893281171048657" PointY="17.568963014319987" />
+        <EntityTypeShape EntityType="PurchaseModel.Indent_BuyJob" Width="1.5" PointX="7.1790718283406783" PointY="17.434478574169091" />
+        <EntityTypeShape EntityType="PurchaseModel.Indent_Det" Width="1.5" PointX="9.9540622709105087" PointY="7.2283787462992493" />
+        <EntityTypeShape EntityType="PurchaseModel.PurchaseItem" Width="1.5" PointX="10.696418238196717" PointY="2.815208644985784" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Inv_Addless" Width="1.5" PointX="2.7259351530698757" PointY="9.8107294187931018" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Inv_Dc" Width="1.5" PointX="7.2513710182399356" PointY="20.440578976851228" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Inv_Debit_Credit" Width="1.5" PointX="1.9985638940700161" PointY="29.429054065341621" />
+        <EntityTypeShape EntityType="PurchaseModel.PurchaseSize" Width="1.5" PointX="11.480273477491117" PointY="9.9905417757064772" />
+        <AssociationConnector Association="PurchaseModel.fk_buy_ord_bomdet_buy_ord_bomid" />
+        <AssociationConnector Association="PurchaseModel.Fk_Buy_Ord_BOMDet_Colorid" />
+        <AssociationConnector Association="PurchaseModel.Fk_Buy_Ord_BOMDet_Sizeid" />
+        <AssociationConnector Association="PurchaseModel.FK_Indent_BuyJob_Buy_Ord_Bomdet" />
+        <AssociationConnector Association="PurchaseModel.Fk_Itemid" />
+        <AssociationConnector Association="PurchaseModel.fk_Cost_Defn_Bom_First_colorid" />
+        <AssociationConnector Association="PurchaseModel.fk_cspreceiptdet_colorid" />
+        <AssociationConnector Association="PurchaseModel.fk_Gen_Memo_det_ColorId" />
+        <AssociationConnector Association="PurchaseModel.FK_Indent_BuyJob_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Indent_Det_color" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemTransDet_Colorid" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemTransDet_ToColorId" />
+        <AssociationConnector Association="PurchaseModel.FK_LotSplitDet_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Debit_ItemDet_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Grn_Order_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Ord_BuyJob_Color" />
+        <AssociationConnector Association="PurchaseModel.fk_Cost_Defn_Bom_First_itemid" />
+        <AssociationConnector Association="PurchaseModel.fk_Cost_Defn_Bom_First_sizeid" />
+        <AssociationConnector Association="PurchaseModel.fk_cspreceiptdet_itemid" />
+        <AssociationConnector Association="PurchaseModel.fk_cspreceiptdet_sizeid" />
+        <AssociationConnector Association="PurchaseModel.fk_Gen_Memo_det_ItemId" />
+        <AssociationConnector Association="PurchaseModel.fk_Gen_Memo_det_Sizeid" />
+        <AssociationConnector Association="PurchaseModel.FK_Indent_BuyJob_Indent_Det" />
+        <AssociationConnector Association="PurchaseModel.FK_Indent_BuyJob_Indent_Mas" />
+        <AssociationConnector Association="PurchaseModel.FK_Indent_BuyJob_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Indent_BuyJob_Size" />
+        <AssociationConnector Association="PurchaseModel.FK_Indent_Det_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Indent_Det_Size" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemTransDet_FromItemId" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemTransDet_ToItemId" />
+        <AssociationConnector Association="PurchaseModel.FK_LotSplitDet_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Debit_ItemDet_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Grn_Order_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Ord_BuyJob_Item" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemTransDet_SizeId" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemTransDet_ToSizeId" />
+        <AssociationConnector Association="PurchaseModel.FK_LotSplitDet_Size" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Debit_ItemDet_Size" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Inv_Dc_Pur_Grn_Mas" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Grn_Order_Size" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Inv_Det_Pur_Inv_Dc" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Ord_BuyJob_Size" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Cancel_Det" Width="1.5" PointX="4.3862302007089511" PointY="21.598700756951562" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Cancel_Mas" Width="1.5" PointX="3.1287049013789296" PointY="23.02241999982969" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Cancel_Order" Width="1.5" PointX="0.88401239965297862" PointY="31.192940875512054" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_Det_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_Det_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_Det_Pur_Cancel_Mas" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_Det_Size" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_Order_Pur_Cancel_Det" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_Mas_pur_ord_mas" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_Order_Pur_Cancel_Mas" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_PurBuyJob" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_Size" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Ord_Term" Width="1.5" PointX="7.2136707097355615" PointY="25.281446304769" />
+        <EntityTypeShape EntityType="PurchaseModel.TermMas" Width="1.5" PointX="10.402411495522788" PointY="20.306287506737881" />
+        <AssociationConnector Association="PurchaseModel.FK_PurOrdid" />
+        <AssociationConnector Association="PurchaseModel.FK_PurTermid" />
+        <EntityTypeShape EntityType="PurchaseModel.Purchasebuy_ord_style" Width="1.5" PointX="8.4866156207800909" PointY="6.3130354612660762" />
+        <EntityTypeShape EntityType="PurchaseModel.pur_grn_qlty_det" Width="1.5" PointX="7.7992780244905866" PointY="2.8853243751848696" />
+        <AssociationConnector Association="PurchaseModel.FK_pur_grn_qlty_det_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_pur_grn_qlty_det_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_pur_grn_qlty_det_Pur_Ord_BuyJob" />
+        <AssociationConnector Association="PurchaseModel.FK_pur_grn_qlty_det_Size" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Return_Det" Width="1.5" PointX="6.2074715132859879" PointY="27.827954558575506" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_return_mas" Width="1.5" PointX="6.78794598522966" PointY="30.133864416803171" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Return_Det_Pur_Retun_Mas" />
+        <EntityTypeShape EntityType="PurchaseModel.Stock_Audit_Det" Width="1.5" PointX="6.8087120497639813" PointY="7.4861751680663673" />
+        <EntityTypeShape EntityType="PurchaseModel.Stock_Audit_Mas" Width="1.5" PointX="2.5762558982596993" PointY="30.677717387060504" />
+        <AssociationConnector Association="PurchaseModel.FK_Stock_Audit_Det_Stock_Audit_Mas" />
+        <EntityTypeShape EntityType="PurchaseModel.StockAllocationDet" Width="1.5" PointX="7.654543924915858" PointY="18.806003430302255" />
+        <EntityTypeShape EntityType="PurchaseModel.StockAllocationMas" Width="1.5" PointX="1.7164141525125198" PointY="18.694189676406882" />
+        <AssociationConnector Association="PurchaseModel.fk_stkallocdet_colorid" />
+        <AssociationConnector Association="PurchaseModel.fk_stkallocdet_itemid" />
+        <AssociationConnector Association="PurchaseModel.fk_stkallocdet_sizeid" />
+        <AssociationConnector Association="PurchaseModel.fk_stkallocdet_allocid" />
+        <EntityTypeShape EntityType="PurchaseModel.Fabric_Requisition_Det" Width="1.5" PointX="9.8086654757189873" PointY="8.30801199763455" />
+        <EntityTypeShape EntityType="PurchaseModel.Fabric_Requisition_Mas" Width="1.5" PointX="8.8105685677428589" PointY="3.1065982147616324" />
+        <EntityTypeShape EntityType="PurchaseModel.GenIssueAddless" Width="1.5" PointX="10.948785446094714" PointY="21.469033370478559" />
+        <EntityTypeShape EntityType="PurchaseModel.GenIssueDet" Width="1.5" PointX="7.2412009477807207" PointY="22.550538297067646" />
+        <EntityTypeShape EntityType="PurchaseModel.GenIssueMas" Width="1.5" PointX="6.7751131294179308" PointY="10.580996622601989" />
+        <EntityTypeShape EntityType="PurchaseModel.GenIssueStock" Width="1.5" PointX="5.489244027756734" PointY="6.6179751039566357" />
+        <AssociationConnector Association="PurchaseModel.FK_Fabric_Requisition_det_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Fabric_Requisition_det_ComboColor" />
+        <AssociationConnector Association="PurchaseModel.FK_Fabric_Requisition_Det" />
+        <AssociationConnector Association="PurchaseModel.FK_Fabric_Requisition_det_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Fabric_Requisition_det_Size" />
+        <EntityTypeShape EntityType="PurchaseModel.StockTranMasNew" Width="1.5" PointX="5.5623823020432059" PointY="23.332047830956078" />
+        <EntityTypeShape EntityType="PurchaseModel.Stores_Issue_ReturnDet" Width="1.5" PointX="8.2183991839263584" PointY="27.494073567676391" />
+        <EntityTypeShape EntityType="PurchaseModel.Stores_Issue_ReturnMas" Width="1.5" PointX="6.9025991162762974" PointY="13.649790859618127" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_ReturnDet_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_ReturnDet_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_ReturnDet_Size" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_ReturnDet_IssRetMas" />
+        <EntityTypeShape EntityType="PurchaseModel.Stores_Issue_Det" Width="1.5" PointX="9.5434756826346163" PointY="31.339763417532556" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Det_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Det_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Det_size" />
+        <EntityTypeShape EntityType="PurchaseModel.TermDet" Width="1.5" PointX="6.3620245821597177" PointY="23.15710529273241" />
+        <AssociationConnector Association="PurchaseModel.FK_TermDet_TermMas" />
+        <EntityTypeShape EntityType="PurchaseModel.Shift" Width="1.5" PointX="1.6799370039626662" PointY="18.791872152496069" />
+        <EntityTypeShape EntityType="PurchaseModel.StockTranStock" Width="1.5" PointX="11.737066671129814" PointY="28.859853743044592" />
+        <EntityTypeShape EntityType="PurchaseModel.StoreTransferDet" Width="1.5" PointX="8.1713261921756555" PointY="28.416774330854775" />
+        <EntityTypeShape EntityType="PurchaseModel.StockAllocationSection" Width="1.5" PointX="2.0107816187715071" PointY="0.655345246500962" />
+        <AssociationConnector Association="PurchaseModel.fk_stkallocsec_allocdetid" />
+        <AssociationConnector Association="PurchaseModel.fk_stkallocsec_allocid" />
+        <EntityTypeShape EntityType="PurchaseModel.BIll_Adj_Det" Width="1.5" PointX="4.7352224908467484" PointY="21.497982139465392" />
+        <EntityTypeShape EntityType="PurchaseModel.BIll_ADJ_mas" Width="1.5" PointX="7.18739118016669" PointY="30.201335414406532" />
+        <AssociationConnector Association="PurchaseModel.FK__BIll_Adj___Trans__22A400A8" />
+        <EntityTypeShape EntityType="PurchaseModel.Op_Stock" Width="1.5" PointX="7.0470419111880673" PointY="6.5492273748615881" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Ord_Det" Width="1.5" PointX="8.6330905690012" PointY="6.8144744666360664" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Ord_Det_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Ord_Det_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Cancel_Det_Pur_ORd_det" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Grn_Order_Pur_Ord_det" />
+        <AssociationConnector Association="PurchaseModel.FK_pur_grn_qlty_det_pur_ord_det" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Inv_Det_Pur_Ord_Det" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Ord_BuyJob_Pur_Ord_Det" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Ord_Det_PurOrdMas" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Ord_Det_Size" />
+        <EntityTypeShape EntityType="PurchaseModel.ItemStock" Width="1.5" PointX="8.7555314436347835" PointY="21.999345998279445" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Grn_Det" Width="1.5" PointX="7.9133498817278767" PointY="20.36950334364991" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemStock_Colorid" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Grn_Det_Color" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemStock_Itemid" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Grn_Det_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_ItemStockId" />
+        <AssociationConnector Association="PurchaseModel.FK__StockAllo__OldSt__5F22FF03" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemStock_Sizeid" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemTransDet_NewStockId" />
+        <AssociationConnector Association="PurchaseModel.Fk_ItemTransDet_StockId" />
+        <AssociationConnector Association="PurchaseModel.FK_LotSplitDet_ItemStock" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Return_Det_ItemStock" />
+        <AssociationConnector Association="PurchaseModel.fk_stkallocdet_stockid" />
+        <AssociationConnector Association="PurchaseModel.fk_stkallocsec_stockid" />
+        <AssociationConnector Association="PurchaseModel.FK_Stock_Audit_Det_ItemStock" />
+        <AssociationConnector Association="PurchaseModel.FK_StockTranStock_ItemStock" />
+        <AssociationConnector Association="PurchaseModel.FK_StockTranStock_NewItemStock" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_ReturnDet_Itmstk" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Grn_Det_GrnMas" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Grn_Det_Size" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Grn_Order_Grn_det" />
+        <AssociationConnector Association="PurchaseModel.FK_pur_grn_qlty_det_Pur_grn_det" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Inv_Det_Pur_grn_det" />
+        <EntityTypeShape EntityType="PurchaseModel.Stores_Issue_Order" Width="1.5" PointX="4.6488629489433313" PointY="18.406356656181792" />
+        <EntityTypeShape EntityType="PurchaseModel.Stores_Issue_Stock" Width="1.5" PointX="9.1448047967370627" PointY="12.374873792927188" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Orde_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Orde_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_stores_itemStock" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Orde_Size" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Size" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Det" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_det_Ord" />
+        <AssociationConnector Association="PurchaseModel.FK_stores_issue_order" />
+        <EntityTypeShape EntityType="PurchaseModel.Special_Req_Det" Width="1.5" PointX="8.27632929397576" PointY="23.007450248583897" />
+        <EntityTypeShape EntityType="PurchaseModel.PurchaseCost_Defn_Mas" Width="1.5" PointX="1.0814101589291405" PointY="29.534731491252188" />
+        <EntityTypeShape EntityType="PurchaseModel.OpenInvoice_Mas" Width="1.5" PointX="6.87347014195913" PointY="25.824029755696667" />
+        <AssociationConnector Association="PurchaseModel.FK_OOpen_InvID" />
+        <AssociationConnector Association="PurchaseModel.FK_OpenInvoice_Mas_OpenInvID" />
+        <EntityTypeShape EntityType="PurchaseModel.FabricSales_AddLess" Width="1.5" PointX="5.937200001411699" PointY="24.549535271036223" />
+        <EntityTypeShape EntityType="PurchaseModel.FABRIC_SALES_MAS" Width="1.5" PointX="6.9635617486031549" PointY="19.666830176332422" />
+        <AssociationConnector Association="PurchaseModel.FK__FabricSal__Fabma__4973B506" />
+        <EntityTypeShape EntityType="PurchaseModel.FABRIC_SALES_DET" Width="1.5" PointX="0.5621779619539985" PointY="30.429470836384908" />
+        <AssociationConnector Association="PurchaseModel.FK__FABRIC_SA__color__43BADBB0" />
+        <AssociationConnector Association="PurchaseModel.FK__FABRIC_SA__Fabma__41D2933E" />
+        <AssociationConnector Association="PurchaseModel.FK__FABRIC_SA__Itemi__42C6B777" />
+        <AssociationConnector Association="PurchaseModel.FK__FABRIC_SA__sizei__44AEFFE9" />
+        <AssociationConnector Association="PurchaseModel.FK__FABRIC_SA__Stock__45A32422" />
+        <EntityTypeShape EntityType="PurchaseModel.Special_Req_Mas" Width="1.5" PointX="11.003570146394694" PointY="1.9275768259202954" />
+        <AssociationConnector Association="PurchaseModel.FK_Special_Req_reqid" />
+        <EntityTypeShape EntityType="PurchaseModel.CommercialInvoice_Addless" Width="1.5" PointX="8.3738589623821245" PointY="7.2832388315737431" />
+        <EntityTypeShape EntityType="PurchaseModel.Process_Inv_Mas" Width="1.5" PointX="9.1614549612446954" PointY="27.151399550564307" />
+        <EntityTypeShape EntityType="PurchaseModel.BillEntry" Width="1.5" PointX="0.36650335433264419" PointY="24.157677244468442" />
+        <EntityTypeShape EntityType="PurchaseModel.Pur_Inv_Mas" Width="1.5" PointX="5.7239284095000142" PointY="21.512110749963721" />
+        <EntityTypeShape EntityType="PurchaseModel.StoreTransferMas" Width="1.5" PointX="11.774402713298054" PointY="5.1156957769373879" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Inv_Addless_Pur_Inv_Mas" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Inv_Dc_Pur_Inv_Mas" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Inv_Debit_Credit_Pur_Inv_Mas" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Inv_Mas_Pur_Inv_Debit_Credit" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Inv_Mas_Pur_Inv_Debit_Credit_Deb" />
+        <AssociationConnector Association="PurchaseModel.FK_Pur_Inv_Det_Pur_Inv_Mas" />
+        <EntityTypeShape EntityType="PurchaseModel.DebitOrderDetail" Width="1.5" PointX="0.56196628537120585" PointY="3.7737172263552048" />
+        <AssociationConnector Association="PurchaseModel.FK_DebitOrderDetail_Color" />
+        <AssociationConnector Association="PurchaseModel.FK_DebitOrderDetail_Item" />
+        <AssociationConnector Association="PurchaseModel.FK_DebitOrderDetail_pur_debit_Itemdet" />
+        <AssociationConnector Association="PurchaseModel.FK_DebitOrderDetail_pur_debit_mas" />
+        <AssociationConnector Association="PurchaseModel.FK_DebitOrderDetail_Size" />
+        <EntityTypeShape EntityType="PurchaseModel.Stores_Issue_Mas" Width="1.5" PointX="8.8943205442718778" PointY="15.050377688859765" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Det_Stores_Issue_mas" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_Order_Stores_Issue" />
+        <AssociationConnector Association="PurchaseModel.FK_Stores_Issue_ReturnMas_Stores_Issue_Mas" />
+        <EntityTypeShape EntityType="PurchaseModel.Unit_Grn_Mas" Width="1.5" PointX="2.3691539011752019" PointY="19.290585124534829" />
+        <EntityTypeShape EntityType="PurchaseModel.Unit_Grn_Det" Width="1.5" PointX="2.1428520316923279" PointY="2.1536500314966078" />
+        <AssociationConnector Association="PurchaseModel.fk_unit_grn_det_colorid" />
+        <AssociationConnector Association="PurchaseModel.fk_unit_grn_det_itemid" />
+        <AssociationConnector Association="PurchaseModel.fk_unit_grn_det_sizeid" />
+        <AssociationConnector Association="PurchaseModel.fk_unit_grn_det_unit_grn_masid" />
+        <EntityTypeShape EntityType="PurchaseModel.Commercial_Invdet" Width="1.5" PointX="2.9873102805518128" PointY="25.85246479224994" />
+        <EntityTypeShape EntityType="PurchaseModel.Commercial_Invmas" Width="1.5" PointX="4.1212089006422126" PointY="5.3716657186726415" />
+        <AssociationConnector Association="PurchaseModel.FK__Commercia__Invma__30A8073C" />
+        <AssociationConnector Association="PurchaseModel.FK__Commercia__Com_I__5114D6CE" />
+        <EntityTypeShape EntityType="PurchaseModel.StockTransfer_Approval" Width="1.5" PointX="5.3208198646646085" PointY="7.4814291333227558" />
+        <AssociationConnector Association="PurchaseModel.FK__StockTran__Froms__23F8E2EB" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

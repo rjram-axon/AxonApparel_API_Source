@@ -1,0 +1,345 @@
+﻿@{
+    ViewBag.Title = "PrecostingTargetEntryIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tblFabricdetails_filter {
+        display: none;
+    }
+
+    #tblTrimsdetails_filter {
+        display: none;
+    }
+
+    #tblEmblishmentdetails_filter {
+        display: none;
+    }
+
+    #tblFabricYarndetails_filter {
+        display: none;
+    }
+
+    #tblProcessdetails_filter {
+        display: none;
+    }
+
+  
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtBuyerOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+
+<script src="~/AxonScripts/OrderProcessing/PrecostingTargetEntry.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Order Measurement</button>*@
+
+
+
+
+                @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+                <!-- /page content -->
+
+
+                <div class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog" style="min-width: 80%">
+                        <div class="modal-content">
+
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Precosting Approve</h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="x_panel">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Target No</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtTargetNo" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                    @*<div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtBuyer" disabled>
+                                                        </div>
+                                                    </div>*@
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Entry Date</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder=" " id="txtEntryDate">
+                                                        </div>
+                                                    </div>
+                                                  @*  <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Style</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtStyle" disabled>
+                                                        </div>
+                                                    </div>*@
+                                                </form>
+                                            </div>
+                                           @* <div class="col-md-4 ">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer Order Date</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder=" " id="txtBuyerOrderDate" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Entry Date</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder=" " id="txtEntryDate">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>*@
+                                        </div>
+
+                                    </div>
+                                     <div class="x_panel"> 
+                                         <div class="col-md-12" style="margin-top: -15px;margin-bottom: -10px;">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12"><h2 style="font-size:16px;font-weight:600;">Order Details</h2></div>
+                                    <form class="form-horizontal form-label-left input_mask">
+                                                                                 
+                                                <table class="table table-responsive" id="tblOrderdetails">
+                                                    <thead>
+                                                        <tr>
+                                                           
+                                                            <th style="display: none;">Stylerowid
+                                                            </th>
+                                                            <th>Order No
+                                                            </th>                                                            
+                                                            <th>Style
+                                                            </th>                                                          
+                                                            <th>Quantity
+                                                            </th>                                                          
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="FabricError" style="color: red"></span>
+                                           
+
+                                    </form>
+                                    <div class="col-md-6 col-sm-6 col-xs-12"><h2 style="font-size:16px;font-weight:600;">Trims Details</h2>
+                                        
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Select All</label>
+                                        <input type="checkbox" id="groupAll" class="groupAll editor-active" style="float:right"/>
+                                            </div>
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div id="TrimsList">
+                                                <table class="table table-responsive" id="tblTrimsdetails">
+                                                    <thead>
+                                                        <tr>
+                                                             <th style="display: none;">TrimsSlNo
+                                                            </th>
+                                                            <th style="display: none;">Trimsmasid
+                                                            </th>
+                                                            <th style="display: none;">Itemid
+                                                            </th>
+                                                             <th>Item
+                                                            </th>
+                                                            <th style="display: none;">Trimsid
+                                                            </th>
+                                                            <th>Trims
+                                                            </th>
+                                                            <th style="display: none;">Colorid
+                                                            </th>
+                                                            <th>Color
+                                                            </th>
+                                                            <th style="display: none;">Sizeid
+                                                            </th>
+                                                            <th>Size
+                                                            </th>
+                                                            <th style="display: none;">Uomid
+                                                            </th>
+                                                             <th>UOM
+                                                            </th>
+                                                            <th>Consumption
+                                                            </th>
+                                                             <th>Rate
+                                                            </th>
+                                                            <th>Target
+                                                            </th>
+                                                             <th>Approve
+                                                            </th>
+                                                            @*<td>&nbsp;</td>*@
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="TrimsdetailsError" style="color: red"></span>
+                                            </div>
+
+                                    </form>
+                                    <div class="col-md-6 col-sm-6 col-xs-12"><h2 style="font-size:16px;font-weight:600;">Embellishment Details</h2></div>
+                                    <form class="form-horizontal form-label-left input_mask">
+                                       <div id="EmblsList">
+                                                <table class="table table-responsive" id="tblEmblishmentdetails">
+                                                    <thead>
+                                                        <tr>
+                                                             <th style="display: none;">EmblSlNo
+                                                            </th>
+                                                            <th style="display: none;">Embellishmentmasid
+                                                            </th>
+                                                            <th style="display: none;">Itemid
+                                                            </th>
+                                                            <td>Item</td>
+                                                            <th style="display: none;">EmblShmentid
+                                                            </th>
+                                                            <th>Embellishment
+                                                            </th>
+                                                            <th>Rate
+                                                            </th>
+                                                             <th>Target
+                                                            </th>
+                                                             <th>Approve
+                                                            </th>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="EmbellishmentError" style="color: red"></span>
+                                            </div>
+
+                                    </form>
+                                    <div class="col-md-6 col-sm-6 col-xs-12"><h2 style="font-size:16px;font-weight:600;">Fabric/Yarn Details</h2></div>
+                                    <div id="YarnList">
+                                                <table class="table table-responsive" id="tblFabricYarndetails">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="display: none;">PreCostFabDeptYarnmasid
+                                                            </th>
+                                                            <th style="display: none;">Precostfabdeptfabmasid
+                                                            </th>     
+                                                            <th>Type
+                                                            </th>
+                                                            <th style="display: none;">fabricid
+                                                            </th>
+                                                            <th>Item
+                                                            </th>                                                          
+                                                            <th style="display: none;">Colorid
+                                                            </th>
+                                                            <th>Color
+                                                            </th>
+                                                              <th style="display: none;">Sizeid
+                                                            </th>
+                                                            <th>Size
+                                                            </th>
+                                                            <th>Rate
+                                                            </th>
+                                                             <th>Target
+                                                            </th>
+                                                             <th>Approve
+                                                            </th>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="FabricYarnError" style="color: red"></span>
+                                            </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12"><h2 style="font-size:16px;font-weight:600;">Process Details</h2></div>
+                                    <form class="form-horizontal form-label-left input_mask">
+                                         <div id="ProcList">
+                                                <table class="table table-responsive" id="tblProcessdetails">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="display: none;">PreCostFabDeptProcessmasid
+                                                            </th>
+                                                            <th style="display: none;">Precostfabdeptfabmasid
+                                                            </th>
+                                                            <th style="display: none;">Fabricid
+                                                            </th>                                                           
+                                                            <th style="display: none;">Processid
+                                                            </th>
+                                                            <th>Process
+                                                            </th>
+                                                             <th>Fabric
+                                                            </th>
+                                                             <th>Fabric Color
+                                                            </th>
+                                                            <th>Percentage
+                                                            </th>
+                                                            <th>Rate
+                                                            </th>
+                                                             <th>Target
+                                                            </th>
+                                                             <th>Approve
+                                                            </th>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="ProcessError" style="color: red"></span>
+                                            </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                                 </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-round btn-success" id="btnAdd" onclick="return Save();">Add</button>
+                                <button type="button" class="btn btn-round btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                <button type="button" class="btn btn-round btn-success" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                <button type="button" class="btn btn-round btn-danger" id="btnclose" onclick="Close();">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                             
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,214 @@
+﻿@{
+    ViewBag.Title = "PlanningAddIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #tPAbody_length {
+    display:none;
+    }
+    #tPAbody_info {
+    display:none;
+    }
+    #tPAbody_paginate {
+    display:none;
+    }
+
+
+                .no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url("/images/Preloader_2.gif") center no-repeat #fff;
+
+   
+}
+
+</style>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Planning/PlanningAdd.js"></script>
+<script src="~/AxonScripts/Common/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/modernizr.js"></script>
+
+
+<script>
+    //paste this code under head tag or in a seperate js file.
+    // Wait for window load
+    $(window).load(function () {
+        // Animate loader off screen
+        $(".se-pre-con").fadeOut("slow");;
+    });
+</script>
+
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+
+                    <div class="x_title">
+                        <h2>Planning Add</h2>
+                        <div style="float:right">
+                         <img class="logo" src="~/images/backicon.png" width="30px" height="30px" onclick="Backmain();"/>
+                            </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="">
+                        <div class="x_panel">
+                            <div class="row">
+                                <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4">Company</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" class="form-control" placeholder="Company" id="txtCompany" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4">
+                                            Buyer
+                                        </label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" class="form-control" placeholder="Buyer" id="txtBuyer" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="display: none;">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-4">
+                                            PlanId
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-8">
+                                            <input type="text" class="form-control" placeholder="PlanId" id="txtPlanId" disabled>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </form>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4">
+                                            Style
+                                        </label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" class="form-control" placeholder="Style" id="txtStyle" disabled>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4">
+                                            Order No
+                                        </label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" class="form-control" placeholder="OrderNo" id="txtOrderNo" disabled>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Ref No</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" class="form-control" placeholder="RefNo" id="txtRefNo" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Prod.Qty</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" class="form-control" placeholder="ProdQty" id="txtProdQty" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">StyleRowId</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+
+                                            <input type="text" class="form-control" placeholder="StyleRowId" id="txtStyleRowId" disabled>
+                                        </div>
+                                    </div>
+                                    </form>
+                            </div>
+                            </div>
+                             </div>
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                    <div class="x_panel">
+                    <table id="tPAbody" class="table table-striped table-bordered"></table>
+                    <div style="display: inline-flex">
+                        <div class="form-group" style="margin-top: 9px;">
+
+                            <input type="button" class="btn btn-primary btn_consumption" id="Con" value="PROGRAM" onclick="Con();">
+                        </div>
+
+                        <div class="form-group" style="margin-top: 9px; display:none;" >
+
+                            <input type="button" class="btn btn-primary btn_fabric" id="Fab" value="FABRIC" onclick="Fab(this);">
+                        </div>
+
+                        <div class="form-group" style="margin-top: 9px;display:none;">
+
+                            <input type="button" class="btn btn-primary btn_yarn" id="Yar" value="YARN" onclick="Yarn(this);">
+                        </div>
+                        <div class="form-group" style="margin-top: 9px;">
+
+                            <input type="button" class="btn btn-primary btn_acc" value="TRIMS" onclick="Acc(this);">
+                        </div>
+                       @*  <div class="form-group" style="margin-top: 9px;padding-left:750px">                           
+                                    <input type="button" class="btn btn-primary btn_acc" value="BACK TO MAIN" onclick="Backmain();">
+                            </div>*@
+                    </div>
+                    </div>
+                </div>
+
+                 @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+
+
+                <!-- /page content -->
+
+
+
+
+                <!-- footer content -->
+
+
+                <!-- /footer content -->
+            </div>
+        </div>
+    </div>
+</div>

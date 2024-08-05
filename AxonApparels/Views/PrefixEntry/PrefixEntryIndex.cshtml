@@ -1,0 +1,142 @@
+﻿@{
+    ViewBag.Title = "PrefixEntryIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    #tblPurchasegrid_filter {
+        display: none;
+    }
+
+    #tblProcessgrid_filter {
+        display: none;
+    }
+
+    #tblPurchasegrid_wrapper {
+        margin-top: 10px;
+    }
+
+    #tblProcessgrid_wrapper {
+        margin-top: 10px;
+    }
+
+    #tblPurchasegrid {
+        margin-top: -9px;
+    }
+
+    #tblProcessgrid {
+        margin-top: -9px;
+    }
+</style>
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/HouseKeeping/PrefixEntry.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+@* Load datatable css *@
+
+<link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+@* Load datatable js *@
+@section Scripts{
+
+    <script src="~/build/js/jquery.dataTables.min.js"></script>
+    <script>
+                                           
+    </script>
+
+}
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+
+            <div class="x_panel">
+                <div class="x_content">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label style="font-size: 19px; white-space: nowrap;">
+                                Prefix Creation
+                            </label>
+
+                        </div>
+
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="row">
+                      
+                   
+                        <div class="col-md-3" id="IId">
+                            <form class="form-horizontal form-label-left input_mask" style="margin-left: -84px;">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12 enquiry_edit">
+                                        Item 
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlItem" class="form-control select2" style="width: 170px; margin-left: -45px;" onchange="LoadDocumentItemDetails();">
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                     
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-10">
+
+                                <form class="form-horizontal form-label-left input_mask">
+
+                                    <div class="form-group" id="tblPur">
+                                        <table class="table table-responsive" id="tblPurchasegrid">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>DocId</th>
+                                                    <th>Doc Name</th>
+                                                    <th>Prefix</th>
+                                                   
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                               
+                                </form>
+                            </div>
+                            <div class="col-md-2">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group" style="display: inline-flex; float: right; margin-top: 40px;">
+                                        <button type="button" class="btn btn-round btn-success" id="Update" style="" onclick="AllowUpdate();">Update</button>
+                                        <button type="button" class="btn btn-round btn-success" id="ProcessUpdate" style="display: none;" onclick="AllowProcessUpdate();">Update</button>
+                                        <button type="button" class="btn btn-round btn-danger" data-dismiss="modal" onclick="ClearAllowData();">Close</button>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>

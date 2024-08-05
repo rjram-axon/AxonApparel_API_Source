@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b9e16c9b84b948eaa3496bbcab505944" Name="Diagram1" ZoomLevel="11">
+        <EntityTypeShape EntityType="HouseKeepingModel.User_Entry_Log" Width="1.5" PointX="6.937183910485909" PointY="23.055928673155574" />
+        <EntityTypeShape EntityType="HouseKeepingModel.Role_Det" Width="1.5" PointX="8.33701118283766" PointY="4.6118705294150253" />
+        <EntityTypeShape EntityType="HouseKeepingModel.Role_Mas" Width="1.5" PointX="7.3083898142484891" PointY="0.87359993200451136" />
+        <EntityTypeShape EntityType="HouseKeepingModel.vw_menuname" Width="1.5" PointX="8.4987403566477546" PointY="29.648251890041053" />
+        <AssociationConnector Association="HouseKeepingModel.FK_RoleRef" />
+        <EntityTypeShape EntityType="HouseKeepingModel.MenuList" Width="1.5" PointX="9.8369305216879255" PointY="31.857400402360316" />
+        <AssociationConnector Association="HouseKeepingModel.FK_Menu_RefList" />
+        <EntityTypeShape EntityType="HouseKeepingModel.MisPathItem" Width="1.5" PointX="0.91691449327250685" PointY="30.76447686495468" />
+        <EntityTypeShape EntityType="HouseKeepingModel.Mail" Width="1.5" PointX="9.1888431539707085" PointY="29.967092110760088" />
+        <EntityTypeShape EntityType="HouseKeepingModel.Mail_Attachments" Width="1.5" PointX="6.9928003023345031" PointY="7.8517276532257574" />
+        <EntityTypeShape EntityType="HouseKeepingModel.Process_Tolerance" Width="1.5" PointX="0.89548474964475488" PointY="15.005215398504033" />
+        <EntityTypeShape EntityType="HouseKeepingModel.Report_Footer_Email" Width="1.5" PointX="9.2503021626036155" PointY="1.3321735865120652" />
+        <EntityTypeShape EntityType="HouseKeepingModel.Report_Footer_Process" Width="1.5" PointX="4.2830057499385461" PointY="29.151166676148385" />
+        <EntityTypeShape EntityType="HouseKeepingModel.Report_Footer_Setup" Width="1.5" PointX="10.65939013597527" PointY="21.526963303576672" />
+        <AssociationConnector Association="HouseKeepingModel.FK__Mail_Atta__MailI__72B4F664" />
+        <AssociationConnector Association="HouseKeepingModel.FK_Rep_Footer_Email_Setupid" />
+        <AssociationConnector Association="HouseKeepingModel.FK_Rep_Footer_Rpt_Setupid" />
+        <EntityTypeShape EntityType="HouseKeepingModel.MisPathUnit_of_measurement" Width="1.5" PointX="3.7848171367239285" PointY="29.510009034308609" />
+        <AssociationConnector Association="HouseKeepingModel.FK_BasUOMRef" />
+        <AssociationConnector Association="HouseKeepingModel.Pur_Unit" />
+        <AssociationConnector Association="HouseKeepingModel.Sec_Unit" />
+        <EntityTypeShape EntityType="HouseKeepingModel.MisPathSize" Width="1.5" PointX="7.1760703414567137" PointY="15.443849675098365" />
+        <EntityTypeShape EntityType="HouseKeepingModel.MisPathProcess" Width="1.5" PointX="2.1046263622607229" PointY="10.030148689649137" />
+        <AssociationConnector Association="HouseKeepingModel.FK_Process_Tolerance_Process" />
+        <AssociationConnector Association="HouseKeepingModel.FK_Rep_Footer_Processid" />
+        <EntityTypeShape EntityType="HouseKeepingModel.Finyear" Width="1.5" PointX="0.26212277089344471" PointY="12.649112588096928" />
+        <EntityTypeShape EntityType="HouseKeepingModel.Prefix" Width="1.5" PointX="2.6789958638506923" PointY="15.691875092541741" />
+        <EntityTypeShape EntityType="HouseKeepingModel.PopMailSettings" Width="1.5" PointX="10.102076913277655" PointY="15.899951495183609" />
+        <EntityTypeShape EntityType="HouseKeepingModel.MisPathUsername" Width="1.5" PointX="4.4680285400096462" PointY="8.4829987923069847" />
+        <AssociationConnector Association="HouseKeepingModel.FK_User_Roleid" />
+        <AssociationConnector Association="HouseKeepingModel.fk_user_entry_log_userid" />
+        <EntityTypeShape EntityType="HouseKeepingModel.MisPathCompany" Width="1.5" PointX="9.75089765607887" PointY="22.402830834688075" />
+        <EntityTypeShape EntityType="HouseKeepingModel.AlertType" Width="1.5" PointX="2.3413685068215093" PointY="31.379979192921883" />
+        <EntityTypeShape EntityType="HouseKeepingModel.User_Grant_AlertRights" Width="1.5" PointX="0.067562118204106625" PointY="8.2014829554601967" />
+        <EntityTypeShape EntityType="HouseKeepingModel.Popup_alert" Width="1.5" PointX="5.8598640811908354" PointY="6.2869001507232429" />
+        <AssociationConnector Association="HouseKeepingModel.FK__Popup_ale__UserI__6C73A3D7" />
+        <EntityTypeShape EntityType="HouseKeepingModel.TandA_Chat" Width="1.5" PointX="4.2470127457040423" PointY="13.17284963148313" />
+        <EntityTypeShape EntityType="HouseKeepingModel.MisPath" Width="1.5" PointX="8.6110764614357969" PointY="18.044083037434184" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

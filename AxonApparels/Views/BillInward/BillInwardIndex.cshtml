@@ -1,0 +1,534 @@
+﻿@{
+    ViewBag.Title = "BillInwardIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>BillInward</h2>*@
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    });
+</script>
+
+<script src="~/AxonScripts/Statement/Order/BillInward.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+               <div class="x_panel">
+                <div class="x_content">
+                    <form class="form-inline">
+                        <div class="row">
+                            <div class="row">
+                                <div style="text-align:center;">
+                                    <div class="form-group">
+                                        <label style="font-size: 19px; white-space: nowrap;">
+                                         Bill Register Report
+                                        </label>
+                                    </div>
+                                </div>                             
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+
+               <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel" >
+
+                <div class="row">
+
+                    <div class="row">
+                        <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12"></div>
+                        <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                       Company
+                                    </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMCompany" class="form-control select2""></select>   @*onchange="CMainlist();*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                     <div id="Mprocess">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Processor</label>   @*for="txtEntryDate"*@
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <select id="ddlprocessor" class="form-control select2">            @* onchange="SPMainlist();"*@                           
+                                            </select>
+                                        </div>
+                                 </div>
+
+                            <div id="Mwork">
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Work Division</label>    @*for="txtEntryDate"*@
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <select id="ddlinnerWorkdivision" class="form-control select2">         @*onchange="SPMainlist();"*@                               
+                                </select>
+                            </div>
+                            </div>
+                            
+                        </div>
+                                <div class="form-group">
+                                           <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                From Date
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                 <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                            </div>
+                                      </div>    
+                                
+                                
+
+                                 
+
+
+                                  
+
+
+                                  
+
+                                   <div class="form-group" style="margin-left: 10px;">
+                                       <input type="checkbox" name="grptype" value="Item" id="ChkUninv">  Uninvoiced Bill  &nbsp;&nbsp;&nbsp;
+                                      <input type="checkbox" name="grptype" value="Color" id="ChkSupplier">  Group by Supplier &nbsp;&nbsp;&nbsp;
+                                       
+                                  
+
+                                       </div>
+                                <div class="form-group" style="margin-left: 10px;">
+                                    <input type="checkbox" name="grptype" value="Item" id="ChkUnBill">  Bill Pass Not made  &nbsp;&nbsp;&nbsp;
+                                   @* <input type="checkbox" name="grptype" value="Item" id="ChkUnBillHo">  Hold  &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="grptype" value="Item" id="ChkUnBillRt">  Return  &nbsp;&nbsp;&nbsp;*@
+</div>
+                                  
+                            </form>
+                        </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                Bill No
+                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <select id="ddlMBillNo" class="form-control select2" onchange="CMainlist();">
+                                </select>
+                            </div>
+ </div>
+                                <div class="form-group">
+                                         <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                Supplier Bill No
+                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <select id="ddlSBillNo" class="form-control select2" onchange="CMainlist();">
+                                </select>
+                            </div>
+                        </div>
+                                <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                To Date
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                 <input type="text" id="txtToDate" class="form-control " placeholder="Date">
+                                            </div>
+                                      </div>
+                                
+                                  
+
+                                 
+
+                                
+                                      
+                                
+
+                                   <div class="form-group">
+                                       <input type="checkbox" name="grptype" value="Item" id="ChkBilldet">  Bill Details  &nbsp;&nbsp;&nbsp;
+                                       <input type="checkbox" name="grptype" value="Item" id="ChkInvdet">  Invoice Details  &nbsp;&nbsp;&nbsp;
+                                       <input type="checkbox" name="grptype" value="Item" id="Chkpassdet">  BillPass Details 
+                                   </div>
+                                <div class="form-group">
+                                       <input type="checkbox" name="Debgrptype" value="CreditDebit" id="ChkDebCrd">  Debit/Credit  &nbsp;&nbsp;&nbsp;
+                                </div>
+
+
+
+
+                                     <div class="form-group" style="display:none;">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                       Purchase Type
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlPurchaseType" class="form-control select2">    
+                                        </select>
+                                    </div>
+                                </div> 
+                                
+                                           
+                                @* <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-6 col-xs-12" style="visibility:hidden;">Processor</label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                <div class="col-md-12" id="innerwork" style="margin-left: 16px;">
+                                                <select id="ddlinnerWorkdivision" style="margin-top: 3px;width: 183px;" class="form-control select2">
+                                                </select>
+                                                    </div>
+                                                <div class="col-md-12" id="innerprocessor" style="margin-left: 16px;">
+                                                 <select id="ddlprocessor"  style="margin-top: 3px;width: 183px;"  class="form-control select2">
+                                                </select>
+                                                    </div>
+                                            </div>
+                                        </div>*@
+
+                                @*<div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                     Processor
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlProcessor" class="form-control select2"  tabindex="-1" aria-autocomplete="list" aria-sort="none" role="combobox" multiple="multiple" name="multiple" onchange="myOrder(this.value);">
+                                         </select>
+                                    </div>
+                                </div>*@
+                                
+                            </form>
+                        </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <form class="form-horizontal form-label-left input_mask">
+                              <div class="form-group">
+                                  <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                        Processor Type
+                                    </label>
+                                    <div class="maxl " style="margin-left: 10px; /* width: 200px; */margin-top: -5px;">
+                                        <label class="radio inline">
+                                            <input type="radio" id="optoutext" name="outinternal" checked value="I" onclick="Changedropcont();">
+                                            <span>Processor</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" id="optoutint" name="outinternal" value="E" onclick="Changedropcont();">   @* onchange="CMainlist();"*@
+                                            <span>Work Division</span>
+                                        </label>   
+                                          <label class="radio inline">
+                                            <input type="radio" id="optoutall" name="outinternal" value="A" onclick="Changedropcont();">   @* onchange="CMainlist();"*@
+                                            <span>All</span>
+                                        </label>       
+                                                                                                                     
+                                    </div>
+                                </div>
+                              <div class="form-group">
+                                       <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                        Department
+                                       </label>
+                                    <div class="maxl " style="margin-left: 10px; /* width: 200px; */margin-top: -5px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="Pur" name="statustype">   @* onchange="CMainlist();"*@
+                                            <span>Purchase</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="Proc" name="statustype">   @* onchange="CMainlist();"*@
+                                            <span>Process</span>
+                                        </label>                                       
+                                           <label class="radio inline">
+                                            <input type="radio" value="Prod" name="statustype">   @*onchange="CMainlist();"*@
+                                            <span>Production</span>
+                                        </label> 
+                                        <label class="radio inline">
+                                            <input type="radio" value="other" name="statustype">   @* onchange="CMainlist();"*@
+                                            <span>Others</span>
+                                        </label>     
+                                           <label class="radio inline">
+                                            <input type="radio" value="all" name="statustype">   @* onchange="CMainlist();"*@
+                                            <span>All</span>
+                                        </label> 
+                                                                        
+                                    </div>
+                                </div>
+                              <div class="form-group">
+                                  <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                        Order Type
+                                       </label>
+                                    <div class="maxl " style="margin-left: 10px; /* width: 200px; */margin-top: -5px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="B" name="ordertype">   
+                                            <span>Bulk Order</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="S" name="ordertype">   
+                                            <span>Sample Order</span>
+                                        </label>                                       
+                                           <label class="radio inline">
+                                            <input type="radio" value="G" name="ordertype">   
+                                            <span>General</span>
+                                        </label> 
+                                         <label class="radio inline">
+                                            <input type="radio" value="A" name="ordertype">  
+                                            <span>All</span>
+                                        </label>   
+                                                                                
+                                    </div>
+                                </div>
+                                <div class="form-group">  
+                                        @*<div class="maxl " style="margin-top: 10px;">*@
+                                     <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                        Date Filter
+                                       </label>
+                                     <div class="maxl " style="margin-left: 10px; /* width: 200px; */margin-top: -5px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="BENT" name="Datetype">
+                                            <span>BillEntry Date</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="BD" name="Datetype">
+                                            <span>BillDate</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="INV" name="Datetype">
+                                            <span>Invoice Date</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="BPA" name="Datetype">
+                                            <span>BillPass Date</span>
+                                        </label>
+                                        </div>
+                                  </div>
+                          </form></div>
+                        </div>
+                         <div class="row">
+                             <div class="col-lg-10 col-md-11 col-sm-12 col-xs-12">
+                                  <button type="button" class="btn btn-success" style="float:right" onclick="LoadReport();">Report</button>
+                             </div>
+                         </div>
+
+
+                         <div class="col-md-6" style="display:none;">
+
+                            <form class="form-horizontal form-label-left input_mask">
+
+                                 <div class="form-group" style="visibility:hidden">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Unit
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlUnit" class="form-control select2">    @*onchange="CMainlist();"*@
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="visibility:hidden">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                     Buyer
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMBuyer" class="form-control select2" >  @*onchange="CMainlist();"*@
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="visibility:hidden">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                     Order No
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                       @* <select id="ddlMOrderNo" class="form-control select2">    
+                                        </select>*@
+
+                                        <select id="ddlMOrderNo" class="form-control select2"  tabindex="-1" aria-autocomplete="list" aria-sort="none" role="combobox" multiple="multiple" name="multiple" onchange="myOrder(this.value);">
+                                                        </select>
+
+                                      @*   <select id="ddlMOrderNo" class="form-control select2"  tabindex="-1" aria-autocomplete="list" aria-sort="none" role="combobox" multiple="multiple" name="multiple" onchange="myOrder(this.value);">
+                                                        </select>*@
+                                    </div>
+                                </div>
+                                                           
+                                  <div class="form-group" style="visibility:hidden">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                      Ref No
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                     @*   <select id="ddlRefNo" class="form-control select2" onchange="LoadRefwise();"></select>   *@
+
+
+                                          <select id="ddlRefNo" class="form-control select2"  tabindex="-1" aria-autocomplete="list" aria-sort="none" role="combobox" multiple="multiple" name="multiple" onchange="myRef(this.value);">
+                                                        </select>
+                                    </div>
+                                </div>  
+
+                                  <div class="form-group" style="visibility:hidden">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Style
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlStyle" class="form-control select2" >   @*onchange="CMainlist();"*@
+                                        </select>
+                                    </div>
+                                </div>
+
+                                 <div class="form-group" style="visibility:hidden">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Process
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlProcess" class="form-control select2" >   @*onchange="CMainlist();"*@
+                                        </select>
+                                    </div>
+                                </div>
+
+                                                         
+                                  <div class="form-group" style="visibility:hidden">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                   Item Group
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlItemGroup" class="form-control select2"></select>    @*onchange="LoadRefwise();"*@  
+
+
+                                       @*   <select id="ddlItemGroup" class="form-control select2"  tabindex="-1" aria-autocomplete="list" aria-sort="none" role="combobox" multiple="multiple" name="multiple" onchange="myRef(this.value);">
+                                                        </select>*@
+                                    </div>
+                                </div>  
+
+                                  <div class="form-group" style="display:none;">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Item
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlItem" class="form-control select2" >   @*onchange="CMainlist();"*@
+                                        </select>
+                                    </div>
+                                </div>
+
+                                 <div class="form-group" style="display:none;">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Item Type
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlItemType" class="form-control select2" >   @*onchange="CMainlist();"*@
+                                        </select>
+                                    </div>
+                                </div>
+
+</form>
+                        </div>
+
+
+
+
+                    </div>
+                    </div>
+
+                        @* <div class="row">
+                             <div class="col-md-12">
+                         <form class="form-horizontal form-label-left input_mask">
+                              <div class="form-group">  
+                         <div class="maxl " style="margin-top: -5px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="P" name="proctype" onchange="CMainlist();">
+                                            <span>Bulk Order</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="P" name="proctype" onchange="CMainlist();">
+                                            <span>Sample Order</span>
+                                        </label>
+                                        </div>
+                                  </div>
+                             </form>
+                             </div>
+                       </div>*@
+                  
+                          <div class="row">       
+                         <form class="form-horizontal form-label-left input_mask">
+                                 
+
+                            @*  <div class="col-sm-6">
+                                      <div class="form-group">
+                                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                From Date
+                                            </label>
+                                            <div class="col-md-6 col-sm-9 col-xs-12">
+                                                 <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                            </div>
+                                    </div>                                    
+                                </div>
+                            <div class="col-sm-6">
+                                      <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                To Date
+                                            </label>
+                                            <div class="col-md-6 col-sm-9 col-xs-12">
+                                                 <input type="text" id="txtToDate" class="form-control " placeholder="Date">
+                                            </div>
+                                    </div>                                    
+                                </div>*@
+
+                              </form>        
+                              </div>
+
+                                 <div class="row">
+                    @* 
+                      <div class="col-md-6">
+                    <form class="form-horizontal form-label-left input_mask">
+                         <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                Lines Per Page
+                            </label>
+                            <div class="col-md-6 col-sm-9 col-xs-12">
+                                <input type="text" id="txtPerPage" class="form-control " placeholder="Lines">
+                            </div>
+                        </div>
+                    </form>
+                </div>*@
+ <div class="col-md-6">
+      
+												</div>
+
+
+                 
+                  
+                </div>
+
+@*ReportButton*@
+                    
+
+
+                </div>
+            </div>
+                </div>
+
+
+
+             </div>
+            
+        
+    
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+            
+        </div>
+    </div>
+

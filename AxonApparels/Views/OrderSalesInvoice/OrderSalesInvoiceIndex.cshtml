@@ -1,0 +1,994 @@
+﻿@{
+    ViewBag.Title = "OrderSalesInvoiceIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tbldespatchmaingrid_filter
+    {
+        /*margin-top: -29px;*/
+    }
+
+    #tbladdgriddet
+    {
+        margin-top: -9px;
+    }
+
+    #tbladdgriddet_filter
+    {
+        /*margin-top: -30px;*/
+    }
+
+    #tblstock_filter
+    {
+        display: none;
+    }
+
+    #tblitemDetails_filter
+    {
+        margin-top: -30px;
+    }
+
+    #tblstock_wrapper
+    {
+        margin-top: -12px;
+    }
+    #tblPaydetails_filter
+    {
+        display:none;
+    }
+
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+        BuyOrddespatchEditFlg = @Html.Raw(Json.Encode(ViewBag.OrderSalesInvoiceEditFlg))
+        BuyOrddespatchDeleteFlg = @Html.Raw(Json.Encode(ViewBag.OrderSalesInvoiceDeleteFlg))
+       BuyOrddespatchPrintFlg = @Html.Raw(Json.Encode(ViewBag.OrderSalesInvoicePrintFlg))
+
+
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtShipDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+        $('#txtInvDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtRefDate').datepicker({ dateFormat: 'dd/mm/yy' });
+      
+    });
+</script>
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Production/OrderSalesInvoice.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+            <div class="x_panel">
+                <div class="x_content">
+                    <form class="form-inline">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-size: 19px; white-space: nowrap;">
+                                        Sales Invoice
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group">
+                                    <label for="ex3" class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">From Date</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group">
+                                    <label for="ex3" class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">To Date</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control " placeholder="Date" id="txtToDate">
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-4 col-xs-12">
+                                <div class="form-group">
+                                   
+                                    <input type="button" style="float:right" class="btn btn-success" value="List" onclick="ListFilter();">
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Company
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMCompany" class="form-control select2"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Order No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMOrderNo" class="form-control select2"></select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Buyer
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMBuyer" class="form-control select2">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Ref No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMRefNo" class="form-control select2">
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <div class="maxl" style="margin-left: 10px;">
+                                        <label class="radio inline">
+                                            <input type="radio" id="optMBuyOrd" name="optmord" checked value="B">
+                                            <span>Buyer Ord</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" id="optMSamOrd" name="optmord" value="S">
+                                            <span>Sample Ord </span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Load datatable css *@
+
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+
+            <div class="x_panel">
+                <button type="button" class="btn btn-primary" id="btnaddnew" @ViewBag.OrderSalesInvoiceAddFlg>Add New</button>
+                <form class="form-horizontal form-label-left input_mask">
+                    <div class="form-group">
+                        <table id="tbldespatchmaingrid" class="table table-bordered table-hover">
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog" style="min-width: 74%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Sales Invoice</h4>
+                        </div>
+                        <div class="x_panel">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="margin-top: 10px;">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Company
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlCompany" class="form-control select2" onchange="GetAddGridDetails()"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Buyer
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlBuyer" class="form-control select2" onchange="GetAddGridDetails()">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Ref No
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlRefNo" class="form-control select2" onchange="GetAddGridDetails()">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Order No
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlOrderNo" class="form-control select2" onchange="GetAddGridDetails()"></select>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+
+                                            @*    <div class="form-group">
+                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                                        Issue Store
+                                                    </label>
+                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                        <select id="ddlIssueStore" class="form-control select2" onchange="GetAddGridDetails()"></select>
+                                                    </div>
+                                                </div>*@
+
+                                                <div class="form-group">
+                                                    <div class="maxl" style="margin-left: 10px; margin-top: -5px;">
+                                                        <label class="radio inline">
+                                                            <input type="radio" id="optoutwrkord" name="optshiptype" onclick="GetAddGridDetails()" checked value="B">
+                                                            <span>Buyer Ord</span>
+                                                        </label>
+                                                        <label class="radio inline">
+                                                            <input type="radio" id="optoutsaemord" name="optshiptype" onclick="GetAddGridDetails()" value="S">
+                                                            <span>Sample Ord </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="x_panel">
+                                <div class="row">
+                                    <div class="">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <table id="tbladdgriddet" class="table table-bordered table-hover" border="1">
+                                                </table>
+                                            </div>
+                                        </form>
+                                        <div class="row" style="float: right">
+                                            <div class="modal-footer" style="border: none;">
+
+                                                @*<button class="btn btn-danger btn-round" id="btnorderclose">Close</button>*@
+                                                <input type="button" class="btn btn-success" value="Submit" onclick="SubmitAdd();">
+                                                <button class="btn btn-danger" onclick="backtomain();" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog" style="min-width: 80%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Sales Invoice</h4>
+                        </div>
+                        <div class="x-panel">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" >
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Company
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    @*<input type="text" id="txtCompany" class="form-control " placeholder="Company">*@
+                                                    <select id="ddlinnCompany" class="form-control" disabled></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Buyer
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    @*<input type="text" id="txtBuyer" class="form-control " placeholder="Buyer">*@
+                                                    <select id="ddlinnbuyer" class="form-control" disabled></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Consignee
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    @*<input type="text" id="txtBuyer" class="form-control " placeholder="Buyer">*@
+                                                    <select id="ddlinnconsignee" class="form-control"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Notify
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    @*<input type="text" id="txtBuyer" class="form-control " placeholder="Buyer">*@
+                                                    <select id="ddlinnNoteconsignee" class="form-control"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Ship Mode
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <select id="ddlShipMode" class="form-control"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    System
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <select id="ddlSystem" class="form-control"></select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                        <form class="form-horizontal form-label-left input_mask">
+
+
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Invoice No
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <input type="text" id="txtInvNo" class="form-control " placeholder="Inv No" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Invoice Date
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <input type="text" id="txtInvDate" class="form-control " placeholder="Inv Date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Inv Ref No
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <input type="text" id="txtInvRefNo" class="form-control " placeholder="inv Ref No">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Ref Date
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <input type="text" id="txtRefDate" class="form-control " placeholder="Ref Date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Payment 
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <select id="ddlPaymentmode" class="form-control"></select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                              <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Port of Loading
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <select id="ddlinnportofloading" class="form-control" disabled></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Destination
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    @*<input type="text" style="margin-left: 10px;" id="txtDestination" class="form-control " placeholder="Destination">*@
+                                                    <select id="ddlinnDestination" class="form-control" disabled></select>
+                                                </div>
+                                            </div>
+                                     
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                Port of Discharge
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <select id="ddlPortOfDischarge" class="form-control">
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                              <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                               Currency
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <select id="ddlCurrency" class="form-control">
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                              <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                   Ex Rate
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <input type="text" id="txtExrate" class="form-control " placeholder="Ex.rate">
+                                                </div>
+                                            </div>                         
+
+                                        </form>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                            <div class="x_panel" >
+                                <div class="row">
+                                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                            <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Item Details</a>
+                                            </li>
+                                             <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab1" data-toggle="tab" aria-expanded="false">Add/Less</a>
+                                            </li>
+                                            <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">More Info</a>
+                                            </li>
+                                        </ul>
+                                        <div id="myTabContent" class="tab-content">
+                                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                                <div class="x_content">
+                                                    <div class="x_panel">
+                                                        <h2 style="margin-top: -5px;">Item</h2>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <form class="form-horizontal form-label-left input_mask" >
+                                                                        <div class="form-group">
+                                                                            <table class="table table-bordered table-hover" border="1" id="tblitemDetails">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <td style="display: none">Masid</td>
+                                                                                        <td style="display: none">Detid</td>
+                                                                                        <td style="display: none">Shiprwid</td>
+                                                                                        <td style="display: none">Itemid</td>
+                                                                                        <td style="display: none">Styleid</td>
+                                                                                         <td>Sno</td>
+                                                                                        <td>Item</td>
+                                                                                        <td>Order No</td>
+                                                                                        <td>Ref No</td>
+                                                                                        <td>Style</td>
+                                                                                        <td>Article No</td>
+                                                                                        <td>HSCode</td>
+                                                                                        <td>Desc</td>
+                                                                                        <td>Ord Qty</td>
+                                                                                        <td>Prod Qty</td>
+                                                                                        <td>Bal Qty</td>
+                                                                                        <td>Qty</td>
+                                                                                        <td>Rate</td>
+                                                                                        <td>Amt</td>
+                                                                                        <td>FCarton</td>
+                                                                                        <td>TCarton</td>
+                                                                                        <td>TotCarton</td>
+                                                                                        <td>GR wgt</td>
+                                                                                        <td>NET wgt</td>
+                                                                                        <td>Split Up</td>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                            </table>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                              <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                                <div class="x_content">
+                                                           <div class="row">
+                                                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                                
+                                                                            <div class="row">
+
+                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                  
+                                                                                </div>
+                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <form class="form-horizontal form-label-left input_mask">
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">Gross Amt</label>
+                                                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                <input type="text" id="txtgrossamt" placeholder="Gross Amt" class="form-control col-md-10" disabled>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                                <div class="form-group">
+                                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                                                                                        <table class="table table-bordered table-hover" border="1">
+                                                                                        <tbody>
+                                                                                            <tr>
+
+                                                                                                <td>AccountHead</td>
+                                                                                                <td>+/-</td>
+                                                                                                <td>Percentage</td>
+                                                                                                <td>Amount</td>
+
+                                                                                                <td>&nbsp;</td>
+                                                                                            </tr>
+                                                                                            <tr class="mycontainer" id="maincomborow">
+                                                                                                <td>
+                                                                                                    <select id="ddlAcc" class="form-control" onchange="LoadPlusAdd();">
+                                                                                                        <option value="0">--Select Addless--</option>
+                                                                                                        <option value="2">DISCOUNT</option>
+                                                                                                        <option value="1">VAT</option>
+                                                                                                    </select>
+                                                                                                    <span class="error">Select AccHeads</span>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input type="text" id="txtPorMins" class="form-control" placeholder="PlusOrMinus" disabled="">
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input type="text" id="txtPer" class="form-control" placeholder="Percent" onkeyup="LoadNetAmount();">
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input type="text" id="txtAAmount" class="form-control" placeholder="Amount">
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnImadd" data-toggle="tooltip" data-placement="top" title="" type="button" data-original-title="Add"><i class="fa fa-plus"></i></button>
+                                                                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnImupdate" data-toggle="tooltip" data-placement="top" title="" type="button" data-original-title="Update"><i class="fa fa-refresh"></i></button>
+
+
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                    </div>
+                                                                                    <table class="table table-bordered table-hover" border="1" id="tblPaydetails">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>AddlessId
+                                                                                            </th>
+                                                                                            <th>AccountsHead
+                                                                                            </th>
+                                                                                            <th>+/-
+                                                                                            </th>
+                                                                                            <th>Percent
+                                                                                            </th>
+                                                                                            <th>Amount
+                                                                                            </th>
+                                                                                            <td>&nbsp;</td>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                </table>
+                                                                                </div>
+                                                                                
+                                                                            </form>
+                                                                            </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                        
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                                <div class="row">
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                                                                                           @* <div class="form-group">
+                                                                                                <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                    Sacc Code
+                                                                                                </label>
+                                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                    <input style="" type="text" class="form-control" placeholder="Sacc Code" id="txtSaccCode" disabled="">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="form-group">
+                                                                                                <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                    SGST
+                                                                                                </label>
+                                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                    <input style="" type="text" class="form-control" placeholder="SGST" id="txtSGST" disabled="">
+                                                                                                </div>
+                                                                                            </div>*@
+                                                                                            <div class="form-group">
+                                                                                                <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                    Net Amt
+                                                                                                </label>
+                                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                    <input style="" type="text" class="form-control" placeholder="Net Amount" id="txtNetAmount" disabled="">
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                            @*<div class="form-group">
+                                                                                                    <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                        CGST 
+                                                                                                    </label>
+                                                                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                        <input style="" type="text" class="form-control" placeholder="CGST" id="txtCGST" disabled="">
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            <div class="form-group">
+                                                                                                    <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                        IGST
+                                                                                                    </label>
+                                                                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                        <input style="" type="text" class="form-control" placeholder="SGST" id="txtIGST" disabled="">
+                                                                                                    </div>
+                                                                                                </div>*@
+                                                                                        </div>
+                                                                                      @*  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-12" style="">Remarks</label>
+                                                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                                                                    <textarea class="form-control" rows="4" style="" placeholder="Remarks" id="txtremarks"></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>*@
+                                                                                    </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                    </div>
+                                            </div>
+
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                                <div class="x_content">
+                                                        <div class="x_panel">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <h2 style="margin-top: -5px; margin-left: -10px;">Sales Invoice</h2>
+                                                                <form class="form-horizontal form-label-left input_mask" >
+                                                                    <div class="form-group">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                Pre-carriage By
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtPrecarrBy" class="form-control " placeholder="By">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                Place Of Receipt
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <div >
+                                                                                    <select id="ddlplaceofrecpt" class="form-control" style="width:100%" ></select>
+                                                                                </div>
+                                                                                @*<input type="text" style="margin-left: 10px;" id="txtPlaceOfReceipt" class="form-control " placeholder="Place Of Receipt">*@
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                Vessel/Flight No
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtVesselFlightNo" class="form-control " placeholder=" Vessel/Flight No">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                Marks/Nos
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtMarksNos" class="form-control " placeholder="Marks/Nos">
+                                                                            </div>
+                                                                        </div>
+                                                                          <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                Ship Bill No
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtSBillno" class="form-control " placeholder=" Ship Bill No">
+                                                                            </div>
+                                                                        </div>
+                                                                          <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                Ship Bill Date
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtSBilldate" class="form-control " placeholder="Ship Bill Date">
+                                                                            </div>
+                                                                        </div>
+                                                                          <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                CDT No
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtCDTno" class="form-control " placeholder="CDT No">
+                                                                            </div>
+                                                                        </div>
+                                                                          <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                CDT Date
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtCDTdate" class="form-control " placeholder="CDT Date">
+                                                                            </div>
+                                                                        </div>
+                                                                          <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                               LC No
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtLCno" class="form-control " placeholder="LC No">
+                                                                            </div>
+                                                                        </div>
+                                                                          <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                               LC Date
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtLCdate" class="form-control " placeholder="LC Date">
+                                                                            </div>
+                                                                        </div>
+                                                                          <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                Type
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtLCtype" class="form-control " placeholder="Type">
+                                                                            </div>
+                                                                        </div>
+                                                                
+
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            &nbsp;
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <div class="row">
+                                                                  @*  <div class="col-md-6">
+                                                                        <form class="form-horizontal form-label-left input_mask">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-6 col-sm-3 col-xs-12">
+                                                                                    Port of Discharge
+                                                                                </label>
+                                                                                <div class="col-md-6 col-sm-9 col-xs-12">
+                                                                                    <select id="ddlPortOfDischarge" class="form-control">
+                                                                                    </select>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>*@
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                        <form class="form-horizontal form-label-left input_mask">
+
+                                                                                      <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                               Statement
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtStatement" class="form-control " placeholder="Statement">
+                                                                            </div>
+                                                                        </div>
+                                                                          <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                Statement Code
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtStatementCode" class="form-control " placeholder="Statement Code">
+                                                                            </div>
+                                                                        </div>
+                                                                          <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                Statement Type
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtStatementType" class="form-control " placeholder="Statement Type">
+                                                                            </div>
+                                                                        </div>
+                                                                          <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                Scheme Code
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtSchemeCode" class="form-control " placeholder="Scheme Code">
+                                                                            </div>
+                                                                        </div>
+                                                                          <div class="form-group">
+                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                Container No
+                                                                            </label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                <input type="text"  id="txtContainerNo" class="form-control " placeholder="Container No">
+                                                                            </div>
+                                                                        </div>
+
+                                                                            <br/>
+                                                                            <br/>
+
+                                                                            <div class="form-group" >
+                                                                                <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                    Total Cartons
+                                                                                </label>
+                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                    <input type="text"  id="txtTotalCartons" class="form-control " placeholder="Total Cartons" disabled>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group" >
+                                                                                <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                    Total Gross Wgt
+                                                                                </label>
+                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                    <input type="text"  id="txtTotalgross" class="form-control " placeholder="Grosswgt">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group" >
+                                                                                <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                    Total Net Wgt
+                                                                                </label>
+                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                    <input type="text" id="txtTotalnet" class="form-control " placeholder="Netwgt">
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="visibility: hidden;">
+                                                                        <form class="form-horizontal form-label-left input_mask">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                    Port of Discharge
+                                                                                </label>
+                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                    <select id="" class="form-control">
+                                                                                    </select>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+
+                                                               
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="modal-footer" style="border: none;">
+                            <button class="btn btn-success btn-round" id="btnAdd" onclick="Add();">Save</button>
+                            <button class="btn  btn-success btn-round" onclick="Update();" id="btnUpdate">Update</button>
+                            <button class="btn btn-danger btn-round" onclick="Delete();" id="btnDel">Delete</button>
+                            <button class="btn btn-danger btn-round" id="btnclose" onclick="backtomain();" style="margin-right: 18px;">Close</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+                  <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 40%">
+                        <div class="modal-content">
+                            <div class="x_panel">
+                                 <div class="x_title">
+                <h2>Invoice Format</h2>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="row" style="margin:0;">               
+
+                    <div class="col-md-8">
+                        <form class="form-horizontal form-label-left input_mask">
+                               <div class="maxl" style="margin-top: 0px;" id="BudPrintPreviewId">
+                                     <label class="radio inline">
+                                                        <input id="F1" class="Score" name="InvoiceFormat" type="radio" value="1" checked="checked">
+                                                        <span>Format 1</span>
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input id="F2" class="Score" name="InvoiceFormat" type="radio" value="2"   >
+                                                        <span>Format 2</span>
+                                                    </label>
+                                                </div>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+
+                <div class="row" style="margin:0px; float:right;">
+                    <div class="form-group" >
+                                <button class="btn btn-success" onclick="SubReport();">Submit</button>
+                                <button class="btn btn-danger" onclick="backtomain();">Cancel</button>
+                            </div>
+                </div>
+
+
+
+
+        </div>
+                            </div>
+                        </div>
+                     </div>
+
+
+
+
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>

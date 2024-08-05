@@ -1,0 +1,762 @@
+﻿@{
+    ViewBag.Title = "CompanyIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    @* margin-top: -29px !important;*@
+    #tbody_filter {
+       
+    }
+    .add_btn {
+    width: 20px; padding: 2px; height: 20px;margin-left: -16px;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#cstdate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#tindate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#aepcdate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    });
+</script>
+
+<script src="~/AxonScripts/Company.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Company</h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+
+
+                            @if (ViewBag.CompAddFlg == "true")
+                            {                                
+                                <button data-toggle="modal" data-target="#myModal" onclick="clearTextBox();" id="btnAddComp" value="Reset" class="enabled btn btn-primary">Add New Company</button>
+                            }
+                            else
+                            {
+                                <button data-toggle="modal" data-target="#myModal" onclick="clearTextBox();" value="Reset" class="enabled btn btn-primary" disabled>Add New Company</button>
+                            }
+
+                            <table id="tbody" class="table table-bordered table-hover">
+                                @*<thead>
+                                    <tr>
+                                        <th style="visibility: hidden;">ID
+                                        </th>
+                                        <th>Buyer Name
+                                        </th>
+                                        <th>Address
+                                        </th>
+                                        <th>City
+                                        </th>
+                                        <th>Status
+                                        </th>
+                                        <th>Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                </tbody>*@
+                            </table>
+                        </div>
+                        @* Load datatable css *@
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 75%;">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Add Company</h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="x_panel">
+                                            <div class="row">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label for="CompanyID" style="display: none;">ID</label>
+                                                        <input type="text" class="form-control" id="CompanyId" placeholder="Id" disabled="disabled" style="display: none" />
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Company<span style="color: red;"> *</span></label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="Name" placeholder="Company Name" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Prefix<span style="color: red;"> *</span></label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="prefix" placeholder="Prefix" class="form-control col-md-10" maxlength="3">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Look Up<span style="color: red;"> *</span></label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="lookup" placeholder="Look Up" class="form-control col-md-10" maxlength="3">
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Address1<span style="color: red;"> *</span></label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="add1" placeholder="Address1" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Address2</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="add2" placeholder="Address2" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Address3</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="add3" placeholder="Address3" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Email<span style="color: red;"> *</span></label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="email" placeholder="Email" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Fax</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="fax" placeholder="Fax" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">
+                                                                    City<span style="color: red;"> *</span>
+                                                                </label>
+                                                                <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                    <select id="ddlcity" class="form-control select2" onchange="LoadCountry();" style="width: 185px; max-height: 24px;">
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                                                    @*<select id="ddlCountry" class="form-control"></select>*@
+                                                                    <button type="button" data-toggle="tooltip" data-placement="top" title="Add City" style="" class="btnaddcity btn btn-primary add_btn"  @ViewBag.CompanyCityAddFlg><i class="fa fa-plus"></i></button>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Country<span style="color: red;"> *</span></label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtCountry" placeholder="Country" class="form-control col-md-10" disabled>
+                                                                    <input type="text" name="Country" id="ddlcountry" placeholder="Country Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                                </div>
+
+
+
+                                                            </div>
+
+
+                                                          @*  <div class="form-group">*@
+
+                                                              
+                                                           @* </div>*@
+                                                        </form>
+                                                        
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Zipcode</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="number" id="zipcode" placeholder="Zipcode" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Mobile No <span style="color: red;">*</span></label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="number" id="mobno" placeholder="Mobile_No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Contact Name</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="contactname" placeholder="Contact Name" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">TNGST No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="tngstno" placeholder="Tngst No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">CST No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="cstno" placeholder="CST No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">CST Date</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="cstdate" placeholder="CST Date" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">RBI Code</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="rbicode" placeholder="RBI Code" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Tin No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="tinno" placeholder="Tin No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Tin Date</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="tindate" placeholder="Tin Date" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">PAN No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtpanno" placeholder="PAN No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">AEPC No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="aepcno" placeholder="AEPC No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6 col-xs-12">
+
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">AEPC Date</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="aepcdate" placeholder="AEPC Date" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Logo Name</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="logoname" placeholder="Logo Name" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">EAN No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="eanno" placeholder="EAN No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">IEC No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="iecno" placeholder="IEC No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">RCMC No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="rcmcno" placeholder="RCMC No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">IE Code</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="iecode" placeholder="IE Code " class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Telex</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="telex" placeholder="Telex" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">C Range</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="range" placeholder="C Range" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">C Division</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="division" placeholder="c Division " class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                             <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">REX No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtRexno" placeholder="REX No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">GST No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtGSTNo" placeholder="GSTNo " class="form-control col-md-10">
+                                                                </div>
+                                                                <label class="col-md-3 col-sm-4 col-xs-12 control-label">
+                                                                    Status
+                                                    <br>
+                                                                </label>
+
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            <input type="checkbox" id="Status" value="">
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </form>
+                                                    </div>
+
+
+
+
+                                                </div>
+                                            </div>
+                                              <div class="col-md-7 col-sm-12 col-xs-12" style="border: 1px solid #dacfcf;">
+
+                                                                            <div class="row" style="margin: 0;">
+                                                                                <h4>LOGO</h4>
+                                                                            </div>
+                                                                            @using (Html.BeginForm("Upload", "StyleEntry", FormMethod.Post,
+                                                                                    new
+                                                                                    {
+                                                                                        enctype = "multipart/form-data",
+                                                                                        id = "ImgForm",
+                                                                                        name = "ImgForm",
+                                                                                        target = "UploadTarget"
+
+
+                                                                                    }))
+                                                                            { 
+@* DataBase Record ID as Hidden Field against which we are uplaoding file  *@
+                                                                                       
+                                                                                @Html.Hidden("ID", 1)
+                                                                                    
+@* <div style="width: 100px; margin: auto; float: left; line-height: 30px; font-weight: bold;">File</div>*@
+
+                                                                                <div class="x_panel">
+                                                                                    <div class="row" >
+                                                                                        <form class="form-horizontal form-label-left input_mask">
+                                                                                            <div class="form-group" style="margin-bottom: 15px;">
+                                                                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                                                                    <input type="text" id="txttitle" name="TitleVal" class="form-control" placeholder="Title">
+                                                                                                </div>
+                                                                                                <div class="col-md-5 col-sm-5 col-xs-12">
+                                                                                                    <input type="file" id="uploadFile" name="file" data-val="true" class="form-control" data-val-required="please select a file" />
+                                                                                                    <span id="validityMessages" style="color: Red;"></span>
+                                                                                                </div>
+                                                                                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                                                    <input id="upload" type="button" value="Upload" name="Upload" onclick="UploadImage();" class="btn btn-primary" />
+                                                                                                </div>
+                                                                                                <br />
+                                                                                            </div>
+                                                                                        </form>
+                                                                                        <div class="row col-xs-12">
+                                                                                            <div id="uploadsContainer" style="margin-left: 22px;"></div>
+                                                                                            <iframe id="UploadTarget" name="UploadTarget" onload="UploadImage_Complete();" style="position: absolute; left: -999em; top: -999em;"></iframe>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+@*  <div style="clear: both;"></div>*@
+
+@*<div style="width: auto; margin-top: 3%;">
+                                                                                            <div style="margin: 5% 18%;">
+                                                                                                <input id="upload" type="button" value="Upload" name="Upload" onclick="UploadImage();" />
+                                                                                                <span id="uploadLoader" style="display: none;">
+                                                                                                    <img id="searchLoader" src="@Url.Content("~/Content/Images/loader.gif")" />Uploading Please Wait</span>
+                                                                                            </div>
+                                                                                        </div>*@
+
+@*<div id="uploadsContainer"></div>
+                                                                                        <iframe id="UploadTarget" name="UploadTarget" onload="UploadImage_Complete();" style="position: absolute; left: -999em; top: -999em;"></iframe>*@
+                                                                            }
+                                                                        </div>
+                                        </div>
+
+
+                                        <form>
+                                        </form>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 0px;">
+                                <div class="x_panel" style="width: 103%;">
+                                    <div class="x_title">
+                                        <h2>Add Country</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+
+                                                <form class="form-horizontal form-label-left">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Country ID</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="Country" id="txtCountryID" placeholder="Department Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Country<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="Country" id="txtconName" placeholder="Country Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Look Up<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="Country" id="txtlookup" placeholder="Look Up" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Status
+                                                 
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="Statuscon" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAddcon" onclick="return AddCountry();">Save</button>
+                                        @*<button type="button" class="btn btn-success" id="btnUpdatecon" style="display: none;" onclick="UpdateCOuntr();">Update</button>*@
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 0px;">
+                                <div class="x_panel" style="width: 103%;">
+                                    <div class="x_title">
+                                        <h2>Add City</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+
+                                                <form class="form-horizontal form-label-left">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">City ID</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="City" id="txtCityID" placeholder="City Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">City<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="City" id="txtName" placeholder="City Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Country
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <select id="ddlCoun" class="form-control"></select>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Status
+                                                 
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="Statuscit" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAddcit" onclick="return Addcity();">Save</button>
+                                        @*<button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>*@
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        debugger;
+        $('.delUpload').on('click', function () {
+            var Id = this.id;
+            var url = "/StyleEntry/DeleteFile";
+            url = url + "?id=" + Id
+            $.get(url, function (response) {
+                $('#uploadsContainer').html(response);
+            });
+        });
+    });
+
+    function deletefile(id) {
+        debugger;
+        var Id = id;
+        var url = "/StyleEntry/DeleteFile";
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            $('#uploadsContainer').html(response);
+            nametxt = GetFilelist();
+        });
+
+        //var filterlst = $.grep(nametxt, function (item) {
+        //    return item.FileID != id;
+        //});
+
+        //nametxt = filterlst;
+
+    }
+    //function Viewfile(id) {
+    //    debugger;
+    //    var Id = id.toString();
+    //    var imgid=Id.SubString(4);
+    //    var url = "/StyleEntry/DeleteFile";
+    //    url = url + "?id=" + Id
+    //    $.get(url, function (response) {
+    //        $('#uploadsContainer').html(response);
+    //        nametxt = GetFilelist();
+    //    });
+
+
+    //}
+</script>
+
+
+
+<script type="text/javascript">
+    var isFirstLoad = true;
+    var nametxt = [];
+    var title = [];
+
+    function UploadImage() {
+        debugger;
+        if ($('#imgid').attr('src') != undefined) {
+            alert('Please Remove Old Logo...');
+            return true;
+        }
+        if ($('#txttitle').val().trim() == "") {
+            alert('Please fill the title...');
+            return true;
+        }
+        // check for size of file not greater than 1MB
+        if ($("#uploadFile").val()) {
+
+            var iSize = ($("#uploadFile")[0].files[0].size / 1024);
+            iSize = (Math.round((iSize / 1024) * 100) / 100);
+            if (iSize > 4) {
+                alert("File must be less than 4MB");
+                $('span#validityMessages').html("File must be less than 4MB");
+                return;
+            }
+            else {
+                // on form post showing Busy Indicator
+                $('#uploadLoader').show();
+                $("#ImgForm").submit();
+                console.log(iSize + "Mb");
+                var fd = $("#uploadFile")[0].files[0].name;
+
+                //nametxt.push(fd);
+                title.push($('#txttitle').val());
+            }
+        }
+            // check for no file selected for upload
+        else {
+            $('span#validityMessages').html("Please select a File of size less than 4MB!");
+            return;
+        }
+
+    }
+
+    function UploadImage_Complete() {
+        debugger;
+        //Check to see if this is the first load of the iFrame
+        if (isFirstLoad == true) {
+            isFirstLoad = false;
+            // if first ajax call for getting uploads if any exists on server against this id 
+        }
+
+        // after successfull upload refreshing partial view to get the latest uploads
+        $('#uploadLoader').hide();
+
+        //Reset the image form so the file won't get uploaded again
+        document.getElementById("ImgForm").reset();
+
+        //if (!isFirstLoad)
+        //    GetFiles();
+        nametxt = GetFilelist();
+        GetFiles();
+
+    }
+
+
+
+    function GetFiles() {
+        debugger;
+
+        var url = "/StyleEntry/GetFiles";
+        var Id = $('input#ID').val();
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            $('#uploadsContainer').html(response);
+        });
+    }
+
+    function GetFilelist() {
+        debugger;
+        var url = "/StyleEntry/GetFilelist";
+        var Id = $('input#ID').val();
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            debugger;
+            nametxt = response;
+        });
+    }
+
+</script>
+<!-- /page content -->

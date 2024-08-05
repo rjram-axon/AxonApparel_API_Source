@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[Buyer]
+(
+	[BuyerId] [int] IDENTITY(1,1) NOT NULL,
+	[Buyer] [varchar](90) NULL,
+	[Buyer_lookup] [varchar](10) NULL,
+	[Address1] [varchar](40) NULL,
+	[Address2] [varchar](40) NULL,
+	[Address3] [varchar](40) NULL,
+	[CityId] [int] NULL,
+	[CountryId] [int] NULL,	
+	[Zipcode] [varchar](10) NULL,
+    [Contact_person] [varchar](40) NULL,
+	[Designation] [varchar](30) NULL,
+	[Phone] [varchar](30) NULL,
+	[E_mail] [varchar](100) NULL,
+	[IsActive] [bit]  DEFAULT (1) NOT NULL,
+	[Commission] [numeric](12, 2) DEFAULT (0.00) NULL,
+	[BankInterest] [numeric](12, 2) DEFAULT (0.00) NULL,
+	[AdminExp] [numeric](12, 2) DEFAULT (0.00) NULL,
+	[MarkExp] [numeric](12, 2) DEFAULT (0.00) NULL,
+	[CompMargin] [numeric](12, 2) DEFAULT (0.00) NULL,
+	[DisMargin] [numeric](12, 2) DEFAULT (0.00) NULL,
+	[DealMargin] [numeric](12, 2) DEFAULT (0.00) NULL,
+	CONSTRAINT [PK_Buyer] PRIMARY KEY ([BuyerId]),
+    CONSTRAINT [FK_Buyer_ToCity] FOREIGN KEY ([CityId]) REFERENCES [City]([Id]),
+	CONSTRAINT [FK_Buyer_ToCountry] FOREIGN KEY ([CountryId]) REFERENCES [Country]([countryId])    
+)

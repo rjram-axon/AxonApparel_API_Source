@@ -1,0 +1,271 @@
+﻿@{
+    ViewBag.Title = "Follow Up";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    fieldset {
+        margin: 8px;
+        border: 1px solid silver;
+        padding: 8px;
+        border-radius: 4px;
+    }
+   
+    #tbody_filter {
+    margin-top:-28px;
+    }
+    #tbody_wrapper {
+    margin-top: -20px;
+    }
+     #tbody_info {
+   display:none;
+    }
+     #tbody_paginate {
+   display:none;
+    }
+     #tbody_length {
+   display:none;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtdate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtquodate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtnextfollow').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+
+
+
+<script src="~/AxonScripts/Common/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/modernizr.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/FollowUp.js"></script>
+<script src="~/AxonScripts/Common/jquery-1.12.4.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        @*<div class="page-title">
+            <div class="title_left">
+                <h3>Department</h3>
+            </div>
+
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Follow Up</h2>
+                       @* <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>*@
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="x_panel">
+                            @*<h2>Departments Record</h2>*@
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();" data-target="#myModal">Add New Follow Up</button><br />
+                            <br />
+                            <table id="tbody" class="table table-bordered table-hover">
+                            </table>
+                        </div>
+               
+                @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+                         <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        @*
+                    <button type="button" class="close" data-dissmiss="modal"><span aria-hidden="true">&times;</span></button>*@
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">Add Follow Up</h4>
+                                    </div>
+                                    <fieldset style="height: 175px;">
+                                        <legend></legend>
+                                        <div class="modal-body" style="margin-top:-35px;">
+                                            <form>
+                                                <div class="form-group" style="display: none;">
+                                                    <label for="txtfollowID">ID</label>
+                                                    <input type="text" class="form-control" id="txtfollowID" placeholder="Id" disabled="disabled" />
+                                                </div>
+                                                <div class="form-group">
+                                                   <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <label for="Company">Company</label>
+                                                                <select id="Company" name="mySelect" class="pc form-control">
+                                                                    <option></option>
+                                                                </select>
+                                                                @*<span class="error">Select Company</span>*@
+                                                            </div>
+                                                            
+                                                            <div class="col-sm-4">
+                                                                <label for="txtentry">Entry No</label>
+                                                                <input type="text" class="form-control" id="txtentry" placeholder="Entry No" />
+                                                            </div>
+                                                           
+                                                            <div class="col-sm-4">
+                                                                <label for="txtdate">Date</label>
+                                                                <input type="text" class="form-control" id="txtdate" placeholder="Follow Date" />
+                                                            </div>
+                                                    </div>  </div>
+                                                     <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <label for="Buyer">Buyer</label>
+                                                                <select id="Buyer" class="form-control">
+                                                                </select>
+                                                                @*<span class="error">Select Buyer</span>*@
+                                                            </div>
+                                                            
+                                                            <div class="col-sm-4">
+                                                                <label for="txtenquiryno">Enquiry No</label>
+                                                                <select id="ddlenquiry" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                           <div class="col-sm-4">
+                                                                <label for="Status">Status</label>
+                                                                <select id="Status" name="mySelect" class="pc form-control">
+                                                                    <option></option>
+                                                                </select>
+                                                                @*<span class="error">Select Status</span>*@
+                                                            </div>
+                                                            </div>
+                                                         </div>
+                                                     <div class="row">
+                                                        <div class="row">
+                                                        <div class="col-sm-4">
+                                                                <label for="Employee">Employee</label>
+                                                                <select id="Employee" name="mySelect" class="pc form-control">
+                                                                    <option></option>
+                                                                </select>
+                                                                @*<span class="error">Select Employee</span>*@
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <label for="txtquotationno">Quotation No</label>
+                                                                <input type="text" class="form-control" id="txtquotationno" placeholder="Quotation No" />
+                                                            </div>
+                                                            </div>
+                                                         </div>
+                                                        
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset style="height: 110px;"> 
+                                        <div style="font-size: 18px;color: inherit;margin-top: -20px;"> Quotation Details</div>                                      
+                                        <legend></legend>
+                                        <div class="modal-body" style="top: -10px;">
+                                            <form>
+                                                <div class="form-group">
+                                                     <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <label for="Style">Style</label>
+                                                                <input type="text" class="form-control" id="txtstyle" placeholder="Style" />
+                                                                @*<span class="error">Select Company</span>*@
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <label for="txtquodate">Date</label>
+                                                                <input type="text" class="form-control" id="txtquodate" placeholder="Quotation Date" />
+                                                            </div>
+                                                            </div>
+                                                         </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset style="height: 150px;">
+                                         <div style="font-size: 18px;color: inherit;margin-top: -20px;"> Action</div>                                      
+                                        <legend></legend>
+                                        <div class="modal-body" style="top: -10px;">
+                                            <form>
+                                                <div class="form-group">
+                                                     <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <label for="Style">Action</label>
+                                                                <input type="text" class="form-control" id="txtaction" placeholder="Action" />
+                                                                @*<span class="error">Select Company</span>*@
+                                                            </div>
+                                                         
+                                                            <div class="col-sm-6">
+                                                                <label for="txttocontact">To Contact</label>
+                                                                <input type="text" class="form-control" id="txttocontact" placeholder="Contact" />
+                                                            </div>
+                                                            </div>
+                                                         </div>
+                                                     <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <label for="txtnextfollow">Next Follow</label>
+                                                                <input type="text" class="form-control" id="txtnextfollow" placeholder="Next Follow" />
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <label for="txtremarks">Remarks</label>
+                                                                <input type="text" class="form-control" id="txtremarks" placeholder="Remarks" />
+                                                            </div>
+                                                            </div>
+                                                         </div>
+                                                  
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </fieldset>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-success btn-round" id="btnAdd" onclick="return Add();">Add</button>
+                                        <button type="button" class="btn btn-success btn-round" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger btn-round" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- /page content -->

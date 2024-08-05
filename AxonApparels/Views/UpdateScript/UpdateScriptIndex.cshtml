@@ -1,0 +1,287 @@
+﻿@{
+    ViewBag.Title = "UpdateScriptIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tbody_filter
+    {
+    }
+
+    .add_btn
+    {
+        width: 20px;
+        padding: 2px;
+        height: 20px;
+        margin-left: -16px;
+    }
+
+
+    #tblSetdetails_filter
+    {
+        display: none;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+        $('#txtCurrUptdate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtLastDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    });
+</script>
+
+
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+<!-- page content -->
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Update Script</h2>
+
+                        <div class="clearfix"></div>
+
+                        <div class="row">
+                            <div class="x_content">
+                                <form class="form-horizontal form-label-left">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Script Update On</label>
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            <input type="text" id="txtLastDate" class="form-control " disabled placeholder="Date">
+                                        </div>
+                                        <label class="control-label col-md-5 col-sm-5 col-xs-12"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Current Updation Date</label>
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            <input type="text" id="txtCurrUptdate" class="form-control " placeholder="Date">
+                                        </div>
+                                        <label class="control-label col-md-5 col-sm-5 col-xs-12"></label>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="x_content">
+
+
+
+                            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                            @* Load datatable js *@
+                            @section Scripts{
+
+                                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                                <script>
+                                           
+                                </script>
+
+                            }
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12" style="padding-bottom: 20px">
+
+                    <table id="tbody" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID
+                                </th >
+                                <th>Template Name
+                                </th>
+                                <th>Result
+                                </th>
+                                <th>Message
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+           <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="form-group" style="float: right; margin-top: 10px; margin-right: 7px; border: none;">
+
+                    <button type="button" class="btn btn-success btn-round" id="btnUpdate" >Update</button>
+
+
+                    <button type="button" class="btn btn-danger btn-round" id="btnclose" onclick="Close();">Close</button>
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+
+
+        var ScriptUpdatedOn = '';
+
+        $(document).ready(function () {
+            debugger;
+            MainFDate = $("#hdMainFromDate").data('value');
+            DCompid = $("#hdnDCompid").data('value');
+            Guserid = $("#hdnUserid").data('value');
+            ScriptUpdatedOn = $("#hdnScriptUpdatedOn").data('value');
+            getDate();
+            var List = [];
+            LoadTable();
+
+            $('#txtLastDate').val(ScriptUpdatedOn);
+        });
+
+
+
+        $(document).on("click", "#btnUpdate", function () {
+            debugger;
+
+            var LastDate = $('#txtLastDate').val();
+            var entrydate = $('#txtCurrUptdate').val();
+
+
+            var formData = new FormData();
+            formData.append('LastDate', LastDate);
+            formData.append('entrydate', entrydate);
+        
+
+            $.ajax({
+                url: '/UpdateScript/Update',
+                data: (formData),
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.Value !=null) {
+                        ListObj = (result.Value);
+                        var crrflg = '';
+                      
+                        List = ListObj;
+                        if (List.length > 0) {
+
+                            $.each(List, function (e, i) {
+                                debugger;
+                                if (i.result == "LicenceExpired") {
+                                    // alert(i.message);
+                                    $('#txtLastDate').val(entrydate);
+                                    LoadTable();
+                                }
+                                else if (i.result == "Success" && crrflg == '') {
+                                    $('#txtLastDate').val(entrydate);
+                                    LoadTable();
+                                    return false; // breaks
+                                }
+                            });
+                        } else {
+                            alert("Please Check Update Script date..");
+                        }
+                       
+                    } else {
+                        alert("Failed to Update");
+                    }
+
+                }
+            });
+        });
+
+        function LoadTable() {
+            debugger;
+            // $('#tblcompdetails').DataTable().destroy();
+            var inputcount = 0;
+            $('#tbody tr').each(function () {
+                inputcount++;
+            });
+
+            if (inputcount > 0) {
+                $('#tbody').DataTable().destroy();
+            }
+            $('#tbody').empty();
+          
+            $('#tbody').DataTable({
+               
+                data: List,
+                scrollY: 300,
+                scrollCollapse: true,
+                paging: false,
+                fixedColumns: false,
+                select: false,
+                scrollX: "100%",
+                scrollXInner: "100%",
+                scroller: false,
+                "bSort": false,
+                columns: [
+                   
+                    { title: "TempId", data: "TempId", "visible": false },
+                   
+                    { title: "TemplateName", data: "TemplateName" },
+                   
+                    { title: "Result", data: "result" },
+                    { title: "Message", data: "message" },
+                  
+                ]
+            });
+
+
+            $("#tbody tr").click(function () {
+                var selected = $(this).hasClass("selected");
+                $("#tbody tr").removeClass("selected");
+                if (!selected)
+                    $(this).addClass("selected");
+            });
+        }
+
+
+
+        function getDate() {
+
+            var todaydate = new Date();
+            var day = todaydate.getDate();
+            var Pmonth = todaydate.getMonth() - 2;
+            var Cmonth = todaydate.getMonth() + 1;
+            var year = todaydate.getFullYear();
+            var datestring = Pmonth + "/" + day + "/" + year;
+            var Fdatestring = day + "/" + Cmonth + "/" + year;
+
+            var day = new Date(),
+                year = ((day.getMonth() - 2) < 0) ? (day.getFullYear() - 1) : day.getFullYear(),
+                month = ((day.getMonth() - 2) < 0) ? (12 + (day.getMonth() - 2)) : (day.getMonth() + 1),
+                date = month + '/' + day.getDate() + '/' + year;
+
+            $('#txtLastDate').val(Fdatestring);
+            $('#txtCurrUptdate').val(Fdatestring);
+        }
+
+        function Close() {
+
+            window.location.href = "/DefaultPage/DefaultPage";
+        }
+
+
+    </script>

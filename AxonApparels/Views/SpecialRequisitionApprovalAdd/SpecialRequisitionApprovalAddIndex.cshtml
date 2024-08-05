@@ -1,0 +1,442 @@
+﻿@{
+    ViewBag.Title = "SpecialRequisitionApprovalAddIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    #itmdetils_length {
+        display: none;
+    }
+
+    #itmdetils_paginate {
+        display: none;
+    }
+
+    #itmdetils_info {
+        display: none;
+    }
+
+    #itmdetils_filter {
+        /*margin-top: -29px;*/
+    }
+</style>
+
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtReqDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtAppDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+
+
+@*<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Purchase/SpecialRequisitionAdd.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />*@
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Budget/SpecialRequisitionApprovalAdd.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Special Requistion</h2>
+                  <div style="float:right">
+                      <a href="/SpecialRequisitionApprovalMain/SpecialRequisitionApprovalMainIndex">
+                         <img class="logo" src="~/images/backicon.png" width="30px" height="30px" />
+                          </a>
+                            </div>
+                @* <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>*@
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Company
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlACompany" class="form-control" disabled>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Req No
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" id="txtReqNo" class="form-control" placeholder="Req No" disabled>
+                                    </div>
+                                </div>
+                                @* <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-6 col-xs-12 enquiry_edit">
+                                    Spl.Req No
+                                </label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input type="text" id="txtSplreqno" class="form-control" placeholder="Spl.Req No" >
+                                </div>
+                            </div>*@
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Order No
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlAOrderno" class="form-control" disabled>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Ref No
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlAReqno" class="form-control" disabled>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Work Order
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlAWorkorder" class="form-control" disabled>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <div class="maxl" style="margin-top: -6px; margin-left: 9px;width:231px">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="P" id="unit" name="MOType" onchange="RadioMBClick();">
+                                            <span>Prod Unit</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" id="supplier" value="S" name="MOType" onchange="RadioMBClick();">
+                                            <span>Sub Contractor </span>
+                                        </label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group" id="fromunit">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Prod Unit
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlAProdunit" class="form-control" disabled>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="supp">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Supplier
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlsupplier" class="form-control">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Approved By
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlApprovedBy" class="form-control">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Approved Date
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" id="txtAppDate" class="form-control" placeholder="App Date">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="maxl" style="margin-top: -6px; margin-left: 9px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="W" name="Type" onclick="chkorder();">
+                                            <span>Work Order</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="J" name="Type" onclick="chkorder();">
+                                            <span>Job Order </span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="S" name="Type" onclick="chkorder();">
+                                            <span>Sample </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            @*    <form class="form-horizontal form-label-left input_mask">
+                            <div id="dvCheckBoxListControl" onclick="LoadItemType();" style="margin-left: 30px; margin-top: -10px;">
+                                <h2>Item Group</h2>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="chklistitem" value="4" id="chklistitem0"><label for="chklistitem0">ACCESSORY</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="chklistitem" value="1" id="chklistitem1"><label for="chklistitem1">ASSET</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="chklistitem" value="2" id="chklistitem2"><label for="chklistitem2">FABRIC</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="chklistitem" value="5" id="chklistitem3"><label for="chklistitem3">GARMENT</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="chklistitem" value="3" id="chklistitem4"><label for="chklistitem4">GENERAL</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="chklistitem" value="3" id="chklistitem5"><label for="chklistitem4">SPAREPARTS/FITTINGS</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="chklistitem" value="3" id="chklistitem6"><label for="chklistitem4">YARN</label></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+
+                        </form>*@
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4">Item Group</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlItemGroup" class="form-control" multiple="multiple" style="height: 80px;" name="multiple" disabled>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Style
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlAStyle" class="form-control" disabled>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="row">
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="LoadPurchaseOrderAdd();">Add New</button><br />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="x_panel" style="padding: 0px;height: 30px;margin-left:30px;">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                         <label style="font-size: 17px;white-space:  nowrap;">
+                                Order Type
+                                </label>
+                                    </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="maxl" style="margin-top: -6px;">
+                                <label class="radio inline"> 
+                                    <input type="radio"   checked value="B"  id="optB" name="MOType" onchange="RadioMBClick();" >
+                                    <span>  Bulk Order</span> 
+                                </label>
+                                <label class="radio inline"> 
+                                    <input type="radio"   value="S"  id="optS" name="MOType" onchange="RadioMBClick();">
+                                    <span>Sample Order </span> 
+                                </label>                             
+                                <label class="radio inline"> 
+                                    <input type="radio"   value="G"  id="optG" name="MOType" onchange="RadioMBClick();">
+                                    <span>General</span> 
+                                </label>
+                                </div>
+                            </div>
+                                
+                                
+                            
+                        </div>
+                        </div>
+                    
+                    <div class="col-md-4">
+                        <div class="x_panel" style="padding: 0px;height:30px;margin-left:70px;">
+                         <div class="col-md-3">
+                                <div class="form-group">
+                                         <label style="font-size: 17px;white-space:  nowrap;margin-left: 0px;">
+                                Po Type
+                                </label>
+                                    </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="maxl" style="margin-left: 15px;width: 259px;margin-top: -6px;">
+                                 <label class="radio inline"> 
+                                  <input type="radio" value=""  id="optAAL" name="PoType" onchange="RadioMAClick();">
+                                  <span>All </span> 
+                              </label>
+                              <label class="radio inline"> 
+                                  <input type="radio"  value="Y"  id="optAY" name="PoType" onchange="RadioMAClick();">
+                                  <span>Yarn </span> 
+                              </label>
+                              <label class="radio inline"> 
+                                  <input type="radio"  checked value="A"  id="optAA" name="PoType" onchange="RadioMAClick();">
+                                  <span>Accessory </span> 
+                              </label>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    
+                     
+                </div>*@
+            @* Load datatable css *@
+
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+
+            <div class="x_panel">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h2 style="margin-top: -5px;">Item Detail</h2>
+                        <div class="x_content">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <table class="table table-bordered table-hover" border="1" id="itmdetils">
+                                        <thead>
+
+
+                                            <tr>
+                                                <th style="display: none;">Sno</th>
+                                                <th style="display: none;">Itemgrpid</th>
+                                                <th style="display: none;">Itemid</th>
+                                                <th style="width:400px;">Item</th>
+                                                <th style="display: none;">Colorid</th>
+                                                <th style="width:100px;">Color</th>
+                                                <th style="display: none;">Sizeid</th>
+                                                <th style="width:100px;">Size</th>
+                                                <th style="display: none;">Unitid</th>
+                                                <th>Unit</th>
+                                                <th>Quanity</th>
+                                                <th>Approved Qty</th>
+                                                <th style="display: none;">Pur unit id</th>
+                                                <th>Pur Unit</th>
+                                                <th>Mode</th>
+                                                <th>T.Po Unit</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12 col-sm-3 col-xs-12">Remarks </label>
+                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                        <textarea id="txtSupAdd" required="" class="form-control" name="message" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.." data-parsley-validation-threshold="10"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                        </div>
+                        
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div style="float: right; margin-top: 47px; ">
+                                <button class="btn btn-success btn-round" id="btnadd" onclick="Add();">Save</button>
+                                <button class="btn  btn-success btn-round" onclick="AppUpdate();" id="btnupd">Update</button>
+                                <button class="btn btn-danger btn-round" onclick="AppDelete();" id="btndel">Delete</button>
+                                <button class="btn btn-danger btn-round" onclick="backtomain();">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>

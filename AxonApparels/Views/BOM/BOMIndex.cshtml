@@ -1,0 +1,327 @@
+﻿@{
+    ViewBag.Title = "BOMIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<script src="~/AxonScripts/Planning/BOM.js"></script>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+
+<style>
+    #tPAbody_paginate {
+    display:none;
+    }
+#tPAbody_info {
+    display:none;
+    }
+ #tPAbody_filter {
+    display:none;
+    }
+
+#tPAbody_length {
+    display:none;
+    }
+    #tPAbody_wrapper {
+        margin-top: -33px;
+    }
+        .multiselect label {
+            display: block;
+        }
+
+    .multiselect-on {
+        color: #ffffff;
+        background-color: #000099;
+    }
+</style>
+<script>
+
+    $(function () {
+
+        $("#selectall").click(function () {
+            $('.sbTwo').attr('checked', this.checked);
+        });
+        $(".sbTwo").click(function () {
+
+            if ($(".sbTwo").length == $(".case:checked").length) {
+                $("#selectall").attr("checked", "checked");
+            } else {
+                $("#selectall").removeAttr("checked");
+            }
+
+        });
+    });
+</script>
+
+<!-- /page content -->
+
+
+
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+
+                    <div class="x_title">
+                        <h2>BOM</h2>
+                       <div class="clearfix"></div>
+                      
+                    </div>
+                   
+                    <div class="x_panel" style="margin-bottom:5%;">
+                        <div class="row">
+                              <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4">Company</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" class="form-control" placeholder="Company" id="txtCompany" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4">
+                                            Buyer
+                                        </label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" class="form-control" placeholder="Buyer" id="txtBuyer" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4">
+                                            Style
+                                        </label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" class="form-control" placeholder="Style" id="txtStyle" disabled>
+                                        </div>
+                                    </div>
+                                     
+                                </form>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4">
+                                            Order No
+                                        </label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" class="form-control" placeholder="OrderNo" id="txtOrderNo" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Ref No</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" class="form-control" placeholder="RefNo" id="txtRefNo" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">StyleRowId</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" class="form-control" placeholder="StyleRowId" id="txtStyleRowId">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Bomdetid</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" class="form-control" placeholder="Bomdetid" id="Bomdetid">
+                                        </div>
+                                    </div>
+                                     <div class="form-group" style="display: none;">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Bommasid</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" class="form-control" placeholder="Bommasid" id="Bommasid">
+                                        </div>
+                                    </div>
+                                     <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4" for="Work Order">Work Order</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" class="form-control" placeholder="Work Order" id="txtWorkOrder" disabled>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-12"">
+                                <div class="">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="selectall" type="checkbox" value="" onclick="loaditemgroup(this.val);">Include all items Groups
+                                        </label>
+                                    </div>
+                                    
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-4">
+                                            Item Groups
+                                        </label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
+                                            <div  class="multiselect">
+                        
+                                                <select multiple="multiple" id='sbTwo' class="form-control" onchange="myIgroup(this.value);">
+                                                </select>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                             </div>
+                        </div>
+                     
+
+
+                        
+                                <div class="" style="margin-top:5px;display:none;">
+                                      <h2>Item Info</h2>
+                                  <div class="form-group">
+                                            <table class="table table-bordered table-hover" border="1">
+                                                <tr>
+
+                                                    <td>Item</td>
+                                                    <td>Color</td>
+                                                    <td>Size</td>
+                                                    <td>Unit</td>
+                                                    <td>Bom Qty</td>
+                                                  
+                                              
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr class="mycontainer" id="maincomborow">
+                                                    <td>
+                                                        <select id="ddlItem" class="form-control select2" style="width:200px;">
+                                                        </select>
+                                                    
+                                                    </td>
+                                                     <td>
+                                                        <select id="ddlColor" class="form-control select2" style="width:200px;">
+                                                        </select>
+                                                    
+                                                    </td>
+                                                     <td>
+                                                        <select id="ddlSize" class="form-control select2" style="width:100px;">
+                                                        </select>
+                                                    
+                                                    </td>
+                                                      <td>
+                                                        <select id="ddlUom" class="form-control select2" style="width:100px;">
+                                                        </select>
+                                                    
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="txtBomQty" class="form-control" placeholder="Bom Qty">
+                                                    </td>
+                                                                                               
+                                                    <td>
+                                                        <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnBomadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                        <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnBomupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+       </td>
+                                                </tr>
+                                            </table>
+                            
+                                        </div>
+                                      
+                                </div>
+                       
+                    </div>
+                    <br />
+                     <div class="form-group">
+                                    <table id="tPAbody" class="table table-striped table-bordered">
+
+@*                                         <thead>
+                                        <tr>
+
+                                              <th>Id
+                                            </th>
+                                            <th>Itemid
+                                            </th>
+                                            <th>Item
+                                            </th>
+                                            <th>Color
+                                            </th>                                           
+                                            <th>Size
+                                            </th>
+                                            <th>Unit
+                                            </th>
+                                            <th>Prgqty
+                                            </th>
+                                            <th>Uom
+                                            </th>
+                                            <th>Mode
+                                            </th>
+                                            <th>Topuruom
+                                            </th>
+                                            <th>Bomqty
+                                            </th>
+                                            <th>Purforjob
+                                            </th>
+                                            <th>CSP
+                                            </th>
+                                            <th>Itemcls
+                                            </th>
+                                            <th>Actoin
+                                            </th>                                          
+
+                                        </tr>
+                                    </thead>*@
+
+                                    </table>
+                                          </div>
+                    <div class="modal-footer" style="border: 0px solid">
+                         @*<button type="button" class="btn btn-round btn-success" id="btnAdd" style="" onclick="Add();">Add</button>*@
+                        <button type="button" class="btn btn-round btn-success" id="btnUpdate" style="" onclick="Update();">Update</button>
+                        <button type="button" class="btn btn-round btn-danger" data-dismiss="modal" onclick="Multiclose();">Close</button>
+                    </div>
+                </div>
+                <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- /page content -->
+
+
+

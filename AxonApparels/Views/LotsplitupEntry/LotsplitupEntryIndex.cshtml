@@ -1,0 +1,383 @@
+﻿@{
+    ViewBag.Title = "LotsplitupEntryIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #tblSplitdetails_filter {
+        display: none;
+    }
+
+    #tblSplitdetails_info {
+        display: none;
+    }
+
+    #tblSplitdetails_wrapper {
+        margin-top: -28px;
+    }
+
+    #tblEntryLotItemdetails_info {
+        display: none;
+    }
+
+    #tblEntryLotItemdetails_wrapper {
+        margin-top: -10px;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+@* Load datatable css *@
+
+<link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+@* Load datatable js *@
+@section Scripts{
+
+    <script src="~/build/js/jquery.dataTables.min.js"></script>
+    <script>
+                                           
+    </script>
+
+}
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Purchase/LotSplitupEntry.js"></script>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+
+            <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        Company
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtCompany" class="form-control " placeholder="Company" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        Supplier
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtSupplier" class="form-control " placeholder="Supplier" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        Trans Type
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtTransType" class="form-control " placeholder="Trans Type" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display: none">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        CompanyId
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtCompanyId" class="form-control " placeholder="CompanyId" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display: none;">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        SupplierId
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtSupplierId" class="form-control " placeholder="SupplierId" disabled>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        Order No
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtOrderNo" class="form-control" placeholder="Order No" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        Order Ref No
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtOrderRefNo" class="form-control" placeholder="Order Ref No" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        Trans No
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtTransNo" class="form-control " placeholder="Trans No" disabled>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <form class="form-horizontal form-label-left input_mask">
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Split No</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtSplitNo" class="form-control " placeholder="Split No" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Split Date</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtEntryDate" class="form-control " placeholder="Date">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Split Ref No</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtSplitRefNo" class="form-control " placeholder="Split Ref No">
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="x_panel">
+                <h2 style="margin-top: -2px;">Item Details</h2>
+                <form class="form-horizontal form-label-left input_mask" style="margin-top: -20px;">
+                    <div class="form-group">
+                        <table class="table table-responsive" id="tblEntryLotItemdetails">
+                            <thead>
+                                <tr>
+
+                                    <th style="display: none">LotSplitDetId
+                                    </th>
+                                    <th style="display: none">LotSplitMasId
+                                    </th>
+                                    <th>SNo
+                                    </th>
+                                    <th>OrderNo
+                                    </th>
+                                    <th>Style
+                                    </th>
+                                    <th>Item
+                                    </th>
+                                    <th>Color
+                                    </th>
+                                    <th>Size
+                                    </th>
+                                    <th>Uom
+                                    </th>
+                                    <th>Balance
+                                    </th>
+                                    <th>SplitQty
+                                    </th>
+                                    <th style="display: none">StockId
+                                    </th>
+                                    <th>Process
+                                    </th>
+
+                                    <th style="display: none">ItemId
+                                    </th>
+                                    <th style="display: none">ColorId
+                                    </th>
+                                    <th style="display: none">SizeId
+                                    </th>
+                                    <th style="display: none">PUnitId
+                                    </th>
+                                    <th style="display: none">StyleId
+                                    </th>
+                                    <th style="display: none">ProcessId
+                                    </th>
+
+
+                                </tr>
+                            </thead>
+
+                        </table>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+
+            <div class="x_panel">
+                <div class="row" style="margin-top: -10px;">
+                    <div class="col-md-12">
+                        <h2>Lot SplitUp</h2>
+                        @*<div class="col-md-2" style="display: none;">
+                        <form class="form-horizontal form-label-left input_mask">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">WorkOrder No</label>
+                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                    <input type="text" id="txtWorkOrderNo" class="form-control hasDatepicker" placeholder="WorkOrder No">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Process</label>
+                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                    <input type="text" id="txtProcess" class="form-control hasDatepicker" placeholder="Process">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Item Remarks</label>
+                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                    <textarea id="txtSupAdd" required="" class="form-control" name="message"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Rate(INR)</label>
+                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                    <input type="text" id="txtRate" class="form-control hasDatepicker" placeholder="Split Ref No">
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>*@
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <table class="table table-bordered table-hover" border="1">
+                                            <tr>
+
+                                                <td>Lot Number</td>
+                                                <td>Lot Quantity</td>
+
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr class="mycontainer" id="maincomborow1">
+
+                                                <td>
+                                                    <input type="text" id="LotNumber" class="form-control" placeholder="LotNumber">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="LotQuantity" class="form-control" placeholder="LotQuantity">
+                                                </td>
+
+                                                <td>
+                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnLotadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnLotupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+                                                    @* <input type="button" id="btnSuppadd" value="Add" style="width: 80px" class="btn btn-success btn-round " />
+                                                    <input type="button" id="btnSuppupdate" value="Update" style="width: 80px; display: none;" class="btn btn-success btn-round" />*@
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <div id="CList2" style="display: none;">
+                                            <table id="tblSplitdetailsSave">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th>LotSplitDetId
+                                                        </th>
+                                                        <th>LotSplitMasId
+                                                        </th>
+                                                        <th>Lot Number
+                                                        </th>
+                                                        <th>Lot Quantity
+                                                        </th>
+                                                        <th>LotSno
+                                                        </th>
+                                                        <th>OrderNo
+                                                        </th>
+                                                        <th>StockId
+                                                        </th>
+                                                        <th>ItemId
+                                                        </th>
+                                                        <th>ColorId
+                                                        </th>
+                                                        <th>SizeId
+                                                        </th>
+                                                        <th>PUnitId
+                                                        </th>
+                                                        <th>StyleId
+                                                        </th>
+                                                        <th>ProcessId
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+                                            <span id="orderItemError2" style="color: red"></span>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <div id="CList1">
+                                            <table id="tblSplitdetails">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th>Lot Number
+                                                        </th>
+                                                        <th>Lot Quantity
+                                                        </th>
+                                                        <th style="display: none">LotSno
+                                                        </th>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+                                            <span id="orderItemError1" style="color: red"></span>
+                                        </div>
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div style="float: right;">
+                                <button type="button" class="btn btn-round btn-success" id="Add" onclick="return save();">Add</button>
+                                <button type="button" class="btn btn-round btn-success" id="Update" style="display: none;" onclick="Update();">Update</button>
+                                <button type="button" class="btn btn-round btn-success" id="Delete" style="display: none;" onclick="Delete();">Delete</button>
+                                <button type="button" class="btn btn-round btn-danger" onclick="Close();">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>

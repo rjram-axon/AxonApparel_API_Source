@@ -1,0 +1,1888 @@
+﻿@{
+    ViewBag.Title = "ProcessOrderIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>   
+
+    .Input_Items,.Stock_Info{
+        border-radius: 10px;
+    }
+    #myModal1 {
+        overflow: auto;
+    }
+
+    body {
+        overflow: hidden;
+    }
+    #inputitmtab_filter {
+        display: none;
+    }
+    #tblPaydetails_filter {
+        display: none;
+    }
+
+    #outputjodettab_filter {
+        display: none;
+    }
+
+    #inputsavestkdettab_wrapper {
+        display: none;
+    }
+
+    #inputsavejodettab_wrapper {
+        display: none;
+    }
+
+    #entrygridtab_paginate {
+        display: none;
+    }
+
+    #entrygridtab_info {
+        display: none;
+    }
+
+    #entrygridtab_length {
+        display: none;
+    }
+
+    #outputsavejodettab_wrapper {
+        display: none;
+    }
+
+    #tblmaindetails_paginate {
+        display: none;
+    }
+
+    #tblmaindetails_length {
+        display: none;
+    }
+
+    #tblmaindetails_info {
+        display: none;
+    }
+
+    #tblmaindetails_filter {
+        /*margin-top: -28px;*/
+    }
+
+    #outputitmtab_paginate {
+        display: none;
+    }
+
+    #outputitmtab_info {
+        display: none;
+    }
+
+    #outputitmtab_length {
+        display: none;
+    }
+
+    #outputitmtab_filter {
+        margin-top: -28px;
+    }
+
+    #outputjodettab_paginate {
+        display: none;
+    }
+
+    #outputjodettab_info {
+        display: none;
+    }
+
+    #outputjodettab_length {
+        display: none;
+    }
+
+    #outputjodettab_filter {
+        margin-top: -28px;
+    }
+
+    #inputitmtab_paginate {
+        display: none;
+    }
+
+    #inputitmtab_info {
+        display: none;
+    }
+
+    #inputitmtab_length {
+        display: none;
+    }
+
+    #inputitmtab_filter {
+        margin-top: -28px;
+    }
+
+    #inputstkdettab_paginate {
+        display: none;
+    }
+
+    #inputstkdettab_info {
+        display: none;
+    }
+
+    #inputstkdettab_length {
+        display: none;
+    }
+
+    #inputstkdettab_filter {
+        display: none;
+    }
+
+    #inputjodettab_paginate {
+        display: none;
+    }
+
+    #inputjodettab_info {
+        display: none;
+    }
+
+    #inputjodettab_length {
+        display: none;
+    }
+
+    #inputjodettab_filter {
+        display: none;
+    }
+
+    #Appgridtab_filter {
+        display: none;
+    }
+
+    #outputitmtab_filter {
+        display: none;
+    }
+</style>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtDeliDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtFromDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                LoadMaingrid();
+            }
+        });
+        $('#txtToDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                LoadMaingrid();
+            }
+        });
+    });
+</script>
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Process/ProcessOrder.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+            <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Company
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMCompany" class="form-control select2" onchange="MRadioOtype();">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Unit
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMUnit" class="form-control select2" onchange="MRadioOtype();">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Order No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMBuyOrderNo" class="form-control select2" onchange="BMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                @*     <div class="form-group">
+                                    <div class="maxl" style="margin-left: 9px; margin-top: -5px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="W" name="maintype" onclick="MRadioOtype();">
+                                            <span>Buyer Order</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="S" name="maintype" onclick="MRadioOtype();">
+                                            <span>Sample Order </span>
+                                        </label>
+                                    </div>
+
+                                </div>*@
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="ex3">From Date</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                    </div>
+                                </div>
+                               
+                            </form>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Process OrdNo
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMOrderNo" class="form-control select2" onchange="POMainlist();"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Style
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMStyle" class="form-control select2" onchange="SMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Ref No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMRefNo" class="form-control select2" onchange="RMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                @*   <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ex3">From Date</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                    </div>
+                                </div>*@
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="ex3">To Date</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control " placeholder="Date" id="txtToDate">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Order Type
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMType" class="form-control select2" onchange="CMainlist();">
+                                            <option value="">--Select Type--</option>
+                                            <option value="W">Work Order</option>
+                                            <option value="J">Job Order</option>
+                                            <option value="S">Sample Order</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="maxl" style="margin-top: -5px;width: 230px;">
+                                            <label class="radio inline">
+                                                <input type="radio" checked value="P" name="proctype" onchange="CMainlist();">
+                                                <span>Processor</span>
+                                            </label>
+                                            <label class="radio inline">
+                                                <input type="radio" value="W" name="proctype" onchange="CMainlist();">
+                                                <span>Work Division</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="maxl" style="margin-left: 9px; margin-top: -5px;width: 240px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="W" name="maintype" onclick="MRadioOtype();">
+                                            <span>Buyer Order</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="S" name="maintype" onclick="MRadioOtype();">
+                                            <span>Sample Order </span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="maxl" style="margin-top: -5px;">
+                                            <label class="radio inline">
+                                                <input type="radio" id="rdMpending" checked value="P" name="Apptype" onchange="CMainlist();">
+                                                <span>Pending</span>
+                                            </label>
+                                            <label class="radio inline">
+                                                <input type="radio" id="rdMapproved" value="A" name="Apptype" onchange="CMainlist();">
+                                                <span>Approved</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Process
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMProcess" class="form-control select2" onchange="PMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Pro.Type
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <div class="" id="Msupp">
+                                            <select id="ddlMSupplier" style="margin-top: 2px;" class="form-control select2" onchange="SPMainlist();">
+                                            </select>
+                                        </div>
+                                        <div class="" id="Mwrkdiv">
+                                            <select id="ddlMwrkdiv" style="margin-top: 2px;" class="form-control select2" onchange="SPMainlist();">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Closure
+                                                 
+                                    </label>
+
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" id="Closure" style="margin-top: 0px;" value="Y" onclick="LoadCheckData();" class="messageCheckbox">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="float: right; margin-right: 5px;">
+                                    <input type="button" class="btn btn-success" value="List" onclick="LoadMain();">
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @*   <div class="row">
+              
+                <div class="col-md-12">
+                    <div class="x_panel" style="height: 30px;">
+                        <div class="col-md-2">
+                            <h2 style="margin-top: -5px;">Order Type</h2>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="maxl" style="margin-top: -15px;margin-left:-45px">
+                                <label class="radio inline">
+                                    <input type="radio" id="optoutwrkord" name="optwrkord" checked value="B" onchange="CMainlist();">
+                                    <span>Buyer Order</span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" id="optoutsaemord" name="optwrkord" value="S" onchange="CMainlist();">
+                                    <span>Sample Order  </span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" id="optouetsamord" name="optwrkord" value="G" onchange="CMainlist();">
+                                    <span>General </span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" id="optouetsamord" name="optwrkord" value="G" onchange="CMainlist();">
+                                    <span>All </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            @* Load datatable css *@
+
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+            <div class="x_panel">
+                <button type="button" class="btn btn-primary" data-toggle="modal" id="btnAddO" data-target="#myModal" onclick="ClearTextbox();" @ViewBag.ProcessOrderAddFlg>Add New</button>
+                <form class="form-horizontal form-label-left input_mask">
+                    <div class="form-group">
+                        <table id="tblmaindetails" class="table table-bordered table-hover">
+                            <thead>
+                            </thead>
+                        </table>
+                    </div>
+                </form>
+
+            </div>
+            <div class="x_panel">
+                <div class="form-group">
+                    <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                        Order No
+                    </label>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <textarea class="form-control" rows="4" placeholder="OrderNo" id="txtmainOrdno" disabled=""></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 col-sm-2 col-xs-12 control-label">
+                        Ref No
+                    </label>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <textarea class="form-control" rows="4" placeholder="RefNo" id="txtmainrefno" disabled=""></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 col-sm-2 col-xs-12 control-label">
+                        Style
+                    </label>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <textarea class="form-control" rows="4" placeholder="Style" id="txtmainstyle" disabled=""></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="x_panel" id="ChkAppId">
+                <label class="col-md-1 col-sm-1 col-xs-12 control-label" id="lblAppChkId">
+                    Approved 
+                </label>
+                <div class="form-group">
+                    @*   <table class="table table-bordered table-hover" border="1" id="Appgridtab">*@
+                    @* <thead>
+                            <tr>
+                                <th>Pmasid</th>
+                                <th>ProcessOrder No</th>
+                                <th>Item</th>
+                                <th>Color</th>
+                                <th>Size</th>
+                                <th>Prg Qty</th>
+                                <th>Iss Qty</th>
+                                <th>Sec Qty</th>
+                                <th>Group</th>
+
+                            </tr>
+                        </thead>*@
+                    <table class="table table-bordered table-hover" border="1" id="Appgridtab">
+                        <thead>
+                            <tr>
+                                <th>SNo</th>
+                                <th>Itemid</th>
+                                <th>Output Item</th>
+                                <th>Colorid</th>
+                                <th>Category I</th>
+                                <th>SIzeid</th>
+                                <th>Category II</th>
+                                <th>Ord Qty</th>
+                                <th>Prog Qty</th>
+                                <th>Balance</th>
+                                <th>Output</th>
+                                <th>IssueQty</th>
+                                <th>Sec Qty</th>
+                                <th>Apply</th>
+                                @* <th>View</th>*@
+
+                            </tr>
+                        </thead>
+
+                    </table>
+                    @*   </table>*@
+                </div>
+                <div class="row" id="ChkAppButId">
+
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="form-group" style="float: right;">
+                                <button type="button" style="" class="btn btn-success" data-toggle="modal" onclick="AppUpdate();" id="btnApp" @ViewBag.ProcessOrderAddFlg>Approved</button>
+                                <button type="button" style="" class="btn btn-success" data-toggle="modal" onclick="AppRevert();" id="btnRev" @ViewBag.ProcessOrderRevertFlg>Revert</button>
+                                <button type="button" style="" class="btn btn-danger" data-toggle="modal" onclick="LoadCloChkAppData();">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 80%">
+                    <div class="modal-content">
+                        <div class="x_panel">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Process Order</h4>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="margin-top: 10px;">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Company
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlCompany" class="form-control select2" onchange="Loadgrid();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Style
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlStyle" class="form-control select2" onchange="Loadgrid();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Unit
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlUnit" class="form-control select2" onchange="Loadgrid();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Ref No
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlRefNo" class="form-control select2" onchange="Loadgrid();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Process
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlProcess" class="form-control select2" onchange="RadioLoadgrid();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Order No
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlOrderNo" class="form-control select2" onchange="Loadgrid();"></select>
+                                                    </div>
+                                                </div>
+
+
+
+
+
+
+                                            </form>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Buyer
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlBuyer" class="form-control select2" onchange="Loadgrid();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                @*       <div class="form-group">
+                                                    <div class="maxl" style="margin-top: -5px;">
+                                                        <label class="radio inline">
+                                                            <input type="radio" checked value="B" name="disploc" onchange="CMainlist();">
+                                                            <span>Buyer Ord</span>
+                                                        </label>
+                                                        <label class="radio inline">
+                                                            <input type="radio" value="S" onchange="CMainlist();">
+                                                            <span>Sample Ord </span>
+                                                        </label>
+                                                    </div>
+
+                                                </div>*@
+                                                @*   <div class="col-md-8 col-sm-8 col-xs-12">
+                                                        <div class="col-md-8 col-sm-8 col-xs-12" id="supp">
+                                                            <select id="ddlSupplier" class="form-control">
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12" id="wrkdiv">
+                                                            <select id="ddlwrkdiv" class="form-control">
+                                                            </select>
+                                                        </div>
+                                                    </div>*@
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Supplier/Work
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" id="supp">
+                                                        <select id="ddlSupplier" class="form-control select2">
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" id="wrkdiv">
+                                                        <select id="ddlwrkdiv" class="form-control select2">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                                                    Order Type
+                                                </label>
+
+                                                <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12" style=" margin-top: -5px;">
+                                                    <div class="maxl" style="margin-top: -5px;">
+                                                        <label class="radio inline">
+                                                            <input type="radio" checked="" value="W" name="type" onclick="RadioLoadgrid();">
+                                                            <span>Work Order </span>
+                                                        </label>
+                                                        <label class="radio inline">
+                                                            <input type="radio" value="S" name="type" onclick="RadioLoadgrid();">
+                                                            <span>Sample Order </span>
+                                                        </label>
+                                                        <label class="radio inline">
+                                                            <input type="radio" value="J" name="type" onclick="RadioLoadgrid();">
+                                                            <span>Job Order </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                                </form>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                        <div class="maxl " style="margin-top: -9px;">
+                                                            <label class="radio inline">
+                                                                <input type="radio" name="optwrkord" checked value="P" onchange="RadioMBClick();">
+                                                                <span>Processor</span>
+                                                            </label>
+                                                            <label class="radio inline" style="">
+                                                                <input type="radio" name="optwrkord" value="W" onchange="RadioMBClick();">
+                                                                <span>Work Division</span>
+                                                            </label>
+                                                        </div></form>
+                                                    </div>
+
+                                                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                           <form class="form-horizontal form-label-left input_mask">
+                                                       <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Store
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlAStoreUnit" class="form-control select2" onchange="">
+                                                        </select>
+                                                    </div>
+                                                </div></form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" >
+                                <div class="row">
+
+                                    <div class="">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover" border="1" id="entrygridtab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Jmasid</th>
+                                                            <th>Job No</th>
+                                                            <th>Style</th>
+                                                            <th>Bmasid</th>
+                                                            <th>Order No</th>
+                                                            <th>Ref No</th>
+                                                            <th>Buyer</th>
+                                                            <th>Group</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    @*<tr class="mycontainer" id="maincomborow">
+                                                        <td>
+                                                            <select id="ddlItemGroup" class="form-control">
+                                                            </select>
+                                                            <span class="error">Select OrderNo</span>
+                                                        </td>
+                                                        <td>
+                                                            <select id="ddlItem" class="form-control">
+                                                            </select>
+                                                            <span class="error">Select Ref No</span>
+                                                        </td>
+                                                        <td>
+                                                            <select id="ddlType" class="form-control">
+                                                                <option value="0">--Select Group--</option>
+                                                                <option value="K">KNITS</option>
+                                                                <option value="P">PANELS</option>
+                                                                <option value="W">WOVEN</option>
+                                                            </select>
+                                                            <span class="error">Select Work Order No</span>
+                                                        </td>
+                                                        <td>
+                                                            <select id="ddlSize" class="form-control">
+                                                            </select>
+                                                            <span class="error">Select Cost Head</span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="txtUom" class="form-control" placeholder="Quantity">
+                                                        </td>
+                                                        <td>
+                                                            <select id="ddlunit" class="form-control">
+                                                            </select>
+                                                            <span class="error">Select Unit</span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="txtIssueQty" class="form-control" placeholder="Rate">
+                                                        </td>
+                                                        
+                                                       
+                                                        <td>
+                                                            <button class="btn btn-success btn-round" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" id="btncomponentadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                            <button class="btn btn-success btn-round" style="width: 20px;padding: 0px;height: 20px;border-radius:10px; display: none;" id="btncomponentupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+                                                        </td>
+                                                    </tr>*@
+                                                </table>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="row">
+
+
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group" style="float: right;">
+                                                    <button type="button" style="" class="btn btn-success" data-toggle="modal" onclick="LoadData();">Submit</button>
+                                                    <button class="btn btn-danger" onclick="MainModClose();">Close</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*                        <div class="modal-footer" style="border: none;">
+                            <button class="btn btn-success btn-round" id="btnAdd" onclick="Add();">Save</button>
+                            <button class="btn  btn-success btn-round" onclick="Update();" id="btnUpdate">Update</button>
+                            <button class="btn btn-danger btn-round" onclick="Delete();" id="btnDel">Delete</button>
+                            <button class="btn btn-danger btn-round" onclick="backtomain();">Close</button>
+                        </div>*@
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 90%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Process Order</h4>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="margin-top: 10px;">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Order No
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <input type="text" id="txtOrderNo" class="form-control " placeholder="Order No" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display: none;">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Issue No
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <input type="text" id="txtIssueNo" class="form-control " placeholder="Issue No" disabled>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Order Date
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <input type="text" id="txtOrderDate" class="form-control " placeholder="Date">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group" style="display: none;">
+
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="maxl" style="margin-top: -5px;">
+                                                            <label class="">
+
+                                                                <span>Sub Process</span>
+                                                            </label>
+                                                            <label class="radio inline">
+                                                                <input type="radio" value="Y" name="subproctype">
+                                                                <span>Yes</span>
+                                                            </label>
+                                                            <label class="radio inline">
+                                                                <input type="radio" checked value="N" name="subproctype">
+                                                                <span>No</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Deli Date
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <input type="text" id="txtDeliDate" class="form-control " placeholder="Date">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Processor
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <input type="text" id="txtProcessor" class="form-control " placeholder="Processor" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display: none;">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Issue Id
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <input type="text" id="txtIssueId" class="form-control " placeholder="Issue No" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display: none;">
+
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="maxl" style="margin-top: -5px;">
+                                                            <label class="">
+
+                                                                <span>Final Process</span>
+                                                            </label>
+                                                            <label class="radio inline">
+                                                                <input type="radio" value="Y" name="finproctype">
+                                                                <span>Yes</span>
+                                                            </label>
+                                                            <label class="radio inline">
+                                                                <input type="radio" checked value="N" name="finproctype">
+                                                                <span>No</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Process
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <input type="text" id="txtProcess" class="form-control " placeholder="Process" disabled>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Unit
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <input type="text" id="txtUnit" class="form-control " placeholder="Unit" disabled>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="row" >
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover nowrap" border="1" id="outputitmtab" style="display:none" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="display: none;">SNo</th>
+                                                            <th style="display: none;">Itemid</th>
+                                                            <th>Output Item</th>
+                                                            <th style="display: none;">Colorid</th>
+                                                            <th>Color</th>
+                                                            <th style="display: none;">Sizeid</th>
+                                                            <th>Size</th>
+                                                            <th>Rate</th>
+                                                            <th>Prog Qty</th>
+                                                            <th>Bal Qty</th>
+                                                            <th>Output</th>
+                                                            <th style="display: none;">Sec Qty</th>
+                                                            <th style="display: none;">Apply</th>
+                                                            <th>Lp Len</th>
+                                                            <th>Gauge</th>
+                                                            <th>Plan Size</th>
+                                                            <th style="display: none;">FinDiaid</th>
+                                                            <th>Finish Dia</th>
+                                                            <th>Fin Gsm</th>
+                                                            <th>TxApp.Val</th>
+                                                            @*<th>View</th>*@
+
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <h2 style="margin-top: -5px;">OutPut Items</h2>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover " border="1" id="outputjodettab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="display: none;">Sno</th>
+                                                            <th style="display: none;">Prdprgdetid</th>
+                                                            <th style="display: none;">Itmid</th>
+                                                            <th style="display: none;">Clrid</th>
+                                                            <th style="display: none;">Sizeid</th>
+                                                            <th style="display: none;">PlanSizeid</th>
+                                                            <td >Prog No</td>
+                                                            <td >Job No</td>
+                                                            <td>Ref No</td>
+                                                            <th>Item</th>
+                                                            <th>Color</th>
+                                                            <th>Size</th>
+                                                            <th>Rate</th>
+                                                            <td>Prog Qty</td>
+                                                            <td>Bal Qty</td>
+                                                            <td>Loss BalQty</td>
+                                                            <td>Adj Qty</td>
+                                                            <td>Sec Qty</td>
+                                                            <th>View</th>
+
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                
+                                                <table class="table table-bordered table-hover" border="1" id="outputsavejodettab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sno</th>
+                                                            <th>Prdprgdetid</th>
+                                                            <th>Itmid</th>
+                                                            <th>Clrid</th>
+                                                            <th>Sizeid</th>
+                                                            <td>ProdProgNo</td>
+                                                            <td>Job Ord No</td>
+                                                            <td>Prog Qty</td>
+                                                            <td>Balance</td>
+                                                            <td>Loss BalQty</td>
+                                                            <td>Adj Qty</td>
+                                                            <td>Sec Qty</td>
+
+
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                 <div class="row">
+
+                                                                        <div class="col-md-4" style="text-align:right">
+                                                                                <div class="form-group" style="margin-left: -10px;">
+                                                                                    <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                                        Total Input Qty
+                                                                                    </label>
+                                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                       <input type="text" id="txtIpTotQty" class="form-control" disabled/>
+                                                                                    </div>
+                                                                                </div>
+                                                                        </div>
+
+                                                    <div class="col-md-4"></div>
+                                                                        <div class="col-md-4" style="text-align:right">
+                                                                                <div class="form-group" style="margin-left: -10px;">
+                                                                                    <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                                        Total Output Qty
+                                                                                    </label>
+                                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                                       <input type="text" id="txtOpTotQty" class="form-control" disabled/>
+                                                                                    </div>
+                                                                                </div>
+                                                                        </div>
+                                                                    </div>
+                                                   
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row" style="margin: 0px;">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="display:none">
+                                <div class="x_panel">
+                                    <h2 style="margin-top: -5px;">Add / Less</h2>
+                                    <form class="form-horizontal form-label-left input_mask">
+
+                                        <div class="form-group">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll;">
+                                                <table class="table table-bordered table-hover" border="1">
+                                                <tr>
+
+                                                    <td>AccountHeads</td>
+                                                    <td>+/-</td>
+                                                    <td>Percentage</td>
+                                                    <td>Amount</td>
+
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr class="mycontainer" id="maincomborow">
+                                                    <td>
+                                                        <select id="ddlAcc" class="form-control" onchange="LoadPlusAdd();">
+                                                        </select>
+                                                        <span class="error">Select AccHeads</span>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="txtPorMins" class="form-control" placeholder="PlusOrMinus" disabled>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="txtPer" class="form-control" placeholder="Percent" onchange="LoadNetAmount();">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="txtAmount" class="form-control" placeholder="Amount" disabled>
+                                                    </td>
+
+                                                    <td>
+                                                        <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnImadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                        <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnImupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            </div>
+                                            <div id="CListP">
+                                                <table class="table table-responsive" id="tblPaydetails">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>AddlessId
+                                                            </th>
+                                                            <th>AccountsHead
+                                                            </th>
+                                                            <th>+/-
+                                                            </th>
+                                                            <th>Percent
+                                                            </th>
+                                                            <th>Amount
+                                                            </th>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="orderItemError3" style="color: red"></span>
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row" style="margin: 0px;">
+                                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <label class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-label">
+                                                    Gross Amt
+                                                </label>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <input type="text" id="txtGrossAmt" class="form-control " disabled placeholder="Gross Amount">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <label class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-label">
+                                                    Net Amt
+                                                </label>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <input type="text" id="txtNetAmt" class="form-control " disabled placeholder="Net Amount">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="display: none;">
+
+                                <div class="x_panel" style="height: 167px;">
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-3 col-xs-12 control-label">
+                                            Knit Loc
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <textarea class="form-control" rows="4" placeholder="KnitLoc" id="txtknitloc"></textarea>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group" style="margin-top: 47px;">
+                                        <label class="col-md-4 col-sm-3 col-xs-12 control-label">
+                                            Yarn Loc
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <textarea class="form-control" rows="4" placeholder="YarnLoc" id="txtyarnloc"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                  <div class="form-group">
+                                    <label class="col-md-12 col-sm-5 col-xs-12 control-label">
+                                        VehicleNo / Driver
+                                    </label>
+                                    <div class="col-md-12 col-sm-7 col-xs-12">
+                                        <input type="text" id="txtVehicleno" class="form-control"  placeholder="Vehicleno / Driver">
+                                    </div>
+                                </div>
+
+                              </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-5 col-xs-12 control-label">
+                                        Remarks
+                                    </label>
+                                    <div class="col-md-12 col-sm-7 col-xs-12">
+                                        <textarea class="form-control" rows="4" placeholder="Remarks" id="txtremarks" style="height: 100px;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                
+                            </div>
+                        </div>
+                        <div class="row" style="margin: 0px;">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="x_panel" >
+                                    <div class="x_title " style="background: #F2F5F7; width: 50%; display: block; border: none;">
+                                                    <a class="collapse-link" style="cursor: pointer;">
+                                                        <h2 style="margin-top: 5px; cursor: pointer">Dispatch To Location</h2>
+                                                        <i class="fa fa-chevron-up" style="margin-top: 7px; margin-left: 4px;"></i></a>
+
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                    @*<h2 style="margin-top: -5px;">Dispatch To Location</h2>*@
+                                    
+                                                <div class="x_content" id="nom_model" style="display: none;">
+                                    <div class="maxl" style="margin-top: -13px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="P" id="OptSelf" name="DType" onchange="LoadLocation();">
+                                            <span>Self</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="O" id="OptUnit" name="DType" onchange="LoadLocation();">
+                                            <span>Company Unit </span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="S" id="OptStore" name="DType" onchange="LoadLocation();">
+                                            <span>Store </span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="C" id="OptSup" name="DType" onchange="LoadLocation();">
+                                            <span>Sub.Contr/Processor </span>
+                                        </label>
+                                    </div>
+
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                Production Unit
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <select id="ddlLocation" class="form-control" onchange="LoadLocalAdd();">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                Address
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <textarea class="form-control" rows="4" placeholder="Address" id="txtLocaAdd" disabled=""></textarea>
+                                            </div>
+                                        </div>
+
+
+                                    </form>
+                                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="x_panel" >
+                                    <div class="x_title " style="background: #F2F5F7; width: 50%; display: block; border: none;">
+                                                    <a class="collapse-link" style="cursor: pointer;">
+                                                        <h2 style="margin-top: 5px; cursor: pointer">Issue Location</h2>
+                                                        <i class="fa fa-chevron-up" style="margin-top: 7px; margin-left: 4px;"></i></a>
+
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                    @*<h2 style="margin-top: -5px;">Issue Location</h2>*@
+                                                <div class="x_content" id="nom_model" style="display: none;">
+                                    <div class="maxl" style="margin-top: -13px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="O" id="OptIssUnit" name="IssType" onchange="LoadIssLocation();">
+                                            <span>Unit</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="C" id="OptCmp" name="IssType" onchange="LoadIssLocation();">
+                                            <span>Company </span>
+                                        </label>
+
+                                    </div>
+
+                                    <form class="form-horizontal form-label-left input_mask" >
+                                        <div class="form-group">
+                                            <label class="col-lg-4 col-md-4 col-sm-4 col-xs-4 control-label">
+                                                Production Unit
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <select id="ddlIssueLocation" class="form-control select2 " onchange="LoadIssLocalAdd();">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-4 col-md-4 col-sm-4 col-xs-4 control-label">
+                                                Address
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <textarea class="form-control" rows="4" placeholder="Address" id="txtIssLocaAdd" disabled=""></textarea>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin: 0px;">
+                            <div class="modal-footer" style="border: none; display: inline-flex; float: right;">
+                                    <button class="btn btn-success " id="btnAdd" onclick="Check();">Save</button>
+                                    <button class="btn  btn-success " onclick="ChkUpdate();" id="btnUpdate">Update</button>
+                                    <button class="btn btn-danger " onclick="ChkDelete();" id="btnDel">Delete</button>
+                                    <button class="btn btn-danger " onclick="MainModClose();" style="margin-right: 5px;">Close</button>
+                                </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 40%">
+                    <div class="modal-content">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Process Order</h2>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="row" style="margin: 0;">
+                                <div class="row" style="margin: 0;">
+
+                                    <div class="col-md-8">
+
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                                                    Options 
+                                                </label>
+                                                <div class="col-md-2 col-sm-2 col-xs-12" style="">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" id="selectall" value="">All
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <div class="multiselect">
+
+                                                        <select multiple="multiple" id='sbTwo' class="form-control multiselect" style="height: 100px;">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                @*    <div class="maxl">
+                                                    <label class="radio inline col-md-4 col-sm-2 col-xs-12">
+                                                        <input id="conewinding" name="ProcessType" checked type="radio" value="C">
+                                                        <span>Cone Winding</span>
+                                                    </label>
+                                                    <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                        <input id="Knitting" name="ProcessType" checked type="radio" value="K">
+                                                        <span>Knitting </span>
+                                                    </label>
+                                                    <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                        <input id="Dyeing" name="ProcessType" type="radio" value="D">
+                                                        <span>Dyeing </span>
+                                                    </label>
+                                                    <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                        <input id="YarnDyed" name="ProcessType" type="radio" value="Y">
+                                                        <span>Yarn Dyed </span>
+                                                    </label>
+                                                </div>*@
+                                            </div>
+
+                                            <div class="maxl" style="margin-top: 0px;" id="BudPrintPreviewId">
+                                                <label class="radio inline">
+                                                    <input id="BudPreviewPlanned" class="Score" name="BudPrintPreviewPlanned" type="radio" value="R">
+                                                    <span>DOS </span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input id="BudPrintPlanned" class="Score" name="BudPrintPreviewPlanned" type="radio" value="P" checked="checked">
+                                                    <span>Windows </span>
+                                                </label>
+                                                  <label class="radio inline">
+                                                    <input id="BudMailPlanned" class="Score" name="BudPrintPreviewPlanned" type="radio" value="M">
+                                                    <span>Mail </span>
+                                                </label>
+
+                                            </div>
+
+
+
+                                        </form>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin: 0px; float: right;">
+                                <div class="form-group">
+                                    <button class="btn btn-success" onclick="SubReport();">Submit</button>
+                                    <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade " style="overflow-y:scroll; background-color: rgba(0, 0, 0, 0.38);" id="myModal4" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 92%">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel" style="border-radius: 10px;box-shadow: cyan;border-style: outset;">
+                            <div class="row">
+                                
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="x_panel Input_Items">
+                                        <h2 style="margin-top: -5px;">Input Items</h2>
+                                    <form class="form-horizontal form-label-left input_mask" >
+                                        <div class="form-group">
+                                            <table class="table table-bordered table-hover nowrap" border="1" id="inputitmtab" style="display: none">
+                                                <thead>
+                                                    <tr>
+                                                        <th>SNo</th>
+                                                        <th>Itemid</th>
+                                                        <th style="width: 150px">Ip Item</th>
+                                                        <th>Colorid</th>
+                                                        <th style="width: 150px">Color</th>
+                                                        <th>SIzeid</th>
+                                                        <th style="width: 150px">Size</th>
+                                                        <th>Ord Qty</th>
+                                                        <th>Prog Qty</th>
+                                                        <th>Bal Qty</th>
+                                                        <th>Output</th>
+                                                        <th>Iss Qty</th>
+                                                        <th>Sec Qty</th>
+                                                        <th>Apply</th>
+                                                        @* <th>View</th>*@
+
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+
+
+                                            <table class="table table-bordered table-hover nowrap" border="1" id="inputjodettab">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="display: none;">Sno</th>
+                                                        <th style="display: none;">Prdprgdetid</th>
+                                                        <th style="display: none;">Itmid</th>
+                                                        <th style="display: none;">Clrid</th>
+                                                        <th style="display: none;">Sizeid</th>
+
+                                                        <th style="display: none;">ProgNo</th>
+                                                        <th style="display: none;">Job No</th>
+                                                        <th style="width:100px;">Order No</th>
+                                                        <th style="width:100px;">Ref No</th>
+                                                        <th style="width:100px;">Item</th>
+                                                        <th style="width:100px;">Color</th>
+                                                        <th style="width:100px;">Size</th>
+                                                        <th>Prog Qty</th>
+                                                        <th>Bal Qty</th>
+                                                        <th>Per</th>
+                                                        <th>Adj Qty</th>
+                                                        <th>Sec Qty</th>
+                                                        <th style="display: none;">opItmid</th>
+                                                        <th style="display: none;">opClrid</th>
+                                                        <th style="display: none;">opSizeid</th>
+                                                        <th>Op Item</th>
+                                                        <th>Op Color</th>
+                                                        <th>Op Size</th>
+                                                        @* <th>View</th>*@
+
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+
+                                            
+                                        </div>
+                                    </form>
+                                        </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="x_panel Stock_Info">
+                                    <h2 style="margin-top: 0px;">Stock Info</h2>
+                                    <form class="form-horizontal form-label-left input_mask" >
+                                        <div class="form-group">
+                                            <table class="table table-bordered table-hover nowrap" border="1" id="inputstkdettab">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="display: none;">Stockid</th>
+                                                        <th style="display: none;">Itmid</th>
+                                                        <th style="display: none;">Clrid</th>
+                                                        <th style="display: none;">Sizeid</th>
+                                                        <th>Document No</th>
+                                                        <th>Ord No</th>
+                                                        <th>Ref No</th>
+                                                        <th style="display: none;">Job No</th>
+                                                        <th style="display: none;">Lot No</th>
+                                                        <th>Supplier</th>
+                                                        <th style="display: none;">Item</th>
+                                                        <th style="display: none;">Color</th>
+                                                        <th style="display: none;">Size</th>
+                                                        <th>Process</th>
+                                                        <th>Stock Qty</th>
+                                                        <th>Iss Qty</th>
+
+
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                            <table class="table table-bordered table-hover nowrap" border="1" id="inputsavejodettab" style="display: none">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sno</th>
+                                                        <th>Prdprgdetid</th>
+                                                        <th>Itmid</th>
+                                                        <th>Clrid</th>
+                                                        <th>Sizeid</th>
+                                                        <th>ProdProgNo</th>
+                                                        <th>Job Ord No</th>
+                                                        <th>Prog Qty</th>
+                                                        <th>Adj Qty</th>
+                                                        <th>Sec Qty</th>
+
+
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+
+                                        </div>
+                                    </form>
+                                </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                    @*<div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <form class="form-horizontal form-label-left input_mask">
+                                                                            <div class="form-group" style="margin-left: -10px;">
+                                                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                                                    Last Process
+                                                                                </label>
+                                                                                <div class="col-md-5 col-sm-9 col-xs-12">
+                                                                                    <select id="ddlLastProcess" class="form-control">
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-md-3 col-sm-9 col-xs-12">
+                                                                                    <button type="button" class="btn btn-success">Fill</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>*@
+                                    <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                        <div class="form-group">
+
+                                            <table class="table table-bordered table-hover nowrap" border="1" id="inputsavestkdettab" style="display: none">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Stockid</th>
+                                                        <th>Itmid</th>
+                                                        <th>Clrid</th>
+                                                        <th>Sizeid</th>
+                                                        <th>JobOrdNo</th>
+                                                        <th>Lot No</th>
+                                                        <th>Stock </th>
+                                                        <th>Issues</th>
+                                                        <th>Process</th>
+
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </form>
+
+
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group" style="float: right;">
+                                        <button type="button" class="btn btn-danger" onclick="InputClose();">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+              <div class="modal fade" style="overflow-y:scroll" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 40%">
+                    <div class="modal-content">
+                        <div class="x_panel">
+                            <div id="uploadsContainer" style="margin-left: 22px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function sentmail(id) {
+        debugger;
+        var filelist = [];
+        var url = "/Mail/MailLoad";
+        //var Id = $('input#ID').val();
+        var tlt = 'ProcessDCReports';
+
+        //var sub = 'Subject';
+        //var bd = 'Test';
+        //url = url + "?title=" + tlt + "&id=" + id
+        //$.get(url, function (response) {
+        //    $('#uploadsContainer').html(response);
+        //});
+
+
+        var from = '';
+        var frommail = '';
+        var to = '';
+        var tomail = '';
+
+
+
+
+        var pono = '';
+
+
+
+        var url = "/Mail/MailLoad";
+
+        var tlt = 'ProcessDCReports';
+
+        var sub = 'ProcessDC Report -' + pono;
+        var bd = ' ';
+        var cc = '';
+
+        var filename = 'ProcessDCReports' + id;
+
+        url = url + "?title=" + tlt + "&id=" + id + "&fmname=" + from + "&fmmail=" + frommail + "&toname="
+            + to + "&tomail=" + tomail + "&sub=" + sub + "&body=" + bd + "&CC=" + cc
+        $.get(url, function (response) {
+            $('#uploadsContainer').html(response);
+
+            $.ajax({
+                url: "/Employee/getbyID/" + Guserid,
+                typr: "GET",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    var obj = result.Value;
+                    if (result.Status == 'SUCCESS') {
+                        from = obj.EmpName;
+                        frommail = obj.Email;
+
+                        $('#CC').val(obj.Email);
+                        //$('#FromName').val(obj.EmpName);
+                    }
+                }
+            });
+
+
+            $.ajax({
+                url: "/AccountSetting/GetSettingData/",
+                typr: "GET",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    var obj = result.Value;
+                    if (result.Status == 'SUCCESS') {
+                        var obj = result.Value;
+                        debugger;
+                        if (obj != undefined) {
+
+                            $('#FromName').val(obj[0]["AccountName"]);
+                            $('#Password').val(obj[0]["EMailPassword"]);
+                            $('#Email').val(obj[0]["FromEmailID"]);
+
+                        }
+                    }
+                }
+            });
+
+            var int = id;
+
+            $.ajax({
+                url: "/ProcessOrder/GetProcessSupplier/",
+                typr: "POST",
+                data: ({ Processordid: id }),
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    var obj = result.Value;
+                    if (result.Status == 'SUCCESS') {
+                        to = obj[0].processor;
+                        tomail = obj[0].ProcessorEmail;
+                        var pono = obj[0].prodnord;
+
+                        $('#To').val(obj[0].ProcessorEmail);
+                        $('#ToName').val(obj[0].processor);
+                        $('#Subject').val('Process DC Report -' + pono);
+                        addses();
+
+                    }
+                }
+            });
+
+
+        });
+
+
+
+
+
+        $('#myModal5').modal('show');
+        //  $('#myModal').modal('hide');
+        //$('#myModal31').modal('show');
+        $('#ID').val(filename);
+        $('#Date').val('');
+        //$('#To').val('');
+        //$('#ToName').val('');
+        // $('#Subject').val('subject');
+        //$('#Body').val('test');
+        //$('#Email').val('');
+        // $('#FromName').val('');
+        $('#passwrd').show();
+        $('#attach').show();
+        $('#btnsent').show();
+        // $('#filetabl').hide();
+
+
+        // LoadMailFileList(3);
+
+
+    }
+    function mailsent() {
+        debugger;
+        var flist = [];
+
+        var obj = {
+            FailPath: flpath,
+            FileName: $('#ID').val()
+        };
+        flist.push(obj);
+
+
+
+
+        var objSubmit = {
+            To: $('#To').val(),
+            ToName: $('#ToName').val(),
+            Subject: $('#Subject').val(),
+            //Buyerid: $('#Subject').val(),
+            Body: $('#Body').val(),
+            FromName: $('#FromName').val(),
+            Email: $('#Email').val(),
+            Password: $('#Password').val(),
+            CC: $('#CC').val(),
+            MailFile: flist
+        };
+
+        LoadingSymb();
+        $.ajax({
+            url: "/Mail/MailsentFromReport",
+            data: JSON.stringify(objSubmit),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                if (result.Value == true) {
+
+                    alert("Mail sent Sucessfully");
+
+                    window.location.href = "/ProcessOrder/ProcessOrderIndex";
+                } else {
+
+                    window.location.href = "/Error/Index";
+
+
+                }
+
+            },
+            error: function (errormessage) {
+
+                alert(errormessage.responseText);
+            }
+        });
+
+
+    }
+
+</script>

@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[VendorQuoteMas]
+(
+	[Quoteid] [int] IDENTITY(1,1) NOT NULL, 
+	[QuoteNo] [varchar](20) NULL,
+	[QuoteDate] [datetime] NULL,
+	[EntryNo] [varchar](20) NULL,
+	[EntryDate] [datetime] NULL,
+	[AutoManual] [varchar](1) NULL,
+	[Supplierid] [int] NULL,
+	[BuyOrdGeneral] [varchar](1) NULL,
+	[Buy_ord_no] [varchar](20) NULL,
+	[Buy_Ord_MasId] [int] Null,
+	[Remarks] [varchar](1000) NULL,
+	[Companyid] [int] NULL,
+	[Commit_Cancel] [varchar](1) NULL DEFAULT ('N'),
+	[CurrencyId] [int] NULL,
+	[CreatedBy] [int] NULL,
+	[Exchangerate] [numeric](10, 4) NULL,
+	[ActiveFrom] [datetime] NULL,
+	[APPROVALDATE] [datetime] NULL,
+	[APPROVEDBY] [int] NULL,
+	[ApprovedStatus] [char](1) NULL DEFAULT ('P'), 
+    CONSTRAINT [PK_VendorQuoteMas] PRIMARY KEY ([Quoteid]), 
+    CONSTRAINT [FK_VendorQuoteMas_company] FOREIGN KEY ([Companyid]) REFERENCES [Company]([CompanyId]),
+	CONSTRAINT [FK_VendorQuoteMas_Employee] FOREIGN KEY ([CreatedBy]) REFERENCES [Employee]([EmployeeId]),
+	CONSTRAINT [FK_VendorQuoteMas_Currency] FOREIGN KEY ([CurrencyId]) REFERENCES [Currency]([CurrencyId]),
+    CONSTRAINT [FK_VendorQuoteMas_Buy_Ord_Mas] FOREIGN KEY ([Buy_Ord_MasId]) REFERENCES [Buy_Ord_Mas]([Buy_Ord_MasId])
+)

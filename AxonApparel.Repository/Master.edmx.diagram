@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="05e413ce05e04ef3b6b2e0232065c8ca" Name="Diagram1" ZoomLevel="13">
+        <EntityTypeShape EntityType="MasterModel.AddLess" Width="1.5" PointX="11.83649466179148" PointY="18.259105616369798" />
+        <EntityTypeShape EntityType="MasterModel.Agent" Width="1.5" PointX="4.6043959355933577" PointY="7.28528425436713" />
+        <EntityTypeShape EntityType="MasterModel.Approval" Width="1.5" PointX="11.326080606936515" PointY="0.61102369456133976" />
+        <EntityTypeShape EntityType="MasterModel.Bank" Width="1.5" PointX="0.047946335770164772" PointY="24.67747953193145" />
+        <EntityTypeShape EntityType="MasterModel.BuyerCharges" Width="1.5" PointX="9.2340524351382864" PointY="3.4598497019428058" />
+        <EntityTypeShape EntityType="MasterModel.City" Width="1.5" PointX="3.7309181074290159" PointY="22.010455275890628" />
+        <EntityTypeShape EntityType="MasterModel.Color" Width="1.5" PointX="6.3249202157952453" PointY="29.526244430582153" />
+        <EntityTypeShape EntityType="MasterModel.ColorCode" Width="1.5" PointX="7.5938296483800887" PointY="15.275718651374671" />
+        <EntityTypeShape EntityType="MasterModel.ColorGroup" Width="1.5" PointX="8.8164835482912522" PointY="24.589037608629575" />
+        <EntityTypeShape EntityType="MasterModel.Country" Width="1.5" PointX="0.69268162953326551" PointY="26.459262144965706" />
+        <AssociationConnector Association="MasterModel.FK_Agent_City" />
+        <AssociationConnector Association="MasterModel.FK_Agent_ToCountry" />
+        <AssociationConnector Association="MasterModel.FK_Bank_ToCity" />
+        <AssociationConnector Association="MasterModel.FK_Bank_ToCountry" />
+        <AssociationConnector Association="MasterModel.FK_Country" />
+        <AssociationConnector Association="MasterModel.FK_Color_ColorGroup" />
+        <AssociationConnector Association="MasterModel.FK_ColorCode_Color" />
+        <EntityTypeShape EntityType="MasterModel.CompanyUnit" Width="1.5" PointX="4.2052064110549194" PointY="20.457977900494811" />
+        <EntityTypeShape EntityType="MasterModel.Consignee" Width="1.5" PointX="5.4686983681603794" PointY="25.117163327111474" />
+        <EntityTypeShape EntityType="MasterModel.Courier" Width="1.5" PointX="7.8861992321378542" PointY="24.245505880678774" />
+        <EntityTypeShape EntityType="MasterModel.Department" Width="1.5" PointX="10.75474249886104" PointY="27.211714578425379" />
+        <EntityTypeShape EntityType="MasterModel.Designation" Width="1.5" PointX="8.75478788500409" PointY="22.149265538039277" />
+        <EntityTypeShape EntityType="MasterModel.Employee" Width="1.5" PointX="9.2968637967933265" PointY="3.0343124284568765" />
+        <EntityTypeShape EntityType="MasterModel.FabricMaster" Width="1.5" PointX="3.8705580327057083" PointY="12.908056712200892" />
+        <EntityTypeShape EntityType="MasterModel.FabricProcess" Width="1.5" PointX="6.9220476126866632" PointY="7.250262681045692" />
+        <EntityTypeShape EntityType="MasterModel.FabricYarn" Width="1.5" PointX="7.4332337637586683" PointY="15.824618928052773" />
+        <AssociationConnector Association="MasterModel.FK_City" />
+        <AssociationConnector Association="MasterModel.FK_CompanyCity" />
+        <AssociationConnector Association="MasterModel.FK_Consignee_Buyer" />
+        <AssociationConnector Association="MasterModel.FK__FabricYar__Color__0B80A42E" />
+        <AssociationConnector Association="MasterModel.FK_CompanyUnit" />
+        <AssociationConnector Association="MasterModel.FK_Courier_Country" />
+        <AssociationConnector Association="MasterModel.FK_Department" />
+        <AssociationConnector Association="MasterModel.FK_Designation" />
+        <AssociationConnector Association="MasterModel.FK__FabricPro__Fabri__07B0134A" />
+        <AssociationConnector Association="MasterModel.FK__FabricYar__Fabri__0D68ECA0" />
+        <EntityTypeShape EntityType="MasterModel.Acc_Gsttaxmaster" Width="1.5" PointX="9.5611386548546786" PointY="27.853726325488523" />
+        <EntityTypeShape EntityType="MasterModel.Acc_HSNMaster" Width="1.5" PointX="10.194823169240181" PointY="27.625170884479381" />
+        <EntityTypeShape EntityType="MasterModel.Followup" Width="1.5" PointX="10.074284433421813" PointY="12.01443416439669" />
+        <EntityTypeShape EntityType="MasterModel.Garment_Uom" Width="1.5" PointX="6.9141320339004189" PointY="1.6361470677126884" />
+        <EntityTypeShape EntityType="MasterModel.Item_Rate" Width="1.5" PointX="3.5617947762654136" PointY="25.717079815323036" />
+        <EntityTypeShape EntityType="MasterModel.ItemGroup" Width="1.5" PointX="7.6340576091939862" PointY="5.1047236198115735" />
+        <EntityTypeShape EntityType="MasterModel.Ledger" Width="1.5" PointX="2.6419581950837552" PointY="23.820411261087475" />
+        <EntityTypeShape EntityType="MasterModel.MerchTeamBuyer" Width="1.5" PointX="9.2632832272272942" PointY="5.0857182913858994" />
+        <EntityTypeShape EntityType="MasterModel.MerchTeamEmployee" Width="1.5" PointX="4.3429346533226472" PointY="7.8823510147083322" />
+        <EntityTypeShape EntityType="MasterModel.MerchTeamMas" Width="1.5" PointX="10.403124331684374" PointY="31.326513155981207" />
+        <EntityTypeShape EntityType="MasterModel.Mode_Of_Shipment" Width="1.5" PointX="0.76494623570001985" PointY="29.412425248610052" />
+        <AssociationConnector Association="MasterModel.FK__Item_Rate__Color__75D08EDA" />
+        <AssociationConnector Association="MasterModel.FK_Employee" />
+        <AssociationConnector Association="MasterModel.FK_TeamEmployee" />
+        <AssociationConnector Association="MasterModel.FK_Team" />
+        <AssociationConnector Association="MasterModel.FK_Teamemp" />
+        <EntityTypeShape EntityType="MasterModel.Commercialmas" Width="1.5" PointX="4.5426557532244622" PointY="19.799849415104767" />
+        <EntityTypeShape EntityType="MasterModel.Payment_Terms" Width="1.5" PointX="10.95705693166566" PointY="13.832141480330444" />
+        <EntityTypeShape EntityType="MasterModel.PortofLoading" Width="1.5" PointX="7.2017836287625991" PointY="7.3421556834793442" />
+        <EntityTypeShape EntityType="MasterModel.ProcessSetup" Width="1.5" PointX="1.7876553394774231" PointY="18.022532084035934" />
+        <EntityTypeShape EntityType="MasterModel.Reason" Width="1.5" PointX="0.36108464950746139" PointY="15.360157437324597" />
+        <EntityTypeShape EntityType="MasterModel.SampleTypeMaster" Width="1.5" PointX="9.4769185434453735" PointY="18.958024763948295" />
+        <EntityTypeShape EntityType="MasterModel.Season" Width="1.5" PointX="11.34465181424499" PointY="9.01543045463759" />
+        <EntityTypeShape EntityType="MasterModel.ShipmentSystem" Width="1.5" PointX="2.1779326713541209" PointY="27.299667579727092" />
+        <AssociationConnector Association="MasterModel.FK_PortofLoading_Country" />
+        <EntityTypeShape EntityType="MasterModel.State" Width="1.5" PointX="6.6425981906441027" PointY="29.629021211354537" />
+        <EntityTypeShape EntityType="MasterModel.StoreSection" Width="1.5" PointX="0.671916967570743" PointY="19.686913171637297" />
+        <EntityTypeShape EntityType="MasterModel.StoreUnit" Width="1.5" PointX="10.495908965587574" PointY="18.501076826127747" />
+        <EntityTypeShape EntityType="MasterModel.Style" Width="1.5" PointX="7.5772380398480408" PointY="13.373075342445203" />
+        <EntityTypeShape EntityType="MasterModel.Style_Group" Width="1.5" PointX="10.375913852069488" PointY="11.939605688648115" />
+        <EntityTypeShape EntityType="MasterModel.StyleDetail" Width="1.5" PointX="7.5311077663354151" PointY="26.169856590297936" />
+        <EntityTypeShape EntityType="MasterModel.StyleHeader" Width="1.5" PointX="9.6802011363581766" PointY="29.773769869363761" />
+        <EntityTypeShape EntityType="MasterModel.StyleTempDet" Width="1.5" PointX="5.8167833284553065" PointY="7.064909074020064" />
+        <EntityTypeShape EntityType="MasterModel.StyleTempMas" Width="1.5" PointX="5.5483558799830988" PointY="4.6055439434040073" />
+        <EntityTypeShape EntityType="MasterModel.TermDet" Width="1.5" PointX="6.2185660350222909" PointY="25.23775928897679" />
+        <EntityTypeShape EntityType="MasterModel.TermMas" Width="1.5" PointX="7.8562495912687149" PointY="2.3349548738146924" />
+        <AssociationConnector Association="MasterModel.FK_StyleTempColorId" />
+        <AssociationConnector Association="MasterModel.FK_Storeunit" />
+        <AssociationConnector Association="MasterModel.FK_Style_StyleGroup" />
+        <AssociationConnector Association="MasterModel.FK_StyleRefId" />
+        <AssociationConnector Association="MasterModel.FK_StyleTempMasId" />
+        <AssociationConnector Association="MasterModel.FK_TermDet_TermMas" />
+        <EntityTypeShape EntityType="MasterModel.TestingType" Width="1.5" PointX="1.5531867079218786" PointY="23.685064416232084" />
+        <EntityTypeShape EntityType="MasterModel.Unit_Conversion" Width="1.5" PointX="11.455735679462428" PointY="5.7440638419911565" />
+        <EntityTypeShape EntityType="MasterModel.UserGroup" Width="1.5" PointX="0.77794895916150364" PointY="0.441997304764575" />
+        <EntityTypeShape EntityType="MasterModel.WorkDivision" Width="1.5" PointX="4.3870612775846674" PointY="14.484727463910694" />
+        <AssociationConnector Association="MasterModel.FK_WorkDivision_company_unit" />
+        <AssociationConnector Association="MasterModel.FK_WorkDivision_Employee" />
+        <EntityTypeShape EntityType="MasterModel.Item" Width="1.5" PointX="2.6778620102805375" PointY="11.298768257395722" />
+        <EntityTypeShape EntityType="MasterModel.Size" Width="1.5" PointX="9.4476281336730477" PointY="27.809602362946421" />
+        <AssociationConnector Association="MasterModel.FK__FabricMas__Fabri__04D3A69F" />
+        <AssociationConnector Association="MasterModel.FK__FabricYar__Count__0C74C867" />
+        <AssociationConnector Association="MasterModel.FK__FabricYar__Yarni__0E5D10D9" />
+        <AssociationConnector Association="MasterModel.FK__Item_Rate__Itemi__76C4B313" />
+        <AssociationConnector Association="MasterModel.FK__StyleTemp__ItemI__3402CB7D" />
+        <AssociationConnector Association="MasterModel.FK_Item_ToItemGroup" />
+        <AssociationConnector Association="MasterModel.FK_Style_Item" />
+        <AssociationConnector Association="MasterModel.FK_StyleRefItem" />
+        <AssociationConnector Association="MasterModel.FK_StyleTempItemId" />
+        <AssociationConnector Association="MasterModel.FK__Item_Rate__SizeI__77B8D74C" />
+        <AssociationConnector Association="MasterModel.FK_StyleTempSizeId" />
+        <EntityTypeShape EntityType="MasterModel.Currency" Width="1.5" PointX="0.63439425483084944" PointY="29.269201784054378" />
+        <EntityTypeShape EntityType="MasterModel.Unit_of_measurement" Width="1.5" PointX="0.82406479903686081" PointY="5.0816109800159985" />
+        <AssociationConnector Association="MasterModel.FK_BasUOMRef" />
+        <AssociationConnector Association="MasterModel.Pur_Unit" />
+        <AssociationConnector Association="MasterModel.Sec_Unit" />
+        <AssociationConnector Association="MasterModel.FK_FromUnitConversion" />
+        <AssociationConnector Association="MasterModel.FK_ToUnitConversion" />
+        <EntityTypeShape EntityType="MasterModel.Emp_Store_Setup" Width="1.5" PointX="0.29851705594850569" PointY="9.1738111270469673" />
+        <AssociationConnector Association="MasterModel.FK__Emp_Store__Emplo__2D01938A" />
+        <AssociationConnector Association="MasterModel.FK__Emp_Store__Store__2DF5B7C3" />
+        <EntityTypeShape EntityType="MasterModel.Username" Width="1.5" PointX="9.53401558731404" PointY="31.521192922965248" />
+        <AssociationConnector Association="MasterModel.FK__Username__Employ__04E65333" />
+        <AssociationConnector Association="MasterModel.FK__Username__Groupi__03F22EFA" />
+        <EntityTypeShape EntityType="MasterModel.MasterProcess" Width="1.5" PointX="11.599830195121388" PointY="4.2782789190664321" />
+        <AssociationConnector Association="MasterModel.FK__FabricPro__Proce__08A43783" />
+        <AssociationConnector Association="MasterModel.FK__ProcessSe__Proce__70A1C569" />
+        <EntityTypeShape EntityType="MasterModel.Description" Width="1.5" PointX="6.0632426860105451" PointY="4.9814152144740405" />
+        <EntityTypeShape EntityType="MasterModel.Buyer" Width="1.5" PointX="3.49444191506805" PointY="27.869498116834787" />
+        <AssociationConnector Association="MasterModel.FK__Item_Rate__Buyer__74DC6AA1" />
+        <AssociationConnector Association="MasterModel.FK_Buyer_ToCity" />
+        <AssociationConnector Association="MasterModel.FK_Buyer_ToCountry" />
+        <AssociationConnector Association="MasterModel.FK_Charge_Buyer" />
+        <AssociationConnector Association="MasterModel.FK_TeamBuyerId" />
+        <EntityTypeShape EntityType="MasterModel.Company" Width="1.5" PointX="11.179335342338" PointY="31.198430090769396" />
+        <AssociationConnector Association="MasterModel.FK_Company_City" />
+        <AssociationConnector Association="MasterModel.FK_Company_Country" />
+        <AssociationConnector Association="MasterModel.FK_Company_Currency" />
+        <EntityTypeShape EntityType="MasterModel.Supplier" Width="1.5" PointX="8.4878021294659938" PointY="21.473401079640446" />
+        <AssociationConnector Association="MasterModel.FK_Supplier_ToCity" />
+        <AssociationConnector Association="MasterModel.FK_ColorCode_Supplier" />
+        <AssociationConnector Association="MasterModel.FK_Supplier_ToCountry" />
+        <AssociationConnector Association="MasterModel.FK__Item_Rate__Suppl__78ACFB85" />
+        <AssociationConnector Association="MasterModel.FK__StyleTemp__Suppl__35EB13EF" />
+        <EntityTypeShape EntityType="MasterModel.SupplierProcessSetup" Width="1.5" PointX="7.5068659780113336" PointY="26.545572039925293" />
+        <AssociationConnector Association="MasterModel.FK__SupplierP__Proce__142C8F76" />
+        <AssociationConnector Association="MasterModel.FK__SupplierP__Suppl__1520B3AF" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

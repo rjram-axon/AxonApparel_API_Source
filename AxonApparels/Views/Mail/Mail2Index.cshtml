@@ -1,0 +1,505 @@
+﻿@model AxonApparel.Domain.MailModel
+
+@{
+    ViewBag.Title = "Mail2Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tbody_filter
+    {
+    }
+
+    #tblattach_filter
+    {
+        display: none;
+    }
+
+    .add_btn
+    {
+        width: 20px;
+        padding: 2px;
+        height: 20px;
+        margin-left: -16px;
+    }
+
+    .Body
+    {
+        width: 240px;
+    }
+</style>
+
+<script src="~/AxonScripts/HouseKeeping/Mail.js?v=@DateTime.UtcNow.ToString()"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>MAIL</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+                            @*  @if (ViewBag.BuyerAddFlag == "true")
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Add New Buyer</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" disabled>Add New Buyer</button>
+                            }*@
+                            <div class="col-md-4">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-12" for="ex3">
+                                            From Mail
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <select id="ddlFrommail" class="form-control select2">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-12" for="ex3">
+                                            To Mail
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <select id="ddlTomail" class="form-control select2">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Create Mail</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-4">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-12" for="ex3">
+                                            From Date
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" id="txtFromDate" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-12" for="ex3">
+                                            To Date
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" id="txtToDate" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="button" class="btn btn-success" value="List" onclick="LoadMailMainList();">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table id="tbody" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="visibility: hidden;">ID
+                                        </th>
+                                        <th>From Name
+                                        </th>
+                                        <th>To Name
+                                        </th>
+                                        <th>Date
+                                        </th>
+                                        <th>Status
+                                        </th>
+                                        <th>Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+
+
+
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 40%">
+                                <div class="modal-content">
+                                    <div class="x_panel" style="width: 102%;">
+                                        <div class="x_title">
+                                            <h2>MAIL</h2>
+                                            <ul class="nav navbar-right panel_toolbox">
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                        <div class="modal-body row">
+                                            <div class="x_panel">
+                                                <div class="row">
+                                                    <div class="row">
+
+                                                        @*   @using (Html.BeginForm("SentMail", "Mail", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                        {
+
+
+
+                                                            <div class="col-md-8">
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtid">ID</label>
+                                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                            @Html.TextBoxFor(m => m.ID)
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtDate">Date</label>
+                                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                           @Html.TextBoxFor(m => m.Date)
+                                                                        </div>
+                                                                    </div>
+                                                                       <div class="form-group">
+                                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtDate">To Mail</label>
+                                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                           @Html.TextBoxFor(m => m.To)
+                                                                        </div>
+                                                                    </div>
+                                                                        <div class="form-group">
+                                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtDate">To Name</label>
+                                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                           @Html.TextBoxFor(m => m.ToName)
+                                                                        </div>
+                                                                    </div>
+                                                                      <div class="form-group">
+                                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtDate">Subject</label>
+                                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                          @Html.TextBoxFor(m => m.Subject)
+                                                                        </div>
+                                                                    </div>
+                                                                     <div class="form-group">
+                                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtDate">Body</label>
+                                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                          @Html.TextAreaFor(m => m.Body, new { @rows = 10, @cols = 50 })
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        }*@
+
+                                                        <div class="col-md-10 col-sm-12 col-xs-12">
+
+                                                            @using (Html.BeginForm("SentMail", "Mail", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                            {
+                                                                <table border="0" cellpadding="0" cellspacing="0">
+                                                                    <tr>
+                                                                        <td style="width: 100px">To:</td>
+                                                                        <td>@Html.TextBoxFor(m => m.To, new { size = 30 })</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width: 100px">ToName:</td>
+                                                                        <td>@Html.TextBoxFor(m => m.ToName, new { size = 30 })</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                     <tr>
+                                                                        <td style="width: 100px">CC:</td>
+                                                                        <td>@Html.TextBoxFor(m => m.CC, new { size = 30 })</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width: 100px">Subject:</td>
+                                                                        <td>@Html.TextBoxFor(m => m.Subject, new { size = 30 })</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top" style="width: 100px">Message:</td>
+                                                                        <td>@Html.TextAreaFor(m => m.Body, new { style = "width: 240px;", @rows = 10, @cols = 100 })</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr id="attach">
+                                                                        <td>File Attachment:</td>
+                                                                        <td>
+                                                                            <input type="file" name="Attachments" multiple="multiple" /></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width: 100px">From Email:</td>
+                                                                        <td>@Html.TextBoxFor(m => m.Email, new { size = 30 })</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width: 100px">From Name:</td>
+                                                                        <td>@Html.TextBoxFor(m => m.FromName, new { size = 30 })</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr id="passwrd">
+                                                                        <td style="width: 100px">Password:</td>
+                                                                        <td>@Html.PasswordFor(m => m.Password, new { size = 30 })</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr id="filetabl">
+                                                                        <td>&nbsp;</td>
+                                                                        <td>
+                                                                            <table id="tblattach" class="table table-bordered table-hover">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="visibility: hidden;">ID
+                                                                                        </th>
+                                                                                        <th style="visibility: hidden;">FIleid
+                                                                                        </th>
+                                                                                        <th>File
+                                                                                        </th>
+                                                                                        <th>FilePath
+                                                                                        </th>
+                                                                                        <th>Action
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody class="tbody">
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td style="width: 100px">
+                                                                            <input class="btn btn-success" type="submit" value="Send" id="btnsent" />
+                                                                            <input type="button" id="btnclose" class="btn btn-danger" data-dismiss="modal" value="Cancel" />
+                                                                        </td>
+
+                                                                    </tr>
+                                                                    <tr style="visibility: hidden">
+                                                                        <td>@Html.TextBoxFor(m => m.ID, new { size = 30 })</td>
+                                                                    </tr>
+                                                                    <tr style="visibility: hidden">
+                                                                        <td>@Html.TextBoxFor(m => m.Date)</td>
+                                                                    </tr>
+                                                                </table>
+                                                            }
+
+
+
+
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+                                        </div>
+
+                                        @*<div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return  sentmail();">Send</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>*@
+                                    </div>
+
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        debugger;
+        $('.delUpload').on('click', function () {
+            var Id = this.id;
+            var url = "/StyleEntry/DeleteFile";
+            url = url + "?id=" + Id
+            $.get(url, function (response) {
+                $('#uploadsContainer').html(response);
+            });
+        });
+    });
+
+    function deletefile(id) {
+        debugger;
+        var Id = id;
+        var url = "/StyleEntry/DeleteFile";
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            $('#uploadsContainer').html(response);
+            nametxt = GetFilelist();
+        });
+
+        //var filterlst = $.grep(nametxt, function (item) {
+        //    return item.FileID != id;
+        //});
+
+        //nametxt = filterlst;
+
+    }
+    //function Viewfile(id) {
+    //    debugger;
+    //    var Id = id.toString();
+    //    var imgid=Id.SubString(4);
+    //    var url = "/StyleEntry/DeleteFile";
+    //    url = url + "?id=" + Id
+    //    $.get(url, function (response) {
+    //        $('#uploadsContainer').html(response);
+    //        nametxt = GetFilelist();
+    //    });
+
+
+    //}
+</script>
+
+
+
+<script type="text/javascript">
+    var isFirstLoad = true;
+    var nametxt = [];
+    var title = [];
+
+    function UploadImage() {
+        debugger;
+        if ($('#imgid').attr('src') != undefined) {
+            alert('Please Remove Old Logo...');
+            return true;
+        }
+        if ($('#txttitle').val().trim() == "") {
+            alert('Please fill the title...');
+            return true;
+        }
+        // check for size of file not greater than 1MB
+        if ($("#uploadFile").val()) {
+
+            var iSize = ($("#uploadFile")[0].files[0].size / 1024);
+            iSize = (Math.round((iSize / 1024) * 100) / 100);
+            if (iSize > 4) {
+                alert("File must be less than 4MB");
+                $('span#validityMessages').html("File must be less than 4MB");
+                return;
+            }
+            else {
+                // on form post showing Busy Indicator
+                $('#uploadLoader').show();
+                $("#ImgForm").submit();
+                console.log(iSize + "Mb");
+                var fd = $("#uploadFile")[0].files[0].name;
+
+                //nametxt.push(fd);
+                title.push($('#txttitle').val());
+            }
+        }
+            // check for no file selected for upload
+        else {
+            $('span#validityMessages').html("Please select a File of size less than 4MB!");
+            return;
+        }
+
+    }
+
+    function UploadImage_Complete() {
+        debugger;
+        //Check to see if this is the first load of the iFrame
+        if (isFirstLoad == true) {
+            isFirstLoad = false;
+            // if first ajax call for getting uploads if any exists on server against this id 
+        }
+
+        // after successfull upload refreshing partial view to get the latest uploads
+        $('#uploadLoader').hide();
+
+        //Reset the image form so the file won't get uploaded again
+        document.getElementById("ImgForm").reset();
+
+        //if (!isFirstLoad)
+        //    GetFiles();
+        nametxt = GetFilelist();
+        GetFiles();
+
+    }
+
+
+
+    function GetFiles() {
+        debugger;
+
+        var url = "/StyleEntry/GetFiles";
+        var Id = $('input#ID').val();
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            $('#uploadsContainer').html(response);
+        });
+    }
+
+    function GetFilelist() {
+        debugger;
+        var url = "/StyleEntry/GetFilelist";
+        var Id = $('input#ID').val();
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            debugger;
+            nametxt = response;
+        });
+    }
+
+</script>
+<!-- /page content -->

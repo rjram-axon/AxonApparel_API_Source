@@ -1,0 +1,35 @@
+﻿CREATE TABLE [dbo].[Cost_Defn_Component]
+(
+	[Cost_Defn_id] [int] NULL ,
+	[Cost_Defn_Compid] [int] IDENTITY(1,1) NOT NULL,
+	[Processid] [int] NULL,
+	[Itemid] [int] NULL,
+	[Colorid] [int] NULL,
+	[Sizeid] [int] NULL,
+	[Componentid] [int] NULL,
+	[Quantity] [numeric](12, 0) NOT NULL DEFAULT (0),
+	[Rate] [numeric](15, 5) NULL DEFAULT (0),
+	[AppQty] [numeric](12, 0) NOT NULL DEFAULT (0),
+	[AppRate] [numeric](15, 5) NULL DEFAULT (0),
+	[Actual_Qty] [numeric](12, 0) NOT NULL DEFAULT (0),
+	[Actual_Rate] [numeric](15, 5) NULL DEFAULT (0),
+	[DisplayOption] [char](1) NULL,
+	[FirstRate] [numeric](15, 5) NULL DEFAULT (0),
+	[Invoice_Qty] [numeric](14, 3) NULL,
+	[Invoice_Rate] [numeric](14, 3) NULL,
+	[ReturnQty] [numeric](14, 3) NULL,
+
+	FOREIGN KEY([Colorid]) REFERENCES [dbo].[color] ([colorid]),
+	FOREIGN KEY([Componentid]) REFERENCES [dbo].[component] ([componentid]),
+	FOREIGN KEY([Cost_Defn_id]) REFERENCES [dbo].[Cost_Defn_Mas] ([Cost_Defn_id]),
+	FOREIGN KEY([Itemid]) REFERENCES [dbo].[Item] ([itemid]),
+	FOREIGN KEY([Processid]) REFERENCES [dbo].[process] ([processid]),
+	FOREIGN KEY([Sizeid]) REFERENCES [dbo].[size] ([sizeid]),
+	CONSTRAINT [fk_Cost_Defn_Component_colorid] FOREIGN KEY([Colorid]) REFERENCES [dbo].[color] ([colorid]),
+	CONSTRAINT [fk_Cost_Defn_Component_Cost_Defn_id] FOREIGN KEY([Cost_Defn_id]) REFERENCES [dbo].[Cost_Defn_Mas] ([Cost_Defn_id]),
+	CONSTRAINT [fk_Cost_Defn_Component_itemid] FOREIGN KEY([Itemid]) REFERENCES [dbo].[Item] ([itemid]),
+	CONSTRAINT [fk_Cost_Defn_Component_processid] FOREIGN KEY([Processid]) REFERENCES [dbo].[process] ([processid]),
+	CONSTRAINT [fk_Cost_Defn_Component_sizeid] FOREIGN KEY([Sizeid]) REFERENCES [dbo].[size] ([sizeid]),
+
+
+)

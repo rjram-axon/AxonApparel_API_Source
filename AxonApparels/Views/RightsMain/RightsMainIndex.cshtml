@@ -1,0 +1,1270 @@
+﻿@{
+    ViewBag.Title = "RightsMainIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tblPaydetails_filter {
+        display: none;
+    }
+
+    #outputjodettab_filter {
+        display: none;
+    }
+
+    #inputsavestkdettab_wrapper {
+        display: none;
+    }
+
+    #inputsavejodettab_wrapper {
+        display: none;
+    }
+
+    #entrygridtab_paginate {
+        display: none;
+    }
+
+    #entrygridtab_info {
+        display: none;
+    }
+
+    #entrygridtab_length {
+        display: none;
+    }
+
+    #outputsavejodettab_wrapper {
+        display: none;
+    }
+
+    #tblmaindetails_paginate {
+        display: none;
+    }
+
+    #tblmaindetails_length {
+        display: none;
+    }
+
+    #tblmaindetails_info {
+        display: none;
+    }
+
+    #tblmaindetails_filter {
+        margin-top: -28px;
+    }
+
+    #outputitmtab_paginate {
+        display: none;
+    }
+
+    #outputitmtab_info {
+        display: none;
+    }
+
+    #outputitmtab_length {
+        display: none;
+    }
+
+    #outputitmtab_filter {
+        margin-top: -28px;
+    }
+
+    #outputjodettab_paginate {
+        display: none;
+    }
+
+    #outputjodettab_info {
+        display: none;
+    }
+
+    #outputjodettab_length {
+        display: none;
+    }
+
+    #outputjodettab_filter {
+        margin-top: -28px;
+    }
+
+    #inputitmtab_paginate {
+        display: none;
+    }
+
+    #inputitmtab_info {
+        display: none;
+    }
+
+    #inputitmtab_length {
+        display: none;
+    }
+
+    #inputitmtab_filter {
+        margin-top: -28px;
+    }
+
+    #inputstkdettab_paginate {
+        display: none;
+    }
+
+    #inputstkdettab_info {
+        display: none;
+    }
+
+    #inputstkdettab_length {
+        display: none;
+    }
+
+    #inputstkdettab_filter {
+        display: none;
+    }
+
+    #inputjodettab_paginate {
+        display: none;
+    }
+
+    #inputjodettab_info {
+        display: none;
+    }
+
+    #inputjodettab_length {
+        display: none;
+    }
+
+    #inputjodettab_filter {
+        display: none;
+    }
+
+    .header {
+        padding: 5px 0 5px 5px;
+        border: 1px solid #ebe8e8;
+        background-color: #337ab7;
+        color: #fff;
+    }
+
+    .btn1 {
+        margin-bottom: 5px;
+    }
+</style>
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Process/ProcessOrder.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+            <div class="">
+                <div class="row  col-md-6" style="border: 1px solid #e3dbdb; margin: 0px;">
+                    <div class="row header">
+                        <h4>User Rights</h4>
+                    </div>
+                    <div class="row ">
+                        @* <div class="col-md-4">
+                           <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12">
+                                        Company
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMCompany" class="form-control" onchange="CMainlist();"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Process
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMProcess" class="form-control" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Unit
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMUnit" class="form-control" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                               <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ex3">From Date</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>*@
+                        <div class="">
+                            <form class="form-horizontal form-label-left input_mask">
+
+
+                                <div class="form-group">
+
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <div class="maxl" style="text-align: center;">
+                                            <label class="radio inline">
+                                                <input type="radio" checked value="P" name="proctype" onchange="CMainlist();">
+                                                <span>Group</span>
+                                            </label>
+                                            <label class="radio inline">
+                                                <input type="radio" value="W" name="proctype" onchange="CMainlist();">
+                                                <span>User</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row col-md-12">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <input type="text" id="txtFromDate" class="form-control " placeholder="User Name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <select multiple size="16" style="width: 100%;">
+                                                    <option value="Admin" selected="selected">Administrator</option>
+                                                    <option value="User">User</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="" style="margin-bottom: 5px; width: 120px">Menu Rights</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" onclick="" style="margin-bottom: 5px; width: 120px">Master Rights</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" onclick="" style="margin-bottom: 5px; width: 120px">Query Rights</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal3" onclick="" style="margin-bottom: 5px; width: 120px">Doc. Rights</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal4" onclick="" style="margin-bottom: 5px; width: 120px">Form Rights</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal5" onclick="" style="margin-bottom: 5px; width: 120px">Statement</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal6" onclick="" style="margin-bottom: 5px; width: 120px">Add</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal7" onclick="" style="margin-bottom: 5px; width: 120px">Edit</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal8" onclick="" style="margin-bottom: 5px; width: 120px">Remove</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal9" onclick="" style="margin-bottom: 5px; width: 120px">View All</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            @*   <div class="row">
+              
+                <div class="col-md-12">
+                    <div class="x_panel" style="height: 30px;">
+                        <div class="col-md-2">
+                            <h2 style="margin-top: -5px;">Order Type</h2>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="maxl" style="margin-top: -15px;margin-left:-45px">
+                                <label class="radio inline">
+                                    <input type="radio" id="optoutwrkord" name="optwrkord" checked value="B" onchange="CMainlist();">
+                                    <span>Buyer Order</span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" id="optoutsaemord" name="optwrkord" value="S" onchange="CMainlist();">
+                                    <span>Sample Order  </span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" id="optouetsamord" name="optwrkord" value="G" onchange="CMainlist();">
+                                    <span>General </span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" id="optouetsamord" name="optwrkord" value="G" onchange="CMainlist();">
+                                    <span>All </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            @* Load datatable css *@
+
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+            @* <div class="x_panel">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="ClearTextbox();">Add New</button>
+                <form class="form-horizontal form-label-left input_mask">
+                    <div class="form-group">
+                        <table id="tblmaindetails" class="table table-bordered table-hover">
+                            <thead>
+                            </thead>
+                        </table>
+                    </div>
+                </form>
+
+            </div>*@
+            <div class="modal fade" style="overflow-y:scroll" id="myModal7" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 40%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">User Group Edit</h4>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="x_panel" style="margin-top: 10px;">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">Group Name</label>
+                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                        <input type="text" id="" class="form-control " placeholder="Group Name">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">Description</label>
+                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                        <textarea class="form-control" placeholder="Description"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">Group Type</label>
+                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                        <input type="text" id="" class="form-control " placeholder="Group Type">
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <button type="button" style="float: right;" class="btn btn-primary" data-toggle="modal" onclick="LoadData();">Close</button>
+                                        <button type="button" style="float: right;" class="btn btn-primary" data-toggle="modal" onclick="LoadData();">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @*                        <div class="modal-footer" style="border: none;">
+                            <button class="btn btn-success btn-round" id="btnAdd" onclick="Add();">Save</button>
+                            <button class="btn  btn-success btn-round" onclick="Update();" id="btnUpdate">Update</button>
+                            <button class="btn btn-danger btn-round" onclick="Delete();" id="btnDel">Delete</button>
+                            <button class="btn btn-danger btn-round" onclick="backtomain();">Close</button>
+                        </div>*@
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" style="overflow-y:scroll" id="myModal6" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="min-width: 40%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">User Group Add</h4>
+            </div>
+            <div class="col-md-12">
+                <div class="x_panel" style="margin-top: 10px;">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">User Name</label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" id="" class="form-control " placeholder="User Name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">User Group</label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" id="" class="form-control " placeholder="User Group">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">Group Type</label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" id="" class="form-control " placeholder="Group Type">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">Password</label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="password" id="" class="form-control ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">Confirm</label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="password" id="" class="form-control ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">Employee</label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" id="" class="form-control " placeholder="Employee">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">Secret Question</label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" id="" class="form-control ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">Answer</label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" id="" class="form-control ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label"></label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="checkbox" id=""><label>User Can Change Password</label>
+                                        </div>
+                                    </div>
+
+
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <form class="form-horizontal form-label-left input_mask">
+                        <div class="form-group">
+                            <button type="button" style="float: right;" class="btn btn-primary" data-toggle="modal" onclick="LoadData();">Close</button>
+                            <button type="button" style="float: right;" class="btn btn-primary" data-toggle="modal" onclick="LoadData();">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*                        <div class="modal-footer" style="border: none;">
+                            <button class="btn btn-success btn-round" id="btnAdd" onclick="Add();">Save</button>
+                            <button class="btn  btn-success btn-round" onclick="Update();" id="btnUpdate">Update</button>
+                            <button class="btn btn-danger btn-round" onclick="Delete();" id="btnDel">Delete</button>
+                            <button class="btn btn-danger btn-round" onclick="backtomain();">Close</button>
+                        </div>*@
+</div>
+                </div>
+
+            </div>
+
+
+
+<div class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="min-width: 40%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Master Rights</h4>
+            </div>
+            <div class="col-md-12">
+                <div class="x_panel" style="margin-top: 10px;">
+                    <div class="row">
+
+                        <div class="right_col" role="main">
+                            <div class="">
+                                <div class="clearfix"></div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="x_panel">
+
+
+                                            <div class="container" style="margin-top: 30px;">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <ul id="tree1">
+
+
+                                                            <li><a href="#">Master</a>
+
+                                                                <ul>
+                                                                    <li>Company
+                            <ul>
+                                <li>Company</li>
+                                <li>Production Unit</li>
+                                <li>Work Division</li>
+                                <li>Store</li>
+                                <li>Store Section</li>
+                            </ul>
+                                                                    </li>
+                                                                    <li>Interactors
+                            <ul>
+                                <li>Company</li>
+                                <li>Production Unit</li>
+                                <li>Work Division</li>
+                                <li>Store</li>
+                                <li>Store Section</li>
+                            </ul>
+                                                                    </li>
+                                                                    <li>Item
+                            <ul>
+                                <li>Company</li>
+                                <li>Production Unit</li>
+                                <li>Work Division</li>
+                                <li>Store</li>
+                                <li>Store Section</li>
+                            </ul>
+                                                                    </li>
+                                                                    <li>Order Elements
+                            <ul>
+                                <li>Company</li>
+                                <li>Production Unit</li>
+                                <li>Work Division</li>
+                                <li>Store</li>
+                                <li>Store Section</li>
+                            </ul>
+                                                                    </li>
+                                                                    <li>Commercial
+                            <ul>
+                                <li>Company</li>
+                                <li>Production Unit</li>
+                                <li>Work Division</li>
+                                <li>Store</li>
+                                <li>Store Section</li>
+                            </ul>
+                                                                    </li>
+                                                                    <li>Territory
+                            <ul>
+                                <li>Company</li>
+                                <li>Production Unit</li>
+                                <li>Work Division</li>
+                                <li>Store</li>
+                                <li>Store Section</li>
+                            </ul>
+                                                                    </li>
+                                                                    <li>Employee
+                            <ul>
+                                <li>Company</li>
+                                <li>Production Unit</li>
+                                <li>Work Division</li>
+                                <li>Store</li>
+                                <li>Store Section</li>
+                            </ul>
+                                                                    </li>
+                                                                    <li>Tally
+                            <ul>
+                                <li>Company</li>
+                                <li>Production Unit</li>
+                                <li>Work Division</li>
+                                <li>Store</li>
+                                <li>Store Section</li>
+                            </ul>
+                                                                    </li>
+                                                                    <li>Lab
+                            <ul>
+                                <li>Company</li>
+                                <li>Production Unit</li>
+                                <li>Work Division</li>
+                                <li>Store</li>
+                                <li>Store Section</li>
+                            </ul>
+                                                                    </li>
+                                                                    <li>Documentation
+                            <ul>
+                                <li>Company</li>
+                                <li>Production Unit</li>
+                                <li>Work Division</li>
+                                <li>Store</li>
+                                <li>Store Section</li>
+                            </ul>
+                                                                    </li>
+                                                                    <li>Vehicle
+                            <ul>
+                                <li>Company</li>
+                                <li>Production Unit</li>
+                                <li>Work Division</li>
+                                <li>Store</li>
+                                <li>Store Section</li>
+                            </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>Template
+                    <ul>
+                        <li>Company Maintenance</li>
+                        <li>Employees
+                            <ul>
+                                <li>Reports
+                                    <ul>
+                                        <li>Report1</li>
+                                        <li>Report2</li>
+                                        <li>Report3</li>
+                                    </ul>
+                                </li>
+                                <li>Employee Maint.</li>
+                            </ul>
+                        </li>
+                        <li>Human Resources</li>
+                    </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            $.fn.extend({
+                                treed: function (o) {
+
+                                    var openedClass = 'glyphicon-minus-sign';
+                                    var closedClass = 'glyphicon-plus-sign';
+
+                                    if (typeof o != 'undefined') {
+                                        if (typeof o.openedClass != 'undefined') {
+                                            openedClass = o.openedClass;
+                                        }
+                                        if (typeof o.closedClass != 'undefined') {
+                                            closedClass = o.closedClass;
+                                        }
+                                    };
+
+                                    //initialize each of the top levels
+                                    var tree = $(this);
+                                    tree.addClass("tree");
+                                    tree.find('li').has("ul").each(function () {
+                                        var branch = $(this); //li with children ul
+                                        branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
+                                        branch.addClass('branch');
+                                        branch.on('click', function (e) {
+                                            if (this == e.target) {
+                                                var icon = $(this).children('i:first');
+                                                icon.toggleClass(openedClass + " " + closedClass);
+                                                $(this).children().children().toggle();
+                                            }
+                                        })
+                                        branch.children().children().toggle();
+                                    });
+                                    //fire event from the dynamically added icon
+                                    tree.find('.branch .indicator').each(function () {
+                                        $(this).on('click', function () {
+                                            $(this).closest('li').click();
+                                        });
+                                    });
+                                    //fire event to open branch if the li contains an anchor instead of text
+                                    tree.find('.branch>a').each(function () {
+                                        $(this).on('click', function (e) {
+                                            $(this).closest('li').click();
+                                            e.preventDefault();
+                                        });
+                                    });
+                                    //fire event to open branch if the li contains a button instead of text
+                                    tree.find('.branch>button').each(function () {
+                                        $(this).on('click', function (e) {
+                                            $(this).closest('li').click();
+                                            e.preventDefault();
+                                        });
+                                    });
+                                }
+                            });
+
+                            //Initialization of treeviews
+
+                            $('#tree1').treed();
+
+                            $('#tree2').treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+
+                            $('#tree3').treed({ openedClass: 'glyphicon-chevron-right', closedClass: 'glyphicon-chevron-down' });
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <form class="form-horizontal form-label-left input_mask">
+                        <div class="form-group">
+                            <button type="button" style="float: right;" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" onclick="LoadData();">Close</button>
+                            <button type="button" style="float: right;" class="btn btn-primary" data-toggle="modal" onclick="LoadData();">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*                        <div class="modal-footer" style="border: none;">
+                            <button class="btn btn-success btn-round" id="btnAdd" onclick="Add();">Save</button>
+                            <button class="btn  btn-success btn-round" onclick="Update();" id="btnUpdate">Update</button>
+                            <button class="btn btn-danger btn-round" onclick="Delete();" id="btnDel">Delete</button>
+                            <button class="btn btn-danger btn-round" onclick="backtomain();">Close</button>
+                        </div>*@
+</div>
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="modal fade" style="overflow-y:scroll" id="myModal#" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 74%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Process Order</h4>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="x_panel" style="margin-top: 10px;">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-6 col-xs-12">
+                                                        Order No
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtOrderNo" class="form-control " placeholder="Order No" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display: none;">
+                                                    <label class="control-label col-md-3 col-sm-6 col-xs-12">
+                                                        Issue No
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtIssueNo" class="form-control " placeholder="Issue No" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                        Order Date
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtOrderDate" class="form-control " placeholder="Date">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                        Deli Date
+                                                    </label>
+                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtDeliDate" class="form-control " placeholder="Date">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                        Processor
+                                                    </label>
+                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtProcessor" class="form-control " placeholder="Processor" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display: none;">
+                                                    <label class="control-label col-md-3 col-sm-6 col-xs-12">
+                                                        Issue Id
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtIssueId" class="form-control " placeholder="Issue No" disabled>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                        Process
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtProcess" class="form-control " placeholder="Process" disabled>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-6 col-xs-12">
+                                                        Unit
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtUnit" class="form-control " placeholder="Unit" disabled>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="x_panel" style="width: 97.8%; margin-left: 11px;">
+                                    <h2 style="margin-top: -5px;">Input Items</h2>
+                                    <div class="col-md-12">
+                                        <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover" border="1" id="inputitmtab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SNo</th>
+                                                            <th>Itemid</th>
+                                                            <th>Output Item</th>
+                                                            <th>Colorid</th>
+                                                            <th>Category I</th>
+                                                            <th>SIzeid</th>
+                                                            <th>Category II</th>
+                                                            <th>Ord Qty</th>
+                                                            <th>Prog Qty</th>
+                                                            <th>Balance</th>
+                                                            <th>Output</th>
+                                                            <th>IssueQty</th>
+                                                            <th>Sec Qty</th>
+                                                            <th>Apply</th>
+                                                            <th>View</th>
+
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <h2 style="margin-top: -5px; margin-left: -10px;">Program AdjustMents</h2>
+                                        <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover" border="1" id="inputjodettab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sno</th>
+                                                            <th>Prdprgdetid</th>
+                                                            <th>Itmid</th>
+                                                            <th>Clrid</th>
+                                                            <th>Sizeid</th>
+                                                            <th>ProdProgNo</th>
+                                                            <th>Job Ord No</th>
+                                                            <th>Prog Qty</th>
+
+                                                            <th>Adj Qty</th>
+                                                            <th>Sec Qty</th>
+                                                            <th>View</th>
+
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <table class="table table-bordered table-hover" border="1" id="inputsavejodettab" style="display: none">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sno</th>
+                                                            <th>Prdprgdetid</th>
+                                                            <th>Itmid</th>
+                                                            <th>Clrid</th>
+                                                            <th>Sizeid</th>
+                                                            <th>ProdProgNo</th>
+                                                            <th>Job Ord No</th>
+                                                            <th>Prog Qty</th>
+                                                            <th>Adj Qty</th>
+                                                            <th>Sec Qty</th>
+
+
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <h2 style="margin-top: -5px; margin-left: -10px;">Stock Info</h2>
+                                        @*<div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <form class="form-horizontal form-label-left input_mask">
+                                                                            <div class="form-group" style="margin-left: -10px;">
+                                                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                                                    Last Process
+                                                                                </label>
+                                                                                <div class="col-md-5 col-sm-9 col-xs-12">
+                                                                                    <select id="ddlLastProcess" class="form-control">
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-md-3 col-sm-9 col-xs-12">
+                                                                                    <button type="button" class="btn btn-success">Fill</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>*@
+                                        <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover" border="1" id="inputstkdettab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Stockid</th>
+                                                            <th>Itmid</th>
+                                                            <th>Clrid</th>
+                                                            <th>Sizeid</th>
+                                                            <th>Document No</th>
+                                                            <th>JobOrdNo</th>
+                                                            <th>Lot No</th>
+                                                            <th>Stock </th>
+                                                            <th>Issues</th>
+                                                            <th>Process</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                                <table class="table table-bordered table-hover" border="1" id="inputsavestkdettab" style="display: none">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Stockid</th>
+                                                            <th>Itmid</th>
+                                                            <th>Clrid</th>
+                                                            <th>Sizeid</th>
+                                                            <th>JobOrdNo</th>
+                                                            <th>Lot No</th>
+                                                            <th>Stock </th>
+                                                            <th>Issues</th>
+                                                            <th>Process</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="x_panel" style="width: 97.8%; margin-left: 11px;">
+                                    <h2 style="margin-top: -5px;">Output Items</h2>
+                                    <div class="col-md-12">
+                                        <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover" border="1" id="outputitmtab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="display: none;">SNo</th>
+                                                            <th style="display: none;">Itemid</th>
+                                                            <th>Output Item</th>
+                                                            <th style="display: none;">Colorid</th>
+                                                            <th>Category I</th>
+                                                            <th style="display: none;">Sizeid</th>
+                                                            <th>Category II</th>
+                                                            <th>Rate</th>
+                                                            <th>Prog Qty</th>
+                                                            <th>Balance</th>
+                                                            <th>Output</th>
+                                                            <th style="display: none;">Sec Qty</th>
+                                                            <th style="display: none;">Apply</th>
+                                                            <th>View</th>
+
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <h2 style="margin-top: -5px;">Program AdjustMents</h2>
+                                    <div class="col-md-12">
+                                        <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover" border="1" id="outputjodettab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sno</th>
+                                                            <th>Prdprgdetid</th>
+                                                            <th>Itmid</th>
+                                                            <th>Clrid</th>
+                                                            <th>Sizeid</th>
+                                                            <td>ProdProgNo</td>
+                                                            <td>Job Ord No</td>
+                                                            <td>Prog Qty</td>
+                                                            <td>Balance</td>
+                                                            <td>Adj Qty</td>
+                                                            <td>Sec Qty</td>
+
+
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <table class="table table-bordered table-hover" border="1" id="outputsavejodettab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sno</th>
+                                                            <th>Prdprgdetid</th>
+                                                            <th>Itmid</th>
+                                                            <th>Clrid</th>
+                                                            <th>Sizeid</th>
+                                                            <td>ProdProgNo</td>
+                                                            <td>Job Ord No</td>
+                                                            <td>Prog Qty</td>
+                                                            <td>Balance</td>
+                                                            <td>Adj Qty</td>
+                                                            <td>Sec Qty</td>
+
+
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                @* <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                                <div class="form-group" style="margin-left: -10px;">
+                                                                                    <label class="control-label col-md-12 col-sm-3 col-xs-12">
+                                                                                        Item Remarks
+                                                                                    </label>
+                                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                                        <textarea class="form-control" rows="4" placeholder="Remarks" id="txtitmrem"></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+
+                                                                        </div>
+                                                                    </div>*@
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="x_panel">
+                                <h2 style="margin-top: -5px;">Add / Less</h2>
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group" style="margin-left: -10px;">
+                                        <label class="col-md-4 col-sm-3 col-xs-12 control-label">
+                                            Gross Amt
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" id="txtGrossAmt" class="form-control " placeholder="Gross Amount">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <table class="table table-bordered table-hover" border="1">
+                                            <tr>
+
+                                                <td>AccountHeads</td>
+                                                <td>+/-</td>
+                                                <td>Percentage</td>
+                                                <td>Amount</td>
+
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr class="mycontainer" id="maincomborow">
+                                                <td>
+                                                    <select id="ddlAcc" class="form-control" onchange="LoadPlusAdd();">
+                                                    </select>
+                                                    <span class="error">Select AccHeads</span>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="txtPorMins" class="form-control" placeholder="PlusOrMinus" disabled>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="txtPer" class="form-control" placeholder="Percent" onchange="LoadNetAmount();">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="txtAmount" class="form-control" placeholder="Amount" disabled>
+                                                </td>
+
+                                                <td>
+                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnImadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnImupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div id="CListP">
+                                            <table class="table table-responsive" id="tblPaydetails">
+                                                <thead>
+                                                    <tr>
+                                                        <th>AddlessId
+                                                        </th>
+                                                        <th>AccountsHead
+                                                        </th>
+                                                        <th>+/-
+                                                        </th>
+                                                        <th>Percent
+                                                        </th>
+                                                        <th>Amount
+                                                        </th>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+                                            <span id="orderItemError3" style="color: red"></span>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group" style="margin-left: -7px;">
+                                        <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                            Net Amt
+                                        </label>
+                                        <div class="col-md-3 col-sm-9 col-xs-12">
+                                            <input type="text" id="txtNetAmt" class="form-control " placeholder="Net Amount" style="margin-left: -15px;">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="x_panel" style="height: 160px;">
+                                <h2 style="margin-top: -5px;">Dispatch To Location</h2>
+                                <div class="maxl" style="margin-top: -13px;">
+                                    <label class="radio inline">
+                                        <input type="radio" checked value="B" onchange="CMainlist();">
+                                        <span>Self </span>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" value="S" onchange="CMainlist();">
+                                        <span>Other Unit</span>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" value="S" onchange="CMainlist();">
+                                        <span>Procesor</span>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" value="S" onchange="CMainlist();">
+                                        <span>Other Company</span>
+                                    </label>
+                                </div>
+
+                                <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-3 col-xs-12 control-label">
+                                            Production Unit
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <select id="ddlProductionUnit" class="form-control" onchange="CMainlist();"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-3 col-xs-12 control-label">
+                                            Address
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <textarea class="form-control" rows="4" placeholder="Address" id="txtLocAdd"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-7">
+                                <form class="form-horizontal form-label-left input_mask" style="margin-left: -18px; margin-top: -18px;">
+
+                                    <div class="form-group">
+                                        <label class="col-md-12 col-sm-3 col-xs-12 control-label">
+                                            Remarks
+                                        </label>
+                                        <div class="col-md-12 col-sm-9 col-xs-12">
+                                            <textarea class="form-control" rows="4" placeholder="Remarks" id="txtremarks"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="col-md-5">
+                                <div class="modal-footer" style="border: none; margin-top: 20px; display: inline-flex; margin-left: 20px;">
+                                    <button class="btn btn-success btn-round" id="btnAdd" onclick="Check();">Save</button>
+                                    <button class="btn  btn-success btn-round" onclick="ChkUpdate();" id="btnUpdate">Update</button>
+                                    <button class="btn btn-danger btn-round" onclick="ChkDelete();" id="btnDel">Delete</button>
+                                    <button class="btn btn-danger btn-round" onclick="backtomain();" style="margin-right: 5px;">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+</div>
+    </div>
+</div>
+           
+           
+           

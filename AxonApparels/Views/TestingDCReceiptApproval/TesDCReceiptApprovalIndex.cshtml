@@ -1,0 +1,329 @@
+﻿@{
+    ViewBag.Title = "TesDCReceiptApprovalIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    @* margin-top: -29px !important;*@
+    #tbody_filter {
+       
+    }
+    .add_btn {
+    width: 20px; padding: 2px; height: 20px;margin-left: -16px;
+    }
+
+    #tblTesttypedetails_filter
+    {
+        display: none;
+    }
+
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#dtDCDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#dtbillDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+
+<script src="~/AxonScripts/OrderProcessing/TestingDCReceiptApproval.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Testing DC Approval</h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+
+                            @*@if (ViewBag.TestingDCReceiptApprovalAddFlg == "true")
+                            { 
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="ClearTextbox();">Add New Testing DC Approval</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" disabled>Add New Testing DC Approval</button>
+                            }*@
+
+                            <table id="tbody" class="table table-bordered table-hover">
+                            </table>
+                        </div>
+                        @* Load datatable css *@
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>                                           
+                            </script>
+                        }
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 82%;">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Testing DC Approval</h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="x_panel">
+                                            <div class="row">
+                                                <div class="row">
+                                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Company</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <select id="ddlCompany" class="form-control" disabled>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">DC No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <select id="ddldcno" onchange="LoadDCNoDetail();" class="form-control" disabled>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Bill No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtbillno" class="form-control col-md-10" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Test Value</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txttestvalue" class="form-control col-md-10" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">SGST %</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12" style="padding: 0">
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" id="txtsgstper" class="form-control" disabled>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" id="txtsgstval" class="form-control" disabled>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Order Ref No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtordrefno" class="form-control col-md-10" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">DC Recpt No.<span style="color: red;"> *</span></label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtdcreceiptno" placeholder="DC Recpt No" class="form-control col-md-10" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Supplier</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <select id="ddlSupplier" class="form-control" disabled>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Bill Date</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" placeholder="Bill Date" id="dtbillDate" class="form-control" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">GST Tax</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <select id="ddlaccheads" class="form-control" disabled>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">IGST %</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12" style="padding: 0">
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" id="txtigstper" class="form-control" disabled>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" id="txtigstval" class="form-control" disabled>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">DC Recpt Date.<span style="color: red;"> *</span></label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" placeholder="DC Date" id="dtDCDate" class="form-control" disabled>
+                                                                </div>
+                                                            </div>
+                                                            @*<div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Test On</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <select id="ddlteston" class="form-control">
+                                                                        <option value="0">--Select--</option>
+                                                                        <option value="1">Garment</option>
+                                                                        <option value="2">Fabric</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>*@
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Order No</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <select id="ddlOrderNo" class="form-control" disabled>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Remarks</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtremarks" class="form-control col-md-10" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">CGST %</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12" style="padding: 0">
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" id="txtcgstper" class="form-control" disabled>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" id="txtcgstval" class="form-control" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">Total Value</label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txttotvalue" class="form-control col-md-10" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                @*<div class="row">
+                                                    <div class="form-group">
+                                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                                            <div class="maxl " style="margin-top: -9px; margin-left: 9px;">
+                                                                <label class="radio inline">
+                                                                    <input type="radio" name="optwrkord" checked value="P" onchange="RadioMBClick();">
+                                                                    <span>Processor</span>
+                                                                </label>
+                                                                <label class="radio inline" style="">
+                                                                    <input type="radio" name="optwrkord" value="W" onchange="RadioMBClick();">
+                                                                    <span>Work Division</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                                            <div class="col-md-12" id="supp">
+                                                                <select id="ddlprosupplier" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-12" id="wrkdiv">
+                                                                <select id="ddlwrkdiv" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @*<table class="table table-bordered table-hover" border="1">
+                                            <tr>
+                                                <td style="width: 150px;">Test Type</td>
+                                                <td>Test Pcs</td>
+                                                <td>Rate Per Pcs</td>
+                                                <td>Value</td>
+                                                <td>Tax Appl Val</td>
+                                            </tr>
+                                            <tr class="mycontainer" id="mainsampletyperow">
+                                                <td>
+                                                    <select id="ddltesttype" class="form-control">
+                                                    </select>
+                                                    <span class="error">Select Test Type</span>
+                                                </td>
+
+                                                <td>
+                                                    <input type="text" id="txttestpcs" class="form-control" placeholder="Test Pcs">                                                    
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="txtRateperpcs" class="form-control" placeholder="Rate Per Pcs">                                                    
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="txtvalue" class="form-control" placeholder="Value">                                                    
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="txttaxapplval" class="form-control" placeholder="Tax Appl Val">                                                    
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-primary add_btn" id="btnsampletypeadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                    <button class="btn btn-primary add_btn" id="btnsampletypeupdate" type="button" data-toggle="tooltip" data-placement="top" title="Update"><i class="fa fa-refresh"></i></button>
+                                                </td>
+                                            </tr>
+                                        </table>*@
+                                        <div id="SampleTypeList">
+                                            <table class="table table-responsive" id="tblTestdcdetails">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="display: none;">
+                                                        RowSeq
+                                                        <th style="display: none;">TestTypeID
+                                                        </th>
+                                                        <th>Test Type
+                                                        </th>
+                                                        <th>Test Pcs
+                                                        </th>
+                                                        <th>Rate Per Pcs
+                                                        </th>
+                                                        <th>Value
+                                                        </th>
+
+                                                        @*<th>Action
+                                                        </th>*@
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                            @*<span id="orderItemError" style="color: red"></span>*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnApprove" onclick="return Approve();">Approve</button>
+                                        @*<button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="return Update();">Update</button>
+                                        <button type="button" class="btn btn-success" id="btnDel" style="display: none;" onclick="return DeleteRecord();">Delete</button>*@
+                                        <button type="button" class="btn btn-danger" onclick="fnClose();">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

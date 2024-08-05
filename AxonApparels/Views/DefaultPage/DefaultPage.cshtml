@@ -1,0 +1,682 @@
+﻿@model List<AxonApparel.Domain.BuyOrdImg>
+
+@{
+    ViewBag.Title = "DefaultPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/AxonScripts/Common/highcharts.js"></script>
+<script src="~/AxonScripts/Common/data.js"></script>
+<script src="~/AxonScripts/Common/drilldown.js"></script>
+<script src="~/AxonScripts/Common/exporting.js"></script>
+<script src="~/AxonScripts/Common/export-data.js"></script>
+<script src="~/AxonScripts/Common/accessibility.js"></script>
+<script src="~/AxonScripts/Dashboard/OrderDashboard.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtDeliDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#ItemtxtFromDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+            }
+        });
+        $('#ItemtxtToDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+            }
+        });
+        $('#OrdertxtFromDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+            }
+        });
+        $('#OrdertxtToDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+            }
+        });
+        $('#ProdtxtFromDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+            }
+        });
+        $('#ProdtxtToDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+            }
+        });
+        $('#BuytxtFromDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+            }
+        });
+        $('#BuytxtToDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+            }
+        });
+        $('#DisptxtFromDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+            }
+        });
+        $('#DisptxtToDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+            }
+        });
+
+        $("#goStygly").click(function () {
+            window.open("/StyleGallery/StyleGalleryIndex");
+        });
+
+
+    });
+</script>
+<style>
+     .gg-chevron-right-o {
+ box-sizing: border-box;
+ position: relative;
+ display: block;
+ transform: scale(var(--ggs,1));
+ width: 21px;
+ height: 21px;
+ border: 2px solid;
+ border-radius: 100px
+}
+
+.gg-chevron-right-o::after {
+ content: "";
+ display: block;
+ box-sizing: border-box;
+ position: absolute;
+ width: 6px;
+ height: 6px;
+ border-bottom: 2px solid;
+ border-right: 2px solid;
+ transform: rotate(-45deg);
+ left: 5px;
+ top: 6px
+} 
+.gg-spinner {
+    transform: scale(var(--ggs,1))
+}
+.gg-spinner,
+.gg-spinner::after,
+.gg-spinner::before {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px
+}
+.gg-spinner::after,
+.gg-spinner::before {
+    content: "";
+    position: absolute;
+    border-radius: 100px
+}
+.gg-spinner::before {
+    animation: spinner 1s
+    cubic-bezier(.6,0,.4,1) infinite;
+    border: 3px solid transparent;
+    border-top-color: currentColor
+}
+.gg-spinner::after {
+    border: 3px solid;
+    opacity: .2
+}
+@@-webkit-keyframes spinner {
+    0% { transform: rotate(0deg) }
+    to { transform: rotate(359deg) }
+}
+
+
+  .carousel-inner img
+    {
+        width: 100%;
+        height: 30%;
+    }
+
+  .carousel-caption {
+    position: absolute;
+    /*right: 23%;*/
+    bottom: -100px;
+    /* left: 15%; */
+    z-index: 10;
+    /*padding-top: 20px;*/
+     /*padding-bottom: 20px;*/ 
+    color: #fff;
+    text-align: center;
+    
+    text-shadow:0 2px 1px rgb(77 0 179 / 60%);
+}
+    .sty_gal_text {
+    border-radius:10px;
+    white-space:nowrap;
+    background:linear-gradient(180deg, #6afdcd, transparent);
+    }
+</style>
+<!-- page content -->
+<div class="right_col" role="main">
+
+    <div class="row top_tiles">
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-envelope purple"></i></div>
+                <div class="count purple" id="cntTotOrder">0</div>
+
+                <h3>Total Order</h3>
+
+            </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-check-square-o green"></i></div>
+                <div class="count green" id="cntTotDes">0</div>
+                <h3>Total Despatched</h3>
+
+            </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-thumbs-down red"></i></div>
+                <div class="count red" id="cntInProgress">0</div>
+                <h3>Work InProgress</h3>
+
+            </div>
+        </div>
+      @*  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-dollar blue"></i></div>
+                <div class="count blue" id="cntTotalEarned">0</div>
+                <h3>Total Earned</h3>
+
+            </div>
+        </div>*@
+
+
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+             <div class="tile-stats" id="">
+              <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <!-- Carousel container -->
+                <div id="my-picspar" class="carousel slide" data-ride="carousel" style="width: 237px; margin: auto; height:86px;margin-top:2px;">
+
+                    <!-- Content -->
+                    <div class="carousel-inner" role="listbox" id="goStygly">
+
+
+@*                         @{int i = 0;}  
+                @foreach (var item in Model)
+                {
+                    i++;
+                    var active = i == 1 ? "active" : "";  
+                    <div class="item @active">  
+                         <div class="col-md-6 col-sm-6 col-xs-6">
+                        <img src="@Url.Content(@item.Imgpath)" alt="@item.Imgtitle" style="height:80px;"> </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                         <img src="@Url.Content(@item.Imgpath)" alt="@item.Imgtitle" style="height:80px;"> </div>
+                    </div>*@
+                    
+                 
+                    
+                    
+                    @* 
+                    <div class="carousel-caption">
+<h3>Rob Roy Glacier</h3>
+<p>You can almost touch it!</p>
+</div>*@
+                     
+                @*}*@  
+
+
+
+                           @if (Model.Count > 1)
+                           {
+                               for (int t = 0; Model.Count > t; t++)
+                               {
+
+
+                                   var active2 = t == 1 ? "active" : "";  
+                    <div class="item @active2">  
+                         <div class="col-md-6 col-sm-6 col-xs-6">
+                        <img src="@Url.Content(Model[t].Imgpath)" alt="@Model[t].Imgtitle" style="height:80px;" > </div>
+                       
+
+                            @if (Model.Count > 1)
+                            {
+                                if ((t + 1) == Model.Count)
+                                {
+                                     <div class="col-md-6 col-sm-6 col-xs-6">
+                                 <img src="@Url.Content(@Model[0].Imgpath)" alt="@Model[0].Imgtitle" style="height:80px;" > </div>
+                                }
+                                else
+                                {
+                                     <div class="col-md-6 col-sm-6 col-xs-6">
+
+                         <img src="@Url.Content(@Model[t + 1].Imgpath)" alt="@Model[t + 1].Imgtitle" style="height:80px;" > </div>
+                                }
+                            }
+
+                           <div class="carousel-caption">
+@*<h3>Rob Roy Glacier</h3>*@
+<p style="font-size:15px;font-family:Aharoni;" class="sty_gal_text" >STYLE GALLERY</p>
+
+</div>
+
+
+                        </div>
+                      
+                               }
+                           }
+
+                           else if (Model.Count == 1)
+                           {
+
+
+                             
+                    <div class="item active">  
+                         <div class="col-md-12 col-sm-12 col-xs-12">
+                        <img src="@Url.Content(Model[0].Imgpath)" alt="@Model[0].Imgtitle" style="height:80px;width:80px;" > </div>
+                       
+                           <div class="carousel-caption">
+<p style="font-size:15px;font-family:Aharoni;" class="sty_gal_text" >STYLE GALLERY</p>
+                                
+</div>
+
+                        </div>
+                           
+                           }
+                           else
+                           {
+                        
+                          <div> <img src="~/images/No-Image-Placeholder.svg.png"  style="height:92px;width:150px;"> </div>
+                           }
+
+                    </div>
+
+                    <!-- Previous/Next controls -->
+                    <a class="left carousel-control" href="#my-picspar" role="button" data-slide="prev">
+                        <span class="icon-prev" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#my-picspar" role="button" data-slide="next">
+                        <span class="icon-next" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+  </div>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="row">
+
+
+
+        @*              <div class="col-md-6 col-sm-6 col-xs-12 widget_tally_box">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Total Earned</h2>
+                    
+                         <div class="x_content">
+                    <div id="graph_bar" style="width:100%; height:200px;"></div>
+
+
+                    <div class="clearfix"></div>
+
+
+
+                  </div>
+
+                  
+                  </div>
+                  <div class="x_content">
+
+                    <div id="container1"  style="width:100%; height:315px;"></div>
+
+                    
+                  </div>
+                </div>
+              </div>*@
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                 <div class="x_title">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                            <h2>Order Status</h2>
+                        </div>
+                        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-2 col-xs-2" for="ex3">From:</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="text" class="form-control " style="height:20px;font-size:10pt;" placeholder="FromDate" id="OrdertxtFromDate">
+                                </div>
+                                <label class="control-label col-lg-1 col-md-1 col-sm-1 col-xs-1" for="ex3">To:</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="text" class="form-control " style="height:20px;font-size:10pt;" placeholder="ToDate" id="OrdertxtToDate">
+                                    
+                                </div> 
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                    <i class="gg-chevron-right-o" id="OrderStatus1" onclick="fnGetOrderDetails();"></i>
+                                    <i class="gg-spinner" id="OrderStatus2" style="display:none"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @*      <div id="graph_bar" style="width:100%; height:390px;"></div>*@
+
+                    <div id="container" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                            <h2>Production Status</h2>
+                        </div>
+                        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-2 col-xs-2" for="ex3">From:</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="text" class="form-control " style="height:20px;font-size:10pt;" placeholder="FromDate" id="ProdtxtFromDate">
+                                </div>
+                                <label class="control-label col-lg-1 col-md-1 col-sm-1 col-xs-1" for="ex3">To:</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="text" class="form-control " style="height:20px;font-size:10pt;" placeholder="ToDate" id="ProdtxtToDate">
+                                    
+                                </div> 
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                    <i class="gg-chevron-right-o" id="ProductionStatus1" onclick="fnGetDesDetails();"></i>
+                                    <i class="gg-spinner" id="ProductionStatus2" style="display:none"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @*      <div id="graph_bar" style="width:100%; height:390px;"></div>*@
+
+                    <div id="container1" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- start of weather widget -->
+        @*              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>How it works</h2>
+                    
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="panel-body">Apparel + is a “Perfect Suite” that automates the entire operations of the garment manufacturing process with seamless integration at all levels and web enabled. Today, Apparel + is being used as a vital management tool in the manufacturing outlets of apparel (Knitted, Woven & leather).
+								<br>
+								<br>
+								1)Apparel + is developed using the latest state of art technology tools and ensures easy migration to any latest plate forms. Apparel + also supports Wide Area Networking to connect and synchronize the data between your offices and factories at multi locations.
+								<br>								
+								2) Automatic alarming and messaging on enquiry follow up's, order summary, cost deviations, schedule with Time and Action calendar deviations, reminders on approval deadlines, quality definitions and control, payables and receivables alerts, Bill pass pending list, etc..
+								<br>
+								3) Apparel + supports Digitization of the documents, International EDI (Electronic Data Interchange)and bar coding integration at all levels.								
+								<br>
+								4) Earn your Bounty!
+								<br>
+								<br>
+								- We are happy to have you as part of the Apparel ERP. 
+                                    <br>
+								<br>
+                                                             
+
+							</div>
+                      </div>
+                    </div>
+                    
+                    
+                    <div class="clearfix"></div>
+
+
+                    
+                  </div>
+                </div>
+
+              </div>*@
+        <!-- end of weather widget -->
+
+
+    </div>
+
+
+    <div class="row">
+
+
+
+
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                            <h2>Buyer Status</h2>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    <div id="container2" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                            <h2>Dispatched Status</h2>
+                        </div>
+                        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-2 col-xs-2" for="ex3">From:</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="text" class="form-control " style="height:20px;font-size:10pt;" placeholder="FromDate" id="DisptxtFromDate">
+                                </div>
+                                <label class="control-label col-lg-1 col-md-1 col-sm-1 col-xs-1" for="ex3">To:</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="text" class="form-control " style="height:20px;font-size:10pt;" placeholder="ToDate" id="DisptxtToDate">
+                                    
+                                </div> 
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                    <i class="gg-chevron-right-o" id="DispatchedStatus1" onclick="fnGetPurDetails();"></i>
+                                    <i class="gg-spinner" id="DispatchedStatus2" style="display:none"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <div id="container3" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+     <div class="row">
+
+
+
+
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                            <h2>Stock Status</h2>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    <div id="container7" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                            <h2>Item Status</h2>
+                        </div>
+                        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-2 col-xs-2" for="ex3">From:</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="text" class="form-control textFromDate" style="height:20px;font-size:10pt;" placeholder="Date" id="ItemtxtFromDate">
+                                </div>
+                                <label class="control-label col-lg-1 col-md-1 col-sm-1 col-xs-1" for="ex3">To:</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="text" class="form-control textToDate" style="height:20px;font-size:10pt;" placeholder="Date" id="ItemtxtToDate">
+                                    
+                                </div> 
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                    <i class="gg-chevron-right-o" id="ItemStatus1" onclick="fnGetProdDetails();"></i>
+                                    <i class="gg-spinner" id="ItemStatus2" style="display:none"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <div id="container8" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+     @*<div class="row">
+
+
+
+
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Order Status</h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    <div id="container4" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Item Status</h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <div id="container5" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Buyer Sales</h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <div id="container6" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+         <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+    
+
+</div>
+
+
+
+

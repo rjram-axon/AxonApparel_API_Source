@@ -1,0 +1,231 @@
+﻿@{
+    ViewBag.Title = "PurchaseGeneralAddIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Purchase/PurchaseGeneralAdd.js"></script>
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Purchase Add</h2>
+                @*<ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>*@
+                <div class="clearfix"></div>
+            </div>
+            &nbsp;
+                    <div class="x_panel">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-6 col-xs-12 enquiry_edit">
+                                            Company
+                                        </label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <select id="ddlACompany" class="form-control">
+                                            </select>
+                                        </div>
+                                    </div>
+                                  
+                                 
+                                </form>
+                            </div>
+                            <div class="col-md-3">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-6 col-xs-12 enquiry_edit">
+                                            Order No
+                                        </label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <select id="ddlAOrderNo" class="form-control" onchange="myOrder(this.value);">
+                                            </select>
+                                        </div>
+                                    </div>
+                                 
+                                </form>
+                            </div>
+                            <div class="col-md-3">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-12 enquiry_edit">
+                                            Supplier
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                             <select id="ddlASupplier" class="form-control">
+                                            </select>
+                                        </div>
+                                    </div>
+                                   
+                                </form>
+                            </div>
+                            <div class="col-md-3">
+                                <form class="form-horizontal form-label-left input_mask">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-6 col-xs-12">Po Type</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <label class="radio inline">
+                                                <input type="radio" checked="" value="L" id="optAL" name="Local" onclick="RadioALClick();">
+                                                <span>Local </span>
+                                            </label>
+                                            <label class="radio inline">
+                                                <input type="radio" checked="" value="I" id="optAI" name="Local" onclick="RadioAIlick();">
+                                                <span>Import</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                  
+                                          
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="x_panel" style="padding: 0px; height: 30px;">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label style="font-size: 17px; white-space: nowrap;">
+                                    Order Type
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="maxl" style="margin-top: -6px;">
+                              
+                              
+                                <label class="radio inline">
+                                    <input type="radio" checked="" value="I" id="OptAIndent" name="OType" onclick="LoadIndentOrder();">
+                                    <span>Indent Order</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                       
+                    </div>
+                    </div>
+                    
+                </div>
+
+                <div class="col-md-4">
+                    <div class="x_panel" style="padding: 0px; height: 30px;">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="font-size: 17px; white-space: nowrap; margin-left: 0px;">
+                                    Po Type
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="maxl" style="margin-left: 15px; width: 259px; margin-top: -6px;">
+                                <label class="radio inline">
+                                    <input type="radio" checked="" value="L" id="optAAll" name="PoType" onclick="LoadDetails();">
+                                    <span>All </span>
+                                </label>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-11"></div>
+                 <div class="col-sm-1">
+                <div class="form-group" style="margin-top: -22px;">
+                    &nbsp; &nbsp;
+                        <button type="submit" class="btn btn-success" onclick="LoadDetails();">Load</button>
+                </div>
+            </div>
+            </div>
+           
+                    @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+
+            <div class="x_panel">
+
+                <div id="CList">
+                    <table class="table table-responsive" id="tblItemdetails">
+                        <thead>
+                            <tr>
+
+                                <th style="display: none;">StyleRowID</th>
+                                <th>OrderNo</th>
+                                <th>OrderDate</th>
+                                <th>Department</th>
+                                <th>Created</th>
+                                <th>Unit</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                    <span id="orderItemError" style="color: red"></span>
+                </div>
+
+
+                <div id="CListSpl">
+                    <table class="table table-responsive" id="tblSplItemdetails">
+                        <thead>
+                            <tr>
+
+                                <th style="display: none;">SPlMasID</th>
+                                <th>Spl.Req.No</th>
+                                <th>Job/Work/Sample</th>
+                                <th>OrderNo</th>
+                                <th>RefNo</th>
+                                <th>Style</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                    <span id="orderItemError1" style="color: red"></span>
+                </div>
+
+            </div>
+             <div class="row">
+                <div class="col-md-11"></div>
+            <div class="col-sm-1">
+                <div class="form-group" style="margin-left: -10px;">
+
+                    <button type="submit" class="btn btn-success" onclick="LoadCheck();">Submit</button>
+                </div>
+            </div>
+                 </div>
+        </div>
+    </div>
+</div>

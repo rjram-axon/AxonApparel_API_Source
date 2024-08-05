@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "UserStatusIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<style>
+     #tblUserStatus_wrapper
+    {
+         margin-top:-23px;
+       
+    }
+
+</style>*@
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    })
+</script>
+
+<script>
+    $("#mySelect").select2({
+        //here my options
+    }).on("select2:opening", 
+     function(){
+         $("#myModal").removeAttr("tabindex", "-1");
+     }).on("select2:close", 
+     function(){ 
+         $("#myModal").attr("tabindex", "-1");
+     }
+    });
+</script>
+
+
+
+<script src="~/AxonScripts/HouseKeeping/UserStatus.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-1.12.4.js"></script>
+@*<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>*@
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">               
+                    <div class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 5%; ">
+                                <div class="modal-content">
+                                    <div class="x_panel" style="height:150px;">
+                                        <div class="x_title">
+                                            <h2>Super User Login</h2>
+
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="row" style="margin: 0;">
+                                           <div class="row">                                 
+                                    <div class="col-md-12">
+                                        <form class="form-horizontal form-label-left input_mask">                                       
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                    <span style="color:red">*</span>
+                                                    Enter SuperUser password
+                                                </label>
+                                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                                    <input type="password" id="txtSuperuserpassword" class="form-control" placeholder="Password">
+                                                </div>
+                                            </div>
+                                             
+                                        </form>
+                                    </div>
+                                                                                             
+                                </div>
+                                            <hr />
+                                    <div class="row">
+                                        <div class="col-md-4" style=" float:right">
+                                        <div class="form-group" >
+                                                <button class="btn btn-success" onclick="CheckSuperUser();">Submit</button>
+                                                <button class="btn btn-danger" onclick="backtomain();">Cancel</button>
+                                            </div>
+                                    </div>  
+                                    </div>
+                                        </div>                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                 <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+                   @* <div class="se-pre-con"></div>
+                    <div class="x_title">
+                        <h2>User Licence Period </h2>
+                      
+                        <div class="clearfix"></div>
+                    </div>*@
+                    <div class="clearfix"></div>
+                    <div class="">                                         
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                            <div class="modal-dialog" style="min-width: 75%">
+                                <div class="modal-content">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="x_panel">
+                                            <div class="x_title">
+                                                <h2>User Name and Password</h2>
+
+                                                <div class="clearfix"></div>
+                                            </div>
+                                          
+                                            <div class="">
+                                                      <div class="x_panel">
+                                                           <table class="table table-bordered table-hover" border="1">
+                                                                                            <tr>
+                                                                                                <td>UserName</td>
+                                                                                                <td>Password</td>
+                                                                                                <td>Employee</td>
+                                                                                                <td>UserGroup</td>
+                                                                                                <td>&nbsp;</td>
+                                                                                            </tr>
+                                                                                            <tr class="mycontainer" id="maincomborow">
+                                                                                                <td>
+                                                                                                  <input type="text" id="txtUsername" class="form-control" style="width:225px" placeholder="Username" disabled="disabled">
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input type="text" id="txtpassword" class="form-control" style="width:225px" placeholder="Password">
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <select id="ddlEmplyee" class="form-control" style="width:225px">
+                                                                                                    </select>
+                                                                                                   
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <select id="ddlUserGroup" class="form-control" style="width:225px" >
+                                                                                                    </select>
+                                                                                                    
+                                                                                                </td>
+                                                                                                
+                                                                                                
+                                                                                                <td>
+                                                                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnUserstatusupdate" type="button" data-toggle="tooltip" data-placement="top" title="Update"><i class="fa fa-refresh"></i></button>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                          <input type="checkbox" id="MaskPassword" class="editor-active MaskPassword"  style="width:15px;" />
+                                                          <span>MaskPassword</span>
+                                                          <div class="row" style="margin:0px;">
+                                                              
+
+                                                               <table class="table table-responsive" id="tblUserStatus">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="display: none;">UserId</th>
+                                                                <th>User Name</th>
+                                                                <th>Password</th>
+                                                                <th style="display: none;">EmployeeId</th>                                                                
+                                                                <th>Employee</th> 
+                                                                <th style="display: none;">GroupId</th>                                                               
+                                                                <th>User Group</th>                                                                
+                                                                <th>Login</th>
+                                                                <td>&nbsp;</td>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                          </div>
+                                                          
+                                                         
+                                                   
+                                                </div>
+
+                                            </div>       
+                                             <button type="button" class="btn btn-round btn-warning" onclick="Update()" style="float: right; margin-right: 40px;">Update</button>
+                                            <button type="button" class="btn btn-round btn-danger" onclick="Close()" style="float: right; margin-right: 20px;">Close</button>                 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+               
+            </div>
+        </div>
+    </div>
+</div>

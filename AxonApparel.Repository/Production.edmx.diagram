@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="84ca8ee9656142b0b8b6238899130c16" Name="Diagram1" ZoomLevel="25">
+        <EntityTypeShape EntityType="ProductionModel.Prod_Ord_Mas" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionItem_stock_outward" Width="1.5" PointX="9.649265107535415" PointY="4.8057932280031" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionItemStock" Width="1.5" PointX="7.4845579171015686" PointY="6.4744926721204505" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_iss_det" Width="1.5" PointX="3.951102618105292" PointY="2.7007653725802738" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_iss_JobDet" Width="1.5" PointX="1.0947488570095734" PointY="24.159173142239066" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_Ord_Det" Width="1.5" PointX="7.52086477890651" PointY="21.148970330669066" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_Ord_JobDet" Width="1.5" PointX="11.457652503372009" PointY="16.547583185391307" />
+        <AssociationConnector Association="ProductionModel.FK_ItemStockId" />
+        <AssociationConnector Association="ProductionModel.FK_ProdissdetRefid" />
+        <AssociationConnector Association="ProductionModel.FK_ProdOrdDetJobOrdDetRefid" />
+        <AssociationConnector Association="ProductionModel.FK_ProdOrdMasRefid" />
+        <AssociationConnector Association="ProductionModel.FK_ProdOrdMasJobOrdDetRefid" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionProd_Prg_Mas" Width="1.5" PointX="8.6107249411804254" PointY="28.545460729182448" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_Recpt_Return" Width="1.5" PointX="6.923574259003427" PointY="25.542428624603165" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_Recpt_Stock" Width="1.5" PointX="7.9897196814369966" PointY="20.898045281366468" />
+        <EntityTypeShape EntityType="ProductionModel.ProdReturnMas" Width="1.5" PointX="9.72299299841886" PointY="13.324842399603147" />
+        <AssociationConnector Association="ProductionModel.FK_ProdreturnIssueJobIdRefid" />
+        <AssociationConnector Association="ProductionModel.FK_ProdProgIdRefid" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Issue_Det" Width="1.5" PointX="1.9453076673416923" PointY="24.949273225362074" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Issue_Mas" Width="1.5" PointX="3.5052238085797169" PointY="30.983948260072594" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Issue_Stock" Width="1.5" PointX="6.4900906078936949" PointY="7.966061923637084" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Order_Det" Width="1.5" PointX="10.687707166507703" PointY="23.783319573748539" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Recpt_Bundle" Width="1.5" PointX="9.7350718685123461" PointY="15.551663823216996" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Recpt_Det" Width="1.5" PointX="8.7433927882199143" PointY="14.196416563445895" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Recpt_Mas" Width="1.5" PointX="11.358543516769327" PointY="21.710547800041059" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Return_det" Width="1.5" PointX="5.5512461166601845" PointY="22.192277277909348" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Return_Mas" Width="1.5" PointX="7.9571312162825514" PointY="13.16340101378197" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionJob_Ord_Mas" Width="1.5" PointX="3.8833244870804835" PointY="1.0733584915629395" />
+        <AssociationConnector Association="ProductionModel.Cutting_Return_det_CuttingIssueDetid" />
+        <AssociationConnector Association="ProductionModel.FK_CuttingIssueMasId" />
+        <AssociationConnector Association="ProductionModel.FK_CuttingIssueRefDetId" />
+        <AssociationConnector Association="ProductionModel.FK_CuttingIssueRefMasId" />
+        <AssociationConnector Association="ProductionModel.Cutting_Return_det_IssueStockid" />
+        <AssociationConnector Association="ProductionModel.FK_Cuttingreceiptdetid" />
+        <AssociationConnector Association="ProductionModel.FK_Cuttingreceiptid" />
+        <AssociationConnector Association="ProductionModel.FK_cuttingrefmasid" />
+        <AssociationConnector Association="ProductionModel.Cutting_Return_det_ReturnMasid" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionBuy_Ord_Ship" Width="1.5" PointX="4.9422744256175468" PointY="21.39208368463073" />
+        <EntityTypeShape EntityType="ProductionModel.Productionbuy_ord_style" Width="1.5" PointX="6.6228606582725709" PointY="18.028102763941558" />
+        <EntityTypeShape EntityType="ProductionModel.DespatchDet" Width="1.5" PointX="6.0892127557141764" PointY="9.3769016607556974" />
+        <EntityTypeShape EntityType="ProductionModel.DespatchStock" Width="1.5" PointX="4.4405259566570292" PointY="12.469885518993198" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionSupplier" Width="1.5" PointX="1.6192580822944911" PointY="6.7307970108142108" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionWorkDivision" Width="1.5" PointX="5.985556206659207" PointY="5.604466783629948" />
+        <AssociationConnector Association="ProductionModel.fk_Job_Ord_mas_stylerowid" />
+        <AssociationConnector Association="ProductionModel.FK_DespatDetRefId" />
+        <AssociationConnector Association="ProductionModel.FK_DespItemStockRefId" />
+        <EntityTypeShape EntityType="ProductionModel.Job_Inv_addless" Width="1.5" PointX="2.7001198859420232" PointY="27.792554227538666" />
+        <EntityTypeShape EntityType="ProductionModel.Job_Inv_Det" Width="1.5" PointX="1.0383607880390997" PointY="14.995871252844051" />
+        <EntityTypeShape EntityType="ProductionModel.Job_Inv_Mas" Width="1.5" PointX="0.016840606935713723" PointY="20.429138133502164" />
+        <EntityTypeShape EntityType="ProductionModel.Job_Recpt_Mas" Width="1.5" PointX="9.733007159891077" PointY="5.6770099725932859" />
+        <AssociationConnector Association="ProductionModel.FK_Job_Inv_refid" />
+        <AssociationConnector Association="ProductionModel.FK_Job_Inv_Det_Job_Inv_Mas" />
+        <AssociationConnector Association="ProductionModel.FK_Job_Inv_Det_Job_recpt_det" />
+        <EntityTypeShape EntityType="ProductionModel.Job_Ord_Sum" Width="1.5" PointX="1.7274546668526973" PointY="5.2618670935099328" />
+        <EntityTypeShape EntityType="ProductionModel.Job_Recpt_Det" Width="1.5" PointX="0.44717129340729267" PointY="4.2664481272299071" />
+        <AssociationConnector Association="ProductionModel.FK_Job_Recpt_Det_Job_Recpt_Mas" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionInvoiceDc" Width="1.5" PointX="2.2855208638522404" PointY="8.4633913228583477" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionInvoiceOrdDet" Width="1.5" PointX="4.4137030338932313" PointY="19.955179804915179" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionInvoiceRateDiff" Width="1.5" PointX="4.9961199392546529" PointY="31.278805523774963" />
+        <EntityTypeShape EntityType="ProductionModel.Production_Ord_AddLess" Width="1.5" PointX="8.8980604656497313" PointY="19.123650783264846" />
+        <EntityTypeShape EntityType="ProductionModel.Production_Ord_Det" Width="1.5" PointX="7.84877459325305" PointY="2.9038584096840854" />
+        <EntityTypeShape EntityType="ProductionModel.Production_Ord_JobDet" Width="1.5" PointX="2.2904933385041044" PointY="13.490306130373062" />
+        <EntityTypeShape EntityType="ProductionModel.Production_Ord_Mas" Width="1.5" PointX="4.2126158514118828" PointY="16.584917091105559" />
+        <EntityTypeShape EntityType="ProductionModel.Production_Ord_Stock" Width="1.5" PointX="11.338100004633004" PointY="24.684982594421591" />
+        <EntityTypeShape EntityType="ProductionModel.Production_Recpt_Det" Width="1.5" PointX="5.441335539073374" PointY="19.010768750221825" />
+        <EntityTypeShape EntityType="ProductionModel.Production_Recpt_JobDet" Width="1.5" PointX="7.2837431911769066" PointY="6.2231453239094208" />
+        <EntityTypeShape EntityType="ProductionModel.Production_Recpt_Mas" Width="1.5" PointX="4.9194347732325241" PointY="21.92639383204579" />
+        <AssociationConnector Association="ProductionModel.FK_Prod_Iss_Stock_ItemStockID" />
+        <AssociationConnector Association="ProductionModel.FK_Process_ord_jobdet_ordId" />
+        <AssociationConnector Association="ProductionModel.FK_Prod_Recpt_JobDet_ProcessOrdDetID" />
+        <AssociationConnector Association="ProductionModel.FK_Process_ord_jobdet_procordId" />
+        <AssociationConnector Association="ProductionModel.FK_Prod_Recpt_JobDet_ProcessOrdJobDetID" />
+        <AssociationConnector Association="ProductionModel.FK_Prod_Recpt_mas_ProcessOrdId" />
+        <AssociationConnector Association="ProductionModel.FK_Process_ord_mas_Prod_Recpt_Detid" />
+        <AssociationConnector Association="ProductionModel.FK_Prod_Recpt_mas_Prod_Recpt_Masid" />
+        <EntityTypeShape EntityType="ProductionModel.Production_Recpt_Return" Width="1.5" PointX="2.6695022744450263" PointY="7.5023884957201723" />
+        <AssociationConnector Association="ProductionModel.FK_Prod_Recpt_Ret_ProdIssueJobId" />
+        <AssociationConnector Association="ProductionModel.FK_Prod_Recpt_Ret_ProcessOrdId" />
+        <EntityTypeShape EntityType="ProductionModel.Sales_Inv_Det" Width="1.5" PointX="6.6448380978055468" PointY="7.0730907204901294" />
+        <EntityTypeShape EntityType="ProductionModel.Sales_Inv_mas" Width="1.5" PointX="7.9229571744440852" PointY="24.601992246043864" />
+        <AssociationConnector Association="ProductionModel.FK__Sales_Inv__Sales__5A73587F" />
+        <EntityTypeShape EntityType="ProductionModel.Vw_GetCutRecptDetForListingForJob" Width="1.5" PointX="9.23489358706162" PointY="30.178372412071738" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Cancel_det" Width="1.5" PointX="9.4512044850043964" PointY="14.077338359354688" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Cancel_mas" Width="1.5" PointX="1.025192834914286" PointY="19.940175110446372" />
+        <AssociationConnector Association="ProductionModel.FK__Cutting_C__Cutti__1C8112FE" />
+        <AssociationConnector Association="ProductionModel.FK__Cutting_C__Cutti__1F5D7FA9" />
+        <AssociationConnector Association="ProductionModel.FK__Cutting_C__Cutti__19A4A653" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Wastage_Det" Width="1.5" PointX="1.8094812844924075" PointY="26.230667186077063" />
+        <AssociationConnector Association="ProductionModel.FK__Cutting_W__Cutti__14DFF136" />
+        <AssociationConnector Association="ProductionModel.FK__Cutting_W__Cutti__26FEA171" />
+        <AssociationConnector Association="ProductionModel.FK__Cutting_W__NewSt__27F2C5AA" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_Recpt_Det" Width="1.5" PointX="4.081103589423515" PointY="1.230203241682706" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_Recpt_Mas" Width="1.5" PointX="6.2025422724907022" PointY="9.2236906929051923" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_Recpt_Reason" Width="1.5" PointX="0.84251783827436988" PointY="25.174809005658521" />
+        <AssociationConnector Association="ProductionModel.FK_ProdrecptMasRefid" />
+        <AssociationConnector Association="ProductionModel.FK_RecptDetIdRefid" />
+        <AssociationConnector Association="ProductionModel.FK_RecptMasIdRefid" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionProd_Prg_Det" Width="1.5" PointX="6.0945861256190508" PointY="29.308305098353095" />
+        <AssociationConnector Association="ProductionModel.FK_Prodprgid" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_iss_mas" Width="1.5" PointX="7.0858622990017111" PointY="8.2592448332622848" />
+        <AssociationConnector Association="ProductionModel.FK_ProdissmasRefid" />
+        <AssociationConnector Association="ProductionModel.FK_ProdissmasdetRefid" />
+        <AssociationConnector Association="ProductionModel.FK_ProdrecptdetIssueIdRefid" />
+        <AssociationConnector Association="ProductionModel.FK_ProdrecptIssueIdRefid" />
+        <AssociationConnector Association="ProductionModel.FK_ProdreturnIssueIdRefid" />
+        <EntityTypeShape EntityType="ProductionModel.Cutting_Order_Mas" Width="1.5" PointX="7.6566508783291329" PointY="12.386755710647794" />
+        <AssociationConnector Association="ProductionModel.FK_CuttingMasId" />
+        <AssociationConnector Association="ProductionModel.FK_CuttingOrdeId" />
+        <AssociationConnector Association="ProductionModel.FK_Cuttingordmas" />
+        <AssociationConnector Association="ProductionModel.FK_ProdPrgIdCutting" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_Iss_Stock" Width="1.5" PointX="5.7704452228594789" PointY="5.9647137997507649" />
+        <AssociationConnector Association="ProductionModel.FK_ProdStockIdRefid" />
+        <AssociationConnector Association="ProductionModel.FK_ProdIssJobDetRefid" />
+        <EntityTypeShape EntityType="ProductionModel.Prod_Return_Reason" Width="1.5" PointX="0.82204872221781344" PointY="6.4084804683963208" />
+        <AssociationConnector Association="ProductionModel.FK__Prod_Retu__Recpt__04C984FE" />
+        <EntityTypeShape EntityType="ProductionModel.ProdReturnDet" Width="1.5" PointX="5.6972730577445" PointY="7.6265220528591993" />
+        <AssociationConnector Association="ProductionModel.FK_ProdRetCuttingMasRefid" />
+        <AssociationConnector Association="ProductionModel.FK_ProdRetDetProdIssueDetRefid" />
+        <EntityTypeShape EntityType="ProductionModel.DespatchMas" Width="1.5" PointX="1.164342435619022" PointY="1.4527605927794989" />
+        <AssociationConnector Association="ProductionModel.FK_DespatchMasReferenceId" />
+        <AssociationConnector Association="ProductionModel.FK_DespMasRefId" />
+        <AssociationConnector Association="ProductionModel.FK_DesSupplierRefId" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionInvoiceMas" Width="1.5" PointX="0.45209891370129718" PointY="11.65163213557174" />
+        <AssociationConnector Association="ProductionModel.FK_Production_Inv_Dc_Production_Inv_Mas" />
+        <AssociationConnector Association="ProductionModel.FK_Production_Inv_JobDet_ProductionInvMas" />
+        <AssociationConnector Association="ProductionModel.FK_ProductionInvoiceRateDiff_ProductionInvoiceMas" />
+        <EntityTypeShape EntityType="ProductionModel.FabDelySec_Issue_Det" Width="1.5" PointX="5.8711352599184661" PointY="16.851199843385814" />
+        <EntityTypeShape EntityType="ProductionModel.FabDelySec_Issue_Mas" Width="1.5" PointX="7.0011477894155068" PointY="14.784894696802317" />
+        <EntityTypeShape EntityType="ProductionModel.FabDelySec_Issue_Stock" Width="1.5" PointX="1.4701954449853838" PointY="21.8024957281549" />
+        <AssociationConnector Association="ProductionModel.FK__FabDelySe__FabDe__0237FC6D" />
+        <AssociationConnector Association="ProductionModel.FK__FabDelySe__FabDe__0ACD426E" />
+        <AssociationConnector Association="ProductionModel.FK__FabDelySe__FabDe__09D91E35" />
+        <EntityTypeShape EntityType="ProductionModel.OrderSalesInvoiceMas" Width="1.5" PointX="4.0421310756551705" PointY="8.9709246349385587" />
+        <EntityTypeShape EntityType="ProductionModel.OrderSalesInvoiceAddless" Width="1.5" PointX="9.0281945415903788" PointY="6.6518901319484645" />
+        <AssociationConnector Association="ProductionModel.FK__OrderSale__InvId__23D8E75A" />
+        <EntityTypeShape EntityType="ProductionModel.OrderSalesInvoiceDet" Width="1.5" PointX="7.49006167589224" PointY="28.067740483241035" />
+        <AssociationConnector Association="ProductionModel.FK__OrderSale__ShipR__1CA10E8F" />
+        <AssociationConnector Association="ProductionModel.FK__OrderSale__Invid__1BACEA56" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionInvoiceDet" Width="1.5" PointX="1.1853808170116418" PointY="23.976673062879904" />
+        <AssociationConnector Association="ProductionModel.FK_Production_Inv_JobDet_ProductionInvoiceDet" />
+        <AssociationConnector Association="ProductionModel.FK_ProductionInvoiceDet_ProductionInvoiceMas" />
+        <EntityTypeShape EntityType="ProductionModel.ProductionInvoiceAddless" Width="1.5" PointX="2.1260181526308966" PointY="22.513065810554227" />
+        <AssociationConnector Association="ProductionModel.FK_ProductionInvoiceAddless_ProductionInvoiceMas" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

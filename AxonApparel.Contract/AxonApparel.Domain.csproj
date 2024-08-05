@@ -1,0 +1,473 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A4ABCF78-D7BB-4853-836B-3991A708769D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AxonApparel.Contract</RootNamespace>
+    <AssemblyName>AxonApparel.Contract</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\ApiBudgetApproval.cs" />
+    <Compile Include="Api\ApiBudgetDetails.cs" />
+    <Compile Include="Api\ApiConsFilter.cs" />
+    <Compile Include="Api\ApiGetOrderfilter.cs" />
+    <Compile Include="Api\ApiOrderStatus.cs" />
+    <Compile Include="Api\ApiOrderStatusDetails.cs" />
+    <Compile Include="Api\ApiProcessDetail.cs" />
+    <Compile Include="Api\ApiProcessPrgAppdetails.cs" />
+    <Compile Include="Api\ApiProfitlossdetaillist.cs" />
+    <Compile Include="Api\ApiProfitlossfilter.cs" />
+    <Compile Include="Api\ApiPurchaseApproval.cs" />
+    <Compile Include="Api\ApiPurchaseDetail.cs" />
+    <Compile Include="Api\ApiPurchaseQuotationApp.cs" />
+    <Compile Include="Api\ApiSplReqdetails.cs" />
+    <Compile Include="Api\ApiStockFilter.cs" />
+    <Compile Include="Budget\BudgetApproval.cs" />
+    <Compile Include="Budget\CostDefnBomFirst.cs" />
+    <Compile Include="Budget\PlanningApproval.cs" />
+    <Compile Include="Budget\PlanningBomApproval.cs" />
+    <Compile Include="DashBoard\OrderDash.cs" />
+    <Compile Include="GeneralFunction\Finyear.cs" />
+    <Compile Include="HouseKeeping\AlertType.cs" />
+    <Compile Include="HouseKeeping\AllowanceSetup.cs" />
+    <Compile Include="HouseKeeping\Mail.cs" />
+    <Compile Include="HouseKeeping\Mail_Attachments.cs" />
+    <Compile Include="HouseKeeping\MisSetting.cs" />
+    <Compile Include="HouseKeeping\PopMailSetting.cs" />
+    <Compile Include="HouseKeeping\Popup_Alert.cs" />
+    <Compile Include="HouseKeeping\PrefixEntry.cs" />
+    <Compile Include="HouseKeeping\ReportFooterSetup.cs" />
+    <Compile Include="HouseKeeping\ReportOption.cs" />
+    <Compile Include="HouseKeeping\ReportPrefix.cs" />
+    <Compile Include="HouseKeeping\Report_Footer_Email.cs" />
+    <Compile Include="HouseKeeping\Report_Footer_Process.cs" />
+    <Compile Include="HouseKeeping\UpdateScript.cs" />
+    <Compile Include="HouseKeeping\User_Entry_Log.cs" />
+    <Compile Include="HouseKeeping\User_Grant_AlertRights.cs" />
+    <Compile Include="Master\AccountHeads.cs" />
+    <Compile Include="Master\Agent.cs" />
+    <Compile Include="Master\Approval.cs" />
+    <Compile Include="Master\Bank.cs" />
+    <Compile Include="Master\Buyer.cs" />
+    <Compile Include="Master\BuyerCharges.cs" />
+    <Compile Include="Master\BuyerItemRate.cs" />
+    <Compile Include="Master\City.cs" />
+    <Compile Include="Master\Color.cs" />
+    <Compile Include="Master\ColorCode.cs" />
+    <Compile Include="Master\ColorGroup.cs" />
+    <Compile Include="Master\ColorMaster.cs" />
+    <Compile Include="Master\Company.cs" />
+    <Compile Include="Master\CompanyUnit.cs" />
+    <Compile Include="Master\Consignee.cs" />
+    <Compile Include="Master\Country.cs" />
+    <Compile Include="Master\Courier.cs" />
+    <Compile Include="Master\Currency.cs" />
+    <Compile Include="Master\Department.cs" />
+    <Compile Include="Master\Description.cs" />
+    <Compile Include="Master\Designation.cs" />
+    <Compile Include="Master\Employee.cs" />
+    <Compile Include="Master\EmpStoreSetup.cs" />
+    <Compile Include="Master\FabricMaster.cs" />
+    <Compile Include="Master\FabricProcess.cs" />
+    <Compile Include="Master\FabricYarn.cs" />
+    <Compile Include="Master\GarmentUom.cs" />
+    <Compile Include="Master\GSTModel.cs" />
+    <Compile Include="Master\Help.cs" />
+    <Compile Include="Master\HSNCode.cs" />
+    <Compile Include="Master\Item.cs" />
+    <Compile Include="Master\ItemGroup.cs" />
+    <Compile Include="Master\ItemRate.cs" />
+    <Compile Include="Master\Ledger.cs" />
+    <Compile Include="Master\ListItem.cs" />
+    <Compile Include="Master\MenuList.cs" />
+    <Compile Include="Master\MerchandTeamBuyer.cs" />
+    <Compile Include="Master\MerchandTeamEmployee.cs" />
+    <Compile Include="Master\MerchandTeamMas.cs" />
+    <Compile Include="Master\OverHeads.cs" />
+    <Compile Include="Master\PaymentTerms.cs" />
+    <Compile Include="Master\PortOfLoading.cs" />
+    <Compile Include="Master\Process.cs" />
+    <Compile Include="Master\ProcessSetup.cs" />
+    <Compile Include="Master\Reason.cs" />
+    <Compile Include="Master\Role.cs" />
+    <Compile Include="Master\RoleDet.cs" />
+    <Compile Include="Master\SampleType.cs" />
+    <Compile Include="Master\Season.cs" />
+    <Compile Include="Master\Shift.cs" />
+    <Compile Include="Master\ShipmentMode.cs" />
+    <Compile Include="Master\Size.cs" />
+    <Compile Include="Master\State.cs" />
+    <Compile Include="Master\StoreSection.cs" />
+    <Compile Include="Master\StoreUnit.cs" />
+    <Compile Include="Master\Style.cs" />
+    <Compile Include="Master\StyleDetail.cs" />
+    <Compile Include="Master\StyleGroup.cs" />
+    <Compile Include="Master\StyleTemplateDet.cs" />
+    <Compile Include="Master\StyleTemplateMas.cs" />
+    <Compile Include="Master\Supplier.cs" />
+    <Compile Include="Master\ShipmentSystem.cs" />
+    <Compile Include="Master\TermDet.cs" />
+    <Compile Include="Master\Terms.cs" />
+    <Compile Include="Master\TermsCondition.cs" />
+    <Compile Include="Master\TestingType.cs" />
+    <Compile Include="Master\UnitConversion.cs" />
+    <Compile Include="Master\Unit_of_measurement.cs" />
+    <Compile Include="Master\UserGroup.cs" />
+    <Compile Include="Master\UserName.cs" />
+    <Compile Include="Master\WorkDivision.cs" />
+    <Compile Include="Master\WorkOrder.cs" />
+    <Compile Include="OrderProcessing\BulkOrder.cs" />
+    <Compile Include="OrderProcessing\BulkOrderCancel.cs" />
+    <Compile Include="OrderProcessing\BulkOrderMeasurement.cs" />
+    <Compile Include="OrderProcessing\BulkOrderMeasurementItemDet.cs" />
+    <Compile Include="OrderProcessing\BulkOrderMeasurementSize.cs" />
+    <Compile Include="OrderProcessing\buyordapptitle.cs" />
+    <Compile Include="OrderProcessing\BuyOrderStyle.cs" />
+    <Compile Include="OrderProcessing\BuyOrdImg.cs" />
+    <Compile Include="OrderProcessing\BuyOrdShipPack.cs" />
+    <Compile Include="OrderProcessing\BuyOrdShipment.cs" />
+    <Compile Include="OrderProcessing\ComboColor.cs" />
+    <Compile Include="OrderProcessing\ComboItem.cs" />
+    <Compile Include="OrderProcessing\ComboItemComposition.cs" />
+    <Compile Include="OrderProcessing\ComboSize.cs" />
+    <Compile Include="OrderProcessing\CommDoc.cs" />
+    <Compile Include="OrderProcessing\Communication.cs" />
+    <Compile Include="OrderProcessing\CourierEntry.cs" />
+    <Compile Include="OrderProcessing\CourierEntryList.cs" />
+    <Compile Include="OrderProcessing\CourierItem.cs" />
+    <Compile Include="OrderProcessing\Enquiry.cs" />
+    <Compile Include="OrderProcessing\EnquiryEmbPrint.cs" />
+    <Compile Include="OrderProcessing\EnquiryFabric.cs" />
+    <Compile Include="OrderProcessing\EnquiryItem.cs" />
+    <Compile Include="OrderProcessing\EnquiryPrint.cs" />
+    <Compile Include="OrderProcessing\EnquiryStyle.cs" />
+    <Compile Include="OrderProcessing\ExchangeRates.cs" />
+    <Compile Include="OrderProcessing\Followup.cs" />
+    <Compile Include="OrderProcessing\JobOrderDetList.cs" />
+    <Compile Include="OrderProcessing\JobOrderItemlist.cs" />
+    <Compile Include="OrderProcessing\JobOrderShipmentlist.cs" />
+    <Compile Include="OrderProcessing\JobWorkDetails.cs" />
+    <Compile Include="OrderProcessing\MarkQuoteAcc.cs" />
+    <Compile Include="OrderProcessing\MarkQuoteCMT.cs" />
+    <Compile Include="OrderProcessing\MarkQuoteCommercial.cs" />
+    <Compile Include="OrderProcessing\MarkQuoteFab.cs" />
+    <Compile Include="OrderProcessing\MarkQuoteMas.cs" />
+    <Compile Include="OrderProcessing\MarkQuoteProcess.cs" />
+    <Compile Include="OrderProcessing\MarkQuoteYarn.cs" />
+    <Compile Include="OrderProcessing\OrdCons_Mas.cs" />
+    <Compile Include="OrderProcessing\OrdCons_ProcSeq.cs" />
+    <Compile Include="OrderProcessing\OrdCons_YarnFab.cs" />
+    <Compile Include="OrderProcessing\OrderCancellation.cs" />
+    <Compile Include="OrderProcessing\Ord_styleTempDet.cs" />
+    <Compile Include="OrderProcessing\Ord_styleTempMas.cs" />
+    <Compile Include="OrderProcessing\P1Entry.cs" />
+    <Compile Include="OrderProcessing\P2Entry.cs" />
+    <Compile Include="OrderProcessing\P3Entry.cs" />
+    <Compile Include="OrderProcessing\PrecostFabDept_Fab.cs" />
+    <Compile Include="OrderProcessing\PreCostFabDept_mas.cs" />
+    <Compile Include="OrderProcessing\PrecostFabDept_Process.cs" />
+    <Compile Include="OrderProcessing\PrecostFabDept_Yarn.cs" />
+    <Compile Include="OrderProcessing\PreCostingEmbellishment_Det.cs" />
+    <Compile Include="OrderProcessing\PrecostingFabric_det.cs" />
+    <Compile Include="OrderProcessing\PrecostingFabTrim_mas.cs" />
+    <Compile Include="OrderProcessing\PrecostingTrim_det.cs" />
+    <Compile Include="OrderProcessing\Precosting_Target_mas.cs" />
+    <Compile Include="OrderProcessing\ProductionColorWOEntry.cs" />
+    <Compile Include="OrderProcessing\ProductionItemWOEntry.cs" />
+    <Compile Include="OrderProcessing\ProductionShipWOEntry.cs" />
+    <Compile Include="OrderProcessing\ProductionWorkOrder.cs" />
+    <Compile Include="OrderProcessing\ProgramSummary.cs" />
+    <Compile Include="OrderProcessing\S1SamplePhoto.cs" />
+    <Compile Include="OrderProcessing\S2PhotoSuit.cs" />
+    <Compile Include="OrderProcessing\SampleTypeEntry.cs" />
+    <Compile Include="OrderProcessing\TestingDCDet.cs" />
+    <Compile Include="OrderProcessing\TestingDCMas.cs" />
+    <Compile Include="OrderProcessing\TestingDCReceiptDet.cs" />
+    <Compile Include="OrderProcessing\TestingDCReceiptMas.cs" />
+    <Compile Include="Planning\AccessoryReqDet.cs" />
+    <Compile Include="Planning\AccessoryReqMas.cs" />
+    <Compile Include="Planning\Bom.cs" />
+    <Compile Include="Planning\Budget.cs" />
+    <Compile Include="Planning\CompList.cs" />
+    <Compile Include="Planning\CompPrgDet.cs" />
+    <Compile Include="Planning\CompPrgMas.cs" />
+    <Compile Include="Planning\CostDefnCom.cs" />
+    <Compile Include="Planning\Cost_defn_Bom.cs" />
+    <Compile Include="Planning\Cost_Defn_Mas.cs" />
+    <Compile Include="Planning\IOTableProcess.cs" />
+    <Compile Include="Planning\PlanCompDetails.cs" />
+    <Compile Include="Planning\PlanComponent.cs" />
+    <Compile Include="Planning\PlanLoss.cs" />
+    <Compile Include="Planning\PlanningFabric.cs" />
+    <Compile Include="Planning\PlanningFabricDetails.cs" />
+    <Compile Include="Planning\PlanningMain.cs" />
+    <Compile Include="Planning\PlanningSampleFabricDet.cs" />
+    <Compile Include="Planning\PlanningSampleMain.cs" />
+    <Compile Include="Planning\PlanningYarn.cs" />
+    <Compile Include="Planning\PlanningYarnDet.cs" />
+    <Compile Include="Planning\PlanningYarnDyeing.cs" />
+    <Compile Include="Planning\PlanningYarnLoss.cs" />
+    <Compile Include="Planning\ProcessList.cs" />
+    <Compile Include="Planning\ProcessProgram.cs" />
+    <Compile Include="Planning\ProcessQuote.cs" />
+    <Compile Include="Planning\ProcessQuoteDet.cs" />
+    <Compile Include="Planning\ProcessSequenceMain.cs" />
+    <Compile Include="Planning\ProdPgmRemarks.cs" />
+    <Compile Include="Planning\ProdPrgDet.cs" />
+    <Compile Include="Planning\ProdPrgMas.cs" />
+    <Compile Include="Planning\ProductionProgramming.cs" />
+    <Compile Include="Planning\ProProcessQuote.cs" />
+    <Compile Include="Planning\TrimsAccessory.cs" />
+    <Compile Include="Planning\TrimsAccShipDet.cs" />
+    <Compile Include="Planning\TrimsColorDetails.cs" />
+    <Compile Include="Planning\TrimsDet.cs" />
+    <Compile Include="Planning\TrimsGenAuto.cs" />
+    <Compile Include="Planning\TrimsItemDetails.cs" />
+    <Compile Include="Planning\TrimsSizeDetails.cs" />
+    <Compile Include="Planning\TrimsStyleDetails.cs" />
+    <Compile Include="Planning\UploadsViewModel.cs" />
+    <Compile Include="Planning\Vendor.cs" />
+    <Compile Include="Planning\VendorEntry.cs" />
+    <Compile Include="Process\FabricDet.cs" />
+    <Compile Include="Process\FabricMas.cs" />
+    <Compile Include="Process\GeneralProcOrdStk.cs" />
+    <Compile Include="Process\Group_Prod_Prg_Det.cs" />
+    <Compile Include="Process\Group_Prod_Prg_Mas.cs" />
+    <Compile Include="Process\ProcessCancel.cs" />
+    <Compile Include="Process\ProcessCancelDet.cs" />
+    <Compile Include="Process\ProcessCancelJobdet.cs" />
+    <Compile Include="Process\ProcessCancelMas.cs" />
+    <Compile Include="Process\ProcessIssueAddgrid.cs" />
+    <Compile Include="Process\ProcessIssueDet.cs" />
+    <Compile Include="Process\ProcessIssueJobdet.cs" />
+    <Compile Include="Process\ProcessIssueMas.cs" />
+    <Compile Include="Process\ProcessIssueStock.cs" />
+    <Compile Include="Process\ProcessOrdAddLess.cs" />
+    <Compile Include="Process\ProcessOrdDet.cs" />
+    <Compile Include="Process\ProcessOrdJobdet.cs" />
+    <Compile Include="Process\ProcessOrdMas.cs" />
+    <Compile Include="Process\ProcessReceiptDet.cs" />
+    <Compile Include="Process\ProcessReceiptJobdet.cs" />
+    <Compile Include="Process\ProcessReceiptLot.cs" />
+    <Compile Include="Process\ProcessReceiptMas.cs" />
+    <Compile Include="Process\ProcessReturn.cs" />
+    <Compile Include="Process\ProcessReturnItemDet.cs" />
+    <Compile Include="Process\ProcQltyDet.cs" />
+    <Compile Include="Process\ProcQltyDrCr.cs" />
+    <Compile Include="Process\ProcQltyJobDet.cs" />
+    <Compile Include="Process\ProcQltyMas.cs" />
+    <Compile Include="Process\ProcQltyStock.cs" />
+    <Compile Include="Process\ProInvAddLess.cs" />
+    <Compile Include="Process\ProInvDc.cs" />
+    <Compile Include="Process\ProInvDet.cs" />
+    <Compile Include="Process\ProInvJobDet.cs" />
+    <Compile Include="Process\ProInvMas.cs" />
+    <Compile Include="Process\ProInvRateDiff.cs" />
+    <Compile Include="Production\BoxConversionDet.cs" />
+    <Compile Include="Production\BoxConversionMas.cs" />
+    <Compile Include="Production\BoxConversionStock.cs" />
+    <Compile Include="Production\BoxDespatchDet.cs" />
+    <Compile Include="Production\BoxDespatchMas.cs" />
+    <Compile Include="Production\BoxDespatchStock.cs" />
+    <Compile Include="Production\CommonProdReceipt.cs" />
+    <Compile Include="Production\CommonProdReturn.cs" />
+    <Compile Include="Production\CommonProductionIssue.cs" />
+    <Compile Include="Production\CommonProductionIssueDet.cs" />
+    <Compile Include="Production\CommonProductionJobOrderDet.cs" />
+    <Compile Include="Production\CommonProductionStckDet.cs" />
+    <Compile Include="Production\CuttingBundle.cs" />
+    <Compile Include="Production\CuttingIssueDet.cs" />
+    <Compile Include="Production\CuttingOrder.cs" />
+    <Compile Include="Production\CuttingOrderDetail.cs" />
+    <Compile Include="Production\CuttingOrderStockProperties.cs" />
+    <Compile Include="Production\CuttingReceipt.cs" />
+    <Compile Include="Production\CuttingReceiptDetails.cs" />
+    <Compile Include="Production\CuttingReturn.cs" />
+    <Compile Include="Production\CuttingReturnDetail.cs" />
+    <Compile Include="Production\Cutting_Wastage_Det.cs" />
+    <Compile Include="Production\DespatchAddGridDetail.cs" />
+    <Compile Include="Production\DespatchDet.cs" />
+    <Compile Include="Production\DespatchInnerDetail.cs" />
+    <Compile Include="Production\DespatchMainGridProperty.cs" />
+    <Compile Include="Production\DespatchMas.cs" />
+    <Compile Include="Production\DespatchStock.cs" />
+    <Compile Include="Production\FabricDelySection.cs" />
+    <Compile Include="Production\FabricDelySection_Mas.cs" />
+    <Compile Include="Production\FabricDelyStockProperties.cs" />
+    <Compile Include="Production\JobInvoice.cs" />
+    <Compile Include="Production\JobInvoiceDetail.cs" />
+    <Compile Include="Production\JobReceiptDet.cs" />
+    <Compile Include="Production\JobReceiptMain.cs" />
+    <Compile Include="Production\OrderSalesInvoiceAddless.cs" />
+    <Compile Include="Production\OrderSalesInvoiceDet.cs" />
+    <Compile Include="Production\OrderSalesInvoiceMas.cs" />
+    <Compile Include="Production\ProcessOrderAddScreen.cs" />
+    <Compile Include="Production\ProcessOrderDetInfo.cs" />
+    <Compile Include="Production\ProdInvAddless.cs" />
+    <Compile Include="Production\ProdInvDc.cs" />
+    <Compile Include="Production\ProdInvDet.cs" />
+    <Compile Include="Production\ProdInvJobDet.cs" />
+    <Compile Include="Production\ProdInvMas.cs" />
+    <Compile Include="Production\ProdInvRatediff.cs" />
+    <Compile Include="Production\ProdReceiptDet.cs" />
+    <Compile Include="Production\ProdReceiptMas.cs" />
+    <Compile Include="Production\ProdReceiptReason.cs" />
+    <Compile Include="Production\ProductionIssueDet.cs" />
+    <Compile Include="Production\ProductionIssueJobDet.cs" />
+    <Compile Include="Production\ProductionIssueMas.cs" />
+    <Compile Include="Production\ProductionIssueStock.cs" />
+    <Compile Include="Production\ProductionMainGridDetails.cs" />
+    <Compile Include="Production\ProductionOrdAddLess.cs" />
+    <Compile Include="Production\ProductionOrdDet.cs" />
+    <Compile Include="Production\ProductionOrdJobDet.cs" />
+    <Compile Include="Production\ProductionOrdMas.cs" />
+    <Compile Include="Production\ProductionOrdStock.cs" />
+    <Compile Include="Production\ProductionReceiptMainDetail.cs" />
+    <Compile Include="Production\ProductionRecptDet.cs" />
+    <Compile Include="Production\ProductionRecptJobdet.cs" />
+    <Compile Include="Production\ProductionRecptMas.cs" />
+    <Compile Include="Production\ProductionReturn.cs" />
+    <Compile Include="Production\ProductionReturnAddDetail.cs" />
+    <Compile Include="Production\ProductionReturnDet.cs" />
+    <Compile Include="Production\ProductionReturnItemDet.cs" />
+    <Compile Include="Production\ProductionReturnMainDetail.cs" />
+    <Compile Include="Production\ProductionReturnMas.cs" />
+    <Compile Include="Production\ProductionStockOutward.cs" />
+    <Compile Include="Production\Prod_Return_Reason.cs" />
+    <Compile Include="Production\Sales_Inv_Det.cs" />
+    <Compile Include="Production\Sales_Inv_mas.cs" />
+    <Compile Include="Production\StockRequestDet.cs" />
+    <Compile Include="Production\StockRequestMas.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Purchase\BillEntry.cs" />
+    <Compile Include="Purchase\BillPass.cs" />
+    <Compile Include="Purchase\Bill_Adj_det.cs" />
+    <Compile Include="Purchase\Bill_Adj_mas.cs" />
+    <Compile Include="Purchase\CommercialInvoice_Addless.cs" />
+    <Compile Include="Purchase\Commercial_Invdet.cs" />
+    <Compile Include="Purchase\commercial_invmas.cs" />
+    <Compile Include="Purchase\CSPReceiptDet.cs" />
+    <Compile Include="Purchase\CSPReceiptMas.cs" />
+    <Compile Include="Purchase\DebitOrdDetails.cs" />
+    <Compile Include="Purchase\FabricSales_AddLess.cs" />
+    <Compile Include="Purchase\FABRIC_SALES_DET.cs" />
+    <Compile Include="Purchase\FABRIC_SALES_MAS.cs" />
+    <Compile Include="Purchase\GeneralMemoDet.cs" />
+    <Compile Include="Purchase\GeneralMemoMas.cs" />
+    <Compile Include="Purchase\GeneralMemoRetDet.cs" />
+    <Compile Include="Purchase\GeneralMemoRetMas.cs" />
+    <Compile Include="Purchase\GenIssueAddless.cs" />
+    <Compile Include="Purchase\GenIssueDet.cs" />
+    <Compile Include="Purchase\GenIssueMas.cs" />
+    <Compile Include="Purchase\GenIssueStock.cs" />
+    <Compile Include="Purchase\ItemStockDom.cs" />
+    <Compile Include="Purchase\ItemTransDet.cs" />
+    <Compile Include="Purchase\ItemTransMas.cs" />
+    <Compile Include="Purchase\ItmStkDet.cs" />
+    <Compile Include="Purchase\LotSplitUp.cs" />
+    <Compile Include="Purchase\LotSplitUpItem.cs" />
+    <Compile Include="Purchase\LotSplitUpQty.cs" />
+    <Compile Include="Purchase\OpenDebit.cs" />
+    <Compile Include="Purchase\OpenDebitAddless.cs" />
+    <Compile Include="Purchase\OpenDebitDet.cs" />
+    <Compile Include="Purchase\OpeningStock.cs" />
+    <Compile Include="Purchase\OpenInvoiceAddless.cs" />
+    <Compile Include="Purchase\OpenInvoiceDet.cs" />
+    <Compile Include="Purchase\OpenInvoiceMas.cs" />
+    <Compile Include="Purchase\PurchaseGrnAccount.cs" />
+    <Compile Include="Purchase\PurchaseGrnItemDet.cs" />
+    <Compile Include="Purchase\PurchaseGrnMas.cs" />
+    <Compile Include="Purchase\PurchaseGrnOrder.cs" />
+    <Compile Include="Purchase\PurchaseIndentApprovalDet.cs" />
+    <Compile Include="Purchase\PurchaseIndentApprovalMas.cs" />
+    <Compile Include="Purchase\PurchaseIndentApprovalOrder.cs" />
+    <Compile Include="Purchase\PurchaseIndentDet.cs" />
+    <Compile Include="Purchase\PurchaseIndentMas.cs" />
+    <Compile Include="Purchase\PurchaseIndentOrder.cs" />
+    <Compile Include="Purchase\PurchaseOrder.cs" />
+    <Compile Include="Purchase\PurchaseOrderAccount.cs" />
+    <Compile Include="Purchase\PurchaseOrderDet.cs" />
+    <Compile Include="Purchase\PurchaseOrderItemDet.cs" />
+    <Compile Include="Purchase\PurchaseReturn.cs" />
+    <Compile Include="Purchase\PurchaseReturnDet.cs" />
+    <Compile Include="Purchase\PurDebitItemdet.cs" />
+    <Compile Include="Purchase\PurDebitMas.cs" />
+    <Compile Include="Purchase\PurDebitOthers.cs" />
+    <Compile Include="Purchase\PurInvDc.cs" />
+    <Compile Include="Purchase\PurInvDebCrd.cs" />
+    <Compile Include="Purchase\PurInvDet.cs" />
+    <Compile Include="Purchase\PurInvMas.cs" />
+    <Compile Include="Purchase\PurInvOrdDet.cs" />
+    <Compile Include="Purchase\PurQltyDet.cs" />
+    <Compile Include="Purchase\PurQltyOrder.cs" />
+    <Compile Include="Purchase\PurInvAddless.cs" />
+    <Compile Include="Purchase\SpecialReqDet.cs" />
+    <Compile Include="Purchase\SpecialReqMas.cs" />
+    <Compile Include="Purchase\SpecialRequisition.cs" />
+    <Compile Include="Purchase\StockAllocationDet.cs" />
+    <Compile Include="Purchase\StockAllocationMas.cs" />
+    <Compile Include="Purchase\StockAllocationSection.cs" />
+    <Compile Include="Purchase\StockAudit.cs" />
+    <Compile Include="Purchase\StockAuditDet.cs" />
+    <Compile Include="Purchase\StockInward.cs" />
+    <Compile Include="Purchase\StockLocAllocation.cs" />
+    <Compile Include="Purchase\StockTransfer.cs" />
+    <Compile Include="Purchase\StockTransferDet.cs" />
+    <Compile Include="Purchase\StoresDelivery.cs" />
+    <Compile Include="Purchase\StoresDeliveryDet.cs" />
+    <Compile Include="Purchase\StoresDeliveryOrder.cs" />
+    <Compile Include="Purchase\StoresDeliveryReturn.cs" />
+    <Compile Include="Purchase\StoresDeliveryReturnDet.cs" />
+    <Compile Include="Purchase\StoresDeliveryStock.cs" />
+    <Compile Include="Purchase\StoreTransferDet.cs" />
+    <Compile Include="Purchase\StoreTransferMas.cs" />
+    <Compile Include="Purchase\UnitGrnDet.cs" />
+    <Compile Include="Purchase\UnitGrnMas.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

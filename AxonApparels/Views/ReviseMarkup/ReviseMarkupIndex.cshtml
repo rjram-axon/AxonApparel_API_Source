@@ -1,0 +1,300 @@
+﻿@{
+    ViewBag.Title = "ReviseMarkupIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<style>
+    #tOMbody_info {
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtFromDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                LoadMainGrid();
+            }
+        });
+        $('#txtToDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                LoadMainGrid();
+            }
+        });
+
+    })
+</script>
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/HouseKeeping/ReviseMarkup.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+            <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12 enquiry_edit">
+                                        Company
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMCompany" class="form-control select2" onchange="CMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12">Item</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMItem" class="form-control select2" onchange="SMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12" for="ex3">Trans No</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMTransno" class="form-control select2" onchange="SMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-3">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12 enquiry_edit">
+                                        Supp Type
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMSupplierType" class="form-control select2" onchange="SMainList();">
+                                            <option value="0">--Select All--</option>
+                                            <option value="S">Supplier</option>
+                                            <option value="C">Company Unit</option>
+                                            <option value="W">Work Division</option>
+                                            <option value="B">Buyer</option>
+                                            <option value="E">Employee</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12 enquiry_edit">
+                                        All. 
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMAll" class="form-control select2" onchange="SMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12" for="ex3">Order No</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMOrdNo" class="form-control select2" onchange="SMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12 enquiry_edit">
+                                        Ref No
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMRefNo" class="form-control select2" onchange="SMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12">Process</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMProcess" class="form-control select2" onchange="SMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+
+
+
+
+                @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+
+
+
+            </div>
+
+            <div class="x_panel">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="x_content">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+
+                                    <table class="table table-responsive" id="tblEntryItemdetails">
+                                        <thead>
+                                            <tr>
+                                                <th style="display: none;">StockId</th>
+                                                <th>Item
+                                                </th>
+                                                <th>Color
+                                                </th>
+                                                <th>Size
+                                                </th>
+                                                <th>Uom
+                                                </th>
+
+                                                <th>Qty
+                                                </th>
+                                                <th>Markup Rate</th>
+
+                                                <th style="display: none;">Itemid
+                                                </th>
+                                              @*  <th style="display: none;">Colorid
+                                                </th>
+                                                <th style="display: none;">Sizeid
+                                                </th>
+                                                <th style="display: none;">PurUomId
+                                                </th>*@
+                                         
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </form>
+                            <div class="row">
+
+                                <div class="modal-footer" style="border: none;">
+                                    <button type="button" class="btn btn-round btn-success" id="Add" onclick="return save();">Update</button>
+                                    <button type="button" class="btn btn-round btn-success" id="Update" style="display: none;" onclick="Update();">Update</button>
+                                    <button type="button" class="btn btn-round btn-success" id="Delete" style="display: none;" onclick="Delete();">Delete</button>
+
+                                    <button type="button" class="btn btn-round btn-success" id="Approve" style="display: none;" onclick="Approve();">Approve</button>
+                                    <button type="button" class="btn btn-round btn-success" id="Revert" style="display: none;" onclick="Update();">Revert</button>
+                                    <button type="button" class="btn btn-round btn-danger" onclick="Close();">Close</button>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="x_panel">
+                <div class="form-group">
+                    <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                        Comp Unit
+                    </label>
+                    <div class="col-md-2 col-sm-1 col-xs-12">
+                        <textarea class="form-control" rows="4" placeholder="Unit" id="txtmaincomp" disabled=""></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                        Trans No
+                    </label>
+                    <div class="col-md-2 col-sm-1 col-xs-12">
+                        <textarea class="form-control" rows="4" placeholder="Trans no" id="txtmaintranno" disabled=""></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                        Process
+                    </label>
+                    <div class="col-md-2 col-sm-1 col-xs-12">
+                        <textarea class="form-control" rows="4" placeholder="Process" id="txtmainprocess" disabled=""></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                        Order No
+                    </label>
+                    <div class="col-md-2 col-sm-1 col-xs-12">
+                        <textarea class="form-control" rows="4" placeholder="Ord No" id="txtmainordno" disabled=""></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 40%">
+                    <div class="modal-content">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Purchase Order</h2>
+
+
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>
+

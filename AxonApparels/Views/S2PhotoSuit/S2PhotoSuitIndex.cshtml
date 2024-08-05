@@ -1,0 +1,181 @@
+﻿@{
+    ViewBag.Title = "S2PhotoSuitIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/AxonScripts/OrderProcessing/S2PhotoSuit.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>S2 Photo Suit Entry</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+                             @if (ViewBag.S2SampleEntryAddFlg == "true")
+                            { 
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Add S2 Sample Entry</button>
+                            }
+                            else
+                             {
+                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" disabled>Add S2 Sample Entry</button>                                
+                             }
+                            
+
+
+                            <table id="tbody" class="table table-bordered table-hover">
+                                @*<thead>
+                                    <tr>
+                                        <th style="visibility: hidden;">ID
+                                        </th>
+                                        <th>Country Name
+                                        </th>
+                                        <th>LookUp
+                                        </th>                                        
+                                        <th>Status
+                                        </th>
+                                        <th>Action
+                                        </th>
+                                    </tr>
+                                </thead>*@
+                                @*<tbody class="tbody">
+                                </tbody>*@
+                            </table>
+                        </div>
+                        @* Load datatable css *@
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" 
+                            aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="x_panel" style="width: 150%;">
+                                    <div class="x_title">
+                                        <h2>Add S2 Sample Entry</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="">
+                                            <div class="x_panel">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <form class="form-horizontal form-label-left">
+                                                            <div class="form-group" style="display: none;">
+                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">ID</label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <input type="text" id="EntryID" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                                    Ref No <span style="color: red;">*</span>
+                                                                </label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-11">
+                                                                    <select id="ddlRefNo" class="form-control"></select>
+                                                                    @*<button type="button" data-toggle="tooltip" data-placement="top" title="Add" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" data-target="#myModal2" class="btnprodproadd btn btn-round btn-success"> <i class="fa fa-plus"></i> </button>*@
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">Elastic</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtelastic" placeholder="Elastic" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">Photo Suit Submit</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtprotosubmit" placeholder="Proto Sew" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                            <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                                                Status
+                                                            </label>
+
+                                                            <div class="col-md-5 col-sm-8 col-xs-12">
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" id="Status" style="margin-top: 0px;" value="">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <form class="form-horizontal form-label-left">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">Fabric</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtfabric" placeholder="Fabric" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                                    Photo Suit Sam Sew
+                                                                </label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-11">
+                                                                    <input type="text" id="txtphotosuitsamsew" placeholder="Photo Suit Sew" class="form-control col-md-10">                                                                    
+                                                                </div>
+                                                            </div>                                                           
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">Remarks</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtremarks" placeholder="Remarks" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

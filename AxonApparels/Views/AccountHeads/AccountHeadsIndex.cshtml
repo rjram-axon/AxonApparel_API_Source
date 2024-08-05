@@ -1,0 +1,183 @@
+﻿@{
+    ViewBag.Title = "AccountHeadsIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+@* margin-top: -28px;*@
+<style>
+    #tbody_filter {
+    }
+</style>
+<script src="~/AxonScripts/AccountHeads.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<!-- page content -->
+
+
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Account Heads</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+                            @if (ViewBag.AccountHeadsAddFlg == "true")
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Add New Account Heads</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" disabled>Add New Account Heads</button>
+                            }
+                            <table id="tbody" class="table table-bordered table-hover">
+                                @*<thead>
+                                    <tr>
+                                        <th style="visibility: hidden;">ID
+                                        </th>
+                                        <th>Country Name
+                                        </th>
+                                        <th>LookUp
+                                        </th>                                        
+                                        <th>Status
+                                        </th>
+                                        <th>Action
+                                        </th>
+                                    </tr>
+                                </thead>*@
+                                @*<tbody class="tbody">
+                                </tbody>*@
+                            </table>
+                        </div>
+                        @* Load datatable css *@
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="x_panel" style="min-width: 50%;">
+                                    <div class="x_title">
+                                        <h2>Add Account Heads</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+                                                <div class="row">
+                                                    <form class="form-horizontal form-label-left">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="AccountHeadsID" style="display: none">ID</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" class="form-control" id="AccountHeadsID" placeholder="Id" disabled="disabled" style="display: none" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Name">Name <span style="color: red;">*</span></label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" class="form-control" id="Name" placeholder="Name" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="LookUp">LookUp <span style="color: red;">*</span></label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" class="form-control" id="LookUp" placeholder="LookUp" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Per">Percentage <span style="color: red;">*</span></label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" class="form-control" id="Per" placeholder="Per" />
+                                                            </div>
+                                                        </div>
+                                                        @*           <div class="form-group">
+                                                        <label class="control-label col-md-2 col-sm-3 col-xs-12" for="Amount">Amount <span style="color: red;">*</span></label>
+                                                        <div class="col-md-5 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" id="Amount" placeholder="Amount" />
+                                                        </div>
+                                                    </div>*@
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Per">Type </label>
+                                                            <div class="maxl col-md-9 col-sm-9 col-xs-12">
+                                                                <label class="radio inline">
+                                                                    <input id="Add" class="Score" name="AddorLess" checked type="radio" value="+">
+                                                                    <span>Add </span>
+                                                                </label>
+                                                                <label class="radio inline">
+                                                                    <input id="Less" class="Score" name="AddorLess" type="radio" value="-">
+                                                                    <span>Less </span>
+                                                                </label>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Status
+                                                 
+                                                            </label>
+
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" id="Status" style="margin-top: 0px;" value="">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->

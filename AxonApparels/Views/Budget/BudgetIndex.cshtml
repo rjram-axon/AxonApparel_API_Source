@@ -1,0 +1,1556 @@
+﻿@{
+    ViewBag.Title = "BudgetIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+        $('#date').datepicker({ dateFormat: 'dd/mm/yy' });
+
+
+    });
+</script>
+
+
+
+<script src="~/AxonScripts/Planning/Budget.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<style>
+    #particularsdetails_filter {
+        display: none;
+    }
+
+    #particularsdetails_info {
+        display: none;
+    }
+
+    #particularsdetails_length {
+        display: none;
+    }
+
+    #particularsdetails_paginate {
+        display: none;
+    }
+
+    #production2table_paginate {
+        display: none;
+    }
+
+    #production2table_filter {
+        display: none;
+    }
+
+    #production2table_info {
+        display: none;
+    }
+
+    #production2table_length {
+        display: none;
+    }
+
+    #bomtable_filter {
+        display: none;
+    }
+
+    #production1table_paginate {
+        display: none;
+    }
+
+    #production1table_filter {
+        display: none;
+    }
+
+    #production1table_info {
+        display: none;
+    }
+
+    #production1table_length {
+        display: none;
+    }
+
+    #process2table_length {
+        display: none;
+    }
+
+    #process2table_filter {
+        display: none;
+    }
+
+    #process2table_info {
+        display: none;
+    }
+
+    #process2table_paginate {
+        display: none;
+    }
+
+    #process2table_filter {
+        display: none;
+    }
+
+    #process1table_paginate {
+        display: none;
+    }
+
+    #process1table_length {
+        display: none;
+    }
+
+    #process1table_info {
+        display: none;
+    }
+
+    #process1table_filter {
+        display: none;
+    }
+
+    #bomtable_length {
+        display: none;
+    }
+
+    #bomtable_paginate {
+        display: none;
+    }
+
+    #bomtable_info {
+        display: none;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    .column {
+        float: left;
+        width: 33.33%;
+        padding: 10px;
+        height: 300px; /* Should be removed. Only for demonstration */
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+                    &nbsp;
+                    <div class="x_title">
+
+                        <h2>Budget</h2>
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="x_panel">
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-4 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Entry No</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="Entrynum" placeholder="Entry No" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtWorkOrder">Work Order</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" id="txtWorkOrder" placeholder="Work Order" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Prod.Quantity
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="qnty" placeholder="Quantity" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Style Amount
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtstylerate" placeholder="Style Rate" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+
+                                     <div class="form-group" style="display:none;">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Order Qty
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtordqty" placeholder="Order Qty" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+                                       
+
+                                </form>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-4 col-xs-12">
+
+                                <form class="form-horizontal form-label-left input_mask">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Order No
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="Ordernum" placeholder="Order No" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Ref No</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" id="Refnum" placeholder="Ref No" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Style</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" id="style" placeholder="Style" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Ship Rate
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtshiprate" placeholder="Style Rate" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+
+
+
+                                </form>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-4 col-xs-12">
+
+                                <form class="form-horizontal form-label-left input_mask">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Company
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtCompany" placeholder="Company" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Buyer</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" id="txtBuyer" placeholder="Buyer" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Date
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="date" placeholder=" Date" class="form-control col-md-10">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Order Value
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtOrderValue" placeholder="Order Value" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+                                 
+                                    <div class="form-group" style="display: none">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">CostdefnId</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" id="CostdefnId" placeholder="CostdefnId" class="form-control col-md-10">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">CostdefnBOMId</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" id="CostdefnbomId" placeholder="CostdefnbomId" class="form-control col-md-10">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group" style="display: none">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">CostdefnCOMId</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                            <input type="text" id="CostdefncomId" placeholder="CostdefncomId" class="form-control col-md-10">
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+
+
+                        </div>
+                        @*<div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                        <div class="maxl">
+                                            <label class="radio inline ">
+
+                                                <input id="" checked name="PAType" type="radio" value="P" disabled>
+                                                <span>Pending </span>
+                                            </label>
+                                            <label class="radio inline ">
+                                                <input id="" name="PAType" type="radio" value="A" disabled>
+                                                <span>Approved </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>*@
+                        <div  class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <button type="button" class="close" data-dismiss="modal">×</button>
+                                        <h4 class="modal-title" id="myModalLabel">Currency</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group col-sm-12">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">S.No</label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <input type="text" name="snumb" id="txtsno" class="form-control col-md-10" style="border-color: lightgrey;">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Curency</label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+
+
+                                                    <select id="ddlCurrencybom" class="form-control" style="border-color: lightgrey;" onchange="loadexcratebom();">
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Exchange Rate</label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <input type="text" name="Quantity" id="txtexchngratebom" class="form-control col-md-10" style="border-color: lightgrey;">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-sm-12">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Rate</label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <input type="text" name="Quantity" id="txtratebom" class="form-control col-md-10" style="border-color: lightgrey;">
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-success btn-round" id="btncurrAdd" onclick="return Addcurr();">Add</button>
+                                        <button type="button" class="btn btn-success btn-round" id="btncurrUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger btn-round" onclick="Close();">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                            @* <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
+                        <button type="button" class="btn btn-primary" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>*@
+                        </div>
+
+
+                       <div class="" id="myTab" role="tabpanel" data-example-id="togglable-tabs">
+                            <ul class="nav nav-tabs bar_tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#tab_content1" id="profile-tab" role="tab" data-toggle="tab" aria-expanded="false">Bom</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#tab_content2" role="tab" id="profile-tab1" data-toggle="tab" aria-expanded="false">Process</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#tab_content3" id="profile-tab2" role="tab" data-toggle="tab" aria-expanded="false">Production</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#tab_content4" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false" style="display: none">Component Prodn</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#tab_content5" id="profile-tab4" role="tab" data-toggle="tab" aria-expanded="false">Commercial</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#tab_content6" role="tab" id="profile-tab5" data-toggle="tab" onclick="totcost()" aria-expanded="false">Summary / Remarks</a>
+                                </li>
+
+
+                            </ul> 
+                            <div id="myTabContent" class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                    <div class="x_content">
+
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="x_panel">
+                                                    <h2 style="margin-top: -5px;">Bom Details</h2>
+
+                          <div class="form-group">
+                                        <label class="control-label col-lg-2 col-md-2 col-sm-6 col-xs-12">Copy from </label>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                             <select id="ddlCPOrderNo" class="form-control select2" onchange="LoadFOrdDropDetails();">
+                                                                </select>
+                                        </div>
+
+                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                           <select id="ddlCPSty" class="form-control select2" >
+                                                                </select>
+                                        </div>
+                                             <button type="button" class="btn btn-round btn-success col-lg-1 col-md-1 col-sm-1 col-xs-1" id="SetCopy"  onclick="LoadCopy();">Load</button>
+
+
+                                    </div>
+<div style="text-align:right;">
+                                          <button class="btn btn-success"  onclick="loadfillbom();" >Fill</button>
+    </div>
+
+                                                    <div class="x_content">
+                                                        <form class="form-horizontal form-label-left">
+                                                            <table id="bomtable" class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>SNo</th>
+                                                                        <th>ItemId</th>
+                                                                        <th>Item</th>
+                                                                         <th>Color</th>
+                                                                        <th>Size</th>
+                                                                        <th>Quantity</th>
+                                                                                                                                       
+                                                                        <th>Rate</th>
+                                                                     
+                                                                        <th>Amount</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+                                                            </br>
+                                                        @*<div class="col-md-3">
+                                                                 <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                           Currency
+                                        </label>
+                                        <div class="col-md-8 col-sm-7 col-xs-12">
+                                            <select id="ddlCurrencybom" class="form-control"  >
+                                               
+                                               
+                                            </select>
+                                        </div>
+                                    </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                <label class="control-label col-md-5 col-sm-6 col-xs-12" for="txtEntryDate">Exchange Rate</label>
+                                                                <div class="col-md-7 col-sm-7 col-xs-12">
+
+                                                                     <input type="text" id="txtexchnratebom"  placeholder="Exchange Rate" class="form-control col-md-10" >
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                <label class="control-label col-md-2 col-sm-6 col-xs-12" for="txtEntryDate">Rate</label>
+                                                                <div class="col-md-8 col-sm-7 col-xs-12">
+
+                                                                     <input type="text" id="txtratebom"  placeholder="Rate" class="form-control col-md-10" >
+                                                                </div>
+                                                            </div>
+                                                            </div>*@
+                                                            <div class="row">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-md-7 col-sm-12 col-xs-12" style="padding: 0px;">
+                                                                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                                    Currency 
+                                                                                </label>
+                                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" >
+                                                                                    <select id="ddlbomcurrency" class="form-control select2" onchange="loadexcratebom();">
+                                                                                    </select>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-lg-5 col-md-6 col-sm-6 col-xs-4" for="txtEntryDate">Exchange Rate</label>
+                                                                                <div class="col-lg-5 col-md-6 col-sm-6 col-xs-8">
+
+                                                                                    <input type="text" id="txtbomexrate" placeholder="Ex.Rate"  class="form-control" disabled>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-lg-3 col-md-4 col-sm-3 col-xs-4" for="txtEntryDate">Rate</label>
+                                                                                <div class="col-lg-5 col-md-8 col-sm-6 col-xs-8">
+
+                                                                                    <input type="text" id="txtbomrate" placeholder="Rate" style="" class="form-control Addcurr">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Total</label>
+                                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" >
+                                                                                   <input type="text" id="txttotbom" placeholder="Total Amount"  class="form-control " disabled>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                 
+
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                       <div class="x_panel">
+                                            <div class="x_panel" >                                            
+                                                  <label class="col-md-12 col-sm-12 col-xs-12 control-label">
+                                                 Last PO Details
+                                            </label>
+                                            </div>
+                   <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                                Order No
+                                            </label>*@
+                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                PO Number
+                                                <input type="text" class="form-control" rows="4" placeholder="OrderNo" id="txtmainOrdno" disabled="">
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                            @*<label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                               
+                                            </label>*@
+                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                 PO Date
+                                                <input type="text"  class="form-control" rows="4" placeholder="RefNo" id="txtmainrefno" disabled="">
+                                            </div>
+                                        </div>
+                 @*  <div class="form-group">
+                                        
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                 Style
+                                                <textarea class="form-control" rows="4" placeholder="Style" id="txtmainstyle" disabled=""></textarea>
+                                            </div>
+                                        </div>*@
+                      <div class="form-group">
+                                            @*<label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                              
+                                            </label>*@
+                                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                                  Supplier
+                                                <input type="text" class="form-control" rows="4" placeholder="Supplier" id="txtsupplier" disabled="">
+                                            </div>
+                                        </div>
+                                                <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                              
+                                            </label>*@
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                  PO Rate
+                                                <input type="text" class="form-control" rows="4" placeholder="Previous Rate" id="txtPrerate" disabled="">
+                                            </div>
+                                        </div>
+                                        </div>
+                                    <label class="col-md-12 col-sm-12 col-xs-12 control-label">
+                                                 Quotation Details
+                                            </label>
+
+                                     <table id="PurQuotetable" class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>QuoteNo</th>
+                                                                        <th>MinQty</th>
+                                                                        <th>MaxQty</th>
+                                                                         <th>Rate</th>
+                                                                        <th>Supplier</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+
+
+
+
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                    <div class="x_content">
+
+                                        <div class="x_content">
+
+                                            <div class="row">
+
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="x_panel">
+                                                        <h2 style="margin-top: -5px;">Process Details</h2>
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <table id="process1table" class="table table-bordered table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            @*<th>SNo</th>*@
+                                                                            <th>Processid</th>
+                                                                            <th>Process</th>
+                                                                            <th>Amount</th>
+                                                                            @*<th>Details</th>*@
+
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="x_panel">
+                                                        <h2 style="margin-top: -5px;">Item Details</h2>
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <div class="form-group">
+                                                                    <div class="maxl">
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradioprocess" id="pri" value="I" onclick="procitem();">
+                                                                            <span>Item </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradioprocess" id="prc" value="C" onclick="proccolor();">
+                                                                            <span>Color </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradioprocess" id="prs" value="S" onclick="procsize();">
+                                                                            <span>Size </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradioprocess" id="prn" value="N" onclick="procnone();" checked>
+                                                                            <span>None </span>
+                                                                        </label>
+                                                                      <input type="button" class="btn btn-success" value="Fill" onclick="LoadFillProcess();" style="width: 50px; float: right; height: 28px;" />
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </form>
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <table id="process2table" class="table table-bordered table-hover">
+                                                                    <tr>
+                                                                        <th>SNo</th>
+                                                                        <th>Processid</th>
+                                                                        <th>Item</th>
+                                                                        <th>Category 1</th>
+                                                                        <th>Category 2</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Rate</th>
+                                                                        <th>Amount</th>
+                                                                        <th>SecQty</th>
+                                                                         <th style="visibility:hidden">Itemid</th>
+                                                                         <th style="visibility:hidden">Colorid</th>
+                                                                         <th style="visibility:hidden">Sizeid</th>
+
+                                                                    </tr>
+                                                                </table>
+                                                                &nbsp;
+                                                                <div class="col-md-12 col-sm-12 col-sx-12" >
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-2 col-sm-1 col-xs-3" for="txtEntryDate">Total</label>
+                                                                        <div class="col-md-4 col-sm-3 col-xs-9">
+
+                                                                            <input type="text" id="txttotamnt" disabled  placeholder="Total Amount" class="form-control ">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                     <div class="x_panel">
+                                            <div class="x_panel" >                                            
+                                                  <label class="col-md-12 col-sm-12 col-xs-12 control-label">
+                                                 Last Process Order Details
+                                            </label>
+                                            </div>
+                   <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                                Order No
+                                            </label>*@
+                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                Process DC No
+                                                <input type="text" class="form-control" rows="4" placeholder="OrderNo" id="txtmainOrdno2" disabled="">
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                            @*<label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                               
+                                            </label>*@
+                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                Date
+                                                <input type="text" class="form-control" rows="4" placeholder="RefNo" id="txtmainrefno2" disabled="">
+                                            </div>
+                                        </div>
+                @*   <div class="form-group">
+                                        
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                 Style
+                                                <textarea class="form-control" rows="4" placeholder="Style" id="txtmainstyle2" disabled=""></textarea>
+                                            </div>
+                                        </div>*@
+                      <div class="form-group">
+                                            @*<label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                              
+                                            </label>*@
+                                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                                  Supplier
+                                                <input type="text" class="form-control" rows="4" placeholder="Supplier" id="txtsupplier2" disabled="">
+                                            </div>
+                                        </div>
+                                                <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                              
+                                            </label>*@
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                 Process Rate
+                                                <input type="text" class="form-control" rows="4" placeholder="Previous Rate" id="txtPrerate2" disabled=""></input>
+                                            </div>
+                                        </div>
+
+                                          <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                 Quotation Details
+                                            </label>
+                                         
+                                     <table id="ProQuotetable" class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>QuoteNo</th>
+                                                                        <th>MinQty</th>
+                                                                         <th>Rate</th>
+                                                                        <th>Supplier</th>
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+
+                                        </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                    <div class="x_content">
+
+                                        <div class="x_content">
+
+                                            <div class="row">
+
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="x_panel">
+                                                        <h2 style="margin-top: -5px;">Production Details</h2>
+                                                        <div class="x_content">
+
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <table id="production1table" class="table table-bordered table-hover">
+                                                                    <tr>
+                                                                        <th>Processid</th>
+                                                                        <th>Production</th>
+                                                                        <th>Cost</th>
+                                                                        @*<th>Details</th>*@
+
+                                                                    </tr>
+                                                                </table>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                                    <div class="x_panel">
+                                                        <h2 style="margin-top: -5px;">Item Details</h2>
+
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <div class="form-group">
+                                                                    <div class="maxl">
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradioprod" id="pdi" value="I" onclick="prodctnitem();">
+                                                                            <span>Item </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradioprod" id="pdc" value="C" onclick="prodctncolor();">
+                                                                            <span>Color </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradioprod" id="pds" value="S" onclick="prodctnsize();">
+                                                                            <span>Size </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradioprod" id="pdn" value="N" onclick="prodctnnone();" checked>
+                                                                            <span>None </span>
+                                                                        </label>
+                                                                        <input type="button" class="btn btn-success" value="Fill" onclick="LoadFillProdtn();" style="width: 50px; float: right; height: 28px;" />
+
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                            <form class="form-horizontal form-label-left">
+                                                                <table id="production2table" class="table table-bordered table-hover">
+                                                                    <tr>
+                                                                        <th>SNo</th>
+                                                                        <th>Processid</th>
+                                                                        <th>Item</th>
+                                                                        <th>Category 1</th>
+                                                                        <th>Category 2</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Rate</th>
+                                                                        <th>Amount</th>
+
+                                                                    </tr>
+                                                                </table>
+                                                                &nbsp;
+                                                                <div class="col-md-12 col-sm-12 col-xs-12" >
+
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-2 col-sm-1 col-xs-3" for="txtEntryDate">Total</label>
+                                                                        <div class="col-md-4 col-sm-3 col-xs-9">
+
+                                                                            <input type="text" id="txttotamntprod" disabled placeholder="Total Amount" class="form-control col-md-10">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+                                    <div class="x_content">
+
+                                        <div class="x_content">
+
+                                            <div class="row">
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="x_panel">
+
+                                                        <div class="x_content">
+
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <table id="comp1table" class="table table-striped table-bordered">
+                                                                    <tr>
+                                                                        <th>Process</th>
+                                                                        <th>Amount</th>
+
+                                                                    </tr>
+                                                                </table>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="x_panel">
+
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <div class="form-group">
+                                                                    <div class="maxl">
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradio">
+                                                                            <span>Item </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradio">
+                                                                            <span>Color </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradio">
+                                                                            <span>Size </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradio">
+                                                                            <span>Component </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="optradio" checked>
+                                                                            <span>None </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                            <form class="form-horizontal form-label-left">
+                                                                <table id="comp2table" class="table table-striped table-bordered">
+                                                                    <tr>
+
+                                                                        <th>Item</th>
+                                                                        <th>Color</th>
+                                                                        <th>Size</th>
+                                                                        <th>Component</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Rate</th>
+                                                                        <th>Amount</th>
+
+                                                                    </tr>
+                                                                </table>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade  in" id="tab_content5" aria-labelledby="home-tab">
+                                    <div class="x_content">
+
+                                        <div class="x_content">
+
+                                            <div class="row">
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="x_panel">
+
+                                                        <div class="x_content">
+                                                            @* <form class="form-horizontal form-label-left input_mask">
+
+                                                                 <table id="commercial1table" class="table table-striped table-bordered">
+                                                                <tr>
+                                                                   <th>Particulars</th>
+                                                                     <th>Cost</th>
+                                                                    <th>Value</th>
+                                                                    <th>Remarks</th>
+                                                                </tr>
+                                                                   </table>
+
+                                                            </form>*@
+                                                            <form>
+                                                                <div class="details">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                                                                        <table class="table table-bordered table-hover" border="1">
+                                                                        <tr>
+                                                                            <td>Particular</td>
+                                                                            <td>Cost</td>
+                                                                            <td>Value</td>
+                                                                            <td>Remarks</td>
+                                                                            <td>&nbsp;</td>
+                                                                        </tr>
+                                                                        <tr class="mycontainer" id="mainrow">
+                                                                            <td>
+                                                                                <select id="ddlItem" style="width:170px" class="form-control select2">
+                                                                                    <option></option>
+                                                                                </select>
+                                                                                @*<span class="error">Select Item</span>*@
+                                                                            </td>
+                                                                            @*<td>
+                                                            <select id="product" class="product form-control">
+                                                                <option>Select</option>
+                                                            </select>
+                                                            <span class="error">Select product</span>
+                                                        </td>*@
+                                                                            <td>
+                                                                                <input type="text" id="cost" style="width:50px" class="quantity form-control" onkeyup="calcvalue(this.value);" />
+                                                                                @*<span class="error">Valid quantity required</span>*@
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" id="value" style="width:80px" class="rate form-control" disabled />
+                                                                                @*<span class="error">Valid rate required</span>*@
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" id="remarks" style="width:100px" class="rate form-control" />
+                                                                                @*<span class="error">Valid rate required</span>*@
+                                                                            </td>
+                                                                            <td>
+                                                                                <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btncldadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btncldupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+                                                                                @*  <input type="button" data-toggle="tooltip" data-placement="top" title="Add" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" id="btncldadd" value="Add"  class="btn btn-success btn btn-round" />
+                                                                                <input type="button" data-toggle="tooltip" data-placement="top" title="Update" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" id="btncldupdate" value="Update"  class="btn btn-success" />*@
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                    </div>
+                                                                    
+                                                                    <div id="orderItems">
+                                                                        <table class="table table-responsive" id="particularsdetails">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th style="display: none">ID
+                                                                                    </th>
+                                                                                    <th>Particular
+                                                                                    </th>
+                                                                                    <th>Cost
+                                                                                    </th>
+                                                                                    <th>Value
+                                                                                    </th>
+                                                                                    <th>Remarks
+                                                                                    </th>
+                                                                                    <th>Action
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                        </table>
+                                                                        <span id="orderItemError" style="color: red"></span>
+                                                                    </div>
+                                                                    @*<div style="padding: 10px 0; text-align: right">
+                                                    <input id="submit" type="button" value="Save Order" class="btn btn-warning" style="padding: 10px 20px" />
+                                                </div>*@
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                                    <div class="x_panel">
+
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left">
+                                                                <div class="form-group">
+                                                                    <div class="maxl">
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="price" id="optperpiece" value="P" onclick="CalcComercial();">
+                                                                            <span>Per Price </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="price" id="optpercentage" value="O" onclick="CalcComercial();">
+                                                                            <span>% of Order Value </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" name="price" id="optpervalue" value="V" onclick="CalcComercial();" checked>
+                                                                            <span>Value </span>
+                                                                        </label>
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                            <br />
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2 col-sm-2 col-xs-3" for="txtEntryDate">Total</label>
+                                                                <div class="col-md-4 col-sm-3 col-xs-9">
+
+                                                                    <input type="text" id="totamntcomm" placeholder="Total Amount" class="form-control col-md-10" disabled>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade  in" id="tab_content6" aria-labelledby="home-tab" onclick="totcost();">
+                                    <div class="x_content">
+
+                                        <div class="row">
+
+
+                                            @* <div class="col-md-12">
+
+
+
+                                                <div class="x_panel">
+
+                                                    <div class="x_content">
+                                                        <br>
+                                                        <form class="form-horizontal form-label-left">
+
+
+                                                            <h2>GRID</h2>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>*@
+
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                                    <form class="form-horizontal form-label-left">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                Fabric Cost 
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                <input type="text" id="fabric" class="form-control" placeholder="Fabric" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                Accessories Cost 
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                <input type="text" id="accessories" class="form-control" placeholder="Accessories" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" style="display: none;">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                Packing Material Cost 
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                <input type="text" id="packing" class="form-control" placeholder="Packing Material" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                Process Cost 
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                <input type="text" id="process" class="form-control" placeholder="Process" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                CMT Cost 
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                <input type="text" id="cmt" class="form-control" placeholder="CMT" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <!--<div class="form-group">
+                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                OutSide JobCost 
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-9">
+                                                                <input type="text" id="txtOutSideJob" class="form-control" placeholder="OutSideJob Cost" disabled>
+                                                            </div>
+                                                        </div>-->
+                                                       @* <div class="form-group" style="display: none;">
+                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                Comp.Process Cost
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-9">
+                                                                <input type="text" id="compprocess" class="form-control" placeholder=" Comp.Process">
+                                                            </div>
+                                                        </div>*@
+
+                                                        @*<div class="form-group">
+                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                CMCost
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-9">
+                                                                <input type="text" id="cmcost" class="form-control" placeholder="CMCost" onkeyup="calcmarkup();">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                Import
+                                                            </label>
+                                                            <div class="col-md-2 col-sm-3 col-xs-9">
+                                                                <input type="text" id="txtImport" class="form-control" placeholder="Import Per" onkeyup="calcImpper();">
+                                                            </div>
+                                                            <div class="col-md-4 col-sm-5 col-xs-9">
+                                                                <input type="text" id="txtImportValue" class="form-control" placeholder="Imp Per Value" disabled>
+                                                            </div>
+                                                        </div>*@
+                                                       @* <div class="form-group">
+                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                Export
+                                                            </label>
+                                                            <div class="col-md-2 col-sm-3 col-xs-9">
+                                                                <input type="text" id="txtExport" class="form-control" placeholder="Fin Per" onkeyup="calcExpper();">
+                                                            </div>
+                                                            <div class="col-md-4 col-sm-5 col-xs-9">
+                                                                <input type="text" id="txtExportValue" class="form-control" placeholder="Fin Per Value" disabled>
+                                                            </div>
+                                                        </div>*@
+                                                       @* <div class="form-group">
+                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                Fin Per
+                                                            </label>
+                                                            <div class="col-md-2 col-sm-3 col-xs-9">
+                                                                <input type="text" id="finper" class="form-control" placeholder="Fin Per" onkeyup="calcfinper();">
+                                                            </div>
+                                                            <div class="col-md-4 col-sm-5 col-xs-9">
+                                                                <input type="text" id="finpervalue" class="form-control" placeholder="Fin Per Value" disabled>
+                                                            </div>
+                                                        </div>*@
+                                                        @* <div class="form-group" >
+                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                Value
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-9">
+                                                                <input type="text" id="finpervalue" class="form-control" placeholder="Fin Per Value" disabled>
+                                                            </div>
+                                                        </div>*@
+                                                       @*<div class="form-group">
+                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                Gafi Charges
+                                                            </label>
+                                                            <div class="col-md-2 col-sm-3 col-xs-9">
+                                                                <input type="text" id="txtGafiPer" class="form-control" placeholder="Gif Per" onkeyup="calcGifper();">
+                                                            </div>
+                                                            <div class="col-md-4 col-sm-5 col-xs-9">
+                                                                <input type="text" id="gaficharges" class="form-control" placeholder="Gafi Charges" disabled>
+                                                            </div>
+                                                        </div>*@
+
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                Commercial Cost
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                <input type="text" id="commercial" class="form-control" placeholder="Commercial" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                Total Cost
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                <input type="text" id="totalcost" class="form-control" placeholder="Total Cost" disabled>
+                                                            </div>
+                                                        </div>
+                                                         <div class="form-group">
+
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                               Sales Rate Margin %
+                                                            </label>
+                                                            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+                                                                <input type="text" id="txtSalesrateper" class="form-control" placeholder="%"  >
+                                                            </div>
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                               Sales Margin Cost / Pcs
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                <input type="text" id="Salescostset" class="form-control" placeholder="Cost" disabled>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="form-group">
+
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                Margin %
+                                                            </label>
+                                                            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+                                                                <input type="text" id="txtProfitper" class="form-control" placeholder="Profit Per"  onkeyup="calcProfitper();">
+                                                            </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                Cost / Pcs
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                <input type="text" id="costset" class="form-control" placeholder="Cost" disabled>
+                                                            </div>
+
+                                                        </div>
+                                                       
+                                                    </form>
+
+
+
+
+                                                </div>
+                                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                                    <form class="form-horizontal form-label-left">
+                                                         
+                                                      @*  <div class="form-group">
+                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                Qiz Charges
+                                                            </label>
+                                                            <div class="col-md-2 col-sm-3 col-xs-9">
+                                                                <input type="text" id="txtqizchargesper" class="form-control" placeholder="Qiz Per">
+                                                            </div>
+                                                            <div class="col-md-4 col-sm-5 col-xs-9">
+                                                                <input type="text" id="qizcharges" class="form-control" placeholder="Qiz PerValue" disabled>
+                                                                
+                                                            </div>
+                                                            <div class="col-md-4 col-sm-5 col-xs-9">
+                                                                <input type="checkbox" id="QizStatus" style="margin-top: 5px;" value="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                MarkUp
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-9">
+                                                                <input type="text" id="markup" class="form-control" placeholder=" MarkUp" disabled>
+                                                            </div>
+                                                        </div>*@
+
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-5 col-xs-6">
+                                                                Currency<span style="color: red;"> *</span>
+                                                            </label>
+
+                                                             <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6">
+                                                               @* <select id="ddlCurrency" class="form-control select2" onchange="Loadexchangerate();" style="width:150px;">
+
+                                                                    <option value="1">Euro</option>
+                                                                </select>*@
+                                                                   <input type="text" id="txtCurrency" class="form-control" placeholder="Currency" disabled>
+                                                            </div>
+
+
+                                                            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6" style="display:none;">
+                                                               @* <select id="ddlCurrency" class="form-control select2" onchange="Loadexchangerate();" style="width:150px;">
+
+                                                                    <option value="1">Euro</option>
+                                                                </select>*@
+                                                                   <input type="text" id="ddlSCurrency" class="form-control" placeholder="Currency">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-5 col-xs-6">
+                                                                Exchange
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6">
+                                                                <input type="text" id="exchange" class="form-control" placeholder="Exchange">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-5 col-xs-6">
+                                                                Indian Rupees
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6">
+                                                                <input type="text" id="rupees" class="form-control" placeholder="Rupees" disabled>
+                                                            </div>
+                                                        </div>
+
+                                                      <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-5 col-xs-6">
+                                                                Selected Currency
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6">
+                                                                <input type="text" id="selcurr" class="form-control" placeholder=" Selected Currency" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" id="divBuyMer">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-5 col-xs-6">Buyer / Merchendiser</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6">
+                                                                <select id="ddlBuyMer" class="form-control">
+                                                                    <option value="0">--Select Option--</option>
+                                                                    <option value="1">Buyer</option>
+                                                                    <option value="2">Merchendiser</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                       
+                                                    </form>
+
+
+                                                </div>
+                                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                                    <form class="form-horizontal form-label-left">
+                                                        
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-5 col-xs-6">
+                                                                Sale Price<span style="color: red;"> *</span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6">
+                                                                <input type="text" id="saleprice" class="form-control" placeholder=" Sale Price">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group" style="display:none;">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-5 col-xs-6">
+                                                                Drawback %<span style="color: red;"> *</span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6">
+                                                                <input type="text" id="dbpercent" class="form-control" onkeydown="return (!(event.keyCode>=65) && event.keyCode!=32);" placeholder=" Drawback" onkeyup="calcdrwbck();">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group" style="display:none;">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-5 col-xs-6">
+                                                                Value
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6">
+                                                                <input type="text" id="dbvalue" class="form-control" placeholder=" Value" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-5 col-xs-6">
+                                                                Profit %
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6">
+                                                                <input type="text" id="profit" class="form-control" placeholder=" Profit" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-5 col-xs-6">
+                                                                Value
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6">
+                                                                <input type="text" id="profitvalue" class="form-control" placeholder=" Value" disabled>
+                                                            </div>
+                                                        </div>
+                                                         <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-5 col-xs-6">Remarks</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-6">
+                                                                <textarea class="form-control" rows="3" style="height: 65.5px;" placeholder="Remarks" id="remark"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group" style="float: right;">
+                                                        @*<button class="btn btn-success btn-round"  style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" id="btnsave" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                        <button class="btn btn-success btn-round"  style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" id="btnUpd" data-toggle="tooltip" data-placement="top" title="Update"  type="button"><i class="fa fa-refresh"></i></button>
+                                                        <button class="btn btn-danger btn-round"  style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" id="btncancel" data-toggle="tooltip" data-placement="top" title="Delete"  type="button"><i class="fa fa-minus"></i></button>*@
+                                                        <button type="button" class="btn btn-success btn-round" id="btnsave" onclick="add();">Add</button>
+                                                        <button type="button" class="btn btn-success btn-round" id="btnUpd" onclick="Update();">Update</button>
+                                                        <button type="button" class="btn btn-success btn-round" id="btndelete" onclick="Delete();">Delete</button>
+                                                        <button type="button" class="btn btn-danger btn-round" id="btncancel" onclick="Multiclose();">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+
+
+                <table id="tMbody" class="table table-striped table-bordered"></table>
+
+            </div>
+
+
+            <!-- /page content -->
+
+
+            <div  class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 74%">
+                    <div class="modal-content">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        </div>
+
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
+                            <button type="button" class="btn btn-primary" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+            <!-- footer content -->
+
+
+            <!-- /footer content -->
+        </div>
+    </div>
+</div>
+</div>
+<!-- page content -->

@@ -1,0 +1,213 @@
+﻿@{
+    ViewBag.Title = "StyleApprovalTitleIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tblgeneraldetails_filter
+    {
+        display: none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $(".select-el").select2({
+            dropdownPosition: 'below'
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtBuyerOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+
+<script src="~/AxonScripts/OrderProcessing/StyleApproval.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Order Measurement</button>*@
+
+
+
+
+                @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+                <!-- /page content -->
+
+
+                <div class="modal fade" style="overflow-y:scroll" id="myModal1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog" style="min-width: 80%">
+                        <div class="modal-content">
+
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Approval Title</h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="x_panel">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer Order No</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtOrderNo" disabled>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Style</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtStyle" disabled>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Ref.No</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtRefNo" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Style Qty</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtStyQty" disabled>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4 ">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtBuyer" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Order Date</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder=" " id="txtDate" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="x_panel">
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <h2 style="font-size: 16px; font-weight: 600;">Approval Details</h2>
+                                                </div>
+                                                <table class="table table-bordered table-hover" border="1">
+                                                    <tr>                                                       
+                                                        <td>Approval Title</td>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
+                                                    <tr class="mycontainer" id="maincomborow31">
+                                                        <td style="width: 150px">
+                                                            <select id="dllApprovaltitle" class="form-control select2">
+                                                            </select>
+                                                        </td>                                                      
+                                                        <td>
+                                                            <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnAppadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                           @* <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnAppdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>*@
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <div id="ProcList">
+                                                    <table class="table table-responsive" id="tblApprovaldetails">
+                                                        <thead>
+                                                            <tr>    
+                                                                <th style="display: none;">OrdNo
+                                                                </th>  
+                                                                <th style="display: none;">StyleId
+                                                                </th>                                                                                                                       
+                                                                <th style="display: none;">Approvalid
+                                                                </th>
+                                                                <th>Sno
+                                                                </th>
+                                                                <th>Approval Title
+                                                                </th>
+                                                                <td>&nbsp;</td>
+                                                            </tr>
+                                                        </thead>
+
+                                                    </table>
+                                                    <span id="ApprovalError" style="color: red"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-round btn-success" id="btnAdd" onclick="return Save();">Add</button>
+                                            <button type="button" class="btn btn-round btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                            <button type="button" class="btn btn-round btn-success" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                            <button type="button" class="btn btn-round btn-danger" id="btnclose" onclick="Close();">Close</button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</div>
+

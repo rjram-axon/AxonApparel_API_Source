@@ -1,0 +1,133 @@
+﻿@model AxonApparel.Domain.StoreSection
+@{
+    ViewBag.Title = "StoreSection";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/AxonScripts/StoreSection.js"></script>
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        @*<div class="page-title">
+            <div class="title_left">
+                <h3>Work Division</h3>
+            </div>
+
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Store Section</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            @*<li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>*@
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Store Unit Record</h2>*@
+                            @if(ViewBag.StoreSectionAddFlag=="true")
+                            {
+                                <button type="button" class="btn btn-primary" id="btnaddnew" data-toggle="modal" onclick="clearTextBox();" data-target="#myModal">Add Store Section</button><br />@*onclick="clearTextBox();"*@
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary" id="btnaddnew" data-toggle="modal" data-target="#myModal" disabled  >Add Store Section</button><br />@*onclick="clearTextBox();"*@
+                            }
+                            <br />
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="visibility: hidden;">ID
+                                        </th>
+                                        <th>Section Name
+                                        </th>
+                                        <th>Store Name
+                                        </th>
+                                        <th>Status
+                                        </th>
+                                        <th>Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        @*
+                    <button type="button" class="close" data-dissmiss="modal"><span aria-hidden="true">&times;</span></button>*@
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">Add Store Section</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">ID </label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <input type="text" class="form-control" id="SSectionID" placeholder="SSectionID">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="Name">Store Section</label>
+                                                    <input type="text" class="form-control" id="Name" placeholder="Name" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Age">Store</label>
+                                                @Html.DropDownListFor(m => m.UnitList, Model.UnitList, "--Select Company Unit--", new { @id = "ddlstoreunit", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Status">Status</label>
+                                                <input type="checkbox" class="form-control" id="Status" />
+                                            </div>
+                                        </form>
+                                        <form>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
+                                        <button type="button" class="btn btn-primary" id="btnupdate" style="display: none;" onclick="Update();">update</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->

@@ -1,0 +1,848 @@
+﻿@{
+    ViewBag.Title = "SampleOrderIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    #tMbody_length
+    {
+        display: none;
+    }
+
+    #tMbody_info
+    {
+        display: none;
+    }
+
+    #tMbody_paginate
+    {
+        display: none;
+    }
+
+    #tMbody_filterordertyp
+    {
+        margin-top: -28px;
+    }
+
+    #tblsampletypedetails_filter {
+        display: none;
+    }
+
+    #tblSupdetails_length
+    {
+        display: none;
+    }
+
+    #tblSupdetails_filter
+    {
+        display: none;
+    }
+
+    #tblSupdetails_info
+    {
+        display: none;
+    }
+
+    #tblSupdetails_paginate
+    {
+        display: none;
+    }
+
+    #tblimdetails_length
+    {
+        display: none;
+    }
+
+    #tblimdetails_filter
+    {
+        display: none;
+    }
+
+    #tblimdetails_info
+    {
+        display: none;
+    }
+
+    #tblimdetails_paginate
+    {
+        display: none;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#dtRefDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#dtOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    })
+</script>
+
+
+
+<script src="~/AxonScripts/Common/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/modernizr.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/OrderProcessing/SampleOrder.js"></script>
+<script src="~/AxonScripts/Common/jquery-1.12.4.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+
+<!-- page content -->
+
+
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    @* <div class="page-title">
+              <div class="title_left">
+                <h3>Bulk Order</h3>
+              </div>
+
+             
+            </div>*@
+
+
+                    <div class="clearfix"></div>
+                    <div class="">
+
+
+
+
+                        <div class="x_panel" >
+
+                            <div class="col-md-3 col-sm-12 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask input_one">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-2 col-xs-12">Company</label>
+                                        <div class="col-md-8 col-sm-10 col-xs-12" onchange="CMainList();">
+                                            <select id="ddlMCompany" class="form-control select2">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label class="control-label col-md-4 col-sm-2 col-xs-12" for="ex3">From Date</label>
+                                        <div class="col-md-8 col-sm-10 col-xs-12">
+                                            <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                        </div>
+                                    </div>
+
+
+
+
+                                </form>
+                            </div>
+                            <div class="col-md-3 col-sm-12 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask input_one">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-2 col-xs-12">
+                                            Buyer
+                                        </label>
+                                        <div class="col-md-9 col-sm-10 col-xs-12" onchange="BMainList();">
+                                            <select id="ddlMBuyer" class="form-control select2">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label class="control-label col-md-3 col-sm-2 col-xs-12" for="ex3">To Date</label>
+                                        <div class="col-md-9 col-sm-10 col-xs-12">
+                                            <input type="text" id="txtToDate" class="form-control" placeholder="Date">
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-md-3 col-sm-12 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask input_one">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-2 col-xs-12" for="txtEntryDate">Ref No</label>
+                                        <div class="col-md-8 col-sm-10 col-xs-12" onchange="RMainList();">
+                                            <select id="ddlRefNo" class="form-control select2"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group check_one">
+                                        <label class="control-label col-md-4 col-sm-2 col-xs-12">Order Type</label>
+                                        <div class="col-md-8 col-sm-10 col-xs-12" onchange="CMainList();">
+                                            @*<input type="checkbox">
+                                            Dispatched Orders *@
+                                            <select id="ddlMOrderType" class="form-control">
+
+
+                                                <option value="S">SAMPLE ORDER</option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-md-3 col-sm-12 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask input_one">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-2 col-xs-12">
+                                            Order No
+                                        </label>
+                                        <div class="col-md-8 col-sm-10 col-xs-12" onchange="OMainList();">
+                                            <select id="ddlOrderNo" class="form-control select2">
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-8 col-sm-10 col-xs-12" onchange="OMainList();">
+                                            <input type="checkbox" id="ChkDispatch">
+                                            Dispatched Orders 
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-right: 10px; text-align: right;">
+                                        <button type="button" style="width: 70px;" class="btn btn-success" onclick="MainList();">List</button>
+
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+                    <div class="x_panel">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();" @ViewBag.OrderAddFlg>Add New Order</button>
+                        <table id="tMbody" class="table table-striped table-bordered"></table>
+                        <div style="display: inline-flex">
+                            <div class="form-group" style="margin-top: 9px;">
+
+                                <input type="button" class="btn  btn-primary btn_program" value="ORDER" onclick="LOADORDER();">
+                            </div>
+
+                            <div class="form-group" style="margin-top: 9px;">
+
+                                <input type="button" class="btn btn-primary btn_bom_act" value="STYLE" onclick="LOADSTYLE(this);">
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+
+                <!-- /page content -->
+
+
+
+                <div class="modal fade" style="overflow-y:scroll" id="myModal1" style="overflow-y:scroll" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 74%">
+                        <div class="modal-content">
+                            <div class="x_panel">
+                                <div class="x_content">
+                                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                        <div class="x_content">
+                                            <h2 style="/* margin-left: 12px; */background: #F2F5F7; padding: 5px; width: 100%; display: block;">Order Processing</h2>
+                                               <div class="row" style="margin: 0px;">
+                                                <div class="x_panel">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                                          <div class="form-group">
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12" style="padding: 0px;">Copy From Order</label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <select id="ddlCPOrderNo" style="width:175px" class="form-control" onchange="LoadFOrdDropDetails();">
+                                                                </select>
+                                                            </div>
+                                                           
+                                                        </div>
+
+                                                        <div class="form-group" style="display:none;">
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Quotation No</label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <select id="ddlQuoteNo" class="form-control" onchange="OpenRevQuote();">
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-2 col-sm-2 co-xs-12">
+                                                                <input type="checkbox" id="chk" class="col-md-4" name="revchk" value="R" onclick="OpenRevQuote();" />
+
+                                                                <label class="control-label col-md-1">Revised</label>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <br />
+                                                        <div class="form-group" style="margin-top: -13px;margin-bottom: 2.2em; display:none;" id="ddlrevid";>
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Revised Quot. No</label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <select id="ddlRevised" class="form-control" style="width: 205px;">
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="form-group" style="margin-top: -13px; display:none;" id="ddlErevid">
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Crnt.Rvsd.QuotNo</label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <input type="text" placeholder="RevQuoteNo" id="txtERevNo" class="form-control" disabled>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                    </div>
+                                                    <div class="col-md-5 col-sm-6 col-xs-12" >
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12" style="padding: 0px;">Copy Ref No</label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-9">
+                                                                <select id="ddlCPRefNo" style="width:175px" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-1 col-sm-1 col-xs-3">
+                                                                <button id="BtnLoad" class="btn btn-success" onclick="LoadCpyOrderNo();">List</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" style="margin-left: -13em;display:none" id="unchklblid"; >
+                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12">
+                                                                <p style="color: #0026ff">* Unchecked And Checked To Get New RevQuote No</p>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="x_panel" >
+
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Buyer</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12" onchange="LoadBuyerAdd();">
+                                                                        <select id="ddlBuyer" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <textarea class="form-control" rows="4" style="height: 48px;" placeholder="Address" id="txtBuyAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Consignee</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12" onchange="LoadConAdd();">
+                                                                        <select id="ddlConsignee" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <textarea class="form-control" rows="5" style="height: 48px;" placeholder="Address" id="txtConAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Buyer Agent</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12" onchange="LoadBuyAgAdd();">
+                                                                        <select id="ddlAgent" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+
+                                                                        <textarea class="form-control" rows="5" style="height: 48px;" placeholder="Address" id="txtBuyAgAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Ship Agent</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12" onchange="LoadShipAgAdd();">
+                                                                        <select id="ddlShipAgent" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <textarea class="form-control" rows="5" style="height: 48px;" placeholder="Address" id="txtShipAgAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" hidden>
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Sample No</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlSampleOrder" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">BuyOrdMasID</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" class="form-control" placeholder="" id="txtBuyOrdMasID">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Base UnitID</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" id="txtbasunitID" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">GarmentConID</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="country" id="txtGarmentConID" class="form-control col-md-10">
+                                                                    </div>
+
+                                                                </div>
+
+                                                                 <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Order Type</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlOrderType" class="form-control" onchange="LoadOrderPrefix();">
+                                                                            <option value="S">SAMPLE ORDER</option>
+
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Exporter</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlCompany" class="form-control" onchange="GenerateNumber();">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+
+                                                </div>
+
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="x_panel">
+
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left">
+                                                               
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Order No</label>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" class="form-control" placeholder="Order No" value="" id="txtOrderNo" name="OrdNo" disabled>
+                                                                    </div>
+                                                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group">
+                                                                        <input type="text" placeholder="OrderDate" id="dtOrderDate" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Ref No</label>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" class="form-control" placeholder="Ref No" id="txtRefNo" onchange="CheckRefNo(this.value)">
+                                                                    </div>
+                                                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group">
+                                                                        <input type="text" placeholder="RefDate" id="dtRefDate" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                                        Buyer Ref<span class="required"></span>
+                                                                    </label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" class="form-control" placeholder="Buyer Ref" id="txtBuyRefNo">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <table class="table table-bordered table-hover" border="1">
+                                                                        <tr>
+                                                                            <td style="width: 150px;">Sample Type</td>
+                                                                            <td>Sample Qty</td>
+                                                                        </tr>
+                                                                        <tr class="mycontainer" id="mainsampletyperow">
+                                                                            <td>
+                                                                                <select id="ddlsampletype" class="form-control" onchange="GenerateNumber();">
+                                                                                </select>
+                                                                                 <span class="error">Select Sample Type</span>
+                                                                            </td>
+                                                                            
+                                                                            <td>
+                                                                                <input type="text" id="txtsamqty" class="form-control" placeholder="Qty">
+                                                                                @*<span class="error">Select Color</span>*@
+                                                                            </td>
+                                                                            <td>
+                                                                                <button class="btn btn-primary add_btn" id="btnsampletypeadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                <button class="btn btn-primary add_btn" id="btnsampletypeupdate" type="button" data-toggle="tooltip" data-placement="top" title="Update"><i class="fa fa-refresh"></i></button>                                                                                
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+
+                                                                        </tr>
+                                                                    </table>
+                                                                    <div id="SampleTypeList">
+                                                                        <table class="table table-responsive" id="tblsampletypedetails">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th style="display: none;">RowSeq
+                                                                                    <th style="display: none;">SampleTypeID
+                                                                                    </th>
+                                                                                    <th>SampleType
+                                                                                    </th>                                                                                    
+                                                                                    <th>Quantity
+                                                                                    </th>                                                                                    
+                                                                                    <th>Action
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                        </table>
+                                                                        @*<span id="orderItemError" style="color: red"></span>*@
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Quantity</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="Quantity" id="txtQty" class="form-control col-md-10" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Old Quantity</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="Old Quantity" id="txtOldQty" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Order Unit</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12" onchange="LoadGarmConAdd();">
+                                                                        <select id="ddlUom" class="col-md-3 col-sm-12 col-xs-12 form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Base Unit</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="country" id="txtbasunit" class="form-control col-md-10" disabled>
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">System</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlShipsystem" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Shipment</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlShipMode" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Payment</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlPayment" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Manager</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlManager" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Merch</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlMerch" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">BuyerDept</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="country" id="txtBuyerDeptId" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                        <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Parent Order No</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlParOrderNo" class="form-control">
+                                                                        </select>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                             <div class="x_panel">
+                                                                 <div class="row">
+                                                                       <div class="col-md-6 col-sm-6 co-xs-12">
+                                                                <input type="checkbox" id="chkorderpost" class="col-md-1" name="ordpostchk" value="P"/>
+                                                                <label class="control-label col-md-10" style="color:#FF7D33; font-weight:700;"> Order Posting</label>
+                                                                         </div> 
+                                                                      <div class="col-md-6 col-sm-6 co-xs-12">
+                                                                <input type="checkbox" id="chkplanpost" class="col-md-1" name="planpostchk" value="P"/>
+                                                                <label class="control-label col-md-10" style="color:#ff006e; font-weight:700;"> Planning Posting</label>
+                                                            </div> 
+                                                                 </div>
+                                                             </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="x_panel">
+                                                <div class="x_title" style="background: #F2F5F7; width: 100%; display: block; border: none;">
+                                                    <a class="collapse-link" style="cursor: pointer;">
+                                                        <h2 style="margin-top: 5px; cursor: pointer">Nominated Supplier</h2>
+                                                        <i class="fa fa-chevron-up" style="margin-top: 7px; margin-left: 4px;"></i></a>
+
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="x_content" id="nom_model" style="display: none;">
+                                                    <div class="row">
+
+                                                        <div class="col-md-6">
+                                                            <div class="x_panel">
+                                                                <h2 style="margin-top: -1px;">Supplier</h2>
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                    <div class="form-group">
+                                                                        <table class="table table-bordered table-hover" border="1">
+                                                                            <tr>
+
+                                                                                <td>Supplier</td>
+                                                                                @* <td>SlNo</td>*@
+                                                                                <td>&nbsp;</td>
+                                                                            </tr>
+                                                                            <tr class="mycontainer" id="maincomborow1">
+                                                                                <td>
+                                                                                    <select id="ddlSupp" style="width: 200px;" class="form-control">
+                                                                                    </select>
+
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnSuppadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnSuppupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <div id="CList1">
+                                                                            <table id="tblSupdetails">
+                                                                                <thead>
+                                                                                    <tr>
+
+                                                                                        <th>SupplierId
+                                                                                        </th>
+                                                                                        <th>Supplier
+                                                                                        </th>
+
+                                                                                        <td>&nbsp;</td>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                            </table>
+                                                                            <span id="orderItemError1" style="color: red"></span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="x_panel">
+                                                                <h2 style="margin-top: -1px;">Item</h2>
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                    <div class="form-group">
+                                                                        <table class="table table-bordered table-hover" border="1">
+                                                                            <tr>
+
+                                                                                <td>Item</td>
+
+                                                                                <td>&nbsp;</td>
+                                                                            </tr>
+                                                                            <tr class="mycontainer" id="maincomborow">
+                                                                                <td>
+                                                                                    <select id="ddlIm" style="width: 200px;" class="form-control">
+                                                                                    </select>
+
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnImadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnImupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <div id="CList">
+                                                                            <table id="tblimdetails">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>NsupId
+                                                                                        </th>
+                                                                                        <th>ItemId
+                                                                                        </th>
+                                                                                        <th>Item
+                                                                                        </th>
+                                                                                        <th>SuppId
+                                                                                        </th>
+                                                                                        <td>&nbsp;</td>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                            </table>
+                                                                            <span id="orderItemError" style="color: red"></span>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="border: none">
+                                        <button type="button" class="btn btn-success btn-round" id="btnAdd" onclick="return Add();">Add</button>
+                                        <button type="button" class="btn btn-success btn-round" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger btn-round" onclick="CClose();">Close</button>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- footer content -->
+
+
+                    <!-- /footer content -->
+                </div>
+                <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+            </div>
+        </div>
+
+
+             <div class="modal fade" id="myModal2" style="overflow-y:scroll" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 40%">
+                        <div class="modal-content">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Post Order</h2>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row" style="margin: 0;">
+                                    <div class="row" style="margin: 0;">
+
+                                        <div class="col-md-8 col-sm-8 col-xs-12">
+
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                                                        Options 
+                                                    </label>
+                                                    <div class="col-md-2 col-sm-2 col-xs-12" style="">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" id="selectall" value="">All
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                        <div class="multiselect">
+
+                                                            <select multiple="multiple" id='sbTwo' class="form-control" style="height: 100px;">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </form>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 0px; float: right;">
+                                    <div class="form-group">
+                                        <button class="btn btn-success" onclick="SubReport();">Submit</button>
+                                        <button class="btn btn-danger" onclick="backtomain();">Cancel</button>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    </div>

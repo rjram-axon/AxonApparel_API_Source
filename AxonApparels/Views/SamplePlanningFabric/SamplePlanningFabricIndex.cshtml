@@ -1,0 +1,429 @@
+﻿@{
+    ViewBag.Title = "SamplePlanningFabricIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    #tblSavestkdet_wrapper {
+        display: none;
+    }
+
+    #tblmaindetails_filter {
+        margin-top: -29px;
+    }
+
+    #tblinpdetails_filter {
+        display: none;
+    }
+
+    #tblstkdet_filter {
+        display: none;
+    }
+
+    #tblopitemdetails_filter {
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+
+
+<script src="~/AxonScripts/Planning/SamplePlanningFabric.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+            @*   <div class="row">
+              
+                <div class="col-md-12">
+                    <div class="x_panel" style="height: 30px;">
+                        <div class="col-md-2">
+                            <h2 style="margin-top: -5px;">Order Type</h2>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="maxl" style="margin-top: -15px;margin-left:-45px">
+                                <label class="radio inline">
+                                    <input type="radio" id="optoutwrkord" name="optwrkord" checked value="B" onchange="CMainlist();">
+                                    <span>Buyer Order</span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" id="optoutsaemord" name="optwrkord" value="S" onchange="CMainlist();">
+                                    <span>Sample Order  </span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" id="optouetsamord" name="optwrkord" value="G" onchange="CMainlist();">
+                                    <span>General </span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" id="optouetsamord" name="optwrkord" value="G" onchange="CMainlist();">
+                                    <span>All </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+     
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+            <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 70%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Sample Fabric Plan</h4>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="margin-top: 10px;">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                        Company
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtCompany" class="form-control" placeholder="Company" disabled>
+                                                    </div>
+
+                                                     <div class="col-md-4 col-sm-9 col-xs-12" style="display:none;">
+                                                        <input type="text" id="txtHCompanyId" class="form-control" placeholder="HCompany" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                        Job No
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtJobNo" class="form-control" placeholder="Job No" disabled>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </form>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                        Unit
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtCompUnit" class="form-control" placeholder="Unit" disabled>
+                                                    </div>
+                                                      <div class="col-md-8 col-sm-9 col-xs-12" style="display:none;">
+                                                        <input type="text" id="txtCompUnitId" class="form-control" placeholder="HUnit" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                        Order No
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtOrderno" class="form-control" placeholder="Order No" disabled>
+                                                    </div>
+                                                </div>
+
+
+                                            </form>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                                    Buyer Ref No
+                                                                </label>
+                                                        <div class="col-md-4 col-sm-4 col-xs-6" style="margin-left: 3px;">
+                                                            
+                                                                <input type="text" id="txtBuyRefNo" class="form-control" placeholder="Buy RefNo" disabled>
+                                                           
+
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-6" style="margin-left:-13px;">
+                                                           
+                                                                <input type="text" id="txtEntryDate"  class="form-control" placeholder="Entry Date">
+                                                            
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                        Style Name
+                                                    </label>
+                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                        <input type="text" id="txtStyle"  class="form-control" placeholder="Style" disabled>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="x_panel" style="width: 95.8%; margin-left: 21px;">
+                                <div class="x_content">
+                                    <h2 style="margin-top: -5px;">Fabric Details</h2>
+                                    <div class="">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover" border="1">
+                                                    <tr>
+
+
+                                                        <td>Item</td>
+
+                                                        <td>Size</td>
+                                                        <td>Base Color</td>
+                                                        <td>Dye Color</td>
+                                                        <td>Print Color</td>
+                                                        <td>Prog Qty</td>
+                                                        <td>Grey PurQty</td>
+                                                        <td>Finish PurQty</td>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
+                                                    <tr class="mycontainer" id="maincomborow">
+                                                        <td>
+                                                            <select id="ddlItem" class="form-control">
+                                                            </select>
+
+                                                        </td>
+                                                        <td>
+                                                            <select id="ddlSize" class="form-control">
+                                                            </select>
+
+                                                        </td>
+                                                        <td>
+                                                            <select id="ddlBaseColor" class="form-control">
+                                                            </select>
+
+                                                        </td>
+                                                        <td>
+                                                            <select id="ddlDyeColor" class="form-control">
+                                                            </select>
+
+                                                        </td>
+                                                        <td>
+                                                            <select id="ddlPrintColor" class="form-control">
+                                                            </select>
+
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="txtProgQty" class="form-control" placeholder="Prog Qty">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="txtBasePurQty" class="form-control" placeholder="Base PurQty">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="txtFinPurQty" class="form-control" placeholder="Finish PurQty">
+                                                        </td>
+
+                                                        <td>
+                                                            <button class="btn btn-primary " style="width: 20px; padding: 0px; height: 20px; " id="btnFabitmadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                            <button class="btn btn-primary " style="width: 20px; padding: 0px; height: 20px; display: none;" id="btnFabitmupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+                                                         </td>
+                                                    </tr>
+                                                </table>
+                                                <div id="CopList">
+                                                    <table class="table table-responsive" id="tblFabitemdetails">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Sno</th>
+                                                                <th style="display: none;">Detid</th>
+                                                                <th style="display: none;">Itemid</th>
+                                                                <th>Item</th>
+                                                                <th style="display: none;">Sizeid</th>
+                                                                <th>Size</th>
+                                                                <th style="display: none;">BColorid</th>
+                                                                <th>Base Color</th>
+                                                                <th style="display: none;">DColorid</th>
+                                                                <th>Dye Color</th>
+                                                                <th style="display: none;">PColorid</th>
+                                                                <th>Print Color</th>
+
+                                                                <th>Qty</th>
+                                                                <th>Grey PurQty</th>
+                                                                <th>Finish PurQty</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+
+                                                    </table>
+                                                    <span id="orderItemError" style="color: red"></span>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    @*<div class="row">
+                                        <div class="col-md-4">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12 enquiry_edit">
+                                                        Item Remarks
+                                                    </label>
+                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                        <input type="text" id="txtItemRemarks" class="form-control " placeholder="Remarks">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-7">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <button type="button" style="margin-left: -45px;" class="btn btn-primary" data-toggle="modal" onclick="LoadData();">Apply Output</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>*@
+                                </div>
+                            </div>
+                            <div class="x_panel" style="width: 95.8%; margin-left: 21px;">
+                                <h2 style="margin-top: -5px;">Yarn Details</h2>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover" border="1">
+                                                    <tr>
+
+
+                                                        <td>Item</td>
+                                                        <td>Size</td>
+                                                        <td>Grey Color</td>
+                                                        <td>Dye Color</td>
+                                                        <td>PrgQty</td>
+                                                        <td>Grey Purchase </td>
+                                                        <td>Dye Purchase</td>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
+                                                    <tr class="mycontainer" id="opmaincomborow">
+                                                        <td>
+                                                            <select id="ddlIpItem" class="form-control">
+                                                            </select>
+
+                                                        </td>
+                                                     
+                                                        <td>
+                                                            <select id="ddlIpSize" class="form-control">
+                                                            </select>
+
+                                                        </td>
+
+                                                           <td>
+                                                            <select id="ddlIpGColor" class="form-control">
+                                                            </select>
+
+                                                        </td>
+                                                        <td>
+                                                              <select id="ddlIpDColor" class="form-control">
+                                                            </select>
+
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="txtIpQty" class="form-control" placeholder="Qty">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="txtIpGreyQty" class="form-control" placeholder="Grey Purchase">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="txtIpDyeQty" class="form-control" placeholder="Dye Purchase">
+                                                        </td>
+                                                       
+                                                        <td>
+                                                            <button class="btn btn-primary " style="width: 20px; padding: 0px; height: 20px; " id="btnipitmadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                            <button class="btn btn-primary " style="width: 20px; padding: 0px; height: 20px; display: none;" id="btnipitmupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <div id="CList">
+                                                    <table class="table table-responsive" id="tblinpdetails">
+                                                        <thead>
+                                                            <tr>
+
+                                                                  <th>Sno</th>
+                                                                <th>FSno</th>
+                                                                <th style="display: none;">Detid</th>
+                                                                        <th >FItemid</th>
+                                                                <th style="display: none;">Itemid</th>
+                                                                <th>Item</th>
+                                                                <th style="display: none;">Sizeid</th>
+                                                                <th>Size</th>
+                                                                <th style="display: none;">BColorid</th>
+                                                                <th>Base Color</th>
+                                                                <th style="display: none;">DColorid</th>
+                                                                <th>Dye Color</th>
+                                                             
+
+                                                                <th>Qty</th>
+                                                                <th>Grey PurQty</th>
+                                                                <th>Dye PurQty</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+
+                                                    </table>
+                                                    <span id="orderIpError" style="color: red"></span>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="modal-footer" style="border: none;">
+                            <button type="button" class="btn  btn-success" id="btnAdd" onclick="return save();">Save</button>
+                            <button type="button" class="btn  btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                            <button type="button" class="btn  btn-danger" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                            <button type="button" class="btn  btn-danger" onclick="Close();">Close</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

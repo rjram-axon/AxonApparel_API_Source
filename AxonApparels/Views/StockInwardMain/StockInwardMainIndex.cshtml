@@ -1,0 +1,356 @@
+﻿@{
+    ViewBag.Title = "StockInwardMainIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #tblmaindetails_length {
+        display: none;
+    }
+
+    #tblmaindetails_paginate {
+        display: none;
+    }
+
+    #tblmaindetails_info {
+        display: none;
+    }
+
+    #tblmaindetails_filter {
+        /*margin-top: -28px;*/
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Purchase/StockInwardMain.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+            <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                        @* <div class="col-md-2">
+                        <form class="form-horizontal form-label-left input_mask" style="margin-left: -15px;">
+                            <h3 style="font-size: 18px; margin-top: 1px; margin-left: 25px;">Purchase Type</h3>
+                            <div class="form-group">
+                                <div class="maxl" style="margin-left: 20px; margin-top: -7px;">
+                                    <label class="radio inline">
+                                        <input type="radio" checked value="L" id="L" name="Local" onchange="RadioMLClick();">
+                                        <span>Unit </span>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" value="I" id="I" name="Local" onchange="RadioMIClick();">
+                                        <span>Supplier</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>*@
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Company
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMCompany" class="form-control select2" onchange="CMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4">Reference</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMOrderNo" class="form-control select2" onchange="RefMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4">Supplier</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMSupplier" class="form-control select2" onchange="SMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4" for="ex3">From Date</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        From Unit
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMFromunit" class="form-control select2" onchange="FromunitMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        For Unit 
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMForunit" class="form-control select2" onchange="ForunitMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Process 
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlprocess" class="form-control select2" onchange="ProMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4" for="ex3">To Date</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Date" id="txtToDate">
+                                    </div>
+                                </div>
+                                @*<div class="form-group" style="display: none;">
+                                <label class="control-label col-md-3 col-sm-6 col-xs-12">Pur Type</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <select id="ddlMPType" class="form-control">
+                                    </select>
+                                </div>
+                            </div>*@
+                            </form>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        URN No
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlgrn" class="form-control select2" onchange="UrnMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                        Job No
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddljobno" class="form-control select2" onchange="JobMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="maxl" style="margin-top: -6px;margin-left:10px;">
+                                        <label class="radio inline">
+                                            <input type="radio" id="unit" checked="" value="U" name="UType" onchange="List();">
+                                            <span>Unit</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" id="supplier" value="S" name="UType" onchange="List();">
+                                            <span>Supplier</span>
+                                        </label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="button" style="float:right" class="btn btn-success" value="List" onclick="List();">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-8">
+                        <div class="" style="padding: 0px; height: 30px;">
+                           
+                            <div class="col-md-12">
+                                <div class="maxl" style="margin-top: -6px;">
+                                    <label class="radio inline">
+                                        <input type="radio" id="optB" checked="" value="B" name="MOType" onchange="List();">
+                                        <span>Buyer Order</span>
+                                    </label>
+                                  @*  <label class="radio inline">
+                                        <input type="radio" value="J" name="MOType" onchange="RadioMBClick();">
+                                        <span>Job Order</span>
+                                    </label>*@
+                                    <label class="radio inline">
+                                        <input type="radio" value="S" id="optS" name="MOType" onchange="List();">
+                                        <span>Sample Order </span>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" value="G" id="optG" name="MOType" onchange="List();">
+                                        <span>General</span>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+                @*<div class="col-md-4">
+                    <div class="x_panel" style="padding: 0px; height: 30px; margin-left: 88px;">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="font-size: 17px; white-space: nowrap; margin-left: 0px;">
+                                    Po Type
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="maxl" style="margin-left: 15px; width: 259px; margin-top: -6px;">
+                                <label class="radio inline">
+                                    <input type="radio" value="" id="optAAL" name="PoType" onchange="RadioMAClick();">
+                                    <span>All </span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" value="Y" id="optAY" name="PoType" onchange="RadioMAClick();">
+                                    <span>Yarn </span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" checked value="A" id="optAA" name="PoType" onchange="RadioMAClick();">
+                                    <span>Accessory </span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>*@
+
+
+            </div>
+
+            <div class="x_panel">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" id="btnAdd"  data-target="#myModal" onclick="LoadStockinwardAdd();" @ViewBag.StkInwardAddFlg>Add New</button><br />
+                        </div>
+
+
+                        <div class="x_content">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+
+                                    <table id="tblmaindetails" class="table table-striped table-bordered"></table>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 40%">
+                    <div class="modal-content">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Unit Grn Receipt</h2>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="row" style="margin: 0;">
+                                <div class="row" style="margin: 0;">
+
+                                    <div class="col-md-8">
+
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                                                    Options 
+                                                </label>
+                                                <div class="col-md-2 col-sm-2 col-xs-12" style="">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" id="selectall" value="">All
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <div class="multiselect">
+
+                                                        <select multiple="multiple" id='sbTwo' class="form-control multiselect" style="height: 100px;">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </form>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin: 0px; float: right;">
+                                <div class="form-group">
+                                    <button class="btn btn-success" onclick="SubReport();">Submit</button>
+                                    <button class="btn btn-danger" onclick="backtomain();">Cancel</button>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,245 @@
+﻿@{
+    ViewBag.Title = "LotsplitupMainIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #tLMbody_length {
+        display: none;
+    }
+
+    #tLMbody_info {
+        display: none;
+    }
+
+    #tLMbody_paginate {
+        display: none;
+    }
+
+    #tLMbody_filter {
+        margin-top: -25px;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+@* Load datatable css *@
+
+<link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+@* Load datatable js *@
+@section Scripts{
+
+    <script src="~/build/js/jquery.dataTables.min.js"></script>
+    <script>
+                                           
+    </script>
+
+}
+
+
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Purchase/LotSplitupMain.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+            <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        Company
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMCompany" class="form-control" onchange="CMainList();"></select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12" for="ex3">
+                                        From Date
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Trans No
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMTransNo" class="form-control" onchange="TMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12" for="ex3">
+                                        To Date
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Date" id="txtToDate">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        Supplier
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMSupplier" class="form-control" onchange="SMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Split No</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMSplitNo" class="form-control" onchange="SpTMainList();">
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-1">
+
+                            <form class="form-horizontal form-label-left input_mask">
+
+                                @*  <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Lot No</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMLotNo" class="form-control">
+                                        </select>
+                                    </div>
+                                </div>*@
+                                <div class="form-group" style="margin-right: 8px; margin-top: 14px; float: right;">
+                                    <input type="button" class="btn btn-success" value="List" onclick="List();">
+                                </div>
+                                @*  <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">PO No</label>
+                           <div class="col-md-9 col-sm-9 col-xs-12">
+                                <select id="ddlcutOrderNo" class="form-control">
+                                </select>
+                            </div>
+                        </div>*@
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="LoadLotSplitUpAdd();" @ViewBag.LotSplitupAddFlg>Add New</button>
+                        </div>
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="form-group">
+                                <table id="tLMbody" class="table table-striped table-bordered"></table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 40%">
+                    <div class="modal-content">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Lot SplitUp</h2>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="row" style="margin: 0;">
+                                <div class="row" style="margin: 0;">
+
+                                    <div class="col-md-8">
+
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                                                    Options 
+                                                </label>
+                                                <div class="col-md-2 col-sm-2 col-xs-12" style="">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" id="selectall" value="">All
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <div class="multiselect">
+
+                                                        <select multiple="multiple" id='sbTwo' class="form-control multiselect" style="height: 100px;">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </form>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin: 0px; float: right;">
+                                <div class="form-group">
+                                    <button class="btn btn-success" onclick="SubReport();">Submit</button>
+                                    <button class="btn btn-danger" onclick="backtomain();">Cancel</button>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>

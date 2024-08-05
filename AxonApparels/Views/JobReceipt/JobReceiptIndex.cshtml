@@ -1,0 +1,785 @@
+﻿@{
+    ViewBag.Title = "JobReceiptIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tblMainGrid_info {
+        display: none;
+    }
+
+    #tblinnercuttingreceipt_filter {
+        margin-top: -29px;
+    }
+
+    #tblMainGrid_paginate {
+        display: none;
+    }
+
+    #tblMainGrid_length {
+        display: none;
+    }
+
+    #tblMainGrid_filter {
+        margin-top: -28px;
+    }
+
+    #tblinnercuttingreceipt_paginate {
+        display: none;
+    }
+
+    #tblinnercuttingreceipt_info {
+        display: none;
+    }
+
+    #tblinnercuttingreceipt_length {
+        display: none;
+    }
+
+    #tblreceiptdetail_length {
+        display: none;
+    }
+
+    #tblreceiptdetail_paginate {
+        display: none;
+    }
+
+    #tblreceiptdetail_info {
+        display: none;
+    }
+
+    #tblreceiptdetail_wrapper {
+        margin-top: -30px;
+    }
+
+    #tblreceiptdetail {
+        margin-top: -9px;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        JobRecptEditFlg = @Html.Raw(Json.Encode(ViewBag.JobRecptEditFlg))
+        JobRecptDeleteFlg = @Html.Raw(Json.Encode(ViewBag.JobRecptDeleteFlg))
+        JobRecptPrintFlg = @Html.Raw(Json.Encode(ViewBag.JobRecptPrintFlg))
+        $('#txtFromDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                LoadDDL();
+            }
+        });
+        $('#txtToDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                LoadDDL();
+            }
+        });
+        $('#txtinnEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtDCEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtinvrefdate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Production/JobOrderReceipt.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+@* Load datatable css *@
+
+<link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+@* Load datatable js *@
+@section Scripts{
+
+    <script src="~/build/js/jquery.dataTables.min.js"></script>
+    <script>
+                                           
+    </script>
+
+}
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Job Receipt</h2>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Company
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlmaincomp" class="form-control" onchange="CMainList();"></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Order No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmainordno" class="form-control" onchange="OMainList();"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Job No</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmainjobno" class="form-control" onchange="JMainList()"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="ex3">
+                                        From Date
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Supplier
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmainsupp" class="form-control" onchange="SPMainList()">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Ref No</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmainrefno" class="form-control" onchange="RMainList()">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Style</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmainstyle" class="form-control" onchange="SMainList()">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="ex3">
+                                        To Date
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Date" id="txtToDate">
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlMainWorkdiv">Work Div</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <select id="ddlMainWorkdiv" class="form-control"></select>
+                            </div>
+                        </div>*@
+                            </form>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Entry No</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmainentryno" class="form-control" onchange="RCMainList()">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        DC No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmaindcno" class="form-control" onchange="DCMainList()">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Type
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <div class="maxl">
+                                            <label class="radio inline">
+                                                <input type="radio" id="optmainint" onclick="LoadIntExtData()" name="opttype" value="I" checked>
+                                                <span>Internal </span>
+                                            </label>
+                                            <label class="radio inline">
+                                                <input type="radio" id="optmainext" onclick="LoadIntExtData()" name="opttype" value="E">
+                                                <span>External</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <button type="button" class="btn btn-success" style="float: right;" onclick="clickonlist()">List</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="x_panel">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <button type="button" id="btnaddnew" class="btn btn-primary" @ViewBag.JobRecptAddFlg>Add New</button>
+                <form class="form-horizontal form-label-left input_mask">
+                    <div class="form-group">
+                        <table class="table table-bordered table-hover" border="1" id="tblMainGrid">
+                        </table>
+                    </div>
+                </form>
+                </div>
+            </div>
+            <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="width: 80%;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title" id="myModalLabel">Job Receipt Add</h4>
+                        </div>
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <div class="row" style="margin-top: -20px;">
+                                    <div class="modal-body" style="width: 100%;">
+                                        <div class="x_panel" style="padding-top: 5px; padding-bottom: 0px;">
+                                            <div class="row">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                                                    Company
+                                                                </label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                    <select id="ddlsndcomp" class="form-control" onchange="ListFilterSecondgrid()">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                    Order No
+                                                                </label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                    <select id="ddlsndOrderNo" class="form-control" onchange="ListFilterSecondgrid()">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Supplier</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                    <select id="ddlsndsupp" class="form-control" onchange="ListFilterSecondgrid()">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group ">
+                                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtinnerrefno">Ref No</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                    <select id="ddlsndref" class="form-control" onchange="ListFilterSecondgrid()">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask ">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                                    Job No
+                                                                </label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                    <select id="ddlsndjobno" class="form-control" onchange="ListFilterSecondgrid()">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Type  </label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                    <div class="maxl" style=" margin-top: -5px;">
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" id="optoutint" onclick="OnChangeofRadios()" name="optjobord" checked>
+                                                                            <span>Internal</span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" id="optoutext" onclick="OnChangeofRadios()" name="optjobord">
+                                                                            <span>External </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="x_panel">
+                                            <div class="row" style="margin: 0;">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <table class="table table-bordered table-hover" border="1" id="tblsndgrid">
+                                                        </table>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="border: none;">
+                            @*<button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                            <button type="button" class="btn btn-success " id="btnUpdate" style="display: none;" onclick="Update();">Update</button>*@
+                            <button type="button" class="btn btn-danger" id="btnfstclose" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 76%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title">Job Receipt </h4>
+                        </div>
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <div class="row" style="margin-top: -20px;">
+                                    <div class="modal-body" style="width: 100%;">
+                                        <div class="x_panel" style="padding-top: 5px; padding-bottom: 0px; height: auto;">
+                                            <div class="row">
+                                                <div class="row">
+                                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12 enquiry_edit">
+                                                                    Company
+                                                                </label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text " class="form-control " id="txtrcpcompany" disabled>
+                                                                    <input type="text " class="form-control " id="txtrcpcompanyid" style="display: none;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Supplier</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text " class="form-control " id="txtrcpsupplier" disabled>
+                                                                    <input type="text " class="form-control " id="txtrcpsupplierid" style="display: none;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Style</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text " class="form-control " id="txtrcpstyle" disabled>
+                                                                    <input type="text " class="form-control " id="txtrcpstyleid" style="display: none;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">JobOrderNo</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text " class="form-control " id="txtthrdJobOrdNo" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-3 col-xs-12 ">
+                                                                    Entry No
+                                                                </label>
+                                                                <div class="col-md-8 col-sm-9 col-xs-12 ">
+                                                                    <input type="text " class="form-control " id="txtsndEntryNo" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group ">
+                                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">Order No</label>
+                                                                <div class="col-md-8 col-sm-9 col-xs-12 ">
+                                                                    <input type="text " class="form-control " id="txtrcporderno" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group ">
+                                                                <label class="control-label col-md-4 col-sm-6 col-xs-12">DC No</label>
+                                                                <div class="col-md-8 col-sm-9 col-xs-12 ">
+                                                                    <input type="text " class="form-control " id="txtrcpdcno">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group ">
+                                                                <label class="control-label col-md-4 col-sm-6 col-xs-12 ">Type</label>
+                                                                <div class="col-md-8 col-sm-9 col-xs-12 ">
+                                                                    <div class="maxl">
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" id="optthirdint" value="P" name="wrkord" checked>
+                                                                            <span>Internal</span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" id="optthirdext" value="S" name="wrkord">
+                                                                            <span>External </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask ">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-6 col-xs-12" for="ex3">
+                                                                    Entry Date
+                                                                </label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <input type="text" class="form-control" id="txtinnEntryDate" placeholder="Date" id="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group ">
+                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12 ">Ref. No</label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12 ">
+                                                                    <input type="text " class="form-control " id="txtrecpRefno" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-6 col-xs-12">
+                                                                    DC Date
+                                                                </label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <input type="text" class="form-control" placeholder="Date" id="txtDCEntryDate">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-6 col-xs-12" for="ex3">
+                                                                </label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <button type="button " class="btn btn-primary" id="" onclick="return Add(); ">Fill</button>
+                                                                    <button type="button " class="btn btn-primary " id="" onclick="Update(); ">Apply All</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <div class="col-md-8 col-sm-9 col-xs-12 ">
+                                                                    <input type="text " class="form-control " id="txtCuttinordid" style="visibility: hidden;">
+                                                                </div>
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" " style="margin-left: 11px; width: 98%; margin-top: -1px; padding: 5px;">
+                                        <div class=" " role="tabpanel " data-example-id="togglable-tabs ">
+
+                                            <div id="myTabContent " class=" ">
+                                                <div role="tabpanel " class="tab-pane fade active in " id="tab_content1 " aria-labelledby="home-tab ">
+                                                    <div class="x_content ">
+                                                        <div class="row ">
+                                                            <div class="col-md-12 col-xs-12 " style="margin-top: -20px;">
+                                                                <div class="x_panel ">
+                                                                    <h2 style="margin-top: -5px;">Receipt Details1</h2>
+                                                                    <div class="x_content ">
+                                                                        <form class="form-horizontal form-label-left input_mask ">
+                                                                            <table id="tblreceiptdetail" class="table table-bordered table-hover " border="1 ">
+                                                                            </table>
+                                                                        </form>
+                                                                    </div>
+                                                                    @*<div class="col-md-6 ">
+                                                                        <h2>Lot Info</h2>
+                                                                        <form class="form-horizontal form-label-left input_mask ">
+                                                                            <table class="table table-bordered table-hover " border="1 ">
+                                                                                <tr>
+                                                                                    <td>Lot No</td>
+                                                                                    <td>Recpt Qty</td>
+                                                                                    <td>No Of Bundles</td>
+                                                                                    <td>Sec Qty</td>
+                                                                                </tr>
+                                                                                <tr class="mycontainer " id="maincomborow ">
+                                                                                    <td></td>
+                                                                                    <td></td>
+                                                                                    <td></td>
+                                                                                    <td></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </form>
+                                                                    </div>*@
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="x_panel" style="margin-left: 15px; width: 97%; margin-top: 0px;">
+                                        <div class="row">
+                                            <div class="col-md-5 col-sm-5 col-xs-12">
+                                                <div class="form-group">
+                                                    <div class="maxl" style="margin-top: -6px;">
+                                                        <label class="radio inline">
+                                                            <input type="radio" checked value="M" id="optMS" name="MSType" onclick="LoadMainStore();">
+                                                            <span>Main Store</span>
+                                                        </label>
+                                                        <label class="radio inline">
+                                                            <input type="radio" value="S" id="optSS" name="MSType" onclick="LoadSubStore();">
+                                                            <span>Sub Store</span>
+                                                        </label>
+                                                       @* <label class="radio inline">
+                                                            <input type="radio" value="E" id="optES" name="MSType" onclick="LoadSecStore();">
+                                                            <span>Section Store</span>
+                                                        </label>*@
+                                                    </div>
+                                                </div>
+                                                <div id="MainStoreId">
+                                                    <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Company</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <select id="ddlMSCompany" class="form-control">
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Main Store</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <select id="ddlMSMMainStore" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                     
+
+                                                    </form>
+                                                </div>
+                                                <div id="SubStoreId">
+                                                   @* <div class="maxl" style="margin-top: -6px;">
+                                                        <label class="radio inline">
+                                                            <input type="radio" checked value="SM" id="optSMS" name="SMSType" onclick="RadioSMClick();">
+                                                            <span>Main Store</span>
+                                                        </label>
+                                                        <label class="radio inline">
+                                                            <input type="radio" value="SP" id="optSSS" name="SMSType" onclick="RadioSSPClick();">
+                                                            <span>Prodution List</span>
+                                                        </label>
+                                                    </div>*@
+
+                                                    <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                                        <div id="SubStoreMainId">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Main Store</label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <select id="ddlSCompany" class="form-control">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Sub Store</label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <select id="ddlSMainStore" class="form-control">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="SubStorPrdId">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Production Unit</label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <select id="ddlSStorePunit" class="form-control">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Sub Store</label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <select id="ddlSStoreSub" class="form-control">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                                <div id="SecStoId">
+                                                    <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Prodution Unit</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <select id="ddlPUnit" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Work Division</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <select id="ddlWK" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Section  Store</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <select id="ddlSecStore" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                   <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <textarea id="txtremarks" required="" class="form-control" name="message"></textarea>
+                                                            </div>
+                                                        </div>
+                                            </div>
+                                            <div class="col-md-7 col-sm-7 col-xs-12">
+                                                <div class="x_panel">
+                                                    <h4>Despatch Details</h4>
+                                                    <div class="x_content">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Desp. No</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="text " class="form-control " id="txtdespatchno">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Ship. No</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="text" class="form-control " id="txtshipno">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Ship Mode</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <select class="form-control" id="ddlshipmode">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">System</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <select class="form-control" id="ddlshipsystem">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">System</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="text" class="form-control " id="txtdestination" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Inv.Ref.No</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="text " class="form-control " id="txtinvrefno">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ex3">Inv.Ref.Date</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="text" class="form-control" id="txtinvrefdate" placeholder="Date">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Doc Ref.No</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="text " class="form-control " id="txtdocrefno">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                                        Ship. Type
+                                                                    </label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <div class="maxl">
+                                                                            <label class="radio inline">
+                                                                                <input type="radio" id="optshiptypefull" name="optwrkord" checked>
+                                                                                <span>Full </span>
+                                                                            </label>
+                                                                            <label class="radio inline">
+                                                                                <input type="radio" id="optshiptypepar" name="optwrkord">
+                                                                                <span>Part</span>
+                                                                            </label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row" style="float: right;">
+                                            <div class="col-md-12 ">
+                                                <button type="button " class="btn btn-success" id="btnAdd" onclick="return Add(); ">Save</button>
+                                                <button type="button " class="btn btn-success btn-roid=und" id="btnUpdate" style="display: none;" onclick="Update(); ">Update</button>
+                                                <button type="button " class="btn btn-success btn-roid=und" id="btnDelete" style="display: none;" onclick="Delete(); ">Delete</button>
+                                                <button type="button " class="btn btn-danger" data-dismiss="modal" id="btnjorclose">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>
+

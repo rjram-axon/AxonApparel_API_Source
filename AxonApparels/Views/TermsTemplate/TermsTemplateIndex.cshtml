@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "TermsTemplateIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/TermTemplate.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<style>
+    @* margin-top: -29px !important;*@
+    #tbody_filter {
+       
+    }
+    .add_btn {
+    width: 20px; padding: 2px; height: 20px;margin-left: -16px;
+    }
+</style>
+
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Terms Template</h2>
+
+                    </div>
+                    
+                    <div class="x_content">
+                        <div class="container">
+                            <button data-toggle="modal" data-target="#myModal" onclick="clearTextBox();" id="btnAddComp" value="Reset" class="enabled btn btn-primary">Add New Term Template</button>
+
+                            <table id="tbody" class="table table-bordered table-hover">
+                            </table>
+
+                        </div>
+                        @* Load datatable css *@
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 74%">
+                                <div class="modal-content">
+                                    <div class="x_panel">
+                                        <div class="x_title" style="margin-top: 10px;">
+                                            <h2>Add Term Template</h2>
+                                        </div>
+                                        <div class="x_content">
+                                            <div class="row">
+                                                <div class="modal-body" style="width: 100%;">
+                                                    <div class="x_panel">
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3 col-sm-6 col-xs-12 enquiry_edit">Term Template</label>
+                                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                            <input type="text" class="form-control" id="txttemplate" placeholder="">
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class=" form-group" id="divcolor">
+                                                                    <div class="x_panel">
+                                                                        <div class="x_content">
+                                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                                <div class="form-group">
+                                                                                    <table class="table table-bordered table-hover" border="1">
+                                                                                        <tr>
+                                                                                            <td>Terms</td>
+                                                                                            <td>Description</td>                                                                                           
+                                                                                            <td>&nbsp;</td>
+                                                                                        </tr>
+                                                                                        <tr class="mycontainer" id="maincomborow">
+                                                                                            <td>
+                                                                                                <select id="ddlTerms" class="form-control">
+                                                                                                </select>
+                                                                                                <span class="error">Select Terms</span>
+                                                                                            </td>
+                                                                                           
+                                                                                            <td>
+                                                                                                <input type="text" id="txtDesc" class="form-control" placeholder="Description">
+                                                                                                @*<span class="error">Select Color</span>*@
+                                                                                            </td>
+                                                                                           
+                                                                                            <td>
+                                                                                                <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btncoloradd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                                <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btncolorupdate" type="button" data-toggle="tooltip" data-placement="top" title="Update"><i class="fa fa-refresh"></i></button>
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                  <div id="ColorList">
+                                                                                        <table class="table table-responsive" id="tblItemdetails">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th style="display: none;">Sno
+                                                                                                    </th>
+                                                                                                    <th style="display: none;">TermDetId
+                                                                                                    </th>
+                                                                                                    <th style="display: none;">TermMasId
+                                                                                                    </th>
+                                                                                                    <th>Term
+                                                                                                    </th>                                                                                                   
+                                                                                                    <th>Desc
+                                                                                                    </th>                                                                                               
+                                                                                                    <th>Action
+                                                                                                    </th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                        </table>
+                                                                                        <span id="orderItemError" style="color: red"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row" style="float: right;">
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <button type="button" class="btn btn-success " id="btnAdd" onclick="return Add();">Add</button>
+                                                                <button type="button" class="btn btn-success " id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                                                <button type="button" class="btn btn-success" id="btnmainDelete" style="display: none;" onclick="TermDelete();">Delete</button>
+                                                                <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#myModal" onclick="btnCloseSubmit();">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /page content -->
+

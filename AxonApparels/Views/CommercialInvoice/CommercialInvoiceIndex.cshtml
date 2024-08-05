@@ -1,0 +1,631 @@
+﻿@{
+    ViewBag.Title = "CommercialInvoiceIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tblgeneraldetails_filter
+    {
+        display: none;
+    }
+    #tblPaydetails_filter
+    {
+        display:none;
+    }
+
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtEntryDate').datepicker({
+            dateFormat: 'dd/mm/yy', onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                loaddata();
+            }
+        });
+        $('#txtInvoiceDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                loaddata();
+            }
+        });
+
+        $('#txtInvoiceDate').datepicker({
+            dateFormat: 'dd/mm/yy'});
+
+        //$("#Tblinsert").on("click", "#txtInvoiceDate", function () {
+        //    debugger;
+        //    $(this).datepicker({
+        //        //useCurrent: true,
+        //        dateFormat: 'dd/mm/yy'
+        //    });
+        //});
+
+    })
+</script>
+
+<script src="~/AxonScripts/Purchase/CommercialInvoice.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+          
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Commercial Invoice</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                     <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Company
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmaincomp" class="form-control select2" onchange="clickonlist();"></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Order No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmainordno" class="form-control select2" onchange="clickonlist();"></select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="ex3">
+                                        From Date
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                               
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Ref No</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmainrefno" class="form-control select2" onchange="clickonlist();">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Style</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmainstyle" class="form-control select2" onchange="clickonlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="ex3">
+                                        To Date
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control" placeholder="Date" id="txtToDate">
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlMainWorkdiv">Work Div</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <select id="ddlMainWorkdiv" class="form-control"></select>
+                            </div>
+                        </div>*@
+                            </form>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Entry No</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmainentryno" class="form-control select2" onchange="clickonlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                             <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Supplier</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMSupplier" class="form-control select2" onchange="clickonlist();"></select>
+                                    </div>
+                                </div>
+                             
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <button type="button" class="btn btn-success" style="float: right;" onclick="clickonlist()">List</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                           <div class="x_content">
+                        <div class="container">
+                            <button data-toggle="modal" data-target="" onclick="clearTextBox();" id="btnAddComp" value="Reset" class="enabled btn btn-primary" @ViewBag.SalesInvAddFlg>Add New</button>
+                            <table id="tbody" class="table table-bordered table-hover">
+                                @*<thead>
+                                    <tr>
+                                        <th style="visibility: hidden;">ID
+                                        </th>
+                                        <th>Buyer Name
+                                        </th>
+                                        <th>Address
+                                        </th>
+                                        <th>City
+                                        </th>
+                                        <th>Status
+                                        </th>
+                                        <th>Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                </tbody>*@
+                            </table>
+                        </div>
+                        @* Load datatable css *@
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+
+                      
+
+                    </div>
+            </div>
+                  
+
+                      <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 75%;">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Commercial Invoice</h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="x_panel">
+                                            <div class="row">
+                                                <div class="row form-group">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style=" margin-bottom: -10px;">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <div class="form-group">
+
+                                                                    <div class="row">
+                                                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="ddlCompany">Company</label>
+                                                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                        <select id="ddlCompany" class="form-control select2" onchange="chkcmpnyid();">
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                  <div class="form-group">
+                                                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="ddlSup">Supplier</label>
+                                                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                    <select id="ddlSupplier" class="form-control select2" onchange="changeSupllier();">
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                                <div class="form-group" id="optNewBill">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">New Bill No</label>
+                                                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                        <input type="checkbox" id="chkbillStatus" value="" onclick="LoadNewBill();">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                                                           <div class="form-group">
+                                                                    <div id="txtInvId">
+                                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Invoice No</label>
+                                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                            <input type="text" id="txtInvoiceNo" class="form-control" placeholder="Invoice No">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="dptInvId">
+                                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Invoice No</label>
+                                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                            <select id="ddlInvoiceNo" class="form-control" onchange="LoadBillInvNoAmt();"></select>
+                                                                            <input type="text" id="txtInvoiceAmt" class="form-control" placeholder="Invoice Amount" disabled>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Invoice Date</label>
+                                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                        <input type="text" id="txtInvoiceDate" class="form-control" placeholder="Invoice Date">
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                        </div>
+                                                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Entry No</label>
+                                                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                        <input type="text" class="form-control" placeholder=" " id="txtEntryNo" disabled>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Entry Date</label>
+                                                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                                        <input type="text" class="form-control" placeholder=" " id="txtEntryDate">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </form>
+                                                                        </div>
+                                                                        
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </form>
+                                                            <div class="row">
+
+
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                 @*   <div class="form-group">
+                                                                        <table class="table table-bordered table-hover" border="1" id="Tblinsert">
+                                                                            <tr>
+                                                                                <td>Commercial</td>
+                                                                                <td>OrderNo</td>
+                                                                                <td>RefNo</td>
+                                                                                <td>Style</td>
+                                                                                <td>&nbsp;</td>
+                                                                            </tr>
+                                                                            <tr class="mycontainer" id="maincomborow">
+                                                                                <td style="width: 150px">
+                                                                                      <select id="ddlAcommercial" class="form-control select2" aria-autocomplete="list" aria-sort="none" multiple="multiple" name="multiple" onchange="myProcess(this.value);">
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td style="width: 150px">
+                                                                                     <select id="ddlAOrderNo" class="form-control select2" aria-autocomplete="list" aria-sort="none" multiple="multiple" name="multiple" onchange="myProcess(this.value);">
+                                                                                    </select>
+                                                                                </td>
+                                                                                  <td style="width: 150px">
+                                                                                     <select id="ddlARefno" class="form-control select2" aria-autocomplete="list" aria-sort="none" multiple="multiple" name="multiple" onchange="myProcess(this.value);">
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td style="width: 150px">
+                                                                                     <select id="ddlAStyle" class="form-control select2" aria-autocomplete="list" aria-sort="none" multiple="multiple" name="multiple" onchange="myProcess(this.value);">
+                                                                                    </select>
+                                                                                </td>
+                                                                              
+                                                                                <td style="width: 50px">
+                                                                                    <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btninvadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                    <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btninvupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <div id="CompList">
+                                                                            <table class="table table-responsive" id="tblInvdetails">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="display: none;">Detid
+                                                                                        </th>
+                                                                                         <th style="display: none;">Commerid
+                                                                                        </th>
+                                                                                        <th>Commercial
+                                                                                        </th>
+                                                                                        <th>Orderno
+                                                                                        </th>
+                                                                                        <th>Refno
+                                                                                        </th>
+                                                                                        <th style="display: none;">Styleid
+                                                                                        </th>
+                                                                                        <th>Style
+                                                                                        </th>
+                                                                                         <th>Tot val
+                                                                                        </th>
+                                                                                         <th>Balance
+                                                                                        </th>
+                                                                                         <th>Value
+                                                                                        </th>
+                                                                                        <td>&nbsp;</td>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                            </table>
+                                                                            <span id="tablesError" style="color: red"></span>
+                                                                        </div>
+                                                                    </div>*@
+
+                                                                     <div class="form-group control-label col-md-3 col-sm-6 col-xs-12">
+                                                    <label class="control-label col-md-12 col-sm-12 col-xs-12">
+                                                        Commercial
+                                                    </label>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <select id="ddlAcommercial" class="form-control" aria-autocomplete="list" aria-sort="none" multiple="multiple" name="multiple" onchange="myCommercial(this.value);">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                                     <div class="form-group control-label col-md-3 col-sm-6 col-xs-12">
+                                                    <label class="control-label col-md-12 col-sm-12 col-xs-12">
+                                                        Order No
+                                                    </label>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <select id="ddlAOrderNo" class="form-control" aria-autocomplete="list" aria-sort="none" multiple="multiple" name="multiple" onchange="myOrder(this.value);">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                                     <div class="form-group control-label col-md-3 col-sm-6 col-xs-12">
+                                                    <label class="control-label col-md-12 col-sm-12 col-xs-12">
+                                                        Ref No
+                                                    </label>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <select id="ddlARefno" class="form-control" aria-autocomplete="list" aria-sort="none" multiple="multiple" name="multiple" onchange="myRef(this.value);">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                                     <div class="form-group control-label col-md-3 col-sm-6 col-xs-12">
+                                                    <label class="control-label col-md-12 col-sm-12 col-xs-12">
+                                                        Style
+                                                    </label>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <select id="ddlAStyle" class="form-control" aria-autocomplete="list" aria-sort="none" multiple="multiple" name="multiple" onchange="myStyle(this.value);">
+                                                        </select>
+                                                    </div>
+                                                                         <div class="col-md-12" style="float: right;margin-top:10px;">
+                                            <button type="button" class="btn btn-success " id="btnAddLoad" >Load</button>
+                                        </div>
+                                                </div>
+
+                                                                </form>
+                                                                <div style="margin-top:13px;">
+                                                                <div id="CompList">
+                                                                            <table class="table table-responsive" id="tblInvdetails">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="display: none;">Detid
+                                                                                        </th>
+                                                                                         <th style="display: none;">Commerid
+                                                                                        </th>
+                                                                                        <th>Commercial
+                                                                                        </th>
+                                                                                        <th>Orderno
+                                                                                        </th>
+                                                                                        <th>Refno
+                                                                                        </th>
+                                                                                        <th style="display: none;">Styleid
+                                                                                        </th>
+                                                                                        <th>Style
+                                                                                        </th>
+                                                                                         <th>Tot val
+                                                                                        </th>
+                                                                                         <th>Balance
+                                                                                        </th>
+                                                                                         <th>Amount
+                                                                                        </th>
+                                                                                        <td>&nbsp;</td>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                            </table>
+                                                                            <span id="tablesError" style="color: red"></span>
+                                                                        </div>
+
+
+                                                                 </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <form>
+                                        </form>
+                                    </div>
+
+
+                                 
+
+                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                                        <div class="x_panel">
+                                            
+                                            <div class="row" style="margin-top: -10px;">
+                                                <h2 >Add Less Details </h2>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    
+                                                    <form class="form-horizontal form-label-left input_mask">
+                                                        <div class="form-group">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                                                            <table class="table table-bordered table-hover" border="1">
+                                                                <tr>
+
+                                                                    <td>AccountHeads</td>
+                                                                    <td>+/-</td>
+                                                                    <td>Percentage</td>
+                                                                    <td>Amount</td>
+
+                                                                    <td>&nbsp;</td>
+                                                                </tr>
+                                                                <tr class="mycontainer" id="maincomborow">
+                                                                    <td>
+                                                                        <select id="ddlAcc" class="form-control" onchange="LoadPlusAdd();">
+                                                                        </select>
+                                                                        <span class="error">Select AccHeads</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" id="txtPorMins" class="form-control" placeholder="PlusOrMinus" disabled>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" id="txtPer" class="form-control" placeholder="Percent" onchange="LoadNetAmount();">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" id="txtAmount" class="form-control" placeholder="Amount">
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnImadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                        <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnImupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            </div>
+                                                            <table class="table table-bordered table-hover" border="1" id="tblPaydetails">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>AddlessId
+                                                                        </th>
+                                                                        <th>AccountsHead
+                                                                        </th>
+                                                                        <th>+/-
+                                                                        </th>
+                                                                        <th>Percent
+                                                                        </th>
+                                                                        <th>Amount
+                                                                        </th>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+
+
+                                                        </div>
+
+                                                    </form>
+                                                    
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                   @* <div class="form-group">
+                                                                        <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                                            Exchange Rate
+                                                                        </label>
+                                                                        <div class="col-md-7 col-sm-9 col-xs-12">
+                                                                            <input style="margin-left: 4px;" type="text" class="form-control" placeholder="Exchange Rate" id="txtExchangeRate" disabled>
+                                                                        </div>
+                                                                    </div>*@
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                                            Net Amt
+                                                                        </label>
+                                                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                                                            <input style="" type="text" class="form-control" placeholder="Net Amount" id="txtNetAmount" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                   @* <div class="form-group">
+                                                                        <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                                            Currency
+                                                                        </label>
+                                                                        <div class="col-md-7 col-sm-9 col-xs-12">
+                                                                            <input style="margin-left: 4px;" type="text" class="form-control" placeholder="Currency" id="txtCurrency" disabled>
+                                                                        </div>
+                                                                    </div>*@
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                                            Gross Amt
+                                                                        </label>
+                                                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                                                            <input style="" type="text" class="form-control" placeholder="Gross Amount" id="txtGrossAmount" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group" style="display: none;">
+                                                                        <label class="control-label col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                                            CurrencyId
+                                                                        </label>
+                                                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                                                            <input style="" type="text" class="form-control" placeholder="CurrencyId" id="txtCurrencyId">
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                </div>
+
+                                                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" >
+                                                      <div style="margin-top: 13px;">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="">Remarks</label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <textarea id="txtremarks"></textarea>
+
+                                            </div>
+                                          </div>
+                                      
+                                        </div>
+
+                                                   </div>
+                                                    </div>
+                                                             
+                                       <div class="row" style="text-align:right;">
+                                      
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                          <button type="button" class="btn btn-danger" id="btnDeleter" style="display: none;" onclick="Delete();">Delete</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                                </div>
+
+
+@*                                       <div class="modal-footer" style="border: 0px solid">
+                                      
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                          <button type="button" class="btn btn-danger" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+

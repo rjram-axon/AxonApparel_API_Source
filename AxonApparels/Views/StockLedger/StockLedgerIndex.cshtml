@@ -1,0 +1,298 @@
+﻿@{
+    ViewBag.Title = "StockLedgerIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtDeliDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+
+
+<script src="~/AxonScripts/Statement/StockLedgerReport.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+            <div class="x_panel">
+                <div class="x_content">
+                    <form class="form-inline">
+                        <div class="row">
+                            <div class="row">
+                                <div style="text-align:center;">
+                                    <div class="form-group">
+                                        <label style="font-size: 19px; white-space: nowrap;text-align:center;">
+                                         Stock Ledger Statement
+                                        </label>
+                                    </div>
+                                </div>                              
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12"></div>
+                <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                    <div class="x_panel">
+                        <h2 style="text-align:center;margin-top: -3px;"><b>Filter Options</b></h2>
+                
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Company
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMCompany" class="form-control select2" onchange="CMainlist();"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Supplier
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMSupplier" class="form-control select2" >
+                                        </select>
+                                    </div>
+                                </div>
+                                  <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Style
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMStyle" class="form-control select2" onchange="CMainlist();"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Order No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @*<select id="ddlMOrderNo" class="form-control select2" onchange="CMainlist();">
+                                        </select>*@
+                                        <select id="ddlMOrderNo" class="form-control select2"  tabindex="-1" aria-autocomplete="list" aria-sort="none" role="combobox" multiple="multiple" name="multiple" onchange="myOrder(this.value);">
+                                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Ref No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @*<select id="ddlMRefNo" class="form-control select2" onchange="CMainlist();">
+                                        </select>*@
+                                          <select id="ddlMRefNo" class="form-control select2"  tabindex="-1" aria-autocomplete="list" aria-sort="none" role="combobox" multiple="multiple" name="multiple" onchange="myRef(this.value);">
+                                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Item Group
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMItemGroup" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Item Type
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+  
+                                              <select id="ddlMItemType" class="form-control select2">
+                                                                            <option value="0">--Select Item Type--</option>
+                                                                            <option value="PACKING">PACKING</option>
+                                                                            <option value="ACCESSORY">ACCESSORY</option>
+                                                                            <option value="OTHERS">OTHERS</option>
+                                                                            <option value="FABRIC">FABRIC</option>
+                                                                            <option value="YARN">YARN</option>
+                                                                            <option value="GARMENT">GARMENT</option>
+                                                                            <option value="COMPONENT">COMPONENT</option>
+                                                                    
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Manufacturer
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlManufacturer" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Stock Type
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlStockType" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Grn No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlGRNno" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Issue No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlIssueNo" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Season
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlSeason" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                 <div class="form-group" style="display:none;">
+                                    <div class="maxl " style="margin-left: 10px;  width: 600px; margin-top: -5px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="B" name="proctype" onclick="RadioMBClick();">
+                                            <span>Order Purchase</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="G" name="proctype" onclick="RadioMBClick();">
+                                            <span>General Purchase</span>
+                                        </label>
+                                         <label class="radio inline">
+                                            <input type="radio" value="S" name="proctype" onclick="RadioMBClick();">
+                                            <span>Sample Purchase</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                 
+                              
+                            </form>
+                    
+            </div>
+                </div>
+                 <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                     <div class="x_panel" >
+                        <h2 style="text-align:center;margin-top: -3px;"><b>Display Options</b></h2>
+                
+                        <form class="form-horizontal form-label-left input_mask" style="margin-left:-10px;">
+                            <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                Stock Date
+                                            </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                 <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                            </div>
+                                    </div>  
+                            <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                To Date
+                                            </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                 <input type="text" id="txtToDate" class="form-control " placeholder="Date">
+                                            </div>
+                                    </div> 
+                            <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Item
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlItem" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>  
+                            <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Color
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlColor" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                            <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Size
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlSize" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div> 
+                            <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Store
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlStore" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>  
+                            <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Process
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlProcess" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>  
+                        </form>
+                   
+            </div>
+                </div>
+            </div>
+            
+        
+  
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+                <div class="row">
+                     
+                 
+                      <div class="col-lg-10 col-md-11 col-sm-12 col-xs-12">
+                    <form class="form-horizontal form-label-left input_mask">
+                         <div class="form-group">
+                            <button type="button" class="btn btn-primary" style="float:right" onclick="LoadReport();">Report</button>
+                          
+                            
+                        </div>
+                    </form>
+                </div>
+                </div>
+           
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,482 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{69BF833A-58D5-498C-A98A-C032D7AC8E74}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AxonApparel.Business</RootNamespace>
+    <AssemblyName>AxonApparel.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AxonApparels\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AxonApparels\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Implementation\AccountHeadsBusiness.cs" />
+    <Compile Include="Implementation\AgentBusiness.cs" />
+    <Compile Include="Implementation\Api\ApiBudgetApprovalBusiness.cs" />
+    <Compile Include="Implementation\Api\ApiConsCostBusiness.cs" />
+    <Compile Include="Implementation\Api\ApiLoginBusiness.cs" />
+    <Compile Include="Implementation\Api\ApiOrderStatusBusiness.cs" />
+    <Compile Include="Implementation\Api\ApiProcessOutstandingBussiness.cs" />
+    <Compile Include="Implementation\Api\ApiProfitLossBusiness.cs" />
+    <Compile Include="Implementation\Api\ApiPurchaseoutstandingBusiness.cs" />
+    <Compile Include="Implementation\Api\ApiStockStatusBusines.cs" />
+    <Compile Include="Implementation\Api\ApiStyleGalleryBusiness.cs" />
+    <Compile Include="Implementation\ApprovalBusiness.cs" />
+    <Compile Include="Implementation\BankBusiness.cs" />
+    <Compile Include="Implementation\Budget\BudgetApprovalBusiness.cs" />
+    <Compile Include="Implementation\Budget\OrderApprovalBusiness.cs" />
+    <Compile Include="Implementation\Budget\PlanningApprovalBusiness.cs" />
+    <Compile Include="Implementation\BuyerBusiness.cs" />
+    <Compile Include="Implementation\BuyerChargesBusiness.cs" />
+    <Compile Include="Implementation\BuyerItemRateBusiness.cs" />
+    <Compile Include="Implementation\CityBusiness.cs" />
+    <Compile Include="Implementation\ColorBusiness.cs" />
+    <Compile Include="Implementation\ColorCodeBusiness.cs" />
+    <Compile Include="Implementation\ColorGroupBusiness.cs" />
+    <Compile Include="Implementation\ColorMasterBusiness.cs" />
+    <Compile Include="Implementation\CompanyBusiness.cs" />
+    <Compile Include="Implementation\CompanyUnitBusiness.cs" />
+    <Compile Include="Implementation\ConsigneeBusiness.cs" />
+    <Compile Include="Implementation\CountryBusiness.cs" />
+    <Compile Include="Implementation\CourierBusiness.cs" />
+    <Compile Include="Implementation\CurrencyBusiness.cs" />
+    <Compile Include="Implementation\DashBoard\OrderDashBusiness.cs" />
+    <Compile Include="Implementation\DepartmentBusiness.cs" />
+    <Compile Include="Implementation\DescriptionBusiness.cs" />
+    <Compile Include="Implementation\DesignationBusiness.cs" />
+    <Compile Include="Implementation\EmployeeBusiness.cs" />
+    <Compile Include="Implementation\FabricMasterBusiness.cs" />
+    <Compile Include="Implementation\FollowupBusiness.cs" />
+    <Compile Include="Implementation\GarmentUomBusiness.cs" />
+    <Compile Include="Implementation\GeneralFunction\GeneralFunctionBusiness.cs" />
+    <Compile Include="Implementation\GenerateRightsBusiness.cs" />
+    <Compile Include="Implementation\GSTInterBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\AccountSettingBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\AlertSetupBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\AllowanceBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\AMCBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\DBbackupBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\DocumentSetupBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\MailBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\MisSettingBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\OpeningStockImportBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\PrefixEntryBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\ProcessSeqSetBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\ReviseMarkupBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\UpdateScriptBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\UserEntryLogBusiness.cs" />
+    <Compile Include="Implementation\HouseKeeping\UserStatusBusiness.cs" />
+    <Compile Include="Implementation\Hsnbusiness.cs" />
+    <Compile Include="Implementation\ItemBusiness.cs" />
+    <Compile Include="Implementation\ItemGroupBusiness.cs" />
+    <Compile Include="Implementation\ItemRateBusiness.cs" />
+    <Compile Include="Implementation\LedgerBusiness.cs" />
+    <Compile Include="Implementation\LoginBusiness.cs" />
+    <Compile Include="Implementation\MerchandTeamBusiness.cs" />
+    <Compile Include="Implementation\ModeOfShipmentBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\BulkOrderAmendBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\BulkOrderBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\BulkOrderMeasurementBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\BulkOrderNomSupBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\BulkOrderShipmentBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\BuyOrdStyleBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\CourierEntryBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\EnquiryBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\JobOrderDetailBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\JobWorkBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\OrderCancellationBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\OrderItemDetailsBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\QuotationAddBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\QuotationMainBusiness.cs" />
+    <Compile Include="Implementation\OrderProcessing\StyleApprovalTitleBusiness.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Implementation\OverHeadsBusiness.cs" />
+    <Compile Include="Implementation\PaymentTermBusiness.cs" />
+    <Compile Include="Implementation\Planning\BomBusiness.cs" />
+    <Compile Include="Implementation\Planning\BudgetBusiness.cs" />
+    <Compile Include="Implementation\Planning\PlanningAddBusiness.cs" />
+    <Compile Include="Implementation\Planning\PlanningConsumptionBusiness.cs" />
+    <Compile Include="Implementation\Planning\PlanningFabricBusiness.cs" />
+    <Compile Include="Implementation\Planning\PlanningMainBusiness.cs" />
+    <Compile Include="Implementation\Planning\PlanningSampleBusiness.cs" />
+    <Compile Include="Implementation\Planning\PlanningYarnBusiness.cs" />
+    <Compile Include="Implementation\Planning\ProcessProgramBusiness.cs" />
+    <Compile Include="Implementation\Planning\ProcessQuoteBusiness.cs" />
+    <Compile Include="Implementation\Planning\ProcessQuoteEntryBusiness.cs" />
+    <Compile Include="Implementation\Planning\ProcessSeqBusiness.cs" />
+    <Compile Include="Implementation\Planning\ProcessSeqMainBusiness.cs" />
+    <Compile Include="Implementation\Planning\ProcessSeqProcBusiness.cs" />
+    <Compile Include="Implementation\Planning\TrimsAccessoryBusiness.cs" />
+    <Compile Include="Implementation\Planning\VendorBusiness.cs" />
+    <Compile Include="Implementation\Planning\VendorEntryBusiness.cs" />
+    <Compile Include="Implementation\PortOfLoadingBusiness.cs" />
+    <Compile Include="Implementation\ProcessBusiness.cs" />
+    <Compile Include="Implementation\ProcessSetupBusiness.cs" />
+    <Compile Include="Implementation\Process\GeneralProcessOrderBusiness.cs" />
+    <Compile Include="Implementation\Process\GeneralProcessReceiptBusiness.cs" />
+    <Compile Include="Implementation\Process\GeneralProcessReturnBusiness.cs" />
+    <Compile Include="Implementation\Process\GroupProcessOrderBusiness.cs" />
+    <Compile Include="Implementation\Process\ProcessInvoiceBusiness.cs" />
+    <Compile Include="Implementation\Process\ProcessIssueBusiness.cs" />
+    <Compile Include="Implementation\Process\ProcessOrderBusiness.cs" />
+    <Compile Include="Implementation\Process\ProcessQualityBusiness.cs" />
+    <Compile Include="Implementation\Process\ProcessReceiptBusiness.cs" />
+    <Compile Include="Implementation\Process\ProcessReturnBusiness.cs" />
+    <Compile Include="Implementation\Production\BitCuttingOrderBusiness.cs" />
+    <Compile Include="Implementation\Production\BitCuttingOrderReceiptBusiness.cs" />
+    <Compile Include="Implementation\Production\BitCuttingOrderReturnBusiness.cs" />
+    <Compile Include="Implementation\Production\CommonProductionIssueBusiness.cs" />
+    <Compile Include="Implementation\Production\CommonProductionReceiptBusiness.cs" />
+    <Compile Include="Implementation\Production\CommonProductionReturnBusiness.cs" />
+    <Compile Include="Implementation\Production\CuttingOrderBusiness.cs" />
+    <Compile Include="Implementation\Production\CuttingOrderReceiptBusiness.cs" />
+    <Compile Include="Implementation\Production\CuttingOrderReturnBusiness.cs" />
+    <Compile Include="Implementation\Production\DespatchBuyerOrderBusiness.cs" />
+    <Compile Include="Implementation\Production\FabricDelySectionBusiness.cs" />
+    <Compile Include="Implementation\Production\JobInvoiceBusiness.cs" />
+    <Compile Include="Implementation\Production\JobReceiptBusiness.cs" />
+    <Compile Include="Implementation\Production\OrderSecondsSalesBusiness.cs" />
+    <Compile Include="Implementation\Production\ProductionInvoiceBusiness.cs" />
+    <Compile Include="Implementation\Production\ProductionOrderBusiness.cs" />
+    <Compile Include="Implementation\Production\ProductionReceiptBusiness.cs" />
+    <Compile Include="Implementation\Production\ProductionReturnBusiness.cs" />
+    <Compile Include="Implementation\Production\SalesInvoiceBusiness.cs" />
+    <Compile Include="Implementation\Purchase\BillEntryBusiness.cs" />
+    <Compile Include="Implementation\Purchase\BillPassBusiness.cs" />
+    <Compile Include="Implementation\Purchase\CommercialInvoiceBusiness.cs" />
+    <Compile Include="Implementation\Purchase\CSPReceiptBusiness.cs" />
+    <Compile Include="Implementation\Purchase\GeneralMemoBusiness.cs" />
+    <Compile Include="Implementation\Purchase\GeneralReceiptBusiness.cs" />
+    <Compile Include="Implementation\Purchase\ItemTransferBusiness.cs" />
+    <Compile Include="Implementation\Purchase\LotSplitUpAddBusiness.cs" />
+    <Compile Include="Implementation\Purchase\LotsplitUpEntryBusiness.cs" />
+    <Compile Include="Implementation\Purchase\LotSplitUpMainBusiness.cs" />
+    <Compile Include="Implementation\Purchase\OpenDebitBusiness.cs" />
+    <Compile Include="Implementation\Purchase\OpeningStockBusiness.cs" />
+    <Compile Include="Implementation\Purchase\OpenInvoiceBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PaymentBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseCancelEntryBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseDebitBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseGrnAddBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseGrnEntryBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseGrnMainBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseIndentApprovalBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseIndentBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseInvoiceBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseOrderBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseOrderMainBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseQualityBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseReturnEntryBusiness.cs" />
+    <Compile Include="Implementation\Purchase\PurchaseReturnMainBusiness.cs" />
+    <Compile Include="Implementation\Purchase\SecondSalesBusiness.cs" />
+    <Compile Include="Implementation\Purchase\SpecialRequisitionAddBusiness.cs" />
+    <Compile Include="Implementation\Purchase\SpecialRequisitionMainBusiness.cs" />
+    <Compile Include="Implementation\Purchase\StockAuditEntryBusiness.cs" />
+    <Compile Include="Implementation\Purchase\StockAuditMainBusiness.cs" />
+    <Compile Include="Implementation\Purchase\StockInwardAddBusiness.cs" />
+    <Compile Include="Implementation\Purchase\StockInwardMainBusiness.cs" />
+    <Compile Include="Implementation\Purchase\StockLocAllocationBusiness.cs" />
+    <Compile Include="Implementation\Purchase\StockOutwardBusiness.cs" />
+    <Compile Include="Implementation\Purchase\StockTransferBusiness.cs" />
+    <Compile Include="Implementation\Purchase\StoresDeliReturnBusiness.cs" />
+    <Compile Include="Implementation\Purchase\StoresDeliveryBusiness.cs" />
+    <Compile Include="Implementation\Purchase\SubStoreIssueBusiness.cs" />
+    <Compile Include="Implementation\ReasonBusiness.cs" />
+    <Compile Include="Implementation\RoleBusiness.cs" />
+    <Compile Include="Implementation\SampleTypeBusiness.cs" />
+    <Compile Include="Implementation\SeasonBusiness.cs" />
+    <Compile Include="Implementation\ShipmentSystemBusiness.cs" />
+    <Compile Include="Implementation\SizeBusiness.cs" />
+    <Compile Include="Implementation\StateBusiness.cs" />
+    <Compile Include="Implementation\StoreSectionBusiness.cs" />
+    <Compile Include="Implementation\StoreSetupBusiness.cs" />
+    <Compile Include="Implementation\StoreUnitBusiness.cs" />
+    <Compile Include="Implementation\StyleBusiness.cs" />
+    <Compile Include="Implementation\StyleGroupBusiness.cs" />
+    <Compile Include="Implementation\StyleTemplateBusiness.cs" />
+    <Compile Include="Implementation\SupplierBusiness.cs" />
+    <Compile Include="Implementation\TermsBusiness.cs" />
+    <Compile Include="Implementation\TermTemplateBusiness.cs" />
+    <Compile Include="Implementation\TestingTypeBusiness.cs" />
+    <Compile Include="Implementation\UnitConversionBusiness.cs" />
+    <Compile Include="Implementation\Unit_of_measurementBusiness.cs" />
+    <Compile Include="Implementation\UserGroupBusiness.cs" />
+    <Compile Include="Implementation\WorkDivisionBusiness.cs" />
+    <Compile Include="Implementation\WorkOrderBusiness.cs" />
+    <Compile Include="Interface\Api\IApiBudgetApprovalBusiness.cs" />
+    <Compile Include="Interface\Api\IApiConsCostBusiness.cs" />
+    <Compile Include="Interface\Api\IApiLoginBusiness.cs" />
+    <Compile Include="Interface\Api\IApiOrderStatusBussiness.cs" />
+    <Compile Include="Interface\Api\IApiProcessOutstandingBussiness.cs" />
+    <Compile Include="Interface\Api\IApiProfiLossBusiness.cs" />
+    <Compile Include="Interface\Api\IApiPurchaseoutstandingBusiness.cs" />
+    <Compile Include="Interface\Api\IApiStockStatusBusiness.cs" />
+    <Compile Include="Interface\Api\IApiStyleGalleryBusiness.cs" />
+    <Compile Include="Interface\Budget\IBudgetApprovalBusiness.cs" />
+    <Compile Include="Interface\Budget\IOrderApprovalBusiness.cs" />
+    <Compile Include="Interface\Budget\IPlanningApprovalBusiness.cs" />
+    <Compile Include="Interface\DashBoard\IOrderDashBusiness.cs" />
+    <Compile Include="Interface\GeneralFunction\IGeneralFunctionBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IAccountSettingBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IAlertSetupBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IAllowanceBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IAMCBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IDBbackupBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IDocumentSetupBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IMailBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IMisSettingBusines.cs" />
+    <Compile Include="Interface\HouseKeeping\IOpeningStockImportBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IPrefixEntryBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IProcessSeqSetBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IReviseMarkupBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IUpdateScriptBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IUserEntryLogBusiness.cs" />
+    <Compile Include="Interface\HouseKeeping\IUserStatusBusiness.cs" />
+    <Compile Include="Interface\IAccountHeadsBusiness.cs" />
+    <Compile Include="Interface\IAgentBusiness.cs" />
+    <Compile Include="Interface\IApprovalBusiness.cs" />
+    <Compile Include="Interface\IBankBusiness.cs" />
+    <Compile Include="Interface\IBuyerBusiness.cs" />
+    <Compile Include="Interface\IBuyerChargesBusiness.cs" />
+    <Compile Include="Interface\IBuyerItemRateBusiness.cs" />
+    <Compile Include="Interface\ICityBusiness.cs" />
+    <Compile Include="Interface\IColorBusiness.cs" />
+    <Compile Include="Interface\IColorCodeBusiness.cs" />
+    <Compile Include="Interface\IColorGroupBusiness.cs" />
+    <Compile Include="Interface\IColorMasterBusiness.cs" />
+    <Compile Include="Interface\ICompanyBusiness.cs" />
+    <Compile Include="Interface\ICompanyUnitBusiness.cs" />
+    <Compile Include="Interface\IConsigneeBusiness.cs" />
+    <Compile Include="Interface\ICountryBusiness.cs" />
+    <Compile Include="Interface\ICourierBusiness.cs" />
+    <Compile Include="Interface\ICurrencyBusiness.cs" />
+    <Compile Include="Interface\IDepartmentBusiness.cs" />
+    <Compile Include="Interface\IDescriptionBusiness.cs" />
+    <Compile Include="Interface\IDesignationBusiness.cs" />
+    <Compile Include="Interface\IEmployeeBusiness.cs" />
+    <Compile Include="Interface\IFabricMasterBusiness.cs" />
+    <Compile Include="Interface\IFollowUpBusiness.cs" />
+    <Compile Include="Interface\IGarmentUomBusiness.cs" />
+    <Compile Include="Interface\IGenerateRightsBusiness.cs" />
+    <Compile Include="Interface\IGSTInterBusiness.cs" />
+    <Compile Include="Interface\IHsnbusiness.cs" />
+    <Compile Include="Interface\IItemBusiness.cs" />
+    <Compile Include="Interface\IItemGroupBusiness.cs" />
+    <Compile Include="Interface\IItemRateBusiness.cs" />
+    <Compile Include="Interface\ILedgerBusiness.cs" />
+    <Compile Include="Interface\ILoginBusiness.cs" />
+    <Compile Include="Interface\IMerchandTeamBusiness.cs" />
+    <Compile Include="Interface\IModeOfShipmentBusiness.cs" />
+    <Compile Include="Interface\IOverHeadsBusiness.cs" />
+    <Compile Include="Interface\IPaymentTermsBusiness.cs" />
+    <Compile Include="Interface\IPortOfLoadingBusiness.cs" />
+    <Compile Include="Interface\IProcessBusiness.cs" />
+    <Compile Include="Interface\IProcessSetupBusiness.cs" />
+    <Compile Include="Interface\IReasonBusiness.cs" />
+    <Compile Include="Interface\IRoleBusiness.cs" />
+    <Compile Include="Interface\ISampleTypeBusiness.cs" />
+    <Compile Include="Interface\ISeasonBusiness.cs" />
+    <Compile Include="Interface\IShipmentSystemBusiness.cs" />
+    <Compile Include="Interface\ISizeBusiness.cs" />
+    <Compile Include="Interface\IStateBusiness.cs" />
+    <Compile Include="Interface\IStoreSectionBusiness.cs" />
+    <Compile Include="Interface\IStoreSetupBusiness.cs" />
+    <Compile Include="Interface\IStoreUnitBusiness.cs" />
+    <Compile Include="Interface\IStyleBusiness.cs" />
+    <Compile Include="Interface\IStyleGroupBusiness.cs" />
+    <Compile Include="Interface\IStyleTemplateBusiness.cs" />
+    <Compile Include="Interface\ISupplierBusiness.cs" />
+    <Compile Include="Interface\ITermsBusiness.cs" />
+    <Compile Include="Interface\ITermTemplateBusiness.cs" />
+    <Compile Include="Interface\ITestingTypeBusiness.cs" />
+    <Compile Include="Interface\IUnitConversionBusiness.cs" />
+    <Compile Include="Interface\IUnit_of_measurementBusiness.cs" />
+    <Compile Include="Interface\IUserGroupBusiness.cs" />
+    <Compile Include="Interface\IWorkDivisionBusiness.cs" />
+    <Compile Include="Interface\IWorkOrderBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IBulkOrderAmendBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IBulkOrderBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IBulkOrderMeasurementBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IBulkOrderNomBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IBulkOrderShipmentBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IBuyOrderStyleBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\ICourierEntryBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IEnquiryBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IJobOrderDetailBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IJobWorkBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IOrderCancellationBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IOrderItemDetailsBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IQuotationAddBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IQuotationMainBusiness.cs" />
+    <Compile Include="Interface\OrderProcessing\IStyleApprovalTitleBusiness.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interface\Plannning\IBomBusiness.cs" />
+    <Compile Include="Interface\Plannning\IBudgetBusiness.cs" />
+    <Compile Include="Interface\Plannning\IPlanningAddBusiness.cs" />
+    <Compile Include="Interface\Plannning\IPlanningConsumptionBusiness.cs" />
+    <Compile Include="Interface\Plannning\IPlanningFabricBusiness.cs" />
+    <Compile Include="Interface\Plannning\IPlanningMainBusiness.cs" />
+    <Compile Include="Interface\Plannning\IPlanningSampleBusiness.cs" />
+    <Compile Include="Interface\Plannning\IPlanningYarnBusiness.cs" />
+    <Compile Include="Interface\Plannning\IProcessProgramBusiness.cs" />
+    <Compile Include="Interface\Plannning\IProcessQuoteBusiness.cs" />
+    <Compile Include="Interface\Plannning\IProcessQuoteEntryBusiness.cs" />
+    <Compile Include="Interface\Plannning\IProcessSeqBusiness.cs" />
+    <Compile Include="Interface\Plannning\IProcessSeqMainBusiness.cs" />
+    <Compile Include="Interface\Plannning\IProcessSeqProcBusiness.cs" />
+    <Compile Include="Interface\Plannning\ITrimsAccessoryBusiness.cs" />
+    <Compile Include="Interface\Plannning\IVendorBusiness.cs" />
+    <Compile Include="Interface\Plannning\IVendorEntryBusiness.cs" />
+    <Compile Include="Interface\Process\IGeneralProcessOrderBusiness.cs" />
+    <Compile Include="Interface\Process\IGeneralProcessReciptBusiness.cs" />
+    <Compile Include="Interface\Process\IGeneralProcessReturnBusiness.cs" />
+    <Compile Include="Interface\Process\IGroupProcessOrderBusiness.cs" />
+    <Compile Include="Interface\Process\IProcessInvoiceBusiness.cs" />
+    <Compile Include="Interface\Process\IProcessIssueBusiness.cs" />
+    <Compile Include="Interface\Process\IProcessOrderBusiness.cs" />
+    <Compile Include="Interface\Process\IProcessQualityBusiness.cs" />
+    <Compile Include="Interface\Process\IProcessReceiptBusiness.cs" />
+    <Compile Include="Interface\Process\IProcessReturnBusiness.cs" />
+    <Compile Include="Interface\Production\IBitCuttingOrderBusiness.cs" />
+    <Compile Include="Interface\Production\IBitCuttingOrderReceiptBusiness.cs" />
+    <Compile Include="Interface\Production\IBitCuttingOrderReturnBusiness.cs" />
+    <Compile Include="Interface\Production\ICommonProductionIssueBusiness.cs" />
+    <Compile Include="Interface\Production\ICommonProductionReceiptBusiness.cs" />
+    <Compile Include="Interface\Production\ICommonProductionReturnBusiness.cs" />
+    <Compile Include="Interface\Production\ICuttingOrderBusiness.cs" />
+    <Compile Include="Interface\Production\ICuttingOrderReceiptBusiness.cs" />
+    <Compile Include="Interface\Production\ICuttingOrderReturnBusiness.cs" />
+    <Compile Include="Interface\Production\IDespatchBuyerOrderBusiness.cs" />
+    <Compile Include="Interface\Production\IFabricDelySectionBusiness.cs" />
+    <Compile Include="Interface\Production\IJobInvoiceBusiness.cs" />
+    <Compile Include="Interface\Production\IJobReceiptBusiness.cs" />
+    <Compile Include="Interface\Production\IOrderSecondsSalesBusiness.cs" />
+    <Compile Include="Interface\Production\IProductionInvoiceBusiness.cs" />
+    <Compile Include="Interface\Production\IProductionOrderBusiness.cs" />
+    <Compile Include="Interface\Production\IProductionReceiptBusiness.cs" />
+    <Compile Include="Interface\Production\IProductionReturnBusiness.cs" />
+    <Compile Include="Interface\Production\ISalesInvoiceBusiness.cs" />
+    <Compile Include="Interface\Purchase\IBillEntryBusiness.cs" />
+    <Compile Include="Interface\Purchase\IBillPassBusiness.cs" />
+    <Compile Include="Interface\Purchase\ICommercialInvoiceBusiness.cs" />
+    <Compile Include="Interface\Purchase\ICSPReceiptBusiness.cs" />
+    <Compile Include="Interface\Purchase\IGeneralMemoBusiness.cs" />
+    <Compile Include="Interface\Purchase\IGeneralReceiptBusiness.cs" />
+    <Compile Include="Interface\Purchase\IItemTransferBusiness.cs" />
+    <Compile Include="Interface\Purchase\ILotSplitUpAddBusiness.cs" />
+    <Compile Include="Interface\Purchase\ILotSplitupEntryBusiness.cs" />
+    <Compile Include="Interface\Purchase\ILotSplitUpMainBusiness.cs" />
+    <Compile Include="Interface\Purchase\IOpenDebitBusiness.cs" />
+    <Compile Include="Interface\Purchase\IOpeningStockBusiness.cs" />
+    <Compile Include="Interface\Purchase\IOpenInvoiceBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPaymentBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseCancelEntryBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseDebitBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseGrnAddBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseGrnEntryBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseGrnMainBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseIndentApprovalBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseIndentBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseInvoiceBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseOrderBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseOrderMainBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseQualityBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseReturnEntryBusiness.cs" />
+    <Compile Include="Interface\Purchase\IPurchaseReturnMainBusiness.cs" />
+    <Compile Include="Interface\Purchase\ISecondsSalesBusiness.cs" />
+    <Compile Include="Interface\Purchase\ISpecialRequisitionAddBusiness.cs" />
+    <Compile Include="Interface\Purchase\ISpecialRequisitionMainBusiness.cs" />
+    <Compile Include="Interface\Purchase\IStockAuditEntryBusiness.cs" />
+    <Compile Include="Interface\Purchase\IStockAuditMainBusiness.cs" />
+    <Compile Include="Interface\Purchase\IStockInwardAddBusiness.cs" />
+    <Compile Include="Interface\Purchase\IStockInwardMainBusiness.cs" />
+    <Compile Include="Interface\Purchase\IStockLocAllocationBusiness.cs" />
+    <Compile Include="Interface\Purchase\IStockOutwardBusiness.cs" />
+    <Compile Include="Interface\Purchase\IStockTransferBusiness.cs" />
+    <Compile Include="Interface\Purchase\IStoreDeliveryBusiness.cs" />
+    <Compile Include="Interface\Purchase\IStoresDeliReturnBusiness.cs" />
+    <Compile Include="Interface\Purchase\ISubStoreIssueBusiness.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\AxonApparel.Business.dll" />
+    <Content Include="bin\Debug\AxonApparel.Business.pdb" />
+    <Content Include="bin\Debug\AxonApparel.Common.dll" />
+    <Content Include="bin\Debug\AxonApparel.Common.pdb" />
+    <Content Include="bin\Debug\AxonApparel.Contract.dll" />
+    <Content Include="bin\Debug\AxonApparel.Contract.pdb" />
+    <Content Include="bin\Debug\AxonApparel.Repository.dll" />
+    <Content Include="bin\Debug\AxonApparel.Repository.pdb" />
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\EntityFramework.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AxonApparel.Common\AxonApparel.Common.csproj">
+      <Project>{127a9d0d-fe91-4797-ba92-ad6ed15c37b9}</Project>
+      <Name>AxonApparel.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AxonApparel.Contract\AxonApparel.Domain.csproj">
+      <Project>{a4abcf78-d7bb-4853-836b-3991a708769d}</Project>
+      <Name>AxonApparel.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AxonApparel.Repository\AxonApparel.Repository.csproj">
+      <Project>{fabd058c-ff63-46e0-a5c0-7d8e273793f7}</Project>
+      <Name>AxonApparel.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

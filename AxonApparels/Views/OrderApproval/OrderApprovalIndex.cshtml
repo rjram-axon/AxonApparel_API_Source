@@ -1,0 +1,758 @@
+﻿@{
+    ViewBag.Title = "OrderApprovalIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/AxonScripts/Budget/OrderApproval.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+
+                    <div class="x_title">
+                        <h2>Order Approval </h2>
+                        @*<ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>*@
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="">
+                        <div class="x_panel">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-4 col-xs-12">
+                                         @* <div class="form-group">
+                                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">OrderType</label>
+                                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                <input type="text" id="txttype" placeholder="Type" class="form-control col-md-10" disabled>
+                                                            </div>
+                                                        </div>*@
+                                       <div class="maxl">
+
+                                                                 <label class="radio inline col-md-12 col-sm-12 col-xs-12" style="margin-top: 2px;">
+
+                                                                    <input id="" checked  style="width:50px" name="OrdType" type="radio" value="B" onchange="LoadOrdType();">
+                                                                    <span>Bulk Order </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-12 col-sm-12 col-xs-12" >
+                                                                    <input id="" style="width:50px" name="OrdType" type="radio" value="S" onchange="LoadOrdType();">
+                                                                    <span>Sample Order </span>
+                                                                </label>
+                                                                </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                    @*  <div class="form-group">
+                                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">OrderType</label>
+                                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                <input type="text" id="txttype" placeholder="Type" class="form-control col-md-10" disabled>
+                                                            </div>
+                                                        </div>*@
+
+                                          <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group" >
+                                                <label class="control-label col-md-4 col-sm-4 col-xs-3">Order No</label>
+                                                <div class="col-md-8 col-sm-8 col-xs-9">
+                                                    <select id="ddlMOrderNo" class="form-control" onchange="GetPAStatus();">
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                                    <div class="form-group" >
+                                                <label class="control-label col-md-4 col-sm-4 col-xs-3">Ref No</label>
+                                                <div class="col-md-8 col-sm-8 col-xs-9">
+                                                    <select id="ddlMRefNo" class="form-control" onchange="GetPAStatus();">
+                                                    </select>
+                                                </div>
+                                            </div>                        
+
+
+                                        </form>
+                                        </div>
+                                     <div class="col-md-3 col-sm-4 col-xs-12">
+
+                                           
+                                                            <div class="maxl">
+                                                                 <label class="radio inline col-md-12 col-sm-12 col-xs-12" style="margin-top: 2px;">
+
+                                                                    <input id="" style="width:50px" checked  name="PAType" type="radio" value="P" >
+                                                                    <span>Pending </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-12 col-sm-12 col-xs-12"  style="margin-left:5px">
+                                                                    <input id="" style="width:50px;margin-left:5px" name="PAType" type="radio" value="A" >
+                                                                    <span>Approved </span>
+                                                                </label>
+                                                                </div>
+                                                        
+                                         </div>
+                                    
+                                    <div class="col-md-1 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+
+                                            <input type="button" class="btn  btn-success btn_program" value="Update" style="float:right" onclick="Update();">
+                                        </div>
+
+                                       @* <div class="form-group">
+
+                                            <input type="button" class="btn btn-primary btn_bom_act" value="Approved" style="margin-left: 20px;" onclick="Approved();">
+                                        </div>*@
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="x_panel">
+                            <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-6">
+                                    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" id="btnaddnew" onclick="ClearTextbox();">Add New</button>*@
+                                    <div class="x_content">
+                                        <div class="form-group">
+
+                                            <input type="button" class="btn  btn-primary btn_program" value="Order Entry"  onclick="OrderEntry();">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                  <div class="col-lg-2 col-md-3 col-sm-3  col-xs-6">
+                                    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" id="btnaddnew" onclick="ClearTextbox();">Add New</button>*@
+                                    <div class="x_content">
+                                        <div class="form-group">
+
+                                            <input type="button" class="btn  btn-primary btn_program" value="Style Entry"  onclick="StyleEntry();">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                  <div class="col-lg-2 col-md-3 col-sm-3  col-xs-6">
+                                    <div class="x_content">
+                                        <div class="form-group">
+
+                                            <input type="button" class="btn  btn-primary btn_program" value="Shipment" onclick="Shipment();">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                  <div class="col-lg-2 col-md-3 col-sm-3  col-xs-6">
+                                    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" id="btnaddnew" onclick="ClearTextbox();">Add New</button>*@
+                                    <div class="x_content">
+                                        <div class="form-group">
+
+                                            <input type="button" class="btn  btn-primary btn_program" value="Planning / Trims"  onclick="Planning();">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                
+                                <div class="col-lg-2 col-md-3 col-sm-3  col-xs-6">
+                                    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" id="btnaddnew" onclick="ClearTextbox();">Add New</button>*@
+                                    <div class="x_content">
+                                        <div class="form-group">
+
+                                            <input type="button" class="btn  btn-primary btn_program" value="Budget"  onclick="Budget();">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            @* Load datatable css *@
+
+                            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                            @* Load datatable js *@
+                            @section Scripts{
+
+                                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                                <script>
+                                           
+                                </script>
+
+                            }
+
+
+                            <div class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 74%">
+                        <div class="modal-content">
+                            <div class="x_panel">
+                                <div class="x_content">
+                                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                        <div class="x_content">
+                                            <h2 style="background: #F2F5F7; padding: 5px; width: 100%; display: block;">Order Processing</h2>
+                                          <div class="x_panel">
+                                            <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin: 0px;">
+                                                
+                                                    <div class="col-lg-5 col-md-5 col-sm-10 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-5 col-md-5 col-sm-4 col-xs-5">Quotation No</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-7">
+                                                                <select id="ddlQuoteNo" style="width:155px" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-5 col-md-5 col-sm-10 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-6 col-md-6 col-sm-4 col-xs-5">Copy From Order</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-7">
+                                                                <select id="ddlCPOrderNo" style="width:155px" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                        <div class="form-group">
+                                                            
+                                                            <div class="">
+                                                                <button id="BtnLoad" style="float:right" class="btn btn-success" onclick="LoadCpyOrderNo();">List</button></div>
+                                                        </div>
+                                                            </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <div class="x_panel">
+
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Buyer <span style="color: red;"> *</span></label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlBuyer" style="width:230px" class="form-control" onchange="LoadBuyerAdd();">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Address</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <textarea class="form-control" rows="4" style="height: 48px;" placeholder="Address" id="txtBuyAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Consignee</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlConsignee" style="width:230px" class="form-control" onchange="LoadConAdd();"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Address</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <textarea class="form-control" rows="5" style="height: 48px;" placeholder="Address" id="txtConAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Buyer Agent</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlAgent" style="width:230px" class="form-control" onchange="LoadBuyAgAdd();"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Address</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+
+                                                                        <textarea class="form-control" rows="5" style="height: 48px;" placeholder="Address" id="txtBuyAgAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Ship Agent</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlShipAgent" style="width:230px" class="form-control" onchange="LoadShipAgAdd();"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Address</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <textarea class="form-control" rows="5" style="height: 48px;" placeholder="Address" id="txtShipAgAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Sample No</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlSampleOrder" style="width:230px" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">BuyOrdMasID</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" class="form-control" style="width:190px" placeholder="" id="txtBuyOrdMasID">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Base UnitID</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" style="width:230px"  id="txtbasunitID" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">GarmentConID</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" style="width:230px" name="country" id="txtGarmentConID" class="form-control col-md-10">
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Enquiry No</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlenquiryno" style="width:230px" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                 <div class="form-group">
+                                                            <div class="maxl">
+                                                                 <label class="radio inline col-lg-4 col-md-4 col-sm-3 col-xs-6" >
+
+                                                                    <input id="" checked  name="PAType" type="radio" value="P" disabled>
+                                                                    <span>Pending </span>
+                                                                </label>
+                                                                <label class="radio inline col-lg-4 col-md-4 col-sm-3 col-xs-5" >
+                                                                    <input id="" name="PAType" type="radio" value="A" disabled>
+                                                                    <span>Approved </span>
+                                                                </label>
+                                                                </div>
+                                                        </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <div class="x_panel">
+
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left">
+
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Order Type <span style="color: red;"> *</span></label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlOrderType" style="width:230px" class="form-control" onchange="LoadOrderPrefix();">
+
+                                                                            <option value="0">--Select Order Type--</option>
+                                                                            <option value="B">BULK ORDER</option>
+
+                                                                            <option value="D">DOMESTIC</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Exporter<span style="color: red;"> *</span></label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlCompany" style="width:230px" class="form-control" onchange="GenerateNumber();">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12">Order No<span style="color: red;"> *</span></label>
+                                                                    <div class="col-lg-4 col-md-6 col-sm-4 col-xs-8">
+                                                                        <input type="text" class="form-control" placeholder="Order No" value="" id="txtOrderNo" name="OrdNo" disabled>
+                                                                    </div>
+                                                                    <div class="col-lg-3 col-md-3 col-sm-2 col-xs-4 form-group">
+                                                                        <input type="text" placeholder="OrderDate" id="dtOrderDate" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12">Ref No<span style="color: red;"> *</span></label>
+                                                                    <div class="col-lg-4 col-md-6 col-sm-4 col-xs-8">
+                                                                        <input type="text" class="form-control" placeholder="Ref No" id="txtRefNo" onchange="CheckRefNo(this.value)">
+                                                                    </div>
+                                                                    <div class="col-lg-3 col-md-3 col-sm-2 col-xs-4 form-group">
+                                                                        <input type="text" placeholder="RefDate" id="dtRefDate" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                                                        Buyer Ref<span class="required"></span>
+                                                                    </label>
+                                                                    <div class="col-lg-7 col-md-9 col-sm-6 col-xs-10">
+                                                                        <input type="text" class="form-control" placeholder="Buyer Ref" id="txtBuyRefNo">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Quantity<span style="color: red;"> *</span></label>
+                                                                    <div class="col-lg-7 col-md-9 col-sm-6 col-xs-10">
+                                                                        <input type="text" name="Quantity" id="txtQty" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Old Quantity</label>
+                                                                    <div class="col-lg-7 col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" name="Old Quantity" id="txtOldQty" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Order Unit</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlUom" style="width:230px" class="form-control" onchange="LoadGarmConAdd();">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Base Unit</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="country" id="txtbasunit" class="form-control col-md-10" disabled>
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">System</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlShipsystem" style="width:230px" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Shipment<span style="color: red;"> *</span></label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlShipMode" style="width:230px" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Payment<span style="color: red;"> *</span></label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlPayment" style="width:230px" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Manager<span style="color: red;"> *</span></label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlManager" style="width:230px" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Merch<span style="color: red;"> *</span></label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlMerch" style="width:230px" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">BuyerDept</label>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="country" id="txtBuyerDeptId" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4" >Parent Order No</label>
+                                                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                            <select id="ddlParOrderNo" style="width:230px" class="form-control">
+                                                                            </select>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                             @*  <div class="row" style="margin: 0px;">
+                                                 <div class="x_panel" style="padding: 0px;">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <div class="maxl">
+                                                                 <label class="radio inline col-md-4 col-sm-4 col-xs-12" style="margin-left: 701px;">
+
+                                                                    <input id="" checked  name="PAType" type="radio" value="P" disabled>
+                                                                    <span>Pending </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-4 col-sm-4 col-xs-12" style="margin-left: 802px;margin-top: -32px;">
+                                                                    <input id="" name="PAType" type="radio" value="A" disabled>
+                                                                    <span>Approved </span>
+                                                                </label>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                     </div>
+                                             </div>*@
+                                            <div class="x_panel">
+                                                <div class="x_title col-md-6 col-sm-6 col-xs-12" style="background: #F2F5F7; width: 50%; display: block; border: none;">
+                                                    <a class="collapse-link" style="cursor: pointer;">
+                                                        <h2 style="margin-top: 5px; cursor: pointer">Nominated Supplier</h2>
+                                                        <i class="fa fa-chevron-up" style="margin-top: 7px; margin-left: 4px;"></i></a>
+
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                
+                                                <div class="x_content" id="nom_model" style="display: none;">
+                                                    <div class="row">
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="x_panel">
+                                                                <h4 style="margin-top: -1px;"><b>Supplier</b></h4>
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                    <div class="form-group">
+                                                                        <table class="table table-bordered table-hover" border="1">
+                                                                            <tr>
+
+                                                                                <td>Supplier</td>
+
+                                                                                <td>&nbsp;</td>
+                                                                            </tr>
+                                                                            <tr class="mycontainer" id="maincomborow1">
+                                                                                <td>
+                                                                                    <select id="ddlSupp" style="width: 200px;" class="form-control">
+                                                                                    </select>
+
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <button class="btn btn-primary add_btn" style="" id="btnSuppadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                    <button class="btn btn-primary add_btn" style="display: none;" id="btnSuppupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <div id="CList1">
+                                                                            <table id="tblSupdetails">
+                                                                                <thead>
+                                                                                    <tr>
+
+                                                                                        <th>SupplierId
+                                                                                        </th>
+                                                                                        <th>Supplier
+                                                                                        </th>
+
+                                                                                        <td>&nbsp;</td>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                            </table>
+                                                                            <span id="orderItemError1" style="color: red"></span>
+                                                                        </div>
+                                                                        @*                                                                         <table id="example" class="display" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+    
+      <th>Supplier</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+     
+      <td>
+         <select id="ddlSuppTest" style="width: 200px;" class="form-control">
+          </select>
+      </td> 
+      <td><button type="button" id="removesupp"  onclick="deleteRow(this);" data-toggle="tooltip" data-placement="top" title="Remove" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" class="btnsupremove1 btn btn-round btn-danger"> <i class="fa fa-minus"></i> </button> </td>
+    </tr>
+  </tbody>
+</table>*@
+                                                                        <table id="tblCustomers" cellpadding="0" cellspacing="0" border="1" style="display: none;">
+                                                                            <thead>
+                                                                                <tr>
+
+                                                                                    <th>Supplier</th>
+                                                                                    <th>Action</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            </tbody>
+                                                                            <tfoot>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <select id="ddlSuppTest" style="width: 200px;" class="form-control">
+                                                                                        </select></td>
+
+                                                                                    <td>
+                                                                                        <input type="button" onclick="Add()" value="Add" /></td>
+                                                                                </tr>
+                                                                            </tfoot>
+                                                                        </table>
+                                                                        <br />
+
+                                                                        <button type="button" style="width: 70px; display: none;" class="btn btn-success" id="addRow" onclick="">Add</button>
+
+                                                                        <table id="newRow" style="display: none;">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <select id="ddlSuppTest1" style="width: 200px;" class="form-control">
+                                                                                        </select>
+
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <button type="button" data-toggle="tooltip" onclick="deleteRow(this);" data-placement="top" title="Remove" class="btnsupremove btn btn-danger"><i class="fa fa-minus"></i></button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="x_panel">
+                                                                <h4 style="margin-top: -1px;"><b>Item</b></h4>
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                    <div class="form-group">
+                                                                        <table class="table table-bordered table-hover" border="1">
+                                                                            <tr>
+
+                                                                                <td>Item</td>
+
+                                                                                <td>&nbsp;</td>
+                                                                            </tr>
+                                                                            <tr class="mycontainer" id="maincomborow">
+                                                                                <td>
+                                                                                    <select id="ddlIm" style="width: 200px;" class="form-control">
+                                                                                    </select>
+
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <button class="btn btn-primary add_btn" id="btnImadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                    <button class="btn btn-primary add_btn" style="display: none;" id="btnImupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <div id="CList">
+                                                                            <table id="tblimdetails">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>NsupId
+                                                                                        </th>
+                                                                                        <th>ItemId
+                                                                                        </th>
+                                                                                        <th>Item
+                                                                                        </th>
+                                                                                        <th>SuppId
+                                                                                        </th>
+                                                                                        <td>&nbsp;</td>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                            </table>
+                                                                            <span id="orderItemError" style="color: red"></span>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="border: none">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- footer content -->
+
+
+                    <!-- /footer content -->
+                </div>
+                            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            @* <div class="row" style="display: inline-flex;margin-left:2px;">
+                                <div class="form-group">
+
+                                    <input type="button" class="btn  btn-primary btn_program" value="PROGRAM" onclick="Program();">
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input type="button" class="btn btn-primary btn_bom_act" value="BOM" onclick="Bom(this);">
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input type="button" class="btn btn-primary btn_budget" value="BUDGET" onclick="Budget(this);">
+                                </div>
+                            </div>*@
+
+                        </div>
+                    </div>
+                    
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,916 @@
+﻿@{
+    ViewBag.Title = "PrecostingIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tblgeneraldetails_filter {
+        display: none;
+    }
+
+    #tblgenshipdet_filter {
+        display: none;
+    }
+
+    #tblstyledetails_filter {
+        display: none;
+    }
+
+    #tblshipdet_filter {
+        display: none;
+    }
+
+    #tblcolordet_filter {
+        display: none;
+    }
+
+    #tblsizedetails_filter {
+        display: none;
+    }
+
+    #tblEntryItemdetails_filter {
+        display: none;
+    }
+    /*#tblshipmentdetails_filter
+    {
+        display: none;
+    }*/
+
+    #tblshipmentdetails_length {
+        display: none;
+    }
+
+    #tblshipmentdetails_info {
+        display: none;
+    }
+
+    #tblshipmentdetails_paginate {
+        display: none;
+    }
+
+    #tblcolordetails_wrapper {
+        display: none;
+    }
+
+
+    #tblEntrySizeItemdetails_filter {
+        display: none;
+    }
+
+    #tblEntryCompItemdetails_filter {
+        display: none;
+    }
+
+    #tblEntrySizeItemdetailsSave_filter {
+        display: none;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtBuyerOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+
+<script src="~/AxonScripts/OrderProcessing/Precosting.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Order Measurement</button>*@
+
+
+
+
+                @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+                <!-- /page content -->
+
+
+                <div class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog" style="min-width: 80%">
+                        <div class="modal-content">
+
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>PreCosting</h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="x_panel">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer Order No</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtOrderNo" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtBuyer" disabled>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Ref.No</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtRefNo" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Style</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtStyle" disabled>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4 ">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer Order Date</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder=" " id="txtBuyerOrderDate" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Entry Date</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder=" " id="txtEntryDate">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+
+
+                                   <div class="x_panel">   
+                          <div class="" id="Div1" role="tabpanel" data-example-id="togglable-tabs">
+                            <ul class="nav nav-tabs bar_tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#tab_content1" id="TrimsTab" role="tab" data-toggle="tab" aria-expanded="false">Trims</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#tab_content2" role="tab" id="FabricTab" data-toggle="tab" aria-expanded="false">Fabric</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#tab_content3" id="EmblleshmentTab" role="tab" data-toggle="tab" aria-expanded="false">Embellishment</a>
+                                </li>                               
+                            </ul> 
+                            <div id="Div2" class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                      <div class="row form-group">
+                            <div class="col-md-12" style="margin-top: -15px;margin-bottom: -10px;">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12"><h2 style="font-size:16px;font-weight:600;">Trims Details</h2></div>
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <table class="table table-bordered table-hover" border="1">
+                                                <tr>
+                                                    <td>Item</td>
+                                                    <td>Trims<button type="button" data-toggle="tooltip" data-placement="top" title="Add Item" style="margin-left: 60px;" class="btnaddtrims btn btn-success add_btn" ><i class="fa fa-plus"></i></button></td>
+                                                    <td>Color<button type="button" data-toggle="tooltip" data-placement="top" title="Add Color" style="margin-left: 60px;" class="btnaddcolor btn btn-success add_btn" ><i class="fa fa-plus"></i></button></td>
+                                                    <td>Size<button type="button" data-toggle="tooltip" data-placement="top" title="Add Size" style="margin-left: 60px;" class="btnaddsize btn btn-success add_btn" ><i class="fa fa-plus"></i></button></td>
+                                                    <td>UOM</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr class="mycontainer" id="maincomborow">
+                                                    <td style="width:150px">
+                                                        <select id="ddlItemlist" class="form-control select2" >
+                                                        </select>
+                                                      @*  <span class="error">Select Components</span>*@
+                                                    </td>
+                                                    <td style="width:150px">
+                                                        <select id="ddlTrimslist" class="form-control select2">
+                                                        </select>
+                                                      @*  <span class="error">Select Components</span>*@
+                                                    </td>
+                                                    <td style="width:150px">
+                                                         <select id="ddlColorlist" class="form-control select2" >
+                                                        </select>
+                                                    </td>
+                                                    <td style="width:150px">
+                                                         <select id="ddlSizelist" class="form-control select2" >
+                                                        </select>
+                                                    </td>  
+                                                    <td style="width:150px" >
+                                                         <select id="ddlUOMlist" class="form-control select2" disabled="disabled">
+                                                        </select>
+                                                    </td>                                                                                                    
+                                                    <td>
+                                                        <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btntrimsadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                        <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btntrimsupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div id="CompList">
+                                                <table class="table table-responsive" id="tblTrimsdetails">
+                                                    <thead>
+                                                        <tr>
+                                                             <th style="display: none;">TrimsSlNo
+                                                            </th>
+                                                            <th style="display: none;">Trimsmasid
+                                                            </th>
+                                                            <th style="display: none;">Itemid
+                                                            </th>
+                                                             <th>Item
+                                                            </th>
+                                                            <th style="display: none;">Trimsid
+                                                            </th>
+                                                            <th>Trims
+                                                            </th>
+                                                            <th style="display: none;">Colorid
+                                                            </th>
+                                                            <th>Color
+                                                            </th>
+                                                            <th style="display: none;">Sizeid
+                                                            </th>
+                                                            <th>Size
+                                                            </th>
+                                                            <th style="display: none;">Uomid
+                                                            </th>
+                                                             <th>UOM
+                                                            </th>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="orderItemError" style="color: red"></span>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                  
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab" >
+                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content" aria-labelledby="home-tab">          
+                             <div class="row form-group">
+                            <div class="col-md-12" style="margin-top: -15px;margin-bottom: -10px;">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12"><h2 style="font-size:16px;font-weight:600;">Fabric Details</h2></div>
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <table class="table table-bordered table-hover" border="1">
+                                                <tr>
+                                                    <td>Type</td>
+                                                    <td>Component<button type="button" data-toggle="tooltip" data-placement="top" title="Add Item" style="margin-left: 20px;" class="btnaddcomponent btn btn-success add_btn" ><i class="fa fa-plus"></i></button></td>
+                                                    <td>Fabric<button type="button" data-toggle="tooltip" data-placement="top" title="Add Item" style="margin-left: 40px;" class="btnaddfabric btn btn-success add_btn" ><i class="fa fa-plus"></i></button></td>                                                   
+                                                    <td>Grey Color<button type="button" data-toggle="tooltip" data-placement="top" title="Add Color" style="margin-left: 20px;" class="btnaddcolor btn btn-success add_btn" ><i class="fa fa-plus"></i></button></td>
+                                                    <td>Finish Color</td>
+                                                    <td>Print color</td>
+                                                    <td>GSM</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr class="mycontainer" id="maincomborow1">
+                                                    <td style="width:150px">
+                                                         <select id="ddlTypelist" class="form-control select2" >
+                                                        </select>
+                                                    </td> 
+                                                    <td style="width:150px">
+                                                         <select id="ddlComplist" class="form-control select2">
+                                                        </select>
+                                                    </td>
+                                                    <td style="width:150px">
+                                                        <select id="ddlFablist" class="form-control select2" >
+                                                        </select>
+                                                    </td>
+                                                    <td style="width:150px">
+                                                         <select id="ddlGreylist" class="form-control select2" >
+                                                        </select>
+                                                    </td>
+                                                    <td style="width:150px">
+                                                        <select id="ddlFinishlist" class="form-control select2" >
+                                                        </select>
+                                                    </td>
+                                                    
+                                                    <td style="width:150px">
+                                                         <select id="ddlPrintlist" class="form-control select2" >
+                                                        </select>
+                                                    </td>  
+                                                    <td style="width:150px">
+                                                         <input type="text" class="form-control" placeholder="Enter GSM" id="txtGMS">
+                                                    </td>                                                                                                        
+                                                    <td>
+                                                        <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnfabricadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                        <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnfabricupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div id="FabList">
+                                                <table class="table table-responsive" id="tblFabricdetails">
+                                                    <thead>
+                                                        <tr>
+                                                             <th style="display: none;">FabricSlNo
+                                                            </th>
+                                                            <th style="display: none;">Fabricmas id
+                                                            </th>
+                                                            <th style="display: none;">Fabricid
+                                                            </th>
+                                                            <th>Fabric
+                                                            </th>
+                                                            <th style="display: none;">Componentid
+                                                            </th>
+                                                            <th>Component
+                                                            </th>
+                                                            <th style="display: none;">Typeid
+                                                            </th>
+                                                            <th>Type
+                                                            </th>
+                                                            <th style="display: none;">GreyColorid
+                                                            </th>
+                                                            <th>GreyColor
+                                                            </th>
+                                                            <th style="display: none;">FinishColorid
+                                                            </th>
+                                                            <th>FinishColor
+                                                            </th>
+                                                            <th style="display: none;">PrintColorid
+                                                            </th>
+                                                            <th>PrintColor
+                                                            </th>
+                                                            <th>GSM
+                                                            </th>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="FabricError" style="color: red"></span>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+             
+                                </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                    <div role="tabpanel" class="tab-pane fade active in" id="tab_content31" aria-labelledby="home-tab">
+                                        <div class="row form-group">
+                            <div class="col-md-12" style="margin-top: -15px;margin-bottom: -10px;">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12"><h2 style="font-size:16px;font-weight:600;">Embellishment Details</h2></div>
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <table class="table table-bordered table-hover" border="1">
+                                                <tr>
+                                                    <td>Item</td>
+                                                    <td>Embellishment</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr class="mycontainer" id="maincomborow3">
+                                                    <td style="width:150px">
+                                                        <select id="ddlembItemlist" class="form-control select2" >
+                                                        </select>
+                                                      @*  <span class="error">Select Components</span>*@
+                                                    </td>
+                                                    <td style="width:150px">
+                                                        <select id="ddlEmblish" class="form-control select2" >
+                                                        </select>
+                                                      @*  <span class="error">Select Components</span>*@
+                                                    </td>
+                                                                                                                                                  
+                                                    <td>
+                                                        <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnemblishmentadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                        <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnemblishmentupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div id="EmblsList">
+                                                <table class="table table-responsive" id="tblEmblishmentdetails">
+                                                    <thead>
+                                                        <tr>
+                                                             <th style="display: none;">EmblSlNo
+                                                            </th>
+                                                            <th style="display: none;">Embellishmentmasid
+                                                            </th>
+                                                            <th style="display: none;">Itemid
+                                                            </th>
+                                                            <td>Item</td>
+                                                            <th style="display: none;">EmblShmentid
+                                                            </th>
+                                                            <th>Embellishment
+                                                            </th>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="EmbellishmentError" style="color: red"></span>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                                </div>
+                           
+                                            <div class="form-group" style="float: right;margin-top: 2em;margin-left:100px">
+                                        <button type="button" class="btn btn-round btn-success" id="btnSave" onclick="return Save();">Save</button>
+                                        <button type="button" class="btn btn-round btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-round btn-success" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                        <button type="button" class="btn btn-round btn-danger" id="btnclose" onclick="Close();">Close</button>
+                                                </div>
+                                            
+                            </div>
+
+                        </div>
+                        
+                    <!-- /page content -->
+                          </div>
+
+
+
+
+                    <!-- footer content -->
+
+
+                    <!-- /footer content -->
+                </div>
+
+
+                                    <div class="row">
+
+                                         @*<div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2 col-sm-6 col-xs-12 enquiry_edit" style="white-space: nowrap;">
+                                                    Remarks
+                                                </label>
+                                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                                    <textarea id="txtRemark" required="" class="form-control" name="message"></textarea>
+                                                </div>
+                                            </div>
+                                                </div>
+                                        <div class="col-md-2" style="margin-top: 2em;">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-9 col-sm-6 col-xs-12 enquiry_edit" style="white-space: nowrap;">
+                                                   Check Instruction
+                                                </label>
+                                                <div class="col-md-3">
+                                                     <input type="checkbox" id="Status"/>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>*@
+                                        @*<div class="col-md-4"  >
+                                            <div class="form-group" style="float: right;margin-top: 2em;">
+                                        <button type="button" class="btn btn-round btn-success" id="btnSave" onclick="return Save();">Save</button>
+                                        <button type="button" class="btn btn-round btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-round btn-success" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                        <button type="button" class="btn btn-round btn-danger" id="btnclose" onclick="Close();">Close</button>
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            @*<div class="modal-footer">
+                                <button type="button" class="btn btn-round btn-success" id="btnAdd" onclick="return Add();">Add</button>
+                                <button type="button" class="btn btn-round btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                <button type="button" class="btn btn-round btn-success" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                <button type="button" class="btn btn-round btn-danger" id="btnclose">Close</button>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+                
+                               <div class="modal fade" style="overflow-y:scroll" id="myModal4" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="x_panel" style="width: 103%;">
+                                    <div class="x_title">
+                                        <h2>Add Size</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+                                                <div class="row">
+                                                    <form class="form-horizontal form-label-left">
+                                                        <div class="form-group" style="display: none;">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Size ID</label>
+                                                            <div class="col-md-6 col-sm-9 col-xs-12">
+                                                                <input type="text" name="SizeID" id="SizeID" placeholder="Size Id" class="form-control col-md-10">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Size <span style="color: red;">*</span></label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" name="Name" id="SzName" placeholder="Size" class="form-control col-md-10">
+                                                            </div>
+                                                        </div>
+                                                        @*          <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Look Up</label>
+                                                        <div class="col-md-6 col-sm-9 col-xs-12">
+                                                            <input type="text" name="lookup" id="lookup" placeholder="Look Up" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Actual Size <span style="color: red;">*</span></label>
+                                                        <div class="col-md-6 col-sm-9 col-xs-12">
+                                                            <input type="text" name="actualsize" id="actualsize" placeholder="Actual Size" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Sequence No</label>
+                                                        <div class="col-md-6 col-sm-9 col-xs-12">
+                                                            <input type="text" name="seqno" id="seqno" placeholder="Sequence Number" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>*@
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Item Type <span style="color: red;">*</span></label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <select id="ddlitemtype" class="form-control">
+                                                                    <option value="0">--Select Item Type--</option>
+                                                                    <option value="Packing">Packing</option>
+                                                                    <option value="Accessory">Accessory</option>
+                                                                    <option value="Others">Others</option>
+                                                                    <option value="Fabric">Fabric</option>
+                                                                    <option value="Yarn">Yarn</option>
+                                                                    <option value="Garment">Garment</option>
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Status
+                                                    <br>
+                                                            </label>
+
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" id="SzStatus" value="" style="margin-top: 0px;">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAddSize" onclick="return SzAdd();">Save</button>
+                                     
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="modal fade" style="overflow-y:scroll" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="x_panel" style="min-width: 63%;">
+                                    <div class="x_title">
+                                        <h2>Add Color</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+                                                <div class="row">
+                                                    <form class="form-horizontal form-label-left">
+                                                        <div class="form-group" style="display: none;">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" style="display: none">Color ID</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" name="Color" id="ColorID" placeholder="Color Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Color<span style="color: red;"> *</span></label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" name="Name" id="colorname" placeholder="Color Name" class="form-control col-md-10">
+                                                            </div>
+                                                        </div>
+
+                                                        @*                                              <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Look Up</label>
+                                                <div class="col-md-6 col-sm-9 col-xs-12">
+                                                    <input type="text" name="lookup" id="lookup" placeholder="Look Up" class="form-control col-md-10">
+                                                </div>
+                                          
+                                                 </div>*@
+
+                                                        @*          <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Color Group <span style="color:red;"> *</span></label>
+                                                <div class="col-md-5 col-sm-9 col-xs-12">
+                                                            <select id="ddlcolorgroup" class="form-control"></select>
+                                                </div>
+                                                <div class="col-md-1 col-sm-6 col-xs-12">                                         
+                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Add" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;margin-left:-16px;"  class="btnaddcolorgrp btn btn-round btn-success"> <i class="fa fa-plus"></i> </button>
+                                                 </div>
+                                            </div>*@
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Color Code</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" name="colorcode" id="colorcode" placeholder="Color Code" class="form-control col-md-10">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Pantone</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" name="pantone" id="pantone" placeholder="Pantone" class="form-control col-md-10">
+                                                            </div>
+                                                        </div>
+
+                                                        @*      <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Color Number</label>
+                                                <div class="col-md-6 col-sm-9 col-xs-12">
+                                                    <input type="text" name="Colorno" id="Colorno" placeholder="Color Number" class="form-control col-md-10">
+                                                </div>
+                                            </div>*@
+
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Status
+                                                    <br>
+                                                            </label>
+
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" id="ClrStatus" value="">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                            </div>
+                                            <div class="modal-footer" style="border: 0px solid">
+                                                <button type="button" class="btn btn-success" id="btnClrAdd" onclick="return ClrAdd();">Save</button>
+                                               
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+                 <div class="modal fade" style="overflow-y:scroll" id="myModal6" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 50%;">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Add Item</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <form class="form-horizontal form-label-left">
+
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">Item ID</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="ItemID" id="ItemID" placeholder="Item Id" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Item<span style="color: red;"> *</span></label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="text" name="Name" id="ItmName" placeholder="Item Name" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Item Group <span style="color: red;">*</span></label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <select id="ddlitemgroup" class="form-control"></select>
+                                                                    </div>
+                                                                   
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Item Type <span style="color: red;">*</span></label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <select id="ddlItmitemtype" class="form-control">
+                                                                            <option value="0">--Select Item Type--</option>
+                                                                            <option value="PACKING">PACKING</option>
+                                                                            <option value="ACCESSORY">ACCESSORY</option>
+                                                                            <option value="OTHERS">OTHERS</option>
+                                                                            <option value="FABRIC">FABRIC</option>
+                                                                            <option value="YARN">YARN</option>
+                                                                            <option value="GARMENT">GARMENT</option>
+                                                                            <option value="COMPONENT">COMPONENT</option>
+                                                                            <option value="TRIMS">TRIMS</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                                        Base Unit <span style="color: red;">*</span>
+                                                                    </label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <select id="base" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                  
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                                        Sec Unit <span style="color: red;">*</span>
+                                                                    </label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <select id="sec" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                   
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                                        Pur Unit <span style="color: red;">*</span>
+                                                                    </label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <select id="pur" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                   
+                                                                </div>
+                                                                @*  <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Description</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" name="Descript" id="Descript" placeholder="Description" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>*@
+                                                            </form>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <form class="form-horizontal form-label-left">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">CGST</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="text" name="CGST" id="cgst" placeholder="CGST" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">IGST</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="text" name="IGST" id="igst" placeholder="IGST" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">SGST</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="text" name="SGST" id="sgst" placeholder="SGST" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Rate</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="number" name="Rate" id="Rate" placeholder="Rate" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                @* <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Color</label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" name="Color" id="Color" placeholder="Color" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>*@
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">HSNCODE</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="text" name="HSNCODE" id="HSNCODE" placeholder="HSNCODE" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                                        Status
+                                                    <br>
+                                                                    </label>
+
+                                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                        <div class="checkbox">
+                                                                            <label>
+                                                                                <input style="margin-top: 0px;" type="checkbox" id="ItmStatus" value="">
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+
+
+                                                        <form class="form-horizontal form-label-left">
+
+
+
+
+
+
+
+                                                            @* <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Sec Unit</label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <input type="text" name="Descript" id="sec" placeholder="Sec Unit" class="form-control col-md-10">
+                                                </div>
+                                            </div>*@
+
+
+                                                            @*<div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Pur Unit</label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <input type="text" name="Descript" id="pur" placeholder="Pur Unit" class="form-control col-md-10">
+                                                </div>
+                                            </div>*@
+
+
+
+
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnItmAdd" onclick="return ItmAdd();">Save</button>
+                                      
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+

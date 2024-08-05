@@ -1,0 +1,22 @@
+﻿CREATE TABLE [dbo].[Cutting_Order_Det]
+(
+	[CuttingOrdDetid] [int] IDENTITY(1,1) NOT NULL,
+	[CuttingOrdId] [int] NULL,	
+	[itemid] [int] NULL,
+	[colorid] [int] NULL,
+	[sizeid] [int] NULL,
+	[PlannedSizeid] [int] NULL,
+	[inp_op] [varchar](1) NULL,
+	[Consumption] [numeric](14, 3) NOT NULL DEFAULT ('0'),
+	[Weight] [numeric](14, 3) NOT NULL DEFAULT ('0'),
+	[OrderQty] [numeric](14, 3) NULL DEFAULT ('0'),
+	[Issuedqty] [numeric](14, 3) NULL DEFAULT ('0'),
+	[rate] [numeric](12, 2) NOT NULL DEFAULT ('0'),
+	[receivedqty] [numeric](12, 0) NOT NULL DEFAULT ('0'),
+	[ReturnQty] [numeric](14, 3) NULL DEFAULT ('0'),
+	[LossQty] [numeric](14, 3) NULL DEFAULT ('0'),
+	[Markup_Rate] [numeric](12, 2) NOT NULL DEFAULT ('0'),
+	[Markup_Value] [numeric](12, 2) NOT NULL DEFAULT ('0'),
+	[CancelQty] [numeric](14, 3) NOT NULL DEFAULT ('0'),
+	CONSTRAINT [PK_CuttinOrderdetid] PRIMARY KEY ([CuttingOrdDetid]),
+)

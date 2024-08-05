@@ -1,0 +1,218 @@
+﻿@{
+    ViewBag.Title = "LotsplitupAddIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+             @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Purchase/LotSplitupAdd.js"></script>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Lot Splitup</h2>
+                  <div style="float:right">
+                      <a href="/LotsplitupMain/LotsplitupMainIndex">
+                         <img class="logo" src="~/images/backicon.png" width="30px" height="30px" />
+                          </a>
+                            </div>
+                @*<ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>*@
+                <div class="clearfix"></div>
+            </div>
+            
+            <div class="x_panel">
+                <div class="row">
+                        <div class="row">
+                <div class="col-md-4">
+                    <form class="form-horizontal form-label-left input_mask">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                Company
+                            </label>
+                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                <select id="ddlACompany" class="form-control" onchange="LoadLotAddComp();"></select>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+                <div class="col-md-4">
+
+                    <form class="form-horizontal form-label-left input_mask">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                Supplier
+                            </label>
+                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                <select id="ddlASupplier" class="form-control" onchange="LoadLotAddSupp();">
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+                <div class="col-md-4">
+
+                    <form class="form-horizontal form-label-left input_mask">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Trans No</label>
+                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                <select id="ddlATransNo" class="form-control" onchange="LoadLotAddTransNo();">
+                                </select>
+                            </div>
+                        </div>
+
+                        @*  <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">PO No</label>
+                           <div class="col-md-9 col-sm-9 col-xs-12">
+                                <select id="ddlcutOrderNo" class="form-control">
+                                </select>
+                            </div>
+                        </div>*@
+
+
+                    </form>
+                </div>
+                 </div>
+                  </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="x_panel" style="padding: 0px;height: 30px;margin-left: 0px;width: 468px;">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="font-size: 17px; white-space: nowrap;">
+                                    Order Type
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="maxl" style="margin-top: -6px;">
+                                <label class="radio inline">
+                                    <input type="radio" checked="" value="B" id="optl" name="AOType" onchange="RadioAOClick();">
+                                    <span>Buyer Order</span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" value="S" id="optA" name="AOType" onchange="RadioAOClick();">
+                                    <span>Sample Order</span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" value="G" id="optY" name="AOType" onchange="RadioAOClick();">
+                                    <span>General</span>
+                                </label>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="x_panel" style="padding: 0px;height: 30px;margin-left: -59px;width: 363px;">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label style="font-size: 17px; white-space: nowrap;">
+                                    Stock Type
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="maxl" style="margin-top: -6px;">
+                                <label class="radio inline">
+                                    <input type="radio" checked="" value="U" id="optMB" name="ASType" onchange="RadioASClick();">
+                                    <span>Unit Stock</span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" value="S" id="optMS" name="ASType" onchange="RadioASClick();">
+                                    <span>Stores Stock </span>
+                                </label>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                     <div class="x_panel" style="padding: 0px;height: 30px;margin-left: -45px;width: 203px;">
+                     <div class="form-group" style="margin-top:2px;">
+                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Process</label>
+                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                <select id="ddlAProcess" class="form-control" onchange="RadioASClick();">
+                                </select>
+                            </div>
+                        </div>
+                          </div>
+                </div>
+            </div>
+            <div class="">
+                <form class="form-horizontal form-label-left input_mask">
+                 <div id="CList">
+                    <table class="table table-responsive" id="tblLotAddItemdetails">
+                        <thead>
+                            <tr>
+                               
+                              
+                                <th>TransNo</th>
+                                <th>Trans Date</th>
+                                <th>Supplier</th>      
+                                 <th>StockQty</th>                       
+                                  <td>&nbsp;</td>
+                            </tr>
+                        </thead>
+
+                    </table>
+                    <span id="orderItemError" style="color: red"></span>
+                </div>
+
+                </form>
+
+
+            </div>
+
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>

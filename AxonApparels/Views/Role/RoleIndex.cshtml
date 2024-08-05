@@ -1,0 +1,183 @@
+﻿@{
+    ViewBag.Title = "RoleIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*margin-top: -29px !important;*@
+<style>
+    #tblmainlst_filter {
+    }
+
+    .add_btn {
+        width: 23px;
+        padding: 2px;
+        height: 22px;
+        margin-left: -7px;
+    }
+
+    .pad_marg {
+        padding: 0;
+        margin: 0;
+    }
+</style>
+@*<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#cstdate').datepicker({ dateFormat: 'mm/dd/yy' });
+        $('#tindate').datepicker({ dateFormat: 'mm/dd/yy' });
+        $('#aepcdate').datepicker({ dateFormat: 'mm/dd/yy' });
+
+    });
+</script>*@
+
+@*<script src="~/AxonScripts/Company.js"></script>*@
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Role.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery-1.12.4.js"></script>
+ <script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Role</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="container">
+                            <div class="x_panel">
+                                @*<h2>Departments Record</h2>*@
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New Role</button>
+                                <table id="tblmainlst" class="table table-bordered table-hover">
+                                    <tbody class="tbody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @* Load datatable css *@
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="overflow:scroll;">
+                            <div class="modal-dialog" style="min-width: 85%;">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Add Role</h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="x_panel">
+                                            <div class="row">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Role Name</label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <input type="text" id="txtrolename" placeholder="Role Name" class="form-control col-md-10">
+                                                                </div>
+                                                               
+                                                               
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks</label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <textarea class="form-control" id="txtrem"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                     <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                                Menu
+                                                                </label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                               <select id="ddlMenuname" class="form-control select2 col-md-9" style="width:220px"  onchange="LoadSubmenu();"></select>
+                                                                </div>
+                                                            </div>
+                                                                 <div class="form-group">
+                                                                      <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                                Sub Menu
+                                                                </label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                               <select id="ddlSubmenu" class="form-control select2 col-md-9" style="width:220px" onchange="GetMenu();" ></select>
+                                                                </div>
+                                                                 </div>
+                                                        </form>
+                                                         </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="x_panel">
+                                            <table id="tblmenulst" class="table table-bordered table-hover">
+                                                @*<thead>
+                                                    <tr>
+                                                        <th style="visibility: hidden;">ID
+                                                        </th>
+                                                        <th>Buyer Name
+                                                        </th>
+                                                        <th>Address
+                                                        </th>
+                                                        <th>City
+                                                        </th>
+                                                        <th>Status
+                                                        </th>
+                                                        <th>Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>*@
+                                                <tbody class="tbody">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-success" id="btnDel" style="display: none;" onclick="Delete();">Delete</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="Close();">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /page content -->

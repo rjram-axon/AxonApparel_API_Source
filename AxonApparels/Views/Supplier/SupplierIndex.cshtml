@@ -1,0 +1,510 @@
+﻿@{
+    ViewBag.Title = "Supplier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* margin-top: -28px;*@
+<style>
+    #tbody_filter {
+    }
+
+    .add_btn {
+        width: 20px;
+        padding: 2px;
+        height: 20px;
+        margin-left: -18px;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#cstdate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#tindate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+
+
+
+<script src="~/AxonScripts/Supplier.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Supplier</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+                            @if (ViewBag.SupplierAddFlag == "true")
+                            { 
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Add New Supplier</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" disabled>Add New Supplier</button>
+                            }
+                            <div id="tet" style="float:right">
+                              
+                             <label class="radio inline">
+                                            <input type="radio" checked value=1 name="proctype">
+                                            <span>Active</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value=0 name="proctype" >
+                                            <span>Inactive</span>
+
+                                        </label>
+
+                                       <label class="radio inline" style="padding-right: 20px;">
+                                            <input type="radio" value=2 name="proctype" >
+                                            <span>All</span>
+
+                                        </label>
+                                  
+                                   <button type="button" class="btn btn-primary"  data-backdrop="static" data-keyboard="false" onclick="Print();" >Print List</button>
+                                </div>
+                            
+                         
+
+                            <table id="tbody" class="table table-bordered table-hover">
+                                @*<thead>
+                                    <tr>
+                                        <th style="visibility: hidden;">ID
+                                        </th>
+                                        <th>Buyer Name
+                                        </th>
+                                        <th>Address
+                                        </th>
+                                        <th>City
+                                        </th>
+                                        <th>Status
+                                        </th>
+                                        <th>Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                </tbody>*@
+                            </table>
+                        </div>
+                      @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="x_panel" style="width: 100%;">
+                                    <div class="x_title">
+                                        <h2>Add Supplier</h2>
+
+
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                    <div class="modal-body row">
+                                        <div class="x_panel">
+                                            <div class="row">
+                                                <div class="row">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">ID Name</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" id="SupplierID" placeholder="ID Name" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Supplier<span style="color: red;"> *</span> </label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="Name" placeholder="Supplier Name" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Look Up</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="lookup" placeholder="Look Up" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Address1</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="add1" placeholder="Address1" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Address2</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="add2" placeholder="Address2" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Address3</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="add3" placeholder="Address3" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Email@*<span style="color: red;"> *</span>*@</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="email" placeholder="Email" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Fax</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="fax" placeholder="Fax" class="form-control col-md-10">
+                                                                </div>
+
+                                                            </div>
+
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                                    City <span style="color: red;">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7 col-xs-11">
+                                                                    <select id="ddlcity" class="form-control" onchange="LoadCountry();">
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                                                    @*<select id="ddlCountry" class="form-control"></select>*@
+                                                                    <button type="button" data-toggle="tooltip" data-placement="top" title="Add City" style="" class="btnaddcity btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                </div>
+                                                            </div>
+
+                                                             <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                                    Country 
+                                                                </label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="txtCountry" placeholder="Country" class="form-control col-md-10" disabled>
+                                                                </div>
+
+                                                                <div class="col-md-8 col-sm-8 col-xs-12"  style="display:none;">
+                                                                    <input type="text" id="txtCountryId" placeholder="CountryID" class="form-control col-md-10" disabled>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="form-group" id="Audit">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                                    Audit Supplier 
+                                                                </label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <select id="ddlAuditSupplier" class="form-control" >
+                                                                    </select>
+                                                                </div>
+                                                               
+                                                            </div>
+
+                                                             
+
+
+                                                        </form>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                                        <form class="form-horizontal form-label-left input_mask">
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Zipcode</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="number" id="zipcode" placeholder="Zipcode" class="form-control col-md-10" >
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Mobile <span style="color: red;">*</span></label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="number" id="mobno" placeholder="Mobile_No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                        
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">CST No</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="cstno" placeholder="CST No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">CST Date</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="cstdate" placeholder="CST Date" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Tin No</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="tinno" placeholder="Tin No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Tin Date</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="tindate" placeholder="Tin Date" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">GST No</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" id="gstno" placeholder="GST No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                             <div class="form-group">
+                                                                <label class="col-md-6 col-sm-6 col-xs-6 control-label">
+                                                                   GST Applicable
+                                                    <br>
+                                                                </label>
+
+                                                                <div class="colLook col-md-6 col-sm-6 col-xs-1">
+                                                                    <div class="checkbox">
+                                                                      
+                                                                            <input type="checkbox" id="applicale" value="">
+                                                                      
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-6 col-sm-6 col-xs-6 control-label">
+                                                                    Status
+                                                    <br>
+                                                                </label>
+
+                                                                <div class="colLook col-md-6 col-sm-6 col-xs-1">
+                                                                    <div class="checkbox">
+                                                                      
+                                                                            <input type="checkbox" id="Status" value="">
+                                                                       
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                      <div class="form-group">
+                                                                <label class="col-md-3 col-sm-3 col-xs-12 control-label" style="margin-top: 5px;">
+                                                                    Process Setup
+                                                 
+                                                                </label>
+
+                                                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            <input type="checkbox" id="chkProcessAll" value=""> All Process
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                     <select id="ddlProcess" class="form-control select2"  tabindex="-1" aria-autocomplete="list" aria-sort="none" role="combobox" multiple="multiple" name="multiple" onchange="myProcess(this.value);">
+                                                                    </select>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                         <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                                          <div class="form-group">
+                                                               
+
+                                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            <input type="checkbox" id="chkPurchaseAll" value=""> Purchase All
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+
+                                                               <div class="col-md-4 col-sm-4col-xs-12">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            <input type="checkbox" id="chkPurchaseYarn" value=""> Purchase Yarn
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+
+                                                               <div class="col-md-4 col-sm-4 col-xs-12">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            <input type="checkbox" id="chkPurchaseTrims" value=""> Purchase Trims
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <form>
+                                        </form>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                                    </div>
+
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="x_panel" style="width: 103%;">
+                                    <div class="x_title">
+                                        <h2>Add City</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+
+                                                <form class="form-horizontal form-label-left">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">City ID</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="City" id="txtCityID" placeholder="City Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">City<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="text" name="City" id="txtcitName" placeholder="City Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                                State <span style="color: red;">*</span>
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <select id="ddlState" class="form-control"></select>
+                                                                @*<button type="button" data-toggle="tooltip" data-placement="top" title="Add" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" data-target="#myModal2" class="btnprodproadd btn btn-round btn-success"> <i class="fa fa-plus"></i> </button>*@
+                                                            </div>
+                                                        </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Country
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <select id="ddlCoun" class="form-control"></select>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Status
+                                                 
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="Statuscit" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAddcit" onclick="return Addcity();">Save</button>
+                                        @*<button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>*@
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+
+
+
+

@@ -1,0 +1,604 @@
+﻿@{
+    ViewBag.Title = "GroupProcessOrderIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+       
+        GrpPrcEditFlg = @Html.Raw(Json.Encode(ViewBag.GrpPrcEditFlg))
+        GrpPrcDeleteFlg = @Html.Raw(Json.Encode(ViewBag.GrpPrcDeleteFlg))
+            
+        $('#txtEntrydate').datepicker({ dateFormat: 'dd/mm/yy' });
+        //$('#txtOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+
+<style>
+    #inputitmtab_filter
+    {
+        display: none;
+    }
+
+    #outputitmtab_filter
+    {
+        display: none;
+    }
+
+    #inputsavetab_filter
+    {
+        display: none;
+    }
+
+    #outputsavetab_filter
+    {
+        display: none;
+    }
+</style>
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Process/GroupProcessOrder.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+            <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Company
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMCompany" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        GrpPrgNo
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlGrpPrgNo" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="ex3">From Date</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                    </div>
+                                </div>
+                                @* <div class="form-group">
+                                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                        Closure
+                                                 
+                                    </label>
+
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" id="Closure" style="margin-top: 0px;" value="Y" onclick="LoadCheckData();" class="messageCheckbox">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>*@
+                            </form>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Process 
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlmainProcess" class="form-control select2" onchange="CMainlist();"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Style
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMStyle" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="ex3">To Date</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <input type="text" class="form-control " placeholder="Date" id="txtToDate">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        @*   <div class="col-md-3 col-sm-3 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                        Order Type
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <select id="ddlMType" class="form-control select2" onchange="CMainlist();">
+                                            <option value="">--Select Type--</option>
+                                            <option value="W">Work Order</option>
+                                            <option value="J">Job Order</option>
+                                            <option value="S">Sample Order</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="maxl" style="margin-top: -5px;">
+                                            <label class="radio inline">
+                                                <input type="radio" checked value="P" name="proctype" onchange="CMainlist();">
+                                                <span>Processor</span>
+                                            </label>
+                                            <label class="radio inline">
+                                                <input type="radio" value="W" name="proctype" onchange="CMainlist();">
+                                                <span>Work Division</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="maxl" style="margin-left: 9px; margin-top: -5px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="W" name="maintype" onclick="MRadioOtype();">
+                                            <span>Buyer Order</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="S" name="maintype" onclick="MRadioOtype();">
+                                            <span>Sample Order </span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="maxl" style="margin-top: -5px;">
+                                            <label class="radio inline">
+                                                <input type="radio" checked value="P" name="Apptype" onchange="CMainlist();">
+                                                <span>Pending</span>
+                                            </label>
+                                            <label class="radio inline">
+                                                <input type="radio" value="A" name="Apptype" onchange="CMainlist();">
+                                                <span>Approved</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>*@
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                @*<div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                        Process
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <select id="ddlMProcess" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>*@
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Order No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMBuyOrderNo" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        Ref No
+                                    </label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <select id="ddlMRefNo" class="form-control select2" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="float: right;;">
+                                    <input type="button" class="btn btn-success" value="List" onclick="LoadMain();">
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+
+
+            <div class="x_panel">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" onclick="ClearTextbox();" @ViewBag.GrpPrcAddFlg>Add New</button>
+                <form class="form-horizontal form-label-left input_mask">
+                    <div class="form-group">
+                        <table id="tblmaindetails" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="display: none;">GrpProdPrgid</th>
+                                    <th>GrpProdPrgNo</th>
+                                    <th>GrpProgDate</th>
+                                    <th style="display: none;">ProdPrgid</th>
+                                    <th>ProdPrgNo</th>
+                                    <th style="display: none;">Buy_Ord_MasId</th>
+                                    <th>Order_No</th>
+                                    <th>Ref_No</th>
+                                    <th style="display: none;">Processid</th>
+                                    <th>Process</th>
+                                    <th style="display: none;">ChkProcess</th>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="modal fade" style="overflow-y:scroll" id="myModal1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 95%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">GroupProcess Order</h4>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="margin-top: 10px;">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Company
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlCompany" class="form-control select2" onchange="LoadOrderNo();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Style
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlStyle" class="form-control select2" onchange="LoadOrderNo();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Process
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlProcess" class="form-control" aria-autocomplete="list" aria-sort="none" multiple="multiple" name="multiple" onchange="myProcess(this.value);">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                @* <div class="form-group">
+
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="maxl" style="margin-top: -5px;">
+                                                            <label class="">
+
+                                                                <span>Sub Process</span>
+                                                            </label>
+                                                            <label class="radio inline">
+                                                                <input type="radio" value="Y" name="subproctype">
+                                                                <span>Yes</span>
+                                                            </label>
+                                                            <label class="radio inline">
+                                                                <input type="radio" checked value="N" name="subproctype">
+                                                                <span>No</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Order No
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlOrderNo" class="form-control select2" onchange="LoadOrderwise();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        WorkOrder No
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlWorkOrderNo" class="form-control select2" onchange="LoadProcess();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    @* <label class="control-label col-md-3 col-sm-6 col-xs-12">
+                                                        Issue Id
+                                                    </label>*@
+                                                    @*<div class="col-md-9 col-sm-9 col-xs-12">
+                                                          <button class="btn btn-success " id="btnloadpgm" onclick="LoadPgmProcess();">Load Program</button>
+                                                    </div>*@
+                                                </div>
+                                                 <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Ref No
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <select id="ddlrefno" class="form-control select2"  onchange="LoadRefwise();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                               
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Entry No
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <input type="text" id="txtEntryno" class="form-control " placeholder="EntryNo" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        Entry Date
+                                                    </label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <input type="text" id="txtEntrydate" class="form-control " placeholder="Entrydate" disabled>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <button class="btn btn-success " id="btnloadpgm" onclick="LoadPgmProcess();">Load Program</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="row" >
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
+                                    <h2 style="margin-top: -5px;">Input Details</h2>
+                                        </div>
+                                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <button class="btn btn-success " id="btnIpFill" style="float: right" onclick="Ipfill()">Fill</button>
+                                        </div>
+                                        
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <form class="form-horizontal form-label-left input_mask" >
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover" border="1" id="inputitmtab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>grpmasid</th>
+                                                            <th>ipdetid</th>
+                                                            <th>Prd Prg No</th>
+                                                            <th>Processid</th>
+                                                            <th>Process</th>
+                                                            <th>Itemid</th>
+                                                            <th>Ip Item</th>
+                                                            <th>Colorid</th>
+                                                            <th>Color</th>
+                                                            <th>SIzeid</th>
+                                                            <th>Size</th>
+                                                            <th>Prog Qty</th>
+                                                            <th>Bal Qty</th>
+                                                            <th>Grp Qty</th>
+                                                            @* <th>View</th>*@
+
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="row" >
+                                   
+                                    <h2 style="margin-top: -5px;">Onput Details</h2>
+                                       
+                                     @* <div class="col-md-2" style="float: right">
+                                            <button class="btn btn-success " id="btnOpFill" onclick="Opfill()">Fill</button>
+                                        </div>*@
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <form class="form-horizontal form-label-left input_mask" >
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-hover" border="1" id="outputitmtab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>grpmasid</th>
+                                                            <th>opdetid</th>
+                                                            <th>Prd Prg No</th>
+                                                            <th>Processid</th>
+                                                            <th>Process</th>
+                                                            <th>Itemid</th>
+                                                            <th>Op Item</th>
+                                                            <th>Colorid</th>
+                                                            <th>Color</th>
+                                                            <th>SIzeid</th>
+                                                            <th>Size</th>
+                                                            <th>Prog Qty</th>
+                                                            <th>Bal Qty</th>
+                                                            <th>rate</th>
+                                                            <th>Grp Qty</th>
+                                                            @*<th>View</th>*@
+
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                    <h2 style="margin-top: -5px;">Group Program</h2>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                Prod Prg No
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                <input type="text" id="txtProdpgmno" class="form-control " placeholder="ProgramNo" disabled>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                Group Process
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                <select id="ddlGrpProcess" class="form-control select2" onchange="CMainlist();">
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" >
+                                            <button class="btn btn-success " id="btnLoadGrpProc" style="float: right" onclick="LoadGroupProc()">Load GroupProc</button>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <form class="form-horizontal form-label-left input_mask" >
+                                            <div class="form-group">
+                                                <h2 style="margin-top: -5px;">Input Details</h2>
+                                                <table class="table table-bordered table-hover" border="1" id="inputsavetab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>PrdPrgid</th>
+                                                            <th>Prd Prg No</th>
+                                                            <th>Processid</th>
+                                                            <th>Process</th>
+                                                            <th>Itemid</th>
+                                                            <th>Ip Item</th>
+                                                            <th>Colorid</th>
+                                                            <th>Color</th>
+                                                            <th>SIzeid</th>
+                                                            <th>Size</th>
+                                                            <th>Prog Qty</th>
+                                                            <th>Bal Qty</th>
+                                                            <th>Grp Qty</th>
+                                                            <th>Rate</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="form-group">
+                                                <h2 style="margin-top: -5px;">Output Details</h2>
+                                                <table class="table table-bordered table-hover" border="1" id="outputsavetab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>PrdPrgid</th>
+                                                            <th>Prd Prg No</th>
+                                                            <th>Processid</th>
+                                                            <th>Process</th>
+                                                            <th>Itemid</th>
+                                                            <th>Op Item</th>
+                                                            <th>Colorid</th>
+                                                            <th>Color</th>
+                                                            <th>SIzeid</th>
+                                                            <th>Size</th>
+                                                            <th>Prog Qty</th>
+                                                            <th>Bal Qty</th>
+                                                            <th>Grp Qty</th>
+                                                            <th>Rate</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="row" style="margin: 0px;">
+                            <div class="modal-footer" style="border: none; float: right;">
+                                <button class="btn btn-success " id="btnAdd" onclick="Save();">Save</button>
+                                <button class="btn  btn-success " onclick="Update();" id="btnUpdate">Update</button>
+                                <button class="btn btn-danger " onclick="Delete();" id="btnDelete">Delete</button>
+                                <button class="btn btn-danger " data-dismiss="modal" style="margin-right: 5px;">Close</button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+        </div>
+    </div>
+</div>

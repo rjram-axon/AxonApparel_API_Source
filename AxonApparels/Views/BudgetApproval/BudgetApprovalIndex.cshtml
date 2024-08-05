@@ -1,0 +1,2414 @@
+﻿@{
+    ViewBag.Title = "BudgetApprovalIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #processtable_filter {
+        display: none;
+    }
+
+    #productiontable_filter {
+        display: none;
+    }
+
+    #commercialtable_filter {
+        display: none;
+    }
+    
+      #productionDettable_filter {
+        display: none;
+    }
+      .modal { overflow: auto !important; }
+    .gg-spinner {
+        transform: scale(var(--ggs,1));
+    }
+        .gg-spinner,
+        .gg-spinner::after,
+        .gg-spinner::before {
+            box-sizing: border-box;
+            position: relative;
+            display: block;
+            width: 20px;
+            height: 20px;
+        }
+            .gg-spinner::after,
+            .gg-spinner::before {
+                content: "";
+                position: absolute;
+                border-radius: 100px;
+            }
+            .gg-spinner::before {
+                animation: spinner 1s cubic-bezier(.6,0,.4,1) infinite;
+                border: 3px solid transparent;
+                border-top-color: currentColor;
+            }
+            .gg-spinner::after {
+                border: 3px solid;
+                opacity: .2;
+            }
+    @@-webkit-keyframes spinner {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(359deg);
+        }
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+    $(document).ready(function () {
+
+        var btnleft = document.querySelector(".left-btn");
+        var btnright = document.querySelector(".right-btn");
+        var tabmenu = document.querySelector(".tab-menu");
+        //btnright.addEventListener('click',() => {
+        //    tabmenu.sc
+        //});
+        debugger;
+        $(document).on('click', '#btncancel', function () {
+            debugger;
+            var tabs=document.querySelectorAll(".tab")
+            $('.tab').removeClass('active');
+            //tabs.classList.remove("active");
+            $('.tab1').addClass('active');
+        });
+        $(document).on('click', '.right-btn', function () {
+            tabmenu.scrollLeft += 150;
+            //IconVisibl();
+            setTimeout(() => IconVisibl(),50);
+        });
+        $(document).on('click', '.left-btn', function () {
+            tabmenu.scrollLeft -= 150;
+            //IconVisibl();
+            setTimeout(() => IconVisibl(),50);
+        });
+        
+        //    var activeDrag=false;
+        //    tabmenu.addEventListener("mousemove",(drag) => {
+        //        if(!activeDrag)return;
+        //    tabmenu.scrollLeft -=drag.movementX;
+        //});
+        //tabmenu.addEventListener("mousedown",() =>{
+        //    activeDrag=true;
+        //});
+        var tabs=document.querySelectorAll(".tab")
+        var tabBtns=document.querySelectorAll(".tab-btn")
+
+        var tab_nav= function(tabBtnClick){
+            tabBtns.forEach((tabBtn)=>{
+                tabBtn.classList.remove("active");
+
+        });
+        tabs.forEach((tab)=>{
+            tab.classList.remove("active");
+    });
+    tabBtns[tabBtnClick].classList.add("active");
+    tabs[tabBtnClick].classList.add("active");
+    }
+    tabBtns.forEach((tabBtn,i)=>{
+        tabBtn.addEventListener("click",()=>{
+            tab_nav(i);
+    });
+    });
+   
+    });
+    window.onload = function(){
+        var btnleft = document.querySelector(".left-btn");
+        var btnright = document.querySelector(".right-btn");
+        var tabmenu = document.querySelector(".tab-menu");
+        btnright.style.display=tabmenu.scrollWidth > tabmenu.clientWidth || tabmenu.scrollWidth >= window.innerWidth ? "block":"none";
+        btnleft.style.display=tabmenu.scrollWidth >= window.innerWidth ? "":"none";
+    }
+    window.onresize = function(){
+        var btnleft = document.querySelector(".left-btn");
+        var btnright = document.querySelector(".right-btn");
+        var tabmenu = document.querySelector(".tab-menu");
+        btnright.style.display=tabmenu.scrollWidth > tabmenu.clientWidth || tabmenu.scrollWidth >= window.innerWidth ? "block":"none";
+        btnleft.style.display=tabmenu.scrollWidth >= window.innerWidth ? "":"none";
+
+        var scrollLeftValue = Math.round(tabmenu.scrollLeft);
+
+        btnleft.style.display = scrollLeftValue > 0?"block":"none";
+    }
+    function IconVisibl() {
+        var btnleft = document.querySelector(".left-btn");
+        var btnright = document.querySelector(".right-btn");
+        var tabmenu = document.querySelector(".tab-menu");
+
+        var scrollLeftValue = Math.ceil(tabmenu.scrollLeft);
+        //console.log("1.", scrollLeftValue);
+
+        var scrollableWidth = tabmenu.scrollWidth - tabmenu.clientWidth;
+        //console.log("2.", scrollableWidth);
+
+        btnleft.style.display = scrollLeftValue > 0 ? "block" : "none";
+        btnright.style.display = scrollableWidth > scrollLeftValue ? "block" : "none";
+    }
+</script>
+<style>
+     /*<section class="main-container">
+      <div class="tab-nav-bar">
+      <div class="tab-navigation">
+     <ul class="tab-menu">
+      <li class="tab-btn">Ord Management</li>*/
+    section {
+        position: relative;
+        margin: 0px 0px;
+        transition: 0.5s ease;
+    }
+    .main-container {
+    position:relative;
+    }
+    .tab-menu {
+    color:lightblue;
+    list-style:none;
+    max-width:360px;
+    padding:4px;
+    white-space:nowrap;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    border-radius:50px;
+    box-shadow:initial;
+    overflow-x:auto;
+    user-select:none;
+    scroll-behavior:smooth;
+    }
+        .tab-menu::-webkit-scrollbar {
+            display:none;
+        }
+    .tab-btn {
+    color:black;
+    display:inline-block;
+    font-size:1em;
+    font-weight:400;
+    margin:0 2px;
+    padding:10px 20px;
+    border-radius:30px;
+    cursor:pointer;
+    user-select:none;
+    transition:0.3s ease;
+    }
+    .tab-btn:hover {
+        background-color:lightgrey;
+    }
+    .tab-btn.active {
+        background-color:lightblue;
+    }
+    .tab-nav-bar {
+    /*position:relative;*/
+    /*padding:65px 10px 40px 10px;*/
+    }
+    .tab-navigation {
+    position:relative;
+    /*display:flex;*/
+    justify-content:center;
+    align-items:center;
+    max-width:initial;
+    margin:0 auto;
+    }
+    .left-btn, .right-btn {
+    position:absolute;
+    color:darkblue;
+    font-size:1.8em;
+    padding:7px 7px;
+    cursor:pointer;
+    }
+    .left-btn {
+    left:0;
+    background:linear-gradient(90deg,#a3ddd8,transparent);
+    border-top-left-radius:30px;
+    border-bottom-left-radius:30px;
+    display:none;
+    margin-right:2px;
+    }
+    .right-btn {
+    right:0;
+    background:linear-gradient(270deg,#a3ddd8,transparent);
+    border-top-right-radius:30px;
+    border-bottom-right-radius:30px;
+    margin-left:2px;
+    }
+    .tab-content {
+    
+    width:100%;
+    }
+    .tab {
+    max-width:100%;
+    padding:0px 0px;
+    top:0;
+    bottom:0;
+    right:auto;
+    left:auto;
+    transform:translateX(25px);
+    content-visibility:hidden;
+    opacity:0;
+    }
+        .tab.active {
+    transform:translateX(0);
+    content-visibility:visible;
+    opacity:1;
+        }
+        .tab.tab_row {
+        width:100%;
+        display:flex;
+        justify-content:center;
+        aligh_items:center;
+        margin:50px 0;
+        gap:30px;
+        }
+</style>
+<script>
+  
+</script>
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Budget/BudgetApproval.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+<style>
+    #particularsdetails_filter {
+        display: none;
+    }
+
+    #particularsdetails_info {
+        display: none;
+    }
+
+    #particularsdetails_length {
+        display: none;
+    }
+
+    #particularsdetails_paginate {
+        display: none;
+    }
+
+    #production2table_paginate {
+        display: none;
+    }
+
+    #production2table_filter {
+        display: none;
+    }
+
+    #production2table_info {
+        display: none;
+    }
+
+    #production2table_length {
+        display: none;
+    }
+
+    #bomtable_filter {
+        display: none;
+    }
+
+    #production1table_paginate {
+        display: none;
+    }
+
+    #production1table_filter {
+        display: none;
+    }
+
+    #production1table_info {
+        display: none;
+    }
+
+    #production1table_length {
+        display: none;
+    }
+
+    #process2table_length {
+        display: none;
+    }
+
+    #process2table_filter {
+        display: none;
+    }
+
+    #process2table_info {
+        display: none;
+    }
+
+    #process2table_paginate {
+        display: none;
+    }
+
+    #process2table_filter {
+        display: none;
+    }
+
+    #process1table_paginate {
+        display: none;
+    }
+
+    #process1table_length {
+        display: none;
+    }
+
+    #process1table_info {
+        display: none;
+    }
+
+    #process1table_filter {
+        display: none;
+    }
+
+    #bomtable_length {
+        display: none;
+    }
+
+    #bomtable_paginate {
+        display: none;
+    }
+
+    #bomtable_info {
+        display: none;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    .column {
+        float: left;
+        width: 33.33%;
+        padding: 10px;
+        height: 300px; /* Should be removed. Only for demonstration */
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+<!-- page content -->
+
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+
+                    <div class="x_title">
+                        <h2>Budget Approval </h2>
+                        @*<ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>*@
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="">
+                        <div class="x_panel">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Company</label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <select id="ddlMCompany" style="width:140px" class="form-control select2" onchange="CMainlist();">
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Style
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <select id="ddlMStyle" style="width:140px" class="form-control select2" onchange="CMainlist();">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                             <div class="form-group">
+                                                                 <label class="radio inline col-lg-5 col-md-5 col-sm-5 col-xs-6" style="margin-top: 2px;">
+
+                                                                    <input id="mainbulk" checked  name="OrdType" type="radio" value="B" onchange="Load();">
+                                                                    <span>Bulk </span>
+                                                                </label>
+                                                                <label class="radio inline col-lg-5 col-md-5 col-sm-5 col-xs-6" style="margin-top: 2px;margin-left: -10px;" >
+                                                                    <input id="mainsample" name="OrdType" type="radio" value="S" onchange="Load();">
+                                                                    <span>Sample </span>
+                                                                </label>
+                                                                </div>
+                                            @*<div class="form-group">
+                                        <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                            Style
+                                        </label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <select id="ddlMStyle" class="form-control">
+                                                <option value="0">--Select style--</option>
+                                              <option value="2">POLO-TSHIRT</option>
+
+                                            </select>
+                                        </div>
+                                    </div>*@
+
+
+                                        </form>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+                                        <form class="form-horizontal form-label-left input_mask">
+
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Buyer Ref No</label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                                    <select id="ddlMRefNo" style="width:140px" class="form-control select2" onchange="CMainlist();">
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    From Date
+                                                </label>
+                                                <div class="col-lg-7 col-md-8 col-sm-8 col-xs-8">
+                                                    <input type="text" style="width:140px" id="txtFromDate" class="form-control" placeholder="Date">
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    Order No
+                                                </label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <select id="ddlMOrderNo" style="width:140px" class="form-control select2" onchange="OMainList();">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">To Date</label>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <input type="text" style="width:140px" id="txtToDate" class="form-control" placeholder="Date">
+                                                </div>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+                                    <div class="col-lg-2 col-md-8 col-sm-8 col-xs-12" style="text-align:right">
+                                        <div class="form-group col-lg-12 col-md-9 col-sm-9 col-xs-8">
+
+                                            <input type="button" class="btn  btn-primary btn_program" value="Pending" style="width: 92px;" onclick="Pending();">
+                                        </div>
+
+                                        <div class="form-group col-lg-12 col-md-3 col-sm-3 col-xs-4">
+
+                                            <input type="button" class="btn btn-primary btn_bom_act" value="Approved" onclick="Approved();">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="x_panel">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label id="lblListmain"></label>
+                                    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" id="btnaddnew" onclick="ClearTextbox();">Add New</button>*@
+                                    <div class="x_content">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <table class="table table-responsive " id="tblmaindetails">
+                                                    <thead>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            @* Load datatable css *@
+
+                            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                            @* Load datatable js *@
+                            @section Scripts{
+
+                                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                                <script>
+                                           
+                                </script>
+
+                            }
+
+
+                            @* <div class="row" style="display: inline-flex;margin-left:2px;">
+                                <div class="form-group">
+
+                                    <input type="button" class="btn  btn-primary btn_program" value="PROGRAM" onclick="Program();">
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input type="button" class="btn btn-primary btn_bom_act" value="BOM" onclick="Bom(this);">
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input type="button" class="btn btn-primary btn_budget" value="BUDGET" onclick="Budget(this);">
+                                </div>
+                            </div>*@
+
+                        </div>
+                    </div>
+                    <div  class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" style="overflow-y:scroll" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" style="width: 90%;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Budget Approval</h4>
+                                </div>
+                                <div class="x_panel">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="x_panel" style="border-radius:10px">
+                                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">StyleRwid</label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                            <input type="text" id="StyleRwid" placeholder="StyleRwID" class="form-control col-md-10" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                            Date
+                                                        </label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                            <input type="text" id="date" placeholder=" Date" class="form-control col-md-10" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                            Quantity
+                                                        </label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                            <input type="text" id="qnty" placeholder="Quantity" class="form-control col-md-10" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Style</label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                                            <input type="text" id="style" placeholder="Style" class="form-control col-md-10" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                     <div class="form-group" >
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                                            Shipment Rate
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-6">
+                                            <input type="text" id="txtshiprate" placeholder="Style Rate" class="form-control col-md-10" disabled>
+                                        </div>
+                                    </div>
+
+
+                                                </form>
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+
+                                                <form class="form-horizontal form-label-left input_mask">
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                            Order No
+                                                        </label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                            <input type="text" id="Ordernum" placeholder="Order No" class="form-control col-md-10" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Ref No</label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                                            <input type="text" id="Refnum" placeholder="Ref No" class="form-control col-md-10" disabled>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Pcs Wt</label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                                            <input type="text" id="PcsWt" placeholder="Pcs Wt" disabled class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </form>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+
+                                                <form class="form-horizontal form-label-left input_mask">
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                            Company
+                                                        </label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                            <input type="text" id="txtCompany" placeholder="Company" class="form-control col-md-10" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">Buyer</label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                                            <input type="text" id="txtBuyer" placeholder="Buyer" class="form-control col-md-10" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                                                            Style Amount
+                                                        </label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-6">
+                                                            <input type="text" id="txtstylerate" placeholder="Style Rate" class="form-control col-md-10" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style="display: none">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">CostdefnId</label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                                            <input type="text" id="CostdefnId" placeholder="CostdefnId" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style="display: none">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">CostdefnBOMId</label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                                            <input type="text" id="CostdefnbomId" placeholder="CostdefnbomId" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group" style="display: none">
+                                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="txtEntryDate">CostdefnCOMId</label>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+                                                            <input type="text" id="CostdefncomId" placeholder="CostdefncomId" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                  
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <section class="main-container">
+                                            <div class="tab-nav-bar">
+                                            <div class="tab-navigation">
+                                                <i class="uil uil-angle-left left-btn"></i>
+                                                <i class="uil uil-angle-right right-btn"></i>
+                                                <ul class="tab-menu">
+                                                    <li class="tab-btn active" ><a href="#tab_content1" id="profile-tab" role="tab" data-toggle="tab" aria-expanded="false">BOM</a></li>
+                                                    <li class="tab-btn"><a href="#tab_content2" role="tab" id="profile-tab1" data-toggle="tab" aria-expanded="false">Process</a></li>
+                                                    <li class="tab-btn" onclick="totcost();"><a href="#tab_content5" id="profile-tab4" role="tab" data-toggle="tab" aria-expanded="false" >Commercial / Summary</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                            <div class="tab-content col-md-12 col-sm-12 col-xs-12 ">
+                                                <div class="tab active col-md-12 col-sm-12 col-xs-12 tab1" role="tabpanel">
+                                                    <div class="tab_row">
+                                                <div class="x_panel" style="border-radius:10px">
+                                                        <div class="x_content">
+
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="x_panel">
+                                                                    <div class="col-md-2">
+                                                                        <h2 style="margin-top: -5px; margin-left: -10px;">BOM Details</h2>
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
+                                                                        <input type="checkbox" id="checkallbom" />
+                                                                        Approve All
+                                                                         <input type="checkbox" id="checkallbomlock" />
+                                                                        Lock All
+                                                                    </div>
+
+
+                                                                    <div class="x_content">
+                                                                        <form class="form-horizontal form-label-left">
+                                                                            <table id="bomtable" class="table table-responsive">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="display: none;">SNo</th>
+                                                                                        <th style="display: none;">ItemId</th>
+                                                                                        <th>Item</th>
+                                                                                        <th>Category 1</th>
+                                                                                        <th>Category 2</th>
+                                                                                        <th>Rate</th>
+                                                                                        <th>Currency</th>
+                                                                                        <th>Ex Rate</th>
+                                                                                        <th>Quantity</th>
+                                                                                        <th>Amount</th>
+                                                                                        <th>Approve</th>
+                                                                                         <th>Lock</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                            </table>
+                                                                            </br>
+                                                        @*<div class="col-md-3">
+                                                                 <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                           Currency
+                                        </label>
+                                        <div class="col-md-8 col-sm-7 col-xs-12">
+                                            <select id="ddlCurrencybom" class="form-control"  >
+                                               
+                                               
+                                            </select>
+                                        </div>
+                                    </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                <label class="control-label col-md-5 col-sm-6 col-xs-12" for="txtEntryDate">Exchange Rate</label>
+                                                                <div class="col-md-7 col-sm-7 col-xs-12">
+
+                                                                     <input type="text" id="txtexchnratebom"  placeholder="Exchange Rate" class="form-control col-md-10" >
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                <label class="control-label col-md-2 col-sm-6 col-xs-12" for="txtEntryDate">Rate</label>
+                                                                <div class="col-md-8 col-sm-7 col-xs-12">
+
+                                                                     <input type="text" id="txtratebom"  placeholder="Rate" class="form-control col-md-10" >
+                                                                </div>
+                                                            </div>
+                                                            </div>*@
+                                                                            <div class="row">
+                                                                                <div class="row" >
+                                                                                 @*   <div class="col-md-6"></div>*@
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-6 col-md-7 col-sm-5 col-xs-12" id="lblfabyarn" for="txtEntryDate">Fabric & Yarn Rate /Pcs</label>
+                                                                                            <div class="col-lg-4 col-md-5 col-sm-3 col-xs-12">
+
+                                                                                                <input type="text" id="txttotrateyarn" placeholder="Rate" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                   @* <div class="col-md-2"></div>
+                                                                                    <div class="col-md-2" style="margin-left: -155px;">
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12" for="txtEntryDate">Tot Qty</label>
+                                                                                            <div class="col-md-6 col-sm-7 col-xs-12">
+
+                                                                                                <input type="text" id="txttotqtybom" placeholder="Qty" style="width: 63px; margin-left: -15px;" class="form-control col-md-10" disabled>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>*@
+                                                                                  
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-6 col-md-7 col-sm-5 col-xs-12" for="txtEntryDate">Fabric & Yarn Tot Amt</label>
+                                                                                            <div class="col-lg-4 col-md-5 col-sm-3 col-xs-12">
+
+                                                                                                <input type="text" id="txttotamntyarn" placeholder="Amnt" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                               
+                                                                                </div>
+
+                                                                                 <div class="row" >
+                                                                                 @*   <div class="col-md-6"></div>*@
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-6 col-md-7 col-sm-5 col-xs-12" id="lblAcc" for="txtEntryDate">Accessories Rate /Pcs</label>
+                                                                                            <div class="col-lg-4 col-md-5 col-sm-3 col-xs-12">
+
+                                                                                                <input type="text" id="txttotratebom" placeholder="Rate" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                   @* <div class="col-md-2"></div>
+                                                                                    <div class="col-md-2" style="margin-left: -155px;">
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-md-6 col-sm-6 col-xs-12" for="txtEntryDate">Tot Qty</label>
+                                                                                            <div class="col-md-6 col-sm-7 col-xs-12">
+
+                                                                                                <input type="text" id="txttotqtybom" placeholder="Qty" style="width: 63px; margin-left: -15px;" class="form-control col-md-10" disabled>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>*@
+                                                                                  
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-6 col-md-7 col-sm-5 col-xs-12" for="txtEntryDate">Accessories Tot Amt</label>
+                                                                                            <div class="col-lg-4 col-md-5 col-sm-3 col-xs-12">
+
+                                                                                                <input type="text" id="txttotamntbom" placeholder="Amnt" style="text-align: right; " class="form-control col-md-10" disabled>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                               
+                                                                                </div>
+
+                                                                            </div>
+                                                                                
+                                                                           
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+   <div class="x_panel">
+                                            <div class="x_panel" >                                            
+                                                  <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label" style="text-align:left">
+                                                 Last PO Details
+                                            </label>
+                                            </div>
+                   <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                                Order No
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Order No
+                                                <textarea class="form-control" rows="4" placeholder="OrderNo" id="txtmainOrdno" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                            @*<label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                               
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Ref No
+                                                <textarea class="form-control" rows="4" placeholder="RefNo" id="txtmainrefno" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                               
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Style
+                                                <textarea class="form-control" rows="4" placeholder="Style" id="txtmainstyle" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                               
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Po Number
+                                                <textarea class="form-control" rows="4" placeholder="PO No" id="txtmainPOno" disabled=""></textarea>
+                                            </div>
+                                        </div>
+
+                      <div class="form-group">
+                                            @*<label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                              
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                  Supplier
+                                                <textarea class="form-control" rows="4" placeholder="Supplier" id="txtsupplier" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                                                <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                              
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                  Pre Rate
+                                                <textarea class="form-control" rows="4" placeholder="Previous Rate" id="txtPrerate" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-content col-md-12 col-sm-12 col-xs-12 ">
+                                                <div class="tab col-md-12 col-sm-12 col-xs-12" role="tabpanel">
+                                                    <div class="tab_row">
+                                                <div class="x_panel" style="border-radius:10px">
+                                                        <div class="x_content">
+
+                                                        <div class="x_content">
+
+                                                            <div class="row">
+
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="x_panel">
+                                                                        <div class="col-md-5">
+                                                                            <h2 style="margin-top: -5px; margin-left: -10px;">Process Details</h2>
+                                                                        </div>
+
+                                                                        
+
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
+                                                                            <input type="checkbox" id="checkallprocess" />
+                                                                            Approve All
+                                                                             <input type="checkbox" id="checkallprocesslock" />
+                                                                            Lock All
+                                                                        </div>
+                                                                        <div class="x_content">
+                                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                                <table id="processtable" class="table table-responsive">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th style="display: none;">SNo</th>
+                                                                                            <th style="display: none;">ItemId</th>
+                                                                                            <th>Process</th>
+                                                                                            <th>Item</th>
+                                                                                            <th>Color</th>
+                                                                                            <th>Size</th>
+                                                                                            <th>Rate</th>
+                                                                                            <th>Quantity</th>
+                                                                                            <th>Amount</th>
+                                                                                            <th>Approve</th>
+                                                                                             <th>Lock</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                </table>
+                                                                            </form>
+                                                                        </div>
+                                                                        &nbsp;
+                                                                        <div class="row">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-5" id="lblprocess"  for="txtEntryDate">Rate/Pcs</label>
+                                                                                        <div class="col-mlg-6 col-md-6 col-sm-6 col-xs-7">
+
+                                                                                            <input type="text" id="txttotrateproces" placeholder="Rate" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                             @*   <div class="col-md-4">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label col-md-6 col-sm-6 col-xs-12" for="txtEntryDate">Tot Qty</label>
+                                                                                        <div class="col-md-6 col-sm-7 col-xs-12">
+
+                                                                                            <input type="text" id="txttotqtyproces" placeholder="Qty" style="text-align: right; margin-left: -15px;" class="form-control col-md-10" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>*@
+                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-5" for="txtEntryDate">Tot Amt</label>
+                                                                                        <div class="col-mlg-6 col-md-6 col-sm-6 col-xs-7">
+
+                                                                                            <input type="text" id="txttotamtproces" placeholder="Amt" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+
+                                                                                    <div class="x_panel">
+                                            <div class="x_panel" >                                            
+                                                  <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label" style="text-align:left">
+                                                 Last PO Details
+                                            </label>
+                                            </div>
+                   <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                                Order No
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Order No
+                                                <textarea class="form-control" rows="4" placeholder="OrderNo" id="txtmainOrdno2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                            @*<label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                               
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Ref No
+                                                <textarea class="form-control" rows="4" placeholder="RefNo" id="txtmainrefno2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                               
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Style
+                                                <textarea class="form-control" rows="4" placeholder="Style" id="txtmainstyle2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                                                                                          <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                               
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 PO Number
+                                                <textarea class="form-control" rows="4" placeholder="PO No" id="txtmainPOno2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+
+
+                      <div class="form-group">
+                                            @*<label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                              
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                  Supplier
+                                                <textarea class="form-control" rows="4" placeholder="Supplier" id="txtsupplier2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                                                <div class="form-group">
+                                           @* <label class="col-md-1 col-sm-1 col-xs-12 control-label">
+                                              
+                                            </label>*@
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                  Pre Rate
+                                                <textarea class="form-control" rows="4" placeholder="Previous Rate" id="txtPrerate2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                                        </div>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="x_panel">
+                                                                        <div class="col-md-5">
+                                                                            <h2 style="margin-top: -5px; margin-left: -10px;">Production Details</h2>
+                                                                        </div>
+
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
+                                                                            <input type="checkbox" id="checkallprod" />
+                                                                            Approve All
+                                                                             <input type="checkbox" id="checkallprodlock" />
+                                                                            Lock All
+                                                                        </div>
+                                                                        <div class="x_content">
+
+                                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                                <table id="productiontable" class="table table-responsive">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                          @*  <th style="display: none;">SNo</th>
+                                                                                            <th style="display: none;">ItemId</th>*@
+                                                                                            <th>Process</th>
+                                                                                            <th style="display: none;">ProcessId</th>
+                                                                                            <th style="display: none;">FirstRate</th>
+                                                                                            <th>Rate</th>
+                                                                                            <th>Quantity</th>
+                                                                                            <th>Amount</th>
+                                                                                            <th>Approve</th>
+                                                                                            <th>Lock</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                </table>
+                                                                                &nbsp;
+                                                                                 <div class="row">
+                                                                                     <div class="row">
+                                                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                             <div class="form-group">
+                                                                                                 <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-5" id="lblprod" for="txtEntryDate">Rate/Pcs</label>
+                                                                                                 <div class="col-mlg-6 col-md-6 col-sm-6 col-xs-7">
+
+                                                                                                     <input type="text" id="txttotrateprod" placeholder="Rate" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                                 </div>
+                                                                                             </div>
+                                                                                         </div>
+                                                                                      @*   <div class="col-md-4">
+                                                                                             <div class="form-group">
+                                                                                                 <label class="control-label col-md-6 col-sm-6 col-xs-12" for="txtEntryDate">Tot Qty</label>
+                                                                                                 <div class="col-md-6 col-sm-7 col-xs-12">
+
+                                                                                                     <input type="text" id="txttotqtyprod" placeholder="Qty" style="text-align: right; margin-left: -15px;" class="form-control col-md-10" disabled>
+                                                                                                 </div>
+                                                                                             </div>
+                                                                                         </div>*@
+                                                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                             <div class="form-group">
+                                                                                                 <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-5" for="txtEntryDate">Tot Amt</label>
+                                                                                                 <div class="col-mlg-6 col-md-6 col-sm-6 col-xs-7">
+
+                                                                                                     <input type="text" id="txttotamntprod" placeholder="Amt" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                                 </div>
+                                                                                             </div>
+                                                                                         </div>
+                                                                                     </div>
+                                                                                 </div>
+                                                                                @* <div class="col-md-12" style="margin-left: 268px;">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-1 col-sm-6 col-xs-12" for="txtEntryDate">Total</label>
+                                                                        <div class="col-md-3 col-sm-7 col-xs-12">
+
+                                                                            <input type="text" id="txttotamnt" style="text-align: right;" placeholder="Total Amount" class="form-control col-md-10">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>*@
+                                                                            </form>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                 
+                                                    </div>
+                                                    </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-content col-md-12 col-sm-12 col-xs-12 ">
+                                                <div class="tab col-md-12 col-sm-12 col-xs-12" role="tabpanel">
+                                                    <div class="tab_row">
+                                                <div class="x_panel" style="border-radius:10px">
+                                                         <div class="x_content">
+
+                                                        <div class="x_content">
+
+                                                            <div class="row">
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <div class="x_panel">
+
+                                                                        <div class="x_content">
+                                                                            @* <form class="form-horizontal form-label-left input_mask">
+
+                                                                 <table id="commercial1table" class="table table-striped table-bordered">
+                                                                <tr>
+                                                                   <th>Particulars</th>
+                                                                     <th>Cost</th>
+                                                                    <th>Value</th>
+                                                                    <th>Remarks</th>
+                                                                </tr>
+                                                                   </table>
+
+                                                            </form>*@
+                                                                            <form class="form-horizontal form-label-left">
+                                                                                <div class="details">
+
+                                                                                    <div id="orderItems">
+                                                                                        <table class="table table-responsive" id="commercialtable">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th style="display: none">ID
+                                                                                                    </th>
+                                                                                                    <th>Description
+                                                                                                    </th>
+                                                                                                    <th>Cost
+                                                                                                    </th>
+                                                                                                    <th>Value
+                                                                                                    </th>
+
+                                                                                                    <th>Cost/Pcs
+                                                                                                    </th>
+                                                                                                </tr>
+                                                                                            </thead>
+
+                                                                                        </table>
+                                                                                        <span id="orderItemError" style="color: red"></span>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                       
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-10 col-sm-10 col-xs-12">
+
+                                                                                               
+
+                                                                                            </div>
+                                                                                           
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                       
+                                                                                        <div class="row">
+                                                                                           
+                                                                                           @* <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                                                        Selected Currency
+                                                                                                    </label>
+                                                                                                    <div class="col-md-6 col-sm-6 col-xs-9">
+                                                                                                        <input type="text" id="SelectedCurrency" class="form-control" placeholder="SelectedCurrency" disabled>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>*@
+                                                                                        </div>
+                                                                                    </div>
+                                                                                   @* <div class="row">
+                                                                                        <h5 style="margin-left: 10px;">Style Rate</h5>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+
+                                                                                                <div class="form-group">
+                                                                                                    <label class="control-label col-md-6 col-sm-3 col-xs-12">
+                                                                                                        INR Value
+                                                                                                    </label>
+                                                                                                    <div class="col-md-6 col-sm-9 col-xs-12">
+                                                                                                        <input type="text" id="INRValue" class="form-control" placeholder="INR Value" disabled>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                                                                                                        Exchange Currency
+                                                                                                    </label>
+                                                                                                    <div class="col-md-6 col-sm-6 col-xs-9">
+                                                                                                        <input type="text" id="ExCurrency" class="form-control" placeholder="Exchange Currency" disabled>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>*@
+                                                                                </div>
+                                                                                
+                                                                           
+                                                                                     <div class="form-group col-lg-6 col-md-12 col-sm-6 col-xs-12">
+                                                                                                    <label id="lblcomm" class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-6" >
+                                                                                                      Rate /Pcs
+                                                                                                    </label>
+                                                                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
+                                                                                                        <input type="text" id="Totratecommer" class="form-control" placeholder="Tot Rate" disabled>
+                                                                                                    </div>
+                                                                                                </div>
+
+
+                                                                               @*   <div class="form-group">
+                                                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                                CMCost
+                                                            </label>
+                                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                <input type="text" id="cmcost" class="form-control" placeholder="CMCost" onkeyup="calcmarkup();">
+                                                            </div>
+                                                        </div>
+                                                            
+                                                         <div class="form-group "  >
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                                Fin Per
+                                                            </label>
+                                                            <div class="col-md-4 col-sm-4 col-xs-6">
+                                                                <input type="text" id="finper" class="form-control" placeholder="Fin Per" onkeyup="calcfinper();">
+                                                            </div>
+                                                             <div class="col-md-4 col-sm-4 col-xs-6">
+                                                                <input type="text" id="finpervalue" class="form-control" placeholder="Fin Per Value" disabled>
+                                                            </div>
+                                                        </div>
+                                                                                  
+                                                     <div class="form-group"  >
+                                                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                                Gafi Charges
+                                                            </label>
+                                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                <input type="text" id="gaficharges" class="form-control" placeholder="Gafi Charges" disabled>
+                                                            </div>
+                                                        </div>
+                                                                                   
+                                                              <div class="form-group ">
+                                                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                                Qiz Charges
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-5 col-xs-9">
+                                                                <input type="text" id="qizcharges" class="form-control" placeholder="Qiz Charges" disabled>
+                                                            </div>
+                                                             <div class="col-md-2 col-sm-3 col-xs-9">
+                                                                 <input type="checkbox" id="QizStatus" style="margin-top: 5px;" value="">
+                                                            </div>
+                                                        </div>
+                                                                                   
+                                                        <div class="form-group"  >
+                                                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                                MarkUp
+                                                            </label>
+                                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                <input type="text" id="markup" class="form-control" placeholder=" MarkUp" disabled>
+                                                            </div>
+
+                                                            </div>*@
+                                                                                     <div class="form-group col-lg-6 col-md-12 col-sm-6 col-xs-12">
+                                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                                                                                                        Currency
+                                                                                                    </label>
+                                                                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
+                                                                                                        <select id="ddlCurrency" class="form-control" disabled onchange="Loadexchangerate();">
+
+                                                                                                            @*<option value="1">Euro</option>*@
+                                                                                                        </select>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                     <div class="form-group col-lg-6 col-md-12 col-sm-6 col-xs-12">
+                                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                                                                                                        Exchange
+                                                                                                    </label>
+                                                                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
+                                                                                                        <input type="text" id="exchange" class="form-control" placeholder="Exchange" disabled>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                    <div class="form-group col-lg-6 col-md-12 col-sm-6 col-xs-12">
+                                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-6" id="lblcurrency">
+                                                                                                        INR
+                                                                                                    </label>
+                                                                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                        <input type="text" id="INR" class="form-control" placeholder="INR" disabled>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                    
+                                                        </div>
+                                                                            </form>
+                                                                        </div>
+
+                                                                       <div class="x_panel">
+                                                                        <div class="x_content">
+                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                          @*  <input type="checkbox" id="lckPrgm" value="pgm" /> Lock Seq/Program <br/>*@
+                                                                             <input type="checkbox" id="lckOrd" value="pgm" /> Lock Order<br/>
+                                                                             <input type="checkbox" id="lckPlan" value="pgm" /> Lock Seq/Program
+                                                                                <br />
+                                                                           
+                                                                            <input type="checkbox" id="lckAcc" value="pgm" /> Lock Trims 
+                                                                                </div>
+                                                                               <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                            <input type="checkbox" id="lckCon" value="pgm" /> Lock Consumption <br/>
+                                                                             <input type="checkbox" id="lckFab" value="pgm" /> Lock Fabric<br/>
+                                                                             <input type="checkbox" id="lckYarn" value="pgm" /> Lock Yarn<br/>
+                                                                                   
+                                                                         @*    <input type="checkbox" id="lckPak" value="pgm" /> Lock Packing<br/>*@
+                                                                                </div>
+                                                                           
+                                                                            </div>
+                                                                           </div>
+
+                                                                    </div>
+                                                              
+
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <div class="x_panel">
+                                                                        <div class="x_content">
+                                                                            <form class="form-horizontal form-label-left">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Fabric & Yarn 
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="Fabyarn" class="form-control" placeholder="Rate" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                        <label id="lblrt1" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                  <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Process 
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="Cloth" class="form-control" placeholder="Rate" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                       <label id="lblrt2" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Production 
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="TxtProduction" class="form-control" placeholder="Production" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                       <label id="lblrt3" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Accessories
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="BOM" class="form-control" placeholder="BOM" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                        <label id="lblrt4" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Commercial 
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="txtCommercial" class="form-control" placeholder="Commercial" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                         <label id="lblrt5" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Total
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="Total" class="form-control" placeholder="Total" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                        <label id="lblrt6" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                  <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                       Salesrate Margin %/ Value
+                                                                                    </label>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-2 col-xs-5">
+                                                                                        <input type="text" id="salesProfit" class="form-control" placeholder="%" style="text-align: right;" onkeyup="calcvalues(this.value);">
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5">
+                                                                                        <input type="text" id="salesValue" class="form-control" placeholder="Value" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                                                        <label id="lblrt9" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Margin %/ Value
+                                                                                    </label>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-2 col-xs-5">
+                                                                                        <input type="text" id="Profit" class="form-control" placeholder="Profit" style="text-align: right;" onkeyup="calcvalues(this.value);">
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5">
+                                                                                        <input type="text" id="Value" class="form-control" placeholder="Value" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                                                        <label id="lblrt7" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                               
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Net Amount
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="NetAmount" class="form-control" placeholder="Net Amount" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                       <label id="lblrt8" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Total Value
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="TotalValue" class="form-control" placeholder="Total Value" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                            <div class="x_panel" >
+                                                                                <div class="row">
+                                                                                    <form class="form-horizontal form-label-left">
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                                                                Sale Price
+                                                                                            </label>
+                                                                                            <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
+                                                                                                <input type="text" id="SalePrice" class="form-control" placeholder="Sale Price" style="text-align: right;" onkeyup="calcsp(this.value);">
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                                                                Drawback %/ Value
+                                                                                            </label>
+                                                                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                                                                <input type="text" id="Drawback" class="form-control" placeholder="Drawback" style="text-align: right;" onkeyup="calcdrwbck(this.value);">
+                                                                                            </div>
+                                                                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                                                                <input type="text" id="DrwValue" class="form-control" placeholder="Value" disabled style="text-align: right;">
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                                                                Profit %/ Value
+                                                                                            </label>
+                                                                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                                                                <input type="text" id="txtProfit" class="form-control" placeholder="Profit" disabled style="text-align: right;" onkeyup="profitentry(this.value);">
+                                                                                            </div>
+                                                                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                                                                <input type="text" id="PrfValue" class="form-control" placeholder="Value" disabled style="text-align: right;">
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                  </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="col-md-4">
+                                                                    <i class="gg-spinner" style="float: right;margin-top: 3px;display: none;" id="LoadingSpinner"></i>
+                                                                </div>
+                                                                <div class="col-md-8">
+                                                                    <div class="form-group" >
+                                                                    @*<button class="btn btn-success btn-round"  style="width: 25px;padding:0px;" id="btnsave" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                        <button class="btn btn-success btn-round"  style="width: 25px;padding:0px;" id="btnUpd" data-toggle="tooltip" data-placement="top" title="Update"  type="button"><i class="fa fa-refresh"></i></button>
+                                                        <button class="btn btn-danger btn-round"  style="width: 25px;padding:0px;" id="btncancel" data-toggle="tooltip" data-placement="top" title="Delete"  type="button"><i class="fa fa-minus"></i></button>*@
+                                                                    
+                                                                    <button type="button" class="btn btn-success btn-round" id="btnsave" onclick="Add();">Add</button>
+                                                                    <button type="button" class="btn btn-success btn-round" id="btndelete" onclick="Revert();">Revert</button>
+                                                                    <button type="button" class="btn btn-success btn-round" id="btnUpd" onclick="Update();">Approved</button>
+                                                                     <button type="button" class="btn btn-success btn-round" id="btnLock" onclick="Lock();">Lock</button>
+                                                                    <button type="button" class="btn btn-danger btn-round" id="btncancel" onclick="backtomain();">Cancel</button>
+                                                                </div>
+                                                                </div>
+                                                                
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </section>
+
+
+                                        <div class="" id="myTab" role="tabpanel" data-example-id="togglable-tabs">
+                                            @*<ul class="nav nav-tabs bar_tabs" role="tablist">
+                                                <li role="presentation" class="active">
+                                                    <a href="#tab_content1" id="profile-tab" role="tab" data-toggle="tab" aria-expanded="false">BOM</a>
+                                                </li>
+                                                <li role="presentation" class="">
+                                                    <a href="#tab_content2" role="tab" id="profile-tab1" data-toggle="tab" aria-expanded="false">Process</a>
+                                                </li>
+
+                                                <li role="presentation" class="">
+                                                    <a href="#tab_content5" id="profile-tab4" role="tab" data-toggle="tab" aria-expanded="false" onclick="totcost();">Commercial / Summary</a>
+                                                </li>
+
+
+
+                                            </ul>*@
+                                            <div id="myTabContent" class="tab-content">
+                                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                                    @*<div class="x_content">
+
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="x_panel">
+                                                                    <div class="col-md-2">
+                                                                        <h2 style="margin-top: -5px; margin-left: -10px;">BOM Details</h2>
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
+                                                                        <input type="checkbox" id="checkallbom" />
+                                                                        Approve All
+                                                                         <input type="checkbox" id="checkallbomlock" />
+                                                                        Lock All
+                                                                    </div>
+
+
+                                                                    <div class="x_content">
+                                                                        <form class="form-horizontal form-label-left">
+                                                                            <table id="bomtable" class="table table-responsive">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="display: none;">SNo</th>
+                                                                                        <th style="display: none;">ItemId</th>
+                                                                                        <th>Item</th>
+                                                                                        <th>Category 1</th>
+                                                                                        <th>Category 2</th>
+                                                                                        <th>Rate</th>
+                                                                                        <th>Currency</th>
+                                                                                        <th>Ex Rate</th>
+                                                                                        <th>Quantity</th>
+                                                                                        <th>Amount</th>
+                                                                                        <th>Approve</th>
+                                                                                         <th>Lock</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                            </table>
+                                                                           
+                                                       
+                                                                            <div class="row">
+                                                                                <div class="row" >
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-6 col-md-7 col-sm-5 col-xs-12" id="lblfabyarn" for="txtEntryDate">Fabric & Yarn Rate /Pcs</label>
+                                                                                            <div class="col-lg-4 col-md-5 col-sm-3 col-xs-12">
+
+                                                                                                <input type="text" id="txttotrateyarn" placeholder="Rate" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                   
+                                                                                  
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-6 col-md-7 col-sm-5 col-xs-12" for="txtEntryDate">Fabric & Yarn Tot Amt</label>
+                                                                                            <div class="col-lg-4 col-md-5 col-sm-3 col-xs-12">
+
+                                                                                                <input type="text" id="txttotamntyarn" placeholder="Amnt" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                               
+                                                                                </div>
+
+                                                                                 <div class="row" >
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-6 col-md-7 col-sm-5 col-xs-12" id="lblAcc" for="txtEntryDate">Accessories Rate /Pcs</label>
+                                                                                            <div class="col-lg-4 col-md-5 col-sm-3 col-xs-12">
+
+                                                                                                <input type="text" id="txttotratebom" placeholder="Rate" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                  
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-6 col-md-7 col-sm-5 col-xs-12" for="txtEntryDate">Accessories Tot Amt</label>
+                                                                                            <div class="col-lg-4 col-md-5 col-sm-3 col-xs-12">
+
+                                                                                                <input type="text" id="txttotamntbom" placeholder="Amnt" style="text-align: right; " class="form-control col-md-10" disabled>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                               
+                                                                                </div>
+
+                                                                            </div>
+                                                                                
+                                                                           
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+   <div class="x_panel">
+                                            <div class="x_panel" >                                            
+                                                  <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label" style="text-align:left">
+                                                 Last PO Details
+                                            </label>
+                                            </div>
+                   <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Order No
+                                                <textarea class="form-control" rows="4" placeholder="OrderNo" id="txtmainOrdno" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Ref No
+                                                <textarea class="form-control" rows="4" placeholder="RefNo" id="txtmainrefno" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Style
+                                                <textarea class="form-control" rows="4" placeholder="Style" id="txtmainstyle" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Po Number
+                                                <textarea class="form-control" rows="4" placeholder="PO No" id="txtmainPOno" disabled=""></textarea>
+                                            </div>
+                                        </div>
+
+                      <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                  Supplier
+                                                <textarea class="form-control" rows="4" placeholder="Supplier" id="txtsupplier" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                                                <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                  Pre Rate
+                                                <textarea class="form-control" rows="4" placeholder="Previous Rate" id="txtPrerate" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                                        </div>
+                                                    </div>*@
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                                    @*<div class="x_content">
+
+                                                        <div class="x_content">
+
+                                                            <div class="row">
+
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="x_panel">
+                                                                        <div class="col-md-5">
+                                                                            <h2 style="margin-top: -5px; margin-left: -10px;">Process Details</h2>
+                                                                        </div>
+
+                                                                        
+
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
+                                                                            <input type="checkbox" id="checkallprocess" />
+                                                                            Approve All
+                                                                             <input type="checkbox" id="checkallprocesslock" />
+                                                                            Lock All
+                                                                        </div>
+                                                                        <div class="x_content">
+                                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                                <table id="processtable" class="table table-responsive">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th style="display: none;">SNo</th>
+                                                                                            <th style="display: none;">ItemId</th>
+                                                                                            <th>Process</th>
+                                                                                            <th>Item</th>
+                                                                                            <th>Color</th>
+                                                                                            <th>Size</th>
+                                                                                            <th>Rate</th>
+                                                                                            <th>Quantity</th>
+                                                                                            <th>Amount</th>
+                                                                                            <th>Approve</th>
+                                                                                             <th>Lock</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                </table>
+                                                                            </form>
+                                                                        </div>
+                                                                        &nbsp;
+                                                                        <div class="row">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-5" id="lblprocess"  for="txtEntryDate">Rate/Pcs</label>
+                                                                                        <div class="col-mlg-6 col-md-6 col-sm-6 col-xs-7">
+
+                                                                                            <input type="text" id="txttotrateproces" placeholder="Rate" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-5" for="txtEntryDate">Tot Amt</label>
+                                                                                        <div class="col-mlg-6 col-md-6 col-sm-6 col-xs-7">
+
+                                                                                            <input type="text" id="txttotamtproces" placeholder="Amt" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+
+                                                                                    <div class="x_panel">
+                                            <div class="x_panel" >                                            
+                                                  <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label" style="text-align:left">
+                                                 Last PO Details
+                                            </label>
+                                            </div>
+                   <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Order No
+                                                <textarea class="form-control" rows="4" placeholder="OrderNo" id="txtmainOrdno2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Ref No
+                                                <textarea class="form-control" rows="4" placeholder="RefNo" id="txtmainrefno2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 Style
+                                                <textarea class="form-control" rows="4" placeholder="Style" id="txtmainstyle2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                                                                                          <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                 PO Number
+                                                <textarea class="form-control" rows="4" placeholder="PO No" id="txtmainPOno2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+
+
+                      <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                  Supplier
+                                                <textarea class="form-control" rows="4" placeholder="Supplier" id="txtsupplier2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                                                <div class="form-group">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                                  Pre Rate
+                                                <textarea class="form-control" rows="4" placeholder="Previous Rate" id="txtPrerate2" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                                        </div>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="x_panel">
+                                                                        <div class="col-md-5">
+                                                                            <h2 style="margin-top: -5px; margin-left: -10px;">Production Details</h2>
+                                                                        </div>
+
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
+                                                                            <input type="checkbox" id="checkallprod" />
+                                                                            Approve All
+                                                                             <input type="checkbox" id="checkallprodlock" />
+                                                                            Lock All
+                                                                        </div>
+                                                                        <div class="x_content">
+
+                                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                                <table id="productiontable" class="table table-responsive">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Process</th>
+                                                                                            <th style="display: none;">ProcessId</th>
+                                                                                            <th style="display: none;">FirstRate</th>
+                                                                                            <th>Rate</th>
+                                                                                            <th>Quantity</th>
+                                                                                            <th>Amount</th>
+                                                                                            <th>Approve</th>
+                                                                                            <th>Lock</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                </table>
+                                                                                &nbsp;
+                                                                                 <div class="row">
+                                                                                     <div class="row">
+                                                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                             <div class="form-group">
+                                                                                                 <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-5" id="lblprod" for="txtEntryDate">Rate/Pcs</label>
+                                                                                                 <div class="col-mlg-6 col-md-6 col-sm-6 col-xs-7">
+
+                                                                                                     <input type="text" id="txttotrateprod" placeholder="Rate" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                                 </div>
+                                                                                             </div>
+                                                                                         </div>
+                                                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                             <div class="form-group">
+                                                                                                 <label class="control-label col-lg-6 col-md-6 col-sm-6 col-xs-5" for="txtEntryDate">Tot Amt</label>
+                                                                                                 <div class="col-mlg-6 col-md-6 col-sm-6 col-xs-7">
+
+                                                                                                     <input type="text" id="txttotamntprod" placeholder="Amt" style="text-align: right;" class="form-control col-md-10" disabled>
+                                                                                                 </div>
+                                                                                             </div>
+                                                                                         </div>
+                                                                                     </div>
+                                                                                 </div>
+                                                                            </form>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                 
+                                                    </div>*@
+                                                </div>
+
+
+
+                                                <div role="tabpanel" class="tab-pane fade  in" id="tab_content5" aria-labelledby="home-tab">
+                                                    @*<div class="x_content">
+
+                                                        <div class="x_content">
+
+                                                            <div class="row">
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <div class="x_panel">
+
+                                                                        <div class="x_content">
+                                                                            <form class="form-horizontal form-label-left">
+                                                                                <div class="details">
+
+                                                                                    <div id="orderItems">
+                                                                                        <table class="table table-responsive" id="commercialtable">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th style="display: none">ID
+                                                                                                    </th>
+                                                                                                    <th>Description
+                                                                                                    </th>
+                                                                                                    <th>Cost
+                                                                                                    </th>
+                                                                                                    <th>Value
+                                                                                                    </th>
+
+                                                                                                    <th>Cost/Pcs
+                                                                                                    </th>
+                                                                                                </tr>
+                                                                                            </thead>
+
+                                                                                        </table>
+                                                                                        <span id="orderItemError" style="color: red"></span>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                       
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-10 col-sm-10 col-xs-12">
+
+                                                                                               
+
+                                                                                            </div>
+                                                                                           
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                       
+                                                                                        <div class="row">
+                                                                                           
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                
+                                                                           
+                                                                                     <div class="form-group col-lg-6 col-md-12 col-sm-6 col-xs-12">
+                                                                                                    <label id="lblcomm" class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-6" >
+                                                                                                      Rate /Pcs
+                                                                                                    </label>
+                                                                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
+                                                                                                        <input type="text" id="Totratecommer" class="form-control" placeholder="Tot Rate" disabled>
+                                                                                                    </div>
+                                                                                                </div>
+
+
+                                                                     
+                                                                                     <div class="form-group col-lg-6 col-md-12 col-sm-6 col-xs-12">
+                                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                                                                                                        Currency
+                                                                                                    </label>
+                                                                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
+                                                                                                        <select id="ddlCurrency" class="form-control" disabled onchange="Loadexchangerate();">
+
+                                                                                                        </select>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                     <div class="form-group col-lg-6 col-md-12 col-sm-6 col-xs-12">
+                                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                                                                                                        Exchange
+                                                                                                    </label>
+                                                                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
+                                                                                                        <input type="text" id="exchange" class="form-control" placeholder="Exchange" disabled>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                    <div class="form-group col-lg-6 col-md-12 col-sm-6 col-xs-12">
+                                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-6" id="lblcurrency">
+                                                                                                        INR
+                                                                                                    </label>
+                                                                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                        <input type="text" id="INR" class="form-control" placeholder="INR" disabled>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                    
+                                                        </div>
+                                                                            </form>
+                                                                        </div>
+
+                                                                       <div class="x_panel">
+                                                                        <div class="x_content">
+                                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                             <input type="checkbox" id="lckOrd" value="pgm" /> Lock Order<br/>
+                                                                             <input type="checkbox" id="lckPlan" value="pgm" /> Lock Seq/Program
+                                                                                <br />
+                                                                           
+                                                                            <input type="checkbox" id="lckAcc" value="pgm" /> Lock Trims 
+                                                                                </div>
+                                                                               <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                            <input type="checkbox" id="lckCon" value="pgm" /> Lock Consumption <br/>
+                                                                             <input type="checkbox" id="lckFab" value="pgm" /> Lock Fabric<br/>
+                                                                             <input type="checkbox" id="lckYarn" value="pgm" /> Lock Yarn<br/>
+                                                                                   
+                                                                                </div>
+                                                                           
+                                                                            </div>
+                                                                           </div>
+
+                                                                    </div>
+                                                              
+
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <div class="x_panel">
+                                                                        <div class="x_content">
+                                                                            <form class="form-horizontal form-label-left">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Fabric & Yarn 
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="Fabyarn" class="form-control" placeholder="Rate" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                        <label id="lblrt1" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                  <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Process 
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="Cloth" class="form-control" placeholder="Rate" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                       <label id="lblrt2" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Production 
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="TxtProduction" class="form-control" placeholder="Production" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                       <label id="lblrt3" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Accessories
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="BOM" class="form-control" placeholder="BOM" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                        <label id="lblrt4" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Commercial 
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="txtCommercial" class="form-control" placeholder="Commercial" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                         <label id="lblrt5" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Total
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="Total" class="form-control" placeholder="Total" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                        <label id="lblrt6" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                  <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                       Salesrate Margin %/ Value
+                                                                                    </label>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-2 col-xs-5">
+                                                                                        <input type="text" id="salesProfit" class="form-control" placeholder="%" style="text-align: right;" onkeyup="calcvalues(this.value);">
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5">
+                                                                                        <input type="text" id="salesValue" class="form-control" placeholder="Value" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                                                        <label id="lblrt9" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Margin %/ Value
+                                                                                    </label>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-2 col-xs-5">
+                                                                                        <input type="text" id="Profit" class="form-control" placeholder="Profit" style="text-align: right;" onkeyup="calcvalues(this.value);">
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5">
+                                                                                        <input type="text" id="Value" class="form-control" placeholder="Value" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                                                        <label id="lblrt7" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                               
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Net Amount
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="NetAmount" class="form-control" placeholder="Net Amount" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                                                       <label id="lblrt8" >
+                                                                                         /Pcs 
+                                                                                       </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                                                        Total Value
+                                                                                    </label>
+                                                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-8">
+                                                                                        <input type="text" id="TotalValue" class="form-control" placeholder="Total Value" disabled style="text-align: right;">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                            <div class="x_panel" >
+                                                                                <div class="row">
+                                                                                    <form class="form-horizontal form-label-left">
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                                                                Sale Price
+                                                                                            </label>
+                                                                                            <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
+                                                                                                <input type="text" id="SalePrice" class="form-control" placeholder="Sale Price" style="text-align: right;" onkeyup="calcsp(this.value);">
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                                                                Drawback %/ Value
+                                                                                            </label>
+                                                                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                                                                <input type="text" id="Drawback" class="form-control" placeholder="Drawback" style="text-align: right;" onkeyup="calcdrwbck(this.value);">
+                                                                                            </div>
+                                                                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                                                                <input type="text" id="DrwValue" class="form-control" placeholder="Value" disabled style="text-align: right;">
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                                                                Profit %/ Value
+                                                                                            </label>
+                                                                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                                                                <input type="text" id="txtProfit" class="form-control" placeholder="Profit" disabled style="text-align: right;" onkeyup="profitentry(this.value);">
+                                                                                            </div>
+                                                                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                                                                <input type="text" id="PrfValue" class="form-control" placeholder="Value" disabled style="text-align: right;">
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                  </div>
+                                                            </div>
+
+                                                        </div>*@
+                                                        @*<div class="row">
+                                                            <div class="col-md-6">
+                                                                
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="col-md-4">
+                                                                    <i class="gg-spinner" style="float: right;margin-top: 3px;display: none;" id="LoadingSpinner"></i>
+                                                                </div>
+                                                                <div class="col-md-8">
+                                                                    <div class="form-group" >
+                                                                    <button type="button" class="btn btn-success btn-round" id="btnsave" onclick="Add();">Add</button>
+                                                                    <button type="button" class="btn btn-success btn-round" id="btndelete" onclick="Revert();">Revert</button>
+                                                                    <button type="button" class="btn btn-success btn-round" id="btnUpd" onclick="Update();">Approved</button>
+                                                                     <button type="button" class="btn btn-success btn-round" id="btnLock" onclick="Lock();">Lock</button>
+                                                                    <button type="button" class="btn btn-danger btn-round" id="btncancel" onclick="backtomain();">Cancel</button>
+                                                                </div>
+                                                                </div>
+                                                                
+                                                                
+                                                            </div>
+                                                        </div>*@
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                 <div  class="modal fade" style="overflow-y:scroll" id="myModal3" tabindex="-1" role="dialog" style="overflow-y:scroll" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="x_panel" style="width: 150%; margin-left: -148px;">
+                                  <div class="col-md-12 col-xs-12">
+                                                                    <div class="x_panel">
+                                                                        <div class="col-md-5">
+                                                                            <h2 style="margin-top: -5px; margin-left: -10px;">Production Item Details</h2>
+                                                                        </div>
+
+                                                                        <div class="col-md-2"></div>
+                                                                        <div class="col-md-2"></div>
+
+                                                                        <div class="x_content">
+
+                                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                                <table id="productionDettable" class="table table-striped table-bordered">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th style="display: none;">SNo</th>
+                                                                                            <th style="display: none;">ItemId</th>
+                                                                                            <th>Process</th>
+                                                                                            <th>Item</th>
+                                                                                            <th>Color</th>
+                                                                                            <th>Size</th>
+                                                                                            <th>Rate</th>
+                                                                                            <th>Quantity</th>
+                                                                                            <th>Amount</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                </table>
+                                                                                &nbsp;
+                                                                            
+                                                                            </form>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group" style="float: right; margin-top: -3.5em; margin-right: -13px;">
+                                        <button type="button" class="btn btn-danger" id="ProddetClose" onclick="ProddetClose();">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- page content -->

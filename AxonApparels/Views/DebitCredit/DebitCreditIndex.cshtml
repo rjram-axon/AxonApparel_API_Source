@@ -1,0 +1,863 @@
+﻿@{
+    ViewBag.Title = "DebitCreditIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #tblmaincredeb_filter {
+        margin-top: -30px;
+    }
+
+    #tblItemcredeb_wrapper {
+        margin-top: -30px;
+    }
+
+    #tblOrdercredeb_filter {
+        display: none;
+    }
+
+    #tblOthercredeb_filter {
+        display: none;
+    }
+
+    #tblOrdercredebSave_filter {
+        display: none;
+    }
+
+    #tblOrdercredeb {
+        margin-top: -6px;
+    }
+
+    #tblAddcredeb_filter {
+        margin-top: -30px;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Purchase/PurchaseDebitCredit.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+@* Load datatable css *@
+
+<link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+@* Load datatable js *@
+@section Scripts{
+
+    <script src="~/build/js/jquery.dataTables.min.js"></script>
+    <script>
+                                           
+    </script>
+
+}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+            <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12 enquiry_edit">
+                                        Company
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMCompany" class="form-control select2" onchange="LoadMainComp();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12 enquiry_edit">
+                                        Reference
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMReference" class="form-control select2" onchange="LoadMainRef();">
+                                            <option value="0">--Select Reference--</option>
+                                            <option value="GI">Purchase Invoice</option>
+                                            <option value="PI">Process Invoice</option>
+                                            <option value="GQ">Purchase Quality</option>
+                                            <option value="PQ">Process Quality</option>
+                                            <option value="PC">Process Closure</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12" for="ex3">From Date</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Supplier</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMSupplier" class="form-control select2" onchange="LoadMainSupp();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Note Type</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMNotetype" class="form-control select2" onchange="LoadMainNote();">
+                                            <option value="0">--Select NoteType--</option>
+                                            <option value="D">Debit Note</option>
+                                            <option value="C">Credit Note</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12" for="ex3">To Date</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Date" id="txtToDate">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-3">
+                            <form class="form-horizontal form-label-left input_mask">
+                                @*<div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-6 col-xs-12">Type</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="ddlMType" class="form-control">
+                                            <option value="0">--Select Type--</option>
+                                            <option value="W">Work Order</option>
+                                            <option value="J">Job Order</option>
+                                            <option value="S">Sample Order</option>
+                                        </select>
+                                    </div>
+                                </div>*@
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12 enquiry_edit">
+                                        Debit No 
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMDcNo" class="form-control select2" onchange="LoadMainEntryNo();">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" onclick="ListFilter()" style="margin-left: 10px;" class="btn btn-success">List</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="RadioAIClick();" id="btnaddnew" @ViewBag.DebitCreditAddFlg>Add New</button>
+                        <div class="x_content">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <table class="table table-responsive" id="tblmaincredeb">
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 74%">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h4 class="modal-title" id="myModalLabel">Add Credit/Debit</h4>
+                            </div>
+                            <div class="x_panel">
+                                <div class="x_content">
+                                    <div class="row" style="margin-top: -20px;">
+                                        <div class="modal-body" style="width: 100%;">
+                                            <div class="x_panel" style="padding-top: 5px; padding-bottom: 0px;">
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Order Type</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <select id="ddlAOrderType" class="form-control" onchange="RadioAIClick();">
+                                                                            <option value="P">PURCHASE</option>
+                                                                            <option value="R">PROCESS</option>
+                                                                            <option value="D">PRODUCTION</option>
+                                                                            <option value="C">CLOSURE</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="maxl " style="margin-left: 10px; margin-top: -6px; width: 317px;">
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" checked value="ID" id="optAInv" name="InvQty" onchange="RadioAIClick();">
+                                                                            <span>Invoice</span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" value="QD" id="optAQty" name="InvQty" onchange="RadioAIClick();">
+                                                                            <span>Quality </span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" value="Credit" id="optACre" name="CreDeb" onchange="RadioAIClick();">
+                                                                            <span>Credit</span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" checked value="Debit" id="optADeb" name="CreDeb" onchange="RadioAIClick();">
+                                                                            <span>Debit </span>
+                                                                        </label>
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Company</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <select id="ddlAcompany" class="form-control select2"></select>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </form>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Supplier</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <select id="ddlASupplier" class="form-control select2"></select>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                            </form>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="x_panel" style="width: 99%; margin-left: 5px; margin-top: -17px;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="x_content">
+
+                                                    <form class="form-horizontal form-label-left input_mask">
+                                                        <div class="form-group">
+                                                            <h2 style="margin-top: -5px;">Invoice Details</h2>
+                                                            <table class="table table-responsive" id="tblAddcredeb">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="display: none;">InvoiceId</th>
+                                                                        <th>Invoice</th>
+                                                                        <th>Inv.date</th>
+                                                                        <th>Supplier.Inv</th>
+                                                                        <th>Supplier.Date</th>
+                                                                        <th>Supplier</th>
+                                                                        <th style="display: none;">SupplierId</th>
+                                                                        <th style="display: none;">CompId</th>
+                                                                        <th>Company</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*                 <div class="" style="width: 99%; margin-left: 5px;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-4">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group" style="float: right;">
+                                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" data-backdrop="static" id="btnsubmit">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    </div>
+
+                                </div>
+                                @* <div class="modal-footer" style="border: none;">
+                                    <button type="button" style="margin-right: 34px;" class="btn btn-danger btn-round" id="btninnerclose" data-dismiss="modal">Close</button>
+                                </div>*@
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 78%">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h4 class="modal-title" id="myModalLabel1">Credit / Debit</h4>
+                            </div>
+                            <div class="x_panel" style="width: 96.7%; margin-left: 17px; margin-top: 10px; height: 75px;">
+                                <div class="x_content">
+                                    <div class="row" style="margin-top: -20px;">
+                                        <div class="modal-body" style="width: 100%;">
+                                            <div class="" style="padding-top: 5px; padding-bottom: 0px;">
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Company</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <input type="text" id="txtCompany" class="form-control" placeholder="Company" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Supplier</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <input type="text" id="txtSupplier" class="form-control" placeholder="Supplier" disabled>
+                                                                    </div>
+                                                                </div>
+
+                                                                @*<div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Work Div</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <select id="ddlworkdiv" class="form-control" disabled></select>
+                                                                    </div>
+                                                                </div>*@
+                                                                @*<div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Issue Store</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <select id="ddlstore" class="form-control" disabled></select>
+                                                                    </div>
+                                                                </div>*@
+                                                            </form>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                @*<div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12 enquiry_edit">
+                                                                        Job No
+                                                                    </label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <select id="ddljobNo" class="form-control" disabled></select>
+                                                                    </div>
+                                                                </div>*@
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Debit No</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <input type="text" id="txtDebitNo" class="form-control" placeholder="Debit No" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Entry Date</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <input type="text" id="txtEntryDate" class="form-control" placeholder="Date">
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Inv No</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <input type="text" id="txtInvNo" class="form-control" placeholder="Inv No" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12" for="txtEntryDate">Supp Inv</label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-12">
+
+                                                                        <input type="text" id="txtSuppInv" placeholder="Supp Inv" class="form-control col-md-10" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                @*<div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12 enquiry_edit">
+                                                                        Style / Qty
+                                                                    </label>
+                                                                    <div class="col-md-4 col-sm-9 col-xs-12">
+                                                                        <select id="ddlstyle" class="form-control" disabled>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-4 col-sm-9 col-xs-12">
+                                                                        <input type="text" id="txtstyleqty" class="form-control" placeholder="Qty">
+                                                                    </div>
+                                                                </div>*@
+                                                                @*<div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Proc Ord No</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <input type="text" id="txtprogram" class="form-control" placeholder="Program">
+                                                                    </div>
+                                                                </div>*@
+
+                                                                @* <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Program</label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <input type="text" id="txtprogram" class="form-control" placeholder="Program">
+                                                                    </div>
+                                                                </div>*@
+
+
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="x_panel" style="margin-top: 0px; width: 98.8%; margin-left: 7px;">
+                                    <div class="x_content">
+                                        <div class="">
+                                            <h2 style="margin-top: -6px;">Item Details</h2>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="">
+                                                    <div class="x_content">
+                                                        <form class="form-horizontal form-label-left">
+                                                            <table class="table table-responsive" id="tblItemcredeb">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="display: none;">DebDetId</th>
+                                                                        <th style="display: none;">DebId</th>
+                                                                        <th>Item</th>
+                                                                        <th>Color</th>
+                                                                        <th>Size</th>
+                                                                        <th style="display: none;">ItemId</th>
+                                                                        <th style="display: none;">ColorId</th>
+                                                                        <th style="display: none;">SizeId</th>
+                                                                        <th style="display: none;">UomId</th>
+                                                                        <th>Invoiced</th>
+                                                                        <th>P.O Rate</th>
+                                                                        <th>Inv Rate</th>
+                                                                        <th>Debit Qty</th>
+                                                                        <th>Unit</th>
+                                                                        <th>Rate</th>
+                                                                        <th>Amount</th>
+                                                                        <th style="display: none;">InvId</th>
+                                                                       
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+                                                        </form>
+
+                                                    </div>
+
+
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-5">
+                                        <div class="x_panel" style="margin-left: 8px;">
+                                            <h2 style="margin-top: -3px;">Order Details</h2>
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <table id="tblOrdercredeb" class="table table-responsive">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="display: none;">JobRowId</th>
+                                                            <th style="display: none;">Detid</th>
+                                                            <th>Order No</th>
+                                                            <th>Max.Debit.Qty</th>
+                                                            <th>Debit Qty</th>
+                                                            <th>Itemid</th>
+                                                            <th>Colorid</th>
+                                                            <th>Sizeid</th>
+                                                            <th>Uomid</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                                <table id="tblOrdercredebSave" class="table table-responsive" style="display: none;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>JobRowId</th>
+                                                            <th>Detid</th>
+                                                            <th>Order No</th>
+                                                            <th>Max.Debit.Qty</th>
+                                                            <th>Debit Qty</th>
+                                                            <th>Itemid</th>
+                                                            <th>Colorid</th>
+                                                            <th>Sizeid</th>
+                                                            <th>Uomid</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="x_panel" style="margin-left: -5px;">
+                                            <div class="col-md-4">
+                                                <h2 style="margin-top: -3px; width: 200px; margin-left: -10px;">Other Debits</h2>
+                                            </div>
+
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <table id="tblOthercredeb" class="table table-responsive">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>DebitId</th>
+                                                            <th>InvId</th>
+                                                            <th>Header</th>
+                                                            <th>Amount</th>
+                                                            <th>Reason</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="x_panel" style="margin-left: -5px;">
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group" style="margin-top: -9px; margin-left: -10px;">
+                                                    <label class="control-label col-md-12 col-sm-3 col-xs-12">Remarks</label>
+                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                        <textarea class="form-control" rows="3" style="height: 57px; width: 215px;" placeholder="Remarks" id="txtremark"></textarea>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="border: none; float: right;">
+                                    <button type="button" class="btn btn-success btn-round" id="btnAdd" onclick="return DebSave();">Save</button>
+                                    <button type="button" class="btn btn-success btn-round" id="btnUpdate" style="display: none;" onclick="DebUpdate();">Update</button>
+                                    <button type="button" class="btn btn-round btn-success" id="btnDeletedebit" style="display: none;" onclick="DebDelete();">Delete</button>
+
+                                    <button type="button" class="btn btn-danger btn-round" data-dismiss="modal" style="margin-right: 20px;">Close</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="border: none;">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 40%">
+                    <div class="modal-content">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Debit Credit</h2>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="row" style="margin: 0;">
+                                <div class="row" style="margin: 0;">
+
+                                    <div class="col-md-8">
+
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                                                    Options 
+                                                </label>
+                                                <div class="col-md-2 col-sm-2 col-xs-12" style="">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" id="selectall" value="">All
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <div class="multiselect">
+
+                                                        <select multiple="multiple" id='sbTwo' class="form-control multiselect" style="height: 100px;">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                              <div class="maxl" style="margin-top: 0px;" id="BudPrintPreviewId">
+                                   
+                                                    <label class="radio inline">
+                                                        <input id="BudPrintPlanned" class="Score" name="BudPrintPreviewPlanned" type="radio" value="P"  checked="checked" >
+                                                        <span>Windows </span>
+                                                    </label>
+                                                      <label class="radio inline">
+                                                    <input id="BudMailPlanned" class="Score" name="BudPrintPreviewPlanned" type="radio" value="M">
+                                                    <span>Mail </span>
+                                                </label>
+                                                   
+                                                </div>
+
+                                        </form>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin: 0px; float: right;">
+                                <div class="form-group">
+                                    <button class="btn btn-success" onclick="SubReport();">Submit</button>
+                                    <button class="btn btn-danger" onclick="backtomain();">Cancel</button>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                        <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 40%">
+                    <div class="modal-content">
+                        <div class="x_panel">
+                            <div id="uploadsContainer" style="margin-left: 22px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                  <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    function sentmail(id) {
+        debugger;
+        var filelist = [];
+        var url = "/Mail/MailLoad";
+        //var Id = $('input#ID').val();
+        var tlt = 'CeditDebit_Report';
+
+        //var sub = 'Subject';
+        //var bd = 'Test';
+        //url = url + "?title=" + tlt + "&id=" + id
+        //$.get(url, function (response) {
+        //    $('#uploadsContainer').html(response);
+        //});
+
+
+        var from = '';
+        var frommail = '';
+        var to = '';
+        var tomail = '';
+
+
+
+
+        var pono = '';
+
+
+
+        var url = "/Mail/MailLoad";
+
+        var tlt = 'CeditDebit_Report';
+
+        var sub = 'CeditDebit_Report -' + pono;
+        var bd = ' ';
+        var cc = '';
+
+        var filename = 'CeditDebit_Report' + id;
+
+        url = url + "?title=" + tlt + "&id=" + id + "&fmname=" + from + "&fmmail=" + frommail + "&toname="
+            + to + "&tomail=" + tomail + "&sub=" + sub + "&body=" + bd + "&CC=" + cc
+        $.get(url, function (response) {
+            $('#uploadsContainer').html(response);
+
+            $.ajax({
+                url: "/Employee/getbyID/" + Guserid,
+                typr: "GET",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    var obj = result.Value;
+                    if (result.Status == 'SUCCESS') {
+                        from = obj.EmpName;
+                        frommail = obj.Email;
+
+                        $('#Email').val(obj.Email);
+                        $('#FromName').val(obj.EmpName);
+                    }
+                }
+            });
+            var int = id;
+
+            $.ajax({
+                url: "/DebitCredit/LoadMailDetails/",
+                typr: "POST",
+                data: ({ Debit_id: int }),
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    var obj = result.Value;
+                    if (result.Status == 'SUCCESS') {
+                        to = obj[0].Supplier;
+                        tomail = obj[0].mail;
+                        var pono = obj[0].Debit_no;
+
+                        $('#To').val(obj[0].mail);
+                        $('#ToName').val(obj[0].Supplier);
+                        $('#Subject').val('PO Report -' + pono);
+                        addses();
+
+                    }
+                }
+            });
+
+
+        });
+
+
+
+
+
+        $('#myModal3').modal('show');
+        $('#ID').val(filename);
+        $('#Date').val('');
+        //$('#To').val('');
+        //$('#ToName').val('');
+        // $('#Subject').val('subject');
+        //$('#Body').val('test');
+        //$('#Email').val('');
+        // $('#FromName').val('');
+        $('#passwrd').show();
+        $('#attach').show();
+        $('#btnsent').show();
+        // $('#filetabl').hide();
+
+
+        // LoadMailFileList(3);
+
+
+    }
+    function mailsent() {
+        debugger;
+        var flist = [];
+
+        var obj = {
+            FailPath: flpath,
+            FileName: $('#ID').val()
+        };
+        flist.push(obj);
+
+
+
+
+        var objSubmit = {
+            To: $('#To').val(),
+            ToName: $('#ToName').val(),
+            Subject: $('#Subject').val(),
+            //Buyerid: $('#Subject').val(),
+            Body: $('#Body').val(),
+            FromName: $('#FromName').val(),
+            Email: $('#Email').val(),
+            Password: $('#Password').val(),
+            CC: $('#CC').val(),
+            MailFile: flist
+        };
+
+        LoadingSymb();
+        $.ajax({
+            url: "/Mail/MailsentFromReport",
+            data: JSON.stringify(objSubmit),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                if (result.Value == true) {
+
+                    alert("Mail sent Sucessfully");
+
+                    window.location.href = "/DebitCredit/DebitCreditIndex";
+                } else {
+
+                    window.location.href = "/Error/Index";
+
+
+                }
+
+            },
+            error: function (errormessage) {
+
+                alert(errormessage.responseText);
+            }
+        });
+
+
+    }
+
+</script>

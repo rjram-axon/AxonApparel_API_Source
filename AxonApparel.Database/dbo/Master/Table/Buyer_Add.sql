@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[Buyer_Add]
+(
+	[Buyer_AddId] [int] IDENTITY(1,1) NOT NULL,
+	[BuyerId] [int] NULL,
+	[Address1] [varchar](40) NULL,
+	[Address2] [varchar](40) NULL,
+	[Address3] [varchar](40) NULL,
+	[CityId] [int] NULL,
+	[CountryId] [int] NULL,
+	[Zipcode] [varchar](10) NULL,
+	[Phone] [varchar](30) NULL,
+	[Fax] [varchar](30) NULL,
+	[E_mail] [varchar](50) NULL,
+	[Telex] [varchar](30) NULL,
+	[PreferedCourier] [varchar](40) NOT NULL DEFAULT (''),
+	[CourierNo] [varchar](40) NOT NULL DEFAULT (''),
+	[OtherDetails] [varchar](100) NOT NULL DEFAULT (''),
+	[Code] [varchar](15) NOT NULL DEFAULT (''),
+	[IsActive] [bit] NOT NULL DEFAULT (1),
+	[Tin_No] [varchar](30) NULL, 
+    CONSTRAINT [FK_Buyer_Add_ToBuyer] FOREIGN KEY ([BuyerId]) REFERENCES [Buyer]([BuyerId]),
+	CONSTRAINT [FK_Buyer_Add_ToCity] FOREIGN KEY ([CityId]) REFERENCES [City]([Id]),
+	CONSTRAINT [FK_Buyer_Add_ToCountry] FOREIGN KEY ([CountryId]) REFERENCES [Country]([countryid]), 
+    CONSTRAINT [PK_Buyer_Add] PRIMARY KEY ([Buyer_AddId])
+)

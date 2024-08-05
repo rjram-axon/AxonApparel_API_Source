@@ -1,0 +1,705 @@
+﻿@{
+    ViewBag.Title = "PurchaseOrderMainIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tOMbody_info {
+    display:none;
+    }
+
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtFromDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                LoadMainGrid();
+            }
+        });
+        $('#txtToDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                LoadMainGrid();
+            }
+        });
+      
+    })
+</script>
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Purchase/PurchaseOrderMain.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>        
+            <div class="x_panel">
+               
+                    <div class="x_panel">
+                        <div class="row">
+                            <div class="row"> 
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                         <form class="form-horizontal form-label-left input_mask" >
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-3 enquiry_edit">
+                               Company
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-9">
+                                    <select id="ddlMCompany" class="form-control select2"  onchange="CMainList();">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-3">Style</label>
+                                <div class="col-md-8 col-sm-8 col-xs-9">
+                                    <select id="ddlMStyle" class="form-control select2" onchange="SMainList();">
+                                    </select>
+                                </div>
+                            </div>
+                              <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-3" for="ex3">From Date</label>
+                                <div class="col-md-8 col-sm-8 col-xs-9">
+                                   <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                </div>
+                            </div>
+                         </form>
+                    </div>    
+                      <div class="col-md-4 col-sm-4 col-xs-12">
+                          <form class="form-horizontal form-label-left input_mask" >
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-3 enquiry_edit">
+                              Supplier
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-9">
+                                    <select id="ddlMSupplier" class="form-control select2"  onchange="SuppMainList();">
+                                    </select>
+                                </div>
+                            </div>
+                               <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-3 enquiry_edit">
+                               Ref.No 
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-9">
+                                    <select id="ddlMRefNo" class="form-control select2" onchange="REFMainList();">
+                                    </select>
+                                </div>
+                            </div>
+                               <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-3" for="ex3">To Date</label>
+                                <div class="col-md-8 col-sm-8 col-xs-9">
+                                 <input type="text" class="form-control" placeholder="Date" id="txtToDate">
+                                </div>
+                            </div>
+                            <div class="form-group" style="display:none;">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-3">Pur Type</label>
+                                <div class="col-md-8 col-sm-8 col-xs-9">
+                                    <select id="ddlMPType" class="form-control select2"  >
+                                    </select>
+                                </div>
+                            </div>
+                         </form>
+                      </div>    
+                      <div class="col-md-4 col-sm-4 col-xs-12">
+                          <form class="form-horizontal form-label-left input_mask" >
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-3 enquiry_edit">
+                                    Order No
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-9">
+                                    <select id="ddlMOrderNo" class="form-control select2"  onchange="OMainList();" >
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-3">Po.No</label>
+                                <div class="col-md-8 col-sm-8 col-xs-9">
+                                    <select id="ddlMPoNo" class="form-control select2"  onchange="POMainList();">
+                                    </select>
+                                </div>
+                            </div>
+                                 <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-4">Purchase Type</label>
+                                <div class="col-md-8 col-sm-9 col-xs-8">
+                                    <div class="maxl" style="width: 140px;margin-top: -4px;" >
+                                 <label class="radio inline"> 
+                                  <input type="radio" checked value="L"  id="L" name="MLocal" onclick="RadioMLClick();">
+                                  <span>Local </span> 
+                              </label>
+                              <label class="radio inline"> 
+                                  <input type="radio"   value="I"  id="I" name="MLocal" onclick="RadioMLClick();">
+                                  <span>Import</span> 
+                              </label>
+                                </div>
+                                </div>
+                            </div>
+                         </form>
+                      </div> 
+                                          
+                    </div>
+                            <div class="row">
+                                
+                    <div class="col-lg-8 col-md-9 col-sm-9 col-xs-12">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                <div class="form-group">
+                                         <label style="white-space:  nowrap;">
+                                Order Type
+                                </label>
+                                    </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
+                                <div class="maxl" style="margin-top: -10px;margin-left:5px;">
+                                <label class="radio inline"> 
+                                    <input type="radio"   checked value="B"  id="optB" name="MOType" onclick="RadioMBClick();" >
+                                    <span>  Bulk Order</span> 
+                                </label>
+                                <label class="radio inline"> 
+                                    <input type="radio"   value="S"  id="optS" name="MOType" onclick="RadioMBClick();">
+                                    <span>Sample Order </span> 
+                                </label>                             
+                                <label class="radio inline"> 
+                                    <input type="radio"   value="G"  id="optG" name="MOType" onclick="RadioMBClick();">
+                                    <span>General</span> 
+                                </label>
+                                 <label class="radio inline"> 
+                                    <input type="radio"   value="R"  id="optR" name="MOType" onclick="RadioMBClick();">
+                                    <span>Spl Order</span> 
+                                </label>
+                                </div>
+                            </div>
+                                
+                                
+                            
+                        </div>
+                                <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
+                                    <form class="form-horizontal form-label-left input_mask" >
+                                        <div class="col-lg-4 col-md-5 col-sm-5 col-xs-4">
+                                <div class="form-group">
+                                         <label style="white-space:  nowrap;margin-left: 0px;">
+                                Po Type
+                                </label>
+                                    </div>
+                            </div>
+                            <div class="col-lg-4 col-md-7 col-sm-7 col-xs-8">
+                                <div class="maxl" style="margin-top: -7px;">
+                                 <label class="radio inline"> 
+                                  <input type="radio"  checked value=""  id="optAAL" name="PoType" onclick="RadioMAClick();">
+                                  <span>All </span> 
+                              </label>
+                           @*   <label class="radio inline"> 
+                                  <input type="radio"  value="Y"  id="optAY" name="PoType" onclick="RadioMAClick();">
+                                  <span>Yarn </span> 
+                              </label>
+                              <label class="radio inline"> 
+                                  <input type="radio"  checked value="A"  id="optAA" name="PoType" onclick="RadioMAClick();">
+                                  <span>Accessory </span> 
+                              </label>*@
+                                </div>
+                            </div>
+                                        <div class="form-group">
+                                            <input type="button"  class="btn btn-success" value="List" style="float:right" onclick="List();">
+                                        </div> 
+                                    </form>
+                                </div> 
+                            </div>
+                        </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" id="btnAdd" data-target="#myModal" onclick="LoadPurchaseOrderAdd();"  @ViewBag.POAddFlg>Add New</button>
+                        </div>
+                    </div>
+
+                                       <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12" id="MSplId" style="white-space:nowrap">
+                        <div class="" style="padding: 0px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group">
+                                         <label style="font-size: 17px;white-space:  nowrap;">
+                                SplOrder Type
+                                </label>
+                                    </div>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="maxl" style="margin-top: -8px;">
+                                <label class="radio inline"> 
+                                    <input type="radio"   checked value="B"  id="optSB" name="MSOType" onchange="RadioMSBClick();" >
+                                    <span>  Bulk Order</span> 
+                                </label>
+                                <label class="radio inline"> 
+                                    <input type="radio"   value="S"  id="optSS" name="MSOType" onchange="RadioMSBClick();">
+                                    <span>Sample Order </span> 
+                                </label>                             
+                                
+                                </div>
+                            </div>
+                                
+                                
+                            
+                        </div>
+                        </div>
+
+                           <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
+                        <div class="" style="padding: 0px;">
+                            <div class="col-lg-4 col-md-5 col-sm-5 col-xs-12">
+                                <div class="form-group">
+                                         <label style="font-size: 17px;white-space:  nowrap;">
+                                Approved Type
+                                </label>
+                                    </div>
+                            </div>
+                            <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                                <div class="maxl" style="margin-top: -8px;">
+                                <label class="radio inline"> 
+                                    <input type="radio"   checked value="N"  id="optapen" name="AppOType" onchange="RadioMBClick();" >
+                                    <span> Pending</span> 
+                                </label>
+                                <label class="radio inline"> 
+                                    <input type="radio"   value="Y"  id="optaapp" name="AppOType" onchange="RadioMBClick();">
+                                    <span>Approved </span> 
+                                </label>                             
+                                
+                                </div>
+                            </div>
+                                
+                                
+                            
+                        </div>
+                        </div>
+
+
+                          @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+                    
+                    
+                     
+                </div>
+                               
+                <div class="x_panel">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="x_content">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+          @*                              <table class="table table-bordered table-hover" border="1">
+                                            <tr>
+                                                <td>Company</td>
+                                                <td>Supplier</td>
+                                                <td>Po.No</td>
+                                                <td>Date</td>
+                                                <td>Reference</td>
+                                                <td>Po.Type</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr class="mycontainer" id="maincomborow" >
+                                                <td>
+                                                   
+                                                </td>
+                                                <td>
+                                                   
+                                                </td>
+
+                                                <td>
+                                                  
+                                                </td>
+                                                <td>
+                                                   
+                                                </td>
+                                                  <td>
+                                                   
+                                                </td>
+                                                 <td>
+                                                   
+                                                </td>
+                                                <td>
+                                                    <button type="button" data-toggle="tooltip" data-placement="top" title="View" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" class="btn btn-info btn-round"> <i class="fa fa-eye"></i> </button> 
+                                                    <button type="button" data-toggle="tooltip" data-placement="top" title="Print" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" class="btn btn-round btn-primary"> <i class="fa fa-print"></i> </button>
+                                                    <button type="button" data-toggle="tooltip" data-placement="top" title="Mail"  style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" class="btn btn-round btn-danger"> <i class="fa fa-envelope"></i> </button>'
+                                                </td>
+                                                    
+                                            </tr>
+                                        </table>*@
+                                            <table id="tOMbody" class="table table-bordered table-hover">                            </table>
+                                    </div>
+                                </form>
+                            <div class="row">
+                                
+                                <div class="col-md-4">      
+                                    
+                                <input type="button" class="btn btn_purchase btn-round" value="Purchase" onclick="PurOrder();">
+                                <input type="button" class="btn btn-round btn_cancel " value="Cancel" onclick="PurCancel();">  
+                               
+                                </div>
+                                <div class="col-md-4"></div>
+                             
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    
+                  
+                                    
+                                </div>
+
+                    <div class="x_panel">
+                   <div class="form-group">
+                                            <label class="col-md-2 col-sm-2 col-xs-12 control-label">
+                                                Order No
+                                            </label>
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                <textarea class="form-control" rows="4" placeholder="OrderNo" id="txtmainOrdno" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                            <label class="col-md-2 col-sm-2 col-xs-12 control-label">
+                                                Ref No
+                                            </label>
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                <textarea class="form-control" rows="4" placeholder="RefNo" id="txtmainrefno" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                   <div class="form-group">
+                                            <label class="col-md-2 col-sm-2 col-xs-12 control-label">
+                                                Style
+                                            </label>
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                <textarea class="form-control" rows="4" placeholder="Style" id="txtmainstyle" disabled=""></textarea>
+                                            </div>
+                                        </div>
+                 
+                                        </div>
+
+                <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 40%">
+                        <div class="modal-content">
+                            <div class="x_panel">
+                                 <div class="x_title">
+                <h2>Purchase Order</h2>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="row" style="margin:0;">               
+
+                    <div class="col-md-8">
+
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" >
+                                    Options 
+                                </label>
+                                <div class="col-md-2 col-sm-2 col-xs-12" style="">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="selectall" value="">All
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <div class="multiselect">
+                                      
+                                        <select multiple="multiple" id='sbTwo' class="form-control multiselect" style="height:100px;">
+                                        </select>
+                                    </div>
+                                </div>
+                               
+
+@*                                <div class="col-md-9" style="display:none;">
+                                <div class="maxl" style="margin-left: 15px;width: 249px;margin-top: -6px;">
+                                 <label class="radio inline"> 
+                                  <input type="radio" value="G"  id="optgrey" name="FabType">
+                                  <span>Grey Purchase </span> 
+                              </label>
+                            
+                                </div>
+                            </div>
+                                
+                                <div class="col-md-9" style="display:none;">
+                                <div class="maxl" style="margin-left: 15px;width: 249px;margin-top: -6px;">
+                                 <label class="radio inline"> 
+                                  <input type="radio" value="F"  id="optfin" name="FabType">
+                                  <span>Finish Purchase </span> 
+                              </label>
+                            
+                                </div>
+                            </div>*@
+                            </div>
+
+                             <div class="maxl" style="margin-top: 0px;" id="BudPrintPreviewId">
+                                                <label class="radio inline">
+                                                    <input id="BudPreviewPlanned" class="Score" name="BudPrintPreviewPlanned" type="radio" value="R">
+                                                    <span>DOS </span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input id="BudPrintPlanned" class="Score" name="BudPrintPreviewPlanned" type="radio" value="P" checked="checked">
+                                                    <span>Windows </span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input id="BudMailPlanned" class="Score" name="BudPrintPreviewPlanned" type="radio" value="M">
+                                                    <span>Mail </span>
+                                                </label>
+
+                                            </div>
+                            
+
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+
+                <div class="row" style="margin:0px; float:right;">
+                    <div class="form-group" >
+                                <button class="btn btn-success" onclick="SubReport();">Submit</button>
+                                <button class="btn btn-danger" onclick="backtomain();">Cancel</button>
+                            </div>
+                </div>
+
+
+
+
+        </div>
+                            </div>
+
+
+         
+
+
+                        </div>
+                     </div>
+
+
+                               
+            <div class="modal fade" style="overflow-y:scroll" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 40%">
+                    <div class="modal-content">
+                        <div class="x_panel">
+                            <div id="uploadsContainer" style="margin-left: 22px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                            </div>
+                        </div>
+     
+    
+               </div>
+
+
+
+<script type="text/javascript">
+
+    function sentmail(id) {
+        debugger;
+        var filelist = [];
+        var url = "/Mail/MailLoad";
+        //var Id = $('input#ID').val();
+        var tlt = 'POReports';
+
+        //var sub = 'Subject';
+        //var bd = 'Test';
+        //url = url + "?title=" + tlt + "&id=" + id
+        //$.get(url, function (response) {
+        //    $('#uploadsContainer').html(response);
+        //});
+
+
+        var from = '';
+        var frommail = '';
+        var to = '';
+        var tomail = '';
+
+
+
+
+        var pono = '';
+
+
+
+        var url = "/Mail/MailLoad";
+
+        var tlt = 'POReports';
+
+        var sub = 'PO Report -' + pono;
+        var bd = ' ';
+        var cc = '';
+
+        var filename = 'POReports' + id;
+
+        url = url + "?title=" + tlt + "&id=" + id + "&fmname=" + from + "&fmmail=" + frommail + "&toname="
+            + to + "&tomail=" + tomail + "&sub=" + sub + "&body=" + bd + "&CC=" + cc
+        $.get(url, function (response) {
+            $('#uploadsContainer').html(response);
+
+            $.ajax({
+                url: "/Employee/getbyID/" + Guserid,
+                typr: "GET",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    var obj = result.Value;
+                    if (result.Status == 'SUCCESS') {
+                        from = obj.EmpName;
+                        frommail = obj.Email;
+
+                        $('#CC').val(obj.Email);
+                        //$('#FromName').val(obj.EmpName);
+                    }
+                }
+            });
+
+
+            $.ajax({
+                url: "/AccountSetting/GetSettingData/",
+                typr: "GET",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    var obj = result.Value;
+                    if (result.Status == 'SUCCESS') {
+                        var obj = result.Value;
+                        debugger;
+                        if (obj != undefined) {
+
+                            $('#FromName').val(obj[0]["AccountName"]);
+                            $('#Password').val(obj[0]["EMailPassword"]);
+                            $('#Email').val(obj[0]["FromEmailID"]);
+
+                        }
+                    }
+                }
+            });
+
+
+            var int = id;
+
+            $.ajax({
+                url: "/PurchaseOrderMain/GetSuppdet/",
+                typr: "POST",
+                data: ({ masid: int }),
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    var obj = result.Value;
+                    if (result.Status == 'SUCCESS') {
+                        to = obj[0].Supplier;
+                        tomail = obj[0].SupplierEmail;
+                        var pono = obj[0].pur_ord_no;
+
+                        $('#To').val(obj[0].SupplierEmail);
+                        $('#ToName').val(obj[0].Supplier);
+                        $('#Subject').val('PO Report -' + pono);
+                        addses();
+
+                    }
+                }
+            });
+
+
+        });
+
+
+
+
+
+        $('#myModal3').modal('show');
+        $('#ID').val(filename);
+        $('#Date').val('');
+        //$('#To').val('');
+        //$('#ToName').val('');
+        // $('#Subject').val('subject');
+        //$('#Body').val('test');
+        //$('#Email').val('');
+        // $('#FromName').val('');
+        $('#passwrd').show();
+        $('#attach').show();
+        $('#btnsent').show();
+        // $('#filetabl').hide();
+
+
+        // LoadMailFileList(3);
+
+
+    }
+    function mailsent() {
+        debugger;
+        var flist = [];
+
+        var obj = {
+            FailPath: flpath,
+            FileName: $('#ID').val()
+        };
+        flist.push(obj);
+
+
+
+
+        var objSubmit = {
+            To: $('#To').val(),
+            ToName: $('#ToName').val(),
+            Subject: $('#Subject').val(),
+            //Buyerid: $('#Subject').val(),
+            Body: $('#Body').val(),
+            FromName: $('#FromName').val(),
+            Email: $('#Email').val(),
+            Password: $('#Password').val(),
+            CC: $('#CC').val(),
+            MailFile: flist
+        };
+
+        LoadingSymb();
+        $.ajax({
+            url: "/Mail/MailsentFromReport",
+            data: JSON.stringify(objSubmit),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                if (result.Value == true) {
+
+                    alert("Mail sent Sucessfully");
+
+                    window.location.href = "/PurchaseOrderMain/PurchaseOrderMainIndex";
+                } else {
+
+                    window.location.href = "/Error/Index";
+
+
+                }
+
+            },
+            error: function (errormessage) {
+
+                alert(errormessage.responseText);
+            }
+        });
+
+
+    }
+
+</script>

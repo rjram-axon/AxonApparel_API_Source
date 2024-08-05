@@ -1,0 +1,323 @@
+﻿@{
+    ViewBag.Title = "FabricMasterIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* margin-top: -28px;*@
+<style>
+    #tblYarndetails_filter
+    {
+        display: none;
+    }
+
+    #tblProcessdetails_filter
+    {
+        display: none;
+    }
+
+
+    #tbody_filter
+    {
+    }
+
+    #myModal1
+    {
+        overflow: auto;
+    }
+
+    .add_btn
+    {
+        width: 20px;
+        padding: 2px;
+        height: 20px;
+        margin-left: 0px;
+    }
+
+    .modal-dialog
+    {
+        width: 900px;
+        margin: 35px auto;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        FabricMasEditFlg = @Html.Raw(Json.Encode(ViewBag.FabricMasEditFlg))
+        FabricMasDeleteFlg = @Html.Raw(Json.Encode(ViewBag.FabricMasDeleteFlg))
+
+        $('#txtcutheaderdate').datepicker({ dateFormat: 'dd/mm/yy' });
+        
+    });
+</script>
+
+
+<script src="~/AxonScripts/FabricMaster.js?v=@DateTime.UtcNow.ToString()"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Fabric Master</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();" @ViewBag.FabricMasAddFlg>Add New</button>
+                            @* @if (ViewBag.ItemAddFlg == "true")
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Add New Item</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" disabled>Add New Item</button>
+                            }*@
+
+                            @* <table id="tbody" class="table table-bordered table-hover">
+                            </table>*@
+
+                            <div id="FabmainList">
+                                <table class="table table-responsive" id="tblMaindetails">
+                                    <thead>
+                                        <tr>
+                                            <th style="display: none;">Fabricmasid
+                                            </th>
+                                            <th style="display: none;">Fabricid
+                                            </th>
+                                            <th>Fabric
+                                            </th>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+                                <span id="MainError" style="color: red"></span>
+                            </div>
+
+
+                        </div>
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Fabric Master</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+                                                @* <div class="row">*@
+                                                @* <div class="row">*@
+                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                    <label>Fabric</label>
+                                                    <select id="ddlFablist" class="form-control select2">
+                                                    </select>
+                                                </div>
+                                                  <div class="col-md-4 col-sm-4 col-xs-12">
+                                                    <label>From GSM</label>
+                                                   <input type="number" class="form-control" placeholder="From GSM" id="txtFrmgsm">
+                                                </div>
+                                                  <div class="col-md-4 col-sm-4 col-xs-12">
+                                                    <label>To GSM</label>
+                                                     <input type="number" class="form-control" placeholder="To GSM" id="txtTogsm">
+                                                      <span><label id="validmsg" style="color:red;font-size:x-small" hidden="hidden">ToGSM should be greater than FromGSM </label></span>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <h2 style="font-size: 16px; font-weight: 600;">Yarn Details</h2>
+                                                        </div>
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <table class="table table-bordered table-hover" border="1">
+                                                                    <tr>
+
+                                                                        <td>Yarn</td>
+                                                                        <td>Count</td>
+                                                                        <td>Color</td>
+                                                                        <td>Percentage</td>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr class="mycontainer" id="maincomborow1">
+                                                                        <td style="width: 120px">
+                                                                            <select id="ddlYarn" class="form-control select2">
+                                                                            </select>
+                                                                        </td>
+                                                                        <td style="width: 120px">
+                                                                            <select id="ddlCount" class="form-control select2">
+                                                                            </select>
+                                                                        </td>
+                                                                        <td style="width: 120px">
+                                                                            <select id="ddlColor" class="form-control select2">
+                                                                            </select>
+                                                                        </td>
+                                                                         <td style="width: 120px">
+                                                                            <input type="text" class="form-control" placeholder="Enter percentage" id="txtPercentage">
+                                                                        </td>
+                                                                        <td style="width: 60px">
+                                                                            <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnyarnadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                            <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnyarnupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <div id="FabList">
+                                                                    <table class="table table-responsive" id="tblYarndetails">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th style="display: none;">Fabricmasid
+                                                                                </th>
+                                                                                <th style="display: none;">Fabricmasid
+                                                                                </th>
+                                                                                <th style="display: none;">Yarnid
+                                                                                </th>
+                                                                                <th>Yarn
+                                                                                </th>
+                                                                                <th style="display: none;">Countid
+                                                                                </th>
+                                                                                <th>Count
+                                                                                </th>
+                                                                                <th style="display: none;">Colorid
+                                                                                </th>
+                                                                                <th>Color
+                                                                                </th>
+                                                                                <th>Percentage
+                                                                                </th>
+                                                                                <td>&nbsp;</td>
+                                                                            </tr>
+                                                                        </thead>
+
+                                                                    </table>
+                                                                    <span id="YarnError" style="color: red"></span>
+                                                                </div>
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <h2 style="font-size: 16px; font-weight: 600;">Process Details</h2>
+                                                        </div>
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <table class="table table-bordered table-hover" border="1">
+                                                                    <tr>
+
+                                                                        <td>Process</td>
+                                                                        <td>Loss</td>
+                                                                        <td>Rate</td>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr class="mycontainer" id="maincomborow2">
+                                                                        <td style="width: 120px">
+                                                                            <select id="ddlProcess" class="form-control select2">
+                                                                            </select>
+                                                                        </td>
+                                                                        <td style="width: 120px">
+                                                                            <input type="text" class="form-control" placeholder="Enter Loss" id="txtLoss">
+                                                                        </td>
+                                                                        <td style="width: 120px">
+                                                                            <input type="text" class="form-control" placeholder="Enter Rate" id="txtRate">
+                                                                        </td>
+                                                                        <td style="width: 60px">
+                                                                            <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnprocadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                            <button class="btn btn-primary add_btn" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnprocupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <div id="procList">
+                                                                    <table class="table table-responsive" id="tblProcessdetails">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th style="display: none;">Fabricmasid
+                                                                                </th>
+                                                                                <th style="display: none;">Fabricmasid
+                                                                                </th>
+                                                                                <th style="display: none;">Processid
+                                                                                </th>
+                                                                                <th>Process
+                                                                                </th>
+                                                                                <th>Loss
+                                                                                </th>
+                                                                                <th>Rate
+                                                                                </th>
+                                                                                <td>&nbsp;</td>
+                                                                            </tr>
+                                                                        </thead>
+
+                                                                    </table>
+                                                                    <span id="ProcessError" style="color: red"></span>
+                                                                </div>
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <form class="form-horizontal form-label-left">
+                                                </form>
+                                                @*   </div>*@
+                                                @*  </div>*@
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        @*<span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>*@
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                          <button type="button" class="btn btn-success" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /page content -->

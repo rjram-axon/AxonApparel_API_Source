@@ -1,0 +1,296 @@
+﻿@{
+    ViewBag.Title = "CostingStatementIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtDeliDate').datepicker();
+        $('#txtOrderDate').datepicker();
+        $('#txtFromDate').datepicker();
+        $('#txtToDate').datepicker();
+    });
+</script>
+
+
+<script src="~/AxonScripts/Statement/Planning/CostingReport.js"></script>
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+            <div class="x_panel">
+                <div class="x_content">
+                    <form class="form-inline">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                </div>
+                                <div class="col-sm-4" style="margin-left: 10px;">
+                                    <div class="form-group">
+                                        <label style="font-size: 19px; white-space: nowrap; text-align: center;">
+                                         Costing
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="x_content">
+
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                                Company
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlMCompany" class="form-control" onchange="CMainlist();"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                               Order No
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlMOrderNo" class="form-control" onchange="CMainlist();"></select>
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                               Style
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlMStyle" class="form-control" onchange="CMainlist();"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                                Buyer
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlMBuyer" class="form-control" onchange="CMainlist();"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="maxl col-md-12 " style="width: 600px; margin-top: -5px;">
+                                                <label class="radio inline">
+                                                    <input type="radio" checked value="P" name="proctype" onchange="CMainlist();">
+                                                    <span>Work Order</span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input type="radio" value="W" name="proctype" onchange="CMainlist();">
+                                                    <span>Sample Order</span>
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                       
+                                          
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                         <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                               Unit
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlMUnit" class="form-control" onchange="CMainlist();"></select>
+                                            </div>
+                                        </div>
+                                        
+                                          <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                               Ref No
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlMRefno" class="form-control" onchange="CMainlist();"></select>
+                                            </div>
+                                        </div>
+                                          <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                            Job No
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                              <select id="ddlMJobno" class="form-control" onchange="CMainlist();"></select>
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                            Season
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                              <select id="ddlMSeason" class="form-control" onchange="CMainlist();"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                             <div class="col-md-6 col-sm-9 col-xs-12" style="margin-top: 0px;margin-left:0px;">
+                                                <input type="checkbox" name="vehicle" value="Bike">
+                                             General
+                                            </div>
+                                              <div class="col-md-6 col-sm-9 col-xs-12" style="margin-top: 0px;">
+                                                <input type="checkbox" name="vehicle" value="Bike">
+                                              Summary
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                       
+                                         <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                               Item Group
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlMType" class="form-control" onchange="CMainlist();"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                             <table class="table table-responsive" id="tblmaindetails" style="margin-left:10px;width:316px;">
+                                        <thead>
+                                            <tr>
+                                                <th>A</th>
+                                                 <th>Item</th>
+                                            </tr>                                         
+                                        </thead>
+                                    </table>
+                                            </div>
+                                          <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-6 col-xs-12">
+                                                From Date
+                                            </label>
+                                            <div class="col-md-3 col-sm-9 col-xs-12">
+                                                <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                            </div>
+                                            <label class="control-label col-md-3 col-sm-6 col-xs-12">
+                                                To Date
+                                            </label>
+                                            <div class="col-md-3 col-sm-9 col-xs-12">
+                                                <input type="text" id="txtToDate" class="form-control " placeholder="Date">
+                                            </div>
+                                   
+                                        </div>
+                                         
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-success" style="float:right;margin-top:10px;margin-right:5px;">List</button>
+                                        </div>
+                                          
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  <div class="row">
+                        <div class="col-md-12">
+                         <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                             <table class="table table-responsive" id="tblmaindetails">
+                                        <thead>
+                                            <tr>
+                                               <th>Buyer</th>
+                                                <th>Order No</th>
+                                                 <th>Ref No</th>
+                                                 <th>Style</th>
+                                                 <th>Group</th>
+                                            </tr>                                         
+                                        </thead>
+                                    </table>
+                                            </div>
+                             </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                         <div class="row">
+                        <div class="col-md-6">
+                        @* <form class="form-horizontal form-label-left input_mask">
+                              <div class="form-group">
+                                            <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                                From Date
+                                            </label>
+                                            <div class="col-md-2 col-sm-9 col-xs-12">
+                                                <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                            </div>
+                                            <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                                To Date
+                                            </label>
+                                            <div class="col-md-2 col-sm-9 col-xs-12">
+                                                <input type="text" id="txtToDate" class="form-control " placeholder="Date">
+                                            </div>
+                                   <div class="col-md-4 col-sm-9 col-xs-12" style="margin-top: 0px;">
+                                                <input type="checkbox" name="vehicle" value="Bike">
+                                              Display Yarn Detail
+                                            </div>
+                                        </div>
+                              
+                             </form>*@
+                            
+                            </div>
+                            
+                             <div class="col-md-6">
+                         <form class="form-horizontal form-label-left input_mask">
+                               <div class="form-group" style="float: right;margin-right: 10px;">
+                                    <button type="button" class="btn btn-success" onclick="LoadReport();">Report</button>
+                                    <button type="button" class="btn btn-success">Report I</button>
+                                    <button type="button" class="btn btn-success">Report II</button>
+                                   <button type="button" class="btn btn-primary">Export</button>
+                                       <button type="button" class="btn btn-danger">close</button>
+                                              
+                                   
+                                    </div>
+                              
+                             </form>
+                            
+                            </div>  
+                        </div>
+                     </div>
+                </div>
+            </div>
+
+            
+
+
+        </div>
+
+
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+    </div>
+</div>
+
+
+
+
+

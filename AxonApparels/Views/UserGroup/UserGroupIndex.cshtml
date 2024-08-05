@@ -1,0 +1,285 @@
+﻿@{
+    ViewBag.Title = "UserGroupIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@* margin-top: -28px;*@
+<style>
+    #tblgroupdetails_filter {
+    }
+</style>
+<script src="~/AxonScripts/UserGroup.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>User/Group Manager</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="x_panel">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="co-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <div class="maxl" style="margin-top: -15px;">
+                                                <label class="radio inline">
+                                                    <input type="radio" checked value="L" id="L" name="Local" onchange="loadGData();">
+                                                    <span>Group  </span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input type="radio" value="I" id="I" name="Local" onchange="loadUData();">
+                                                    <span>User</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-4 col-xs-12">
+                                            @if (ViewBag.UserGroupAddFlg == "true")
+                                            {
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" id="BtnNewAddUser" data-backdrop="static" data-keyboard="false" onclick="AddNewUser();">Add User / Group</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" id="BtnNewAddUser" data-backdrop="static" data-keyboard="false" disabled>Add User / Group</button>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="group">
+                                        <table class="table table-responsive" id="tblgroupdetails">
+                                            @*  <thead>
+                                                <tr>
+                                                    <th>User Name
+                                                    </th>
+
+                                                </tr>
+                                            </thead>*@
+                                        </table>
+
+                                    </div>
+
+                                    <div class="form-group col-md-12 col-sm-12 col-xs-12" id="user">
+                                        <table class="table table-responsive" id="tblUserdetails">
+                                            @*  <thead>
+                                                <tr>
+                                                    <th>User Name
+                                                    </th>
+
+                                                </tr>
+                                            </thead>*@
+                                        </table>
+
+                                    </div>
+                                    @* Load datatable css *@
+
+                                    <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                                    @* Load datatable js *@
+                                    @section Scripts{
+
+                                        <script src="~/build/js/jquery.dataTables.min.js"></script>
+                                        <script>
+                                           
+                                        </script>
+
+                                    }
+
+
+                                    <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" style="min-width: 33%">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">User Details</h4>
+                                                </div>
+                                                <div class="x_panel">
+                                                    <div class="x_panel">
+                                                        <div class="x_content">
+
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <div class="form-group" style="display: none">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">UserId</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-8">
+                                                                        <input type="text" class="form-control" id="UserId" placeholder="User Id" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">User Name</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-8">
+                                                                        <input type="text" class="form-control" id="UserName" placeholder="User Name" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">User Group</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-8">
+                                                                        <select id="ddlUserGroup" class="form-control" onchange="GroupName();"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">Group Type</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-8">
+                                                                        <input type="text" class="form-control" id="Grouptype" placeholder="Group Type" disabled />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" id="orginalpass">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">Password</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-7">
+                                                                        <input type="Password" class="form-control" id="Password" placeholder="Password" />
+
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1" id="eye">
+
+                                                                        <a style="cursor: pointer;"><i style="font-size: 20px; margin-top: 1px;" class="fa fa-2x fa-eye" onclick="ShowPasswordDcrypt();"></i></a>
+                                                                        @*<a href="" style="cursor:pointer;font-size: 20px;margin-top: 1px;" <i class="fa fa-2x fa-eye-slash"></i></a>*@
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" id="duplicatepass">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">Password</label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-7">
+                                                                        <input type="text" class="form-control" id="txtPassword" placeholder="Password" />
+
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <a style="cursor: pointer;"><i style="font-size: 20px; margin-top: 1px;" class="fa fa-2x fa-eye" onclick="ShowPasswordEncrypt();"></i></a>
+                                                                        @*<a href="" style="cursor:pointer;font-size: 20px;margin-top: 1px;" <i class="fa fa-2x fa-eye-slash"></i></a>*@
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-9 col-sm-9 col-xs-4">
+                                                                        <input type="Password" class="form-control" id="ConfirmPassword" placeholder="Confirm Password" style="display: none" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">Role</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-8">
+                                                                        <select id="ddlRole" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">Employee</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-8">
+                                                                        <select id="ddlEmployee" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">Secret Question</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-8">
+                                                                        <input type="text" class="form-control" id="Question" placeholder="Secret Question" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">Answer</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-8">
+                                                                        <input type="text" class="form-control" id="Answer" placeholder="Answer" />
+                                                                    </div>
+                                                                </div> 
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">Unit</label>
+                                                                    <div class="col-md-7 col-sm-7 col-xs-8">
+                                                                        <select id="UserUnit" class="form-control"></select>
+                                                                    </div>
+                                                                    <input type="checkbox" style="margin-left:10px" id="Multi_Unit">
+                                                                    Multiple
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="checkbox" style="margin-left:10px" id="ChangePassword">
+                                                                    User Can Change passsword<br>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer" style="border: none;">
+                                                    <button type="button" class="btn btn-success" id="btnAddU" onclick="return AddUser();">Save</button>
+                                                    <button type="button" class="btn btn-success" id="btnUpdateU" style="display: none;" onclick="UpdateUser();">Update</button>
+                                                    <button type="button" class="btn btn-danger" id="btnuserclose" onclick="UserClose();">Close</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" style="min-width: 33%">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">User Group</h4>
+                                                </div>
+                                                <div class="x_panel">
+                                                    <div class="x_panel">
+                                                        <div class="x_content">
+
+                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4"></label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-8">
+                                                                        <input type="text" class="form-control" id="GroupId" placeholder="GroupId" style="display: none" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Group Name</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-8">
+                                                                        <input type="text" class="form-control" id="GroupName" placeholder="Group Name" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Description</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-8">
+                                                                        <textarea class="form-control" rows="4" placeholder="Description" id="txtDescription"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-4">Group Type</label>
+                                                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                                                        <select id="ddlGrouptype" style="" class="form-control">
+                                                                            <option value="0">-- Select GroupType --</option>
+                                                                            <option value="A">A</option>
+                                                                            <option value="E">E</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer" style="border: none;">
+                                                    <button type="button" class="btn btn-success" id="btnAddG" onclick="return AddGroup();">Save</button>
+                                                    <button type="button" class="btn btn-success" id="btnUpdateG" style="display: none;" onclick="UpdateGroup();">Update</button>
+                                                    <button type="button" class="btn btn-danger" id="btngroupclose" onclick="GroupClose();">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "AllowanceIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #tblPurchasegrid_filter {
+        display: none;
+    }
+
+    #tblProcessgrid_filter {
+        display: none;
+    }
+
+    #tblPurchasegrid_wrapper {
+        margin-top: 10px;
+    }
+
+    #tblProcessgrid_wrapper {
+        margin-top: 10px;
+    }
+
+    #tblPurchasegrid {
+        margin-top: -9px;
+    }
+
+    #tblProcessgrid {
+        margin-top: -9px;
+    }
+</style>
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/HouseKeeping/AllowanceSetup.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+@* Load datatable css *@
+
+<link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+@* Load datatable js *@
+@section Scripts{
+
+    <script src="~/build/js/jquery.dataTables.min.js"></script>
+    <script>
+                                           
+    </script>
+
+}
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+
+            <div class="x_panel" style="border-radius:10px">
+                <div class="x_content">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label style="font-size: 19px; white-space: nowrap;">
+                                Tolerance Setup
+                            </label>
+
+                        </div>
+
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="maxl form-group" style=" margin-top: -6px;margin-left:10px">
+                                    <label class="radio inline">
+                                        <input type="radio" checked value="P" id="optPur" name="PType" onclick="LoadPurchaseDetails();">
+                                        <span>Purchase</span>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" value="R" id="optProd" name="PType" onclick="LoadProcessDetails();">
+                                        <span>Process </span>
+                                    </label>
+                                </div>
+
+
+
+
+                            </form>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" id="IgId">
+
+                            <form class="form-horizontal form-label-left input_mask" style="">
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-3 enquiry_edit">
+                                        Item Grp
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <select id="ddlItemGrp" class="form-control select2" onchange="LoadItemGroupDetails();" style="">
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" id="IId">
+                            <form class="form-horizontal form-label-left input_mask" style="">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-3 enquiry_edit">
+                                        Item 
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <select id="ddlItem" class="form-control select2" style="" onchange="LoadItemDetails();">
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" id="PrId">
+                            <form class="form-horizontal form-label-left input_mask" style="">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-3 enquiry_edit">
+                                        Process
+                                    </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <select id="ddlProcess" class="form-control select2" style="" onchange="LoadProcessDropDetails();">
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+
+                                <form class="form-horizontal form-label-left input_mask">
+
+                                    <div class="form-group" id="tblPur">
+                                        <table class="table table-responsive" id="tblPurchasegrid">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>ItemId</th>
+                                                    <th>Item</th>
+                                                    <th>CheckPer</th>
+                                                    <th>Percentage</th>
+                                                    <th>Quantity</th>
+                                                    <th>Uom</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="form-group" id="tblProc">
+                                        <table class="table table-responsive" id="tblProcessgrid">
+                                            <thead>
+                                                <tr>
+                                                    <th>ToleId</th>
+                                                    <th>ProcessId</th>
+                                                    <th>Process</th>
+                                                    <th>CheckPer</th>
+                                                    <th>Percentage</th>
+                                                    <th>Quantity</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group" style="display: inline-flex; float: right; margin-top: 20px;">
+                                        <button type="button" class="btn btn-round btn-success" id="Update" style="" onclick="AllowUpdate();">Update</button>
+                                        <button type="button" class="btn btn-round btn-success" id="ProcessUpdate" style="display: none;" onclick="AllowProcessUpdate();">Update</button>
+                                        <button type="button" class="btn btn-round btn-danger" data-dismiss="modal" onclick="ClearAllowData();">Close</button>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>

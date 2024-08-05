@@ -1,0 +1,603 @@
+﻿@{
+    ViewBag.Title = "PlanningYarnIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #tYFbody
+    {
+     margin-top:-9px;
+    }
+    #tblyarnDetails
+    {
+     margin-top:-9px;
+    }
+    #tYFbody_filter {
+    display:none;
+    }
+    #tYFbody_info {
+    display:none;
+    }
+    #tblyarnDetails_filter {
+    display:none;
+    }
+    #tblyarnDetails_info {
+    display:none;
+    }
+    #tblcompyarnloss_filter {
+    display:none;
+    }
+    #tblcompyarnloss_length {
+    display:none;
+    }
+    #tblcompyarnloss_info {
+    display:none;
+    }
+    #tblcompyarnloss_paginate {
+    display:none;Yarn Dyeing Details
+    }
+    #tFYDbody_filter {
+    display:none;
+    }
+    #tFYDbody_length {
+    display:none;
+    }
+    #tFYDbody_info {
+      display:none;
+    }
+    #tFYDbody_paginate {
+     display:none;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtEntryDate').datepicker();
+
+    })
+</script>
+
+
+<script src="~/AxonScripts/Planning/PlanningYarn.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+
+                    <div class="x_title">
+                        <h2>Yarn Planning</h2>
+                        @*<ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>*@
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                    
+                        <div class="x_panel">
+                            <div class="row">
+                                 <div class="row">
+                            <div class="col-md-4 ">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-12">Company</label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" class="form-control" placeholder="Company" id="txtCompany" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                            Buyer
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" class="form-control" placeholder="Buyer" id="txtBuyer" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                            Style
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" class="form-control" placeholder="Style" id="txtStyle" disabled>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div style="display: none; padding: 0px; margin: 0px;">
+                                        <div class="form-group" style="visibility: hidden;">
+                                            <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                                BuyOrdMasId
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                <input type="text" class="form-control" placeholder="Style" id="txtBuyOrdMasId" disabled>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group" style="visibility: hidden;">
+                                            <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                                CompanyId
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                <input type="text" class="form-control" placeholder="Style" id="txtHCompanyId" disabled>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group" style="visibility: hidden;">
+                                            <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                                BuyerId
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                <input type="text" class="form-control" placeholder="Style" id="txtHBuyerId" disabled>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group" style="visibility: hidden;">
+                                            <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                                StyleId
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                <input type="text" class="form-control" placeholder="Style" id="txtHStyleId" disabled>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group" style="visibility: hidden;">
+                                            <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                                ItemId
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                <input type="text" class="form-control" placeholder="Style" id="txtHItemId" disabled>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                                PlanId
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                <input type="text" class="form-control" placeholder="Style" id="txtHPlanId" disabled>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <form class="form-horizontal form-label-left input_mask">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Order No
+                                        </label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <input type="text" class="form-control" placeholder="OrderNo" id="txtOrderNo" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Ref No</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+
+                                            <input type="text" class="form-control" placeholder="RefNo" id="txtRefNo" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Item</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+
+                                            <input type="text" class="form-control" placeholder="Item" id="txtItem" disabled>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-md-4">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                            ProdQty
+                                        </label>
+                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                            <input type="text" class="form-control" placeholder="Style" id="txtProdQty" disabled>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Entry Date</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Entry Date" id="txtEntryDate">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+ </div>
+
+
+
+                    </div>
+
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+
+                 
+                        <div class="x_panel">
+                              <div class="row"> 
+                                  <div class="col-md-12">
+                             <h2 style="margin-top:-5px;">Fabric</h2>
+                          @*  <div class="x_title">
+                               
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+
+                                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>*@
+
+                            <div class="x_content">
+
+                                <div class="container" style="margin-top:0px;">
+                                    <table id="tYFbody" class="table table-striped table-bordered"></table>
+
+
+                                </div>
+
+
+
+                            </div>
+
+ </div>
+                        </div>
+                    </div>
+
+                  
+                        <div class="x_panel">
+                              <div class="row" >
+                                   <div class="col-md-12" >
+                            <h2 style="margin-top:-5px;">Yarn Details</h2>
+                            <div class="x_content">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <table class="table table-bordered table-hover" border="1">
+                                            <tr>
+
+                                                <td>Yarn</td>
+                                                <td>Counts</td>
+                                                <td>Color</td>
+                                                <td>%</td>
+                                                <td>Weight(kgs)</td>
+                                                <td>Loss%</td>
+                                                <td>ActualWeight</td>
+                                                <td>Dyeing</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr class="mycontainer" id="maincomborow1">
+                                                <td>
+                                                    <select id="ddlYarn" class="form-control" onchange="CheckFab();">
+                                                    </select>
+                                                    <span class="error">Select Yarn</span>
+                                                </td>
+                                                <td>
+                                                    <select id="ddlCount" class="form-control">
+                                                    </select>
+                                                    <span class="error">Select Count</span>
+                                                </td>
+                                                <td>
+                                                    <select id="ddlColor" class="form-control">
+                                                    </select>
+                                                    <span class="error">Select Color</span>
+                                                </td>
+
+                                                <td>
+                                                    <input type="text" id="txtPer" class="form-control" placeholder="%" onchange="LoadPer();">
+                                                    <span class="error">Enter Per</span>
+                                                </td>
+
+
+                                                <td>
+                                                    <input type="text" id="txtWeight" class="form-control" placeholder="Weight" disabled>
+                                                    <span class="error">Weight(Kgs)</span>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="txtLossPer" class="form-control" placeholder="LossPer" disabled>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="txtActualWeight" class="form-control" placeholder="ActualWeight" disabled>
+                                                    <span class="error">Enter ActualWeight</span>
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" id="Dyeing" name="interest" value="1" unchecked>
+                                                </td>
+                                                <td>
+
+                                                    <button class="btn btn-success btn-round" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" id="btnYarnViewAdd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                    <button class="btn btn-success btn-round" style="width: 20px;padding: 0px;height: 20px;border-radius:10px; display: none;" id="btnYarnViewUpdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+                                                    @* <input type="button" id="btnYarnViewAdd" value="Add" style="width: 80px" class="btn btn-success" />
+                                                    <input type="button" id="btnYarnViewUpdate" value="Update" style="width: 80px; display: none;" class="btn btn-success" />*@
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div id="CList1">
+                                            <table class="table table-responsive" id="tblyarnDetails">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th>SlNo
+                                                        </th>
+                                                        <th style="display:none;">YplanDetID
+                                                        </th>
+
+                                                        <th style="display:none;">Knit_In_ItemId
+                                                        </th>
+                                                        <th>Yarn
+                                                        </th>
+                                                        <th style="display:none;">Knit_In_SizeID
+                                                        </th>
+                                                        <th>Counts
+                                                        </th>
+                                                        <th style="display:none;">Knit_in_ColorID
+                                                        </th>
+                                                        <th>Color
+                                                        </th>
+                                                        <th>%
+                                                        </th>
+                                                        <th>Weight(kgs)
+                                                        </th>
+                                                        <th>Loss%
+                                                        </th>
+                                                        <th>ActualWeight
+                                                        </th>
+                                                        <th style="display:none;">YDSlNo
+                                                        </th>
+                                                        <th style="display:none;">FabricID
+                                                        </th>
+                                                        <th style="display:none;">BaseCID
+                                                        </th>
+                                                        <th style="display:none;">YMasID
+                                                        </th>
+                                                        <th>Dyeing
+                                                        </th>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+                                            <span id="ordercompItemError1" style="color: red"></span>
+                                        </div>
+                                    </div>
+                                   
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                     </div>
+
+
+
+
+
+
+                   
+                        <div class="x_panel">
+                             <div class="row" >
+                                 <div class="col-md-12">
+                            <h2 style="margin-top:-5px;">Yarn Process Loss</h2>
+                            <div class="x_content">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <table class="table table-bordered table-hover" border="1">
+                                            <tr>
+
+                                                <td>Process</td>
+                                                <td>Loss%</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr class="mycontainer" id="maincomborow">
+                                                <td>
+                                                    <select id="ddlProcess" class="form-control">
+                                                    </select>
+                                                    <span class="error">Select Process</span>
+                                                </td>
+
+                                                <td>
+                                                    <input type="text" id="txtLoss" class="form-control" placeholder="Loss">
+                                                    <span class="error">Enter Loss</span>
+                                                </td>
+
+
+                                                <td>
+
+                                                    <button class="btn btn-success btn-round" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" id="btnLossYarnViewAdd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                    <button class="btn btn-success btn-round" style="width: 20px;padding: 0px;height: 20px;border-radius:10px; display: none;" id="btnLossYarnViewUpdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+                                                    @* <input type="button" id="btnLossYarnViewAdd" value="Add" style="width: 80px" class="btn btn-success" />
+                                                    <input type="button" id="btnLossYarnViewUpdate" value="Update" style="width: 80px; display: none;" class="btn btn-success" />*@
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div id="CList">
+                                            <table class="table table-responsive" id="tblcompyarnloss">
+                                                <thead>
+                                                    <tr>
+                                                        <th>YPlanLossID
+                                                        </th>
+                                                        <th style="visibility: hidden;">ProcessId
+                                                        </th>
+                                                        <th>Process
+                                                        </th>
+                                                        <th>Loss%
+                                                        </th>
+                                                        <th>SlNo
+                                                        </th>
+                                                        <th>SNo
+                                                        </th>
+                                                        <td>&nbsp;</td>
+
+
+
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+                                            <span id="ordercompItemError" style="color: red"></span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                                  </div>
+                        </div>
+                    </div>
+
+
+
+                
+                        <div class="x_panel">
+                                <div class="row">
+                                    <div class="col-md-12">
+                            <h2 style="margin-top:-5px;">Yarn Dyeing Details</h2>
+                            
+                            <div class="x_content">
+
+                                <div class="container">
+                                    @* <table id="tFYDbody" class="table table-striped table-bordered"></table>*@
+                                    <table class="table table-responsive" id="tFYDbody">
+                                        <thead>
+                                            <tr>
+
+                                                <th style="display:none;">YPlanDetID
+                                                </th>
+                                                <th>SlNo
+                                                </th>
+                                                <th style="display:none;">Garment_ColorID
+                                                </th>
+                                                <th>GarmentColor
+                                                </th>
+                                                <th>Weight(Kgs)
+                                                </th>
+                                                <th style="display:none;">Yarn_DyeColorID
+                                                </th>
+                                                <th>DyeingColor
+                                                </th>
+                                                <th>%
+                                                </th>
+                                                <th>Weight(Kgs)
+                                                </th>
+                                                <th>Purchase(Kgs)
+                                                </th>
+                                                <th>Courses
+                                                </th>
+                                                <th>YDSlNo
+                                                </th>
+                                                <th style="display:none;">YPlanDyeID
+                                                </th>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+
+                                </div>
+                                <div id="saveyarnDyeing" style="display:none;">
+                                <table class="table table-responsive" id="tblcompyarndetails1">
+                                    <thead>
+                                        <tr>
+
+                                            <th>YPlanDetID
+                                            </th>
+                                            <th>SlNo
+                                            </th>
+                                            <th>Garment_ColorID
+                                            </th>
+                                            <th>GWeight
+                                            </th>
+                                            <th>Yarn_DyeColorID
+                                            </th>
+                                            <th>Qty_Per
+                                            </th>
+                                            <th>Weight
+                                            </th>
+                                            <th>Purchase_Qty
+                                            </th>
+                                            <th>Courses
+                                            </th>
+                                            <th>YDSlNo
+                                            </th>
+                                            <th>YPlanDyeID
+                                            </th>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+                                    </div>
+                                <div class="modal-footer" style="border:none;margin-top:5px;">
+                                    <button type="button" class="btn btn-round btn-success" id="btnAdd" onclick="return save();">Add</button>
+                                    <button type="button" class="btn btn-round btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                    <button type="button" class="btn btn-round btn-danger" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                    <button type="button" class="btn btn-round btn-danger" onclick="YClose();">Close</button>
+
+
+                                </div>
+
+                            </div>
+
+ </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- /page content -->
+
+
+
+
+                    <!-- footer content -->
+
+
+                    <!-- /footer content -->
+                </div>
+            </div>
+        </div>
+    </div>

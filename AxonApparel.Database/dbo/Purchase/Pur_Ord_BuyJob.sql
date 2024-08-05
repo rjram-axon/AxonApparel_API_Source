@@ -1,0 +1,30 @@
+﻿CREATE TABLE [dbo].[Pur_Ord_BuyJob]
+(
+    [Pur_Ord_BuyJobid] INT IDENTITY(1,1) NOT NULL, 
+    [Order_No] [varchar](25) NULL,
+	[Styleid] [int] NULL,
+	[quantity] [numeric](15, 3) NOT NULL DEFAULT (0),
+	[pur_ord_Detid] [int] NOT NULL,
+	[pur_ord_id] [int] NOT NULL,
+	[ReceivedQty] [numeric](15, 3) NOT NULL DEFAULT (0),	
+	[Cancel_Qty] [numeric](15, 3) NOT NULL DEFAULT (0),
+	[ItemCode] [varchar](30) NOT NULL DEFAULT (''),
+	[ReturnQty] [numeric](14, 3) NULL,
+	[ReqDate] [datetime] NULL DEFAULT (null),
+    [ItemID] [int] NULL,
+	[SizeID] [int] NULL,
+	[ColorID] [int] NULL,
+	[UOMId] [int] NULL,
+	[BomdetId][int]Null,
+	[IndBuyJobId][int]Null,
+	[Plan_ItmRemarks] [varchar](100) NULL,
+    CONSTRAINT [PK_Pur_Ord_BuyJob] PRIMARY KEY ([Pur_Ord_BuyJobid]), 
+    CONSTRAINT [FK_Pur_Ord_BuyJob_Style] FOREIGN KEY ([Styleid]) REFERENCES [StyleHeader]([StyleId]), 
+    CONSTRAINT [FK_Pur_Ord_BuyJob_Pur_Ord_Det] FOREIGN KEY ([pur_ord_detid]) REFERENCES [Pur_ord_det]([Pur_Ord_detid]), 
+	CONSTRAINT [FK_Pur_Ord_BuyJob_Pur_Ord_Mas] FOREIGN KEY ([pur_ord_id]) REFERENCES [Pur_ord_mas]([Pur_Ord_id]),
+	CONSTRAINT [FK_Pur_Ord_BuyJob_Color] FOREIGN KEY ([ColorID]) REFERENCES [Color]([ColorId]), 	
+	CONSTRAINT [FK_Pur_Ord_BuyJob_Size] FOREIGN KEY ([SizeID]) REFERENCES [Size]([SizeId]), 
+	CONSTRAINT [FK_Pur_Ord_BuyJob_Item] FOREIGN KEY ([ItemID]) REFERENCES [Item]([ItemId]), 
+	CONSTRAINT [FK_Pur_Ord_BuyJob_UomId] FOREIGN KEY ([UOMid]) REFERENCES [Unit_of_measurement]([uomid])
+
+)

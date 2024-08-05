@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "HSNIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*margin-top: -28px;*@
+<style>
+    #tbody_filter {
+    }
+</style>
+<script src="~/AxonScripts/Hsn.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>HSN</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="container">
+
+                            @if (ViewBag.HSNAddFlg == "true")
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">ADD NEW HSN DETAILS</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" disabled>EDIT HSN DETAILS</button>
+                            }
+
+                            <table id="tbody" class="table table-bordered table-hover" style="overflow: hidden;">
+                            </table>
+                        </div>
+                        @* Load datatable css *@
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+
+
+
+                        }
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModal" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Add HSN</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content ">
+                                        <div class="x_panel">
+                                            <div class="row">
+                                                <form class="form-horizontal form-label-left">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            ID
+                                                             <span style="color: red;">*</span>
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="GST" id="HSNid" placeholder="Enter GST TaxCode" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" >
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                           HSN code
+                                                             <span style="color: red;">*</span>
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="GST" id="txtHSNcode" placeholder="Enter HSN Code" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                         HSN Desc
+                                                             <span style="color: red;">*</span>
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="GST" id="txtHSNdesc" placeholder="HSN Description" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                           Ttype
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="GST" id="txtTtype" placeholder="Ttype" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Sort Order
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="sortorder" id="sortorder" placeholder="Sort Order" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            GST Tax code
+                                                             <span style="color: red;">*</span>
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <select id="ddlGSTtaxcode" class="form-control select2" ></select>
+                                                        </div>
+                                                        @*<div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="GST" id="txtGSTCode" placeholder="GST Tax code" class="form-control col-md-10">
+                                                        </div>*@
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            IGST Tax code
+                                                            <span style="color: red;">*</span>
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            @*<input type="text" name="GST" id="txtIGSTCode" placeholder="IGST Tax code" class="form-control col-md-10">*@
+                                                            <select id="ddlIGSTtaxcode" class="form-control select2" ></select>
+                                                        </div>
+                                                        </div>
+                                                   
+                                                    <div class="form-group" style="display:none">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Add TaxPer
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="GST" id="txtAddtaxper" placeholder="Addtax Percentage" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Status
+                                                            <span style="color: red;">*</span>
+                                                    <br>
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="rstatus" value="" class="required">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                                    </div>
+
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="return Update();">Update</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,645 @@
+﻿@{
+    ViewBag.Title = "CompanyUnitIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+ @*margin-top: -29px !important; *@
+<style>
+   
+      #tbody_filter {
+        
+    }
+    .add_btn
+    {
+    width: 20px;
+    padding: 2px;
+    height: 20px;
+     margin-left: -16px;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#cstdate').datepicker({ dateFormat: 'mm/dd/yy' });
+        $('#tindate').datepicker({ dateFormat: 'mm/dd/yy' });
+        $('#aepcdate').datepicker({ dateFormat: 'mm/dd/yy' });
+
+    });
+</script>
+
+<script src="~/AxonScripts/CompanyUnit.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Company Unit</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"  onclick="clearTextBox();">Add New Company Unit</button>
+                            <table id="tbody" class="table table-bordered table-hover">
+                                @*<thead>
+                                    <tr>
+                                        <th style="visibility: hidden;">ID
+                                        </th>
+                                        <th>Buyer Name
+                                        </th>
+                                        <th>Address
+                                        </th>
+                                        <th>City
+                                        </th>
+                                        <th>Status
+                                        </th>
+                                        <th>Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                </tbody>*@
+                            </table>
+                        </div>
+                      @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 54%;">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Add Company Unit</h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="x_panel">
+                                             <div class="row">
+                                            <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label for="txtCompID" style="display: none;">ID</label>
+                                                        <input type="text" class="form-control" id="txtCompID" placeholder="Id" disabled="disabled" style="display: none" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Company Unit<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" id="txtName" placeholder="Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Company<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-7 col-sm-8 col-xs-11">
+                                                            <select id="ddlCompany" class="form-control select2" style="width:185px; max-height:24px;">
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-1 col-sm-1 col-xs-1">
+                                                            @*<select id="ddlCountry" class="form-control"></select>*@
+                                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Add Company" style="" class="btnaddcompany btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Look Up</label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" id="txtlookup" placeholder="Look Up" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Address1</label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" id="txtaddress1" placeholder="Address1" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Address2</label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" id="txtaddress2" placeholder="Address2" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+                                                   @*  <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Wastage Cut%</label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" id="txtWastCut" placeholder="Wastage Cut%" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+                                                     <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Wastage Process%</label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" id="txtWastPro" placeholder="Wastage Process%" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+                                                     <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Office Expense</label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" id="txtOfficeExp" placeholder="Office Expense" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>*@
+                                                </form>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Address3</label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" id="txtaddress3" placeholder="Address3" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                            City<span style="color: red;"> *</span>
+                                                        </label>
+                                                        <div class="col-md-7 col-sm-8 col-xs-11">
+                                                            <select id="ddlCity" class="form-control">
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-1 col-sm-1 col-xs-1">
+                                                            @*<select id="ddlCountry" class="form-control"></select>*@
+                                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Add City" class="btnaddcity btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Zipcode</label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="number" id="txtzipcode" placeholder="Zipcode" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="ddltounit" class="control-label col-md-4 col-sm-3 col-xs-12">Type of Unit<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <select id="ddltounit" class="form-control">
+                                                                <option value="0">--Select Type--</option>
+                                                                <option value="1">Internal</option>
+                                                                <option value="2">External</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                   @*  <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Order-OverHead %</label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="number" id="txtOrderOverHead" placeholder="Order-OverHead %" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                     <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Quote-OverHead %</label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="number" id="txtQuoteOverHead" placeholder="Quote-OverHead %" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>*@
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-3 col-xs-12 control-label">
+                                                            Status
+                                                            <br>
+                                                        </label>
+
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="Status" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+</div>
+
+</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 75%;">
+                                >
+                               <div class="x_panel">
+                                   <div class="x_title">
+                                       <h2>Add Company</h2>
+
+                                       <div class="clearfix"></div>
+                                   </div>
+
+                                   <div class="modal-body">
+                                       <div class="x_panel">
+                                           <div class="form-group">
+                                               <label for="CompanyID" style="display: none;">ID</label>
+                                               <input type="text" class="form-control" id="CompanyId" placeholder="Id" disabled="disabled" style="display: none" />
+                                           </div>
+                                           <div class="col-md-4 col-sm-4 col-xs-12">
+                                               <form class="form-horizontal form-label-left input_mask">
+
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Company<span style="color: red;"> *</span></label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="Name" placeholder="Company Name" class="form-control col-md-10">
+                                                       </div>
+
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Look Up<span style="color: red;"> *</span></label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="lookup" placeholder="Look Up" class="form-control col-md-10">
+                                                       </div>
+
+                                                   </div>
+
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Address1<span style="color: red;"> *</span></label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="add1" placeholder="Address1" class="form-control col-md-10">
+                                                       </div>
+
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Address2</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="add2" placeholder="Address2" class="form-control col-md-10">
+                                                       </div>
+
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Address3</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="add3" placeholder="Address3" class="form-control col-md-10">
+                                                       </div>
+
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Email</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="email" placeholder="Email" class="form-control col-md-10">
+                                                       </div>
+
+                                                   </div>
+
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Fax</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="fax" placeholder="Fax" class="form-control col-md-10">
+                                                       </div>
+
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Country</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <select id="ddlcountry" class="form-control">
+                                                           </select>
+                                                       </div>
+
+
+                                                   </div>
+
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                           City
+                                                       </label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <select id="ddlcity" class="form-control">
+                                                           </select>
+                                                       </div>
+
+                                                   </div>
+
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Zipcode</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="zipcode" placeholder="Zipcode" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+
+
+
+
+
+                                               </form>
+                                           </div>
+                                           <div class="col-md-4 col-sm-4 col-xs-12">
+                                               <form class="form-horizontal form-label-left input_mask">
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Mobile No</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="mobno" placeholder="Mobile_No" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Contact Name</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="contactname" placeholder="Contact Name" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                           Status
+                                                    <br>
+                                                       </label>
+
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <div class="checkbox">
+                                                               <label>
+                                                                   <input type="checkbox" id="Status" value="">
+                                                               </label>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">CST No</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="cstno" placeholder="CST No" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">CST Date</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="cstdate" placeholder="CST Date" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">RBI Code</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="rbicode" placeholder="RBI Code" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Tin No</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="tinno" placeholder="Tin No" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Tin Date</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="tindate" placeholder="Tin Date" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Prefix</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="prefix" placeholder="Prefix" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">AEPC No</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="aepcno" placeholder="AEPC No" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+                                               </form>
+
+                                           </div>
+                                           <div class="col-md-4 col-sm-4 col-xs-12">
+
+                                               <form class="form-horizontal form-label-left input_mask">
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">AEPC Date</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="aepcdate" placeholder="AEPC Date" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Logo Name</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="logoname" placeholder="Logo Name" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">EAN No</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="eanno" placeholder="EAN No" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">IEC No</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="iecno" placeholder="IEC No" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">RCMC No</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="rcmcno" placeholder="RCMC No" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">TNGST No</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="tngstno" placeholder="Tngst No" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">IE Code</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="iecode" placeholder="IE Code " class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">Telex</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="telex" placeholder="Telex" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">C Range</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="range" placeholder="C Range" class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group">
+                                                       <label class="control-label col-md-4 col-sm-4 col-xs-12">C Division</label>
+                                                       <div class="col-md-8 col-sm-8 col-xs-12">
+                                                           <input type="text" id="division" placeholder="c Division " class="form-control col-md-10">
+                                                       </div>
+                                                   </div>
+
+
+                                               </form>
+                                           </div>
+
+
+
+
+
+                                       </div>
+
+
+
+                                       <form>
+                                       </form>
+                                   </div>
+
+                                   <div class="form-group">
+                                       <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                                   </div>
+                                   <div class="modal-footer" style="border: 0px solid">
+                                       <button type="button" class="btn btn-success" id="btnAddcompany" onclick="return Addcompany();">Save</button>
+                                       @*<button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>*@
+                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                   </div>
+                               </div>
+                            </div>
+                        </div>
+
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" >
+                                <div class="x_panel" style="width: 103%;">
+                                    <div class="x_title">
+                                        <h2>Add City</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+
+                                                <form class="form-horizontal form-label-left">
+                                                    <div class="form-group" style="visibility: hidden;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">City ID</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="City" id="txtCityID" placeholder="City Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">City<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="text" name="City" id="txtcitName" placeholder="City Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Country
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <select id="ddlCoun" class="form-control"></select>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Status
+                                                 
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="Statuscit" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAddcit" onclick="return Addcity();">Save</button>
+                                        @*<button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>*@
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->

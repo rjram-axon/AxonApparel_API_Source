@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "AlertSetupIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+     #tbody_filter {
+        
+    }
+     .add_btn
+    {
+    width: 20px;
+    padding: 2px;
+    height: 20px;
+     margin-left: -16px;
+    }
+
+
+    #tblSetdetails_filter
+    {
+        display: none;
+    }
+
+
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+      
+    });
+</script>
+
+
+
+<script src="~/AxonScripts/HouseKeeping/AlertSetup.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+<!-- page content -->
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Alert Setup</h2>
+                        
+                        <div class="clearfix"></div>
+
+                           <div class="row">
+                                       <div class="x_content">
+                                        <form class="form-horizontal form-label-left">
+                                          
+                                              <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Alert</label>
+                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                    <select id="ddlMAlert" class="form-control select2" onchange="LoadMaingrid();">
+                                                   </select>
+                                                </div>
+                                                <label class="control-label col-md-5 col-sm-5 col-xs-12"></label>
+                                            </div>
+                                             <div class="form-group">
+                                               <label class="radio inline">
+                                                    <input id="Document" class="Altype" name="Altype" type="radio" value="D" checked="checked" onclick="ChangeDoc();">
+                                                    <span>Document </span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input id="Planned" class="Altype" name="Altype" type="radio" value="S" onclick="ChangeDoc();">
+                                                    <span>Statement </span>
+                                                </label>
+                                            </div>
+                                           
+                                        </form>
+                                    </div>
+                    </div>
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+                            @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();" @ViewBag.StoreSetupAddFlg>Add New Setup</button>*@
+                            <table id="tbody" class="table table-bordered table-hover">
+                              
+                            </table>
+                        </div>
+                  @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                         <div class="modal-dialog" style="min-width: 0px;   ">
+
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2> Setup</h2>
+                                        
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_panel">
+                                        <div class="row">
+                                       <div class="x_content">
+                                        <form class="form-horizontal form-label-left">
+                                          
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Alert </label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                     <input type="text" name="txtAlert" id="txtAlert" placeholder="Alert" class="form-control col-md-10">
+                                                </div>
+                                            </div>
+                                            
+                                        </form>
+                                    </div>
+                                         </div>
+                                        <div  class="row">
+                                             <div id="SetupList">
+                                                <table class="table table-responsive" id="tblSetdetails">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="display: none;">AlertID
+                                                            </th>
+                                                             <th style="display: none;">EmployeeID
+                                                            </th>
+                                                            <th>Employee
+                                                            </th>
+                                                             <th>Mail
+                                                            </th>
+                                                            <th>SMS
+                                                            </th>
+                                                            <th>PopUp
+                                                            </th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="Error" style="color: red"></span>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    
+
+                                    <div class="modal-footer"  style="border:0px solid">
+                                        <button type="button" class="btn btn-success btn1" id="btnAdd" onclick="return Save();">Save</button>
+                                        <button type="button" class="btn btn-success btn1" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-success btn1" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

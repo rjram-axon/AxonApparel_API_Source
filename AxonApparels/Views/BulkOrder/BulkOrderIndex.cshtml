@@ -1,0 +1,2327 @@
+﻿@{
+    ViewBag.Title = "BulkOrderIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+
+@*margin-top: -28px;*@
+<style>
+    #tMbody_length {
+        display: none;
+    }
+
+    #tMbody_info {
+        display: none;
+    }
+
+    #tMbody_paginate {
+        display: none;
+    }
+
+    #tMbody_filter {
+    }
+
+    #tblSupdetails_length {
+        display: none;
+    }
+
+    #tblSupdetails_filter {
+        display: none;
+    }
+
+    #tblSupdetails_info {
+        display: none;
+    }
+
+    #tblSupdetails_paginate {
+        display: none;
+    }
+
+    #tblimdetails_length {
+        display: none;
+    }
+
+    #tblimdetails_filter {
+        display: none;
+    }
+
+    #tblimdetails_info {
+        display: none;
+    }
+
+    #tblimdetails_paginate {
+        display: none;
+    }
+
+
+    .no-js #loader {
+        display: none;
+    }
+
+    .js #loader {
+        display: block;
+        position: absolute;
+        left: 100px;
+        top: 0;
+    }
+
+    .se-pre-con {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url("/images/Preloader_2.gif") center no-repeat #fff;
+    }
+
+    .add_btn {
+        width: 20px;
+        padding: 2px;
+        height: 20px;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#dtRefDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#dtOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtFromDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                LoadMainGrid(Gs);
+            }
+        });
+        $('#txtToDate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateString, txtDate) {
+                DtChk = true;
+                LoadMainGrid(Gs);
+            }
+        });
+
+    })
+</script>
+
+
+
+<script src="~/AxonScripts/OrderProcessing/BulkOrder.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<script>
+    //paste this code under head tag or in a seperate js file.
+    // Wait for window load
+    $(window).load(function () {
+        // Animate loader off screen
+        $(".se-pre-con").fadeOut("slow");;
+    });
+</script>
+
+
+
+
+
+<!-- page content -->
+
+
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    @* <div class="page-title">
+              <div class="title_left">
+                <h3>Bulk Order</h3>
+              </div>
+
+             
+            </div>*@
+
+
+                    <div class="clearfix"></div>
+                    <div class="x_panel">
+                        <div class="row">
+
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask input_one">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Company</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <select id="ddlMCompany" class="form-control select2" onchange="CMainList();">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ex3">From Date</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                        </div>
+                                    </div>
+
+
+
+
+                                </form>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask input_one">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                            Buyer
+                                        </label>
+                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <select id="ddlMBuyer" class="form-control select2" onchange="BMainList();">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ex3">To Date</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <input type="text" id="txtToDate" class="form-control" placeholder="Date">
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask input_one">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Ref No</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <select id="ddlRefNo" class="form-control select2" onchange="RMainList();"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group check_one">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Order Type</label>
+                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                            @*<input type="checkbox">
+                                            Dispatched Orders *@
+                                            <select id="ddlMOrderType" class="form-control select2" onchange="CMainList();">
+
+                                                <option value="0">--Select Order Type--</option>
+                                                <option value="B">BULK ORDER</option>
+                                                <option value="D">DOMESTIC</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask input_one">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                            Order No
+                                        </label>
+                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <select id="ddlOrderNo" class="form-control select2" onchange="OMainList();">
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-sm-4 col-xs-2">
+                                            <input type="checkbox" style="float: right;" id="ChkDispatch">                                           
+                                        </label>
+                                        <div class="col-md-8 col-sm-8 col-xs-8" onchange="OMainList();">
+                                            Dispatched Orders
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
+
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group" style="text-align: right;">
+                                <button type="button" class="btn btn-success" onclick="MainList();">List</button>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="x_panel">
+
+                     
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" id="AddnewOrd-" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();" @ViewBag.OrderAddFlg>Add New Order</button>
+                          
+                      
+                            
+                         
+                        <table id="tMbody" class="table table-striped table-bordered" style="width: 80%;"></table>
+                        <div style="display: inline-flex">
+                            <div class="form-group" style="margin-top: 9px;">
+                                <input type="button" class="btn  btn-primary btn_program" value="ORDER" onclick="LOADORDER();">
+                            </div>
+                            <div class="form-group" style="margin-top: 9px;">
+                                <input type="button" class="btn btn-primary btn_bom_act" value="STYLE" onclick="LOADSTYLE(this);">
+                            </div>
+                            <div class="form-group" style="margin-top: 9px;display:none;">
+                                <input type="button" class="btn btn-primary btn_bom_act" value="TRIMS TEMPLATE" onclick="LOADGARMENT_ITEM(this);">
+                            </div>
+                             <div class="form-group" style="margin-top: 9px;display:none;">
+                                <input type="button" class="btn btn-primary btn_bom_act" value="YARN/FABRIC TEMPLATE" onclick="LoadOrditmdet(this);">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+
+                <!-- /page content -->
+
+
+
+                <div  class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y:scroll" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 74%">
+                        <div class="modal-content">
+                            <div class="x_panel">
+                                <div class="x_content">
+                                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                        <div class="x_content">
+                                            <h2 style="background: #F2F5F7; padding: 5px; width: 100%; display: block;">Order Processing</h2>
+
+                                            <div class="row" style="margin: 0px;">
+                                                <div class="x_panel">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                                          <div class="form-group">
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12" style="padding: 0px;">Copy From Order</label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <select id="ddlCPOrderNo" class="form-control" onchange="LoadFOrdDropDetails();">
+                                                                </select>
+                                                            </div>
+                                                           
+                                                        </div>
+
+                                                        <div class="form-group" style="display:none;">
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Quotation No</label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <select id="ddlQuoteNo" class="form-control" onchange="OpenRevQuote();">
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-2 col-sm-2 co-xs-12">
+                                                                <input type="checkbox" id="chk" class="col-md-4" name="revchk" value="R" onclick="OpenRevQuote();" />
+
+                                                                <label class="control-label col-md-1">Revised</label>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <br />
+                                                        <div class="form-group" style="margin-top: -13px;margin-bottom: 2.2em; display:none;" id="ddlrevid";>
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Revised Quot. No</label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <select id="ddlRevised" class="form-control" style="width: 205px;">
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="form-group" style="margin-top: -13px;" id="ddlErevid">
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Crnt.Rvsd.QuotNo</label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <input type="text" placeholder="RevQuoteNo" id="txtERevNo" class="form-control" disabled>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                    </div>
+                                                    <div class="col-md-5 col-sm-6 col-xs-12" >
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12" style="padding: 0px;">Copy Ref No</label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <select id="ddlCPRefNo" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-1 col-sm-1 col-xs-12">
+                                                                <button id="BtnLoad" class="btn btn-success" onclick="LoadCpyOrderNo();">List</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" style="margin-left: -13em;display:none" id="unchklblid"; >
+                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12">
+                                                                <p style="color: #0026ff">* Unchecked And Checked To Get New RevQuote No</p>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                                    <div class="x_panel">
+
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Buyer <span style="color: red;">*</span></label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                        <select id="ddlBuyer" class="form-control" onchange="LoadBuyerAdd();">
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add Buyer" style="" class="btnaddbuyer btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <textarea class="form-control" rows="4" style="height: 48px;" placeholder="Address" id="txtBuyAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Consignee</label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                        <select id="ddlConsignee" class="form-control" onchange="LoadConAdd();"></select>
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add Consignee" style="" class="btnaddconsignee btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <textarea class="form-control" rows="5" style="height: 48px;" placeholder="Address" id="txtConAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Buyer Agent</label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                        <select id="ddlAgent" class="form-control" onchange="LoadBuyAgAdd();"></select>
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add Agent" style="" class="btnaddagent btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+
+                                                                        <textarea class="form-control" rows="5" style="height: 48px;" placeholder="Address" id="txtBuyAgAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Ship Agent</label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                        <select id="ddlShipAgent" class="form-control" onchange="LoadShipAgAdd();"></select>
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add Agent" style="" class="btnaddshipagent btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <textarea class="form-control" rows="5" style="height: 48px;" placeholder="Address" id="txtShipAgAdd" disabled></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Sample No</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlSampleOrder" class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">BuyOrdMasID</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" class="form-control" placeholder="" id="txtBuyOrdMasID">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Base UnitID</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" id="txtbasunitID" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">GarmentConID</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="country" id="txtGarmentConID" class="form-control col-md-10">
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Enquiry No</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlenquiryno" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group" style="display:none;">
+                                                                    <div class="maxl">
+                                                                        <label class="radio inline col-md-3 col-sm-3 col-xs-12">
+
+                                                                            <input id="" checked name="PAType" type="radio" value="P">
+                                                                            <span>Pending </span>
+                                                                        </label>
+                                                                        <label class="radio inline col-md-3 col-sm-3 col-xs-12">
+                                                                            <input id="" name="PAType" type="radio" value="A">
+                                                                            <span>Approved </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                                    <div class="x_panel">
+
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left">
+
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Order Type <span style="color: red;">*</span></label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlOrderType" class="form-control" onchange="LoadOrderPrefix();">
+
+                                                                            <option value="0">--Select Order Type--</option>
+                                                                            <option value="B">BULK ORDER</option>
+
+                                                                            <option value="D">DOMESTIC</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Exporter<span style="color: red;"> *</span></label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                        <select id="ddlCompany" class="form-control select2" onchange="LoadOrderPrefix();">
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add Company" style="" class="btnaddcompany btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Order No<span style="color: red;"> *</span></label>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" class="form-control" placeholder="Order No" value="" id="txtOrderNo" name="OrdNo" disabled>
+                                                                    </div>
+                                                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group">
+                                                                        <input type="text" placeholder="OrderDate" id="dtOrderDate" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Ref No<span style="color: red;"> *</span></label>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                        <input type="text" class="form-control" placeholder="Ref No" id="txtRefNo" onchange="CheckRefNo(this.value)">
+                                                                    </div>
+                                                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group">
+                                                                        <input type="text" placeholder="RefDate" id="dtRefDate" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                                        Buyer Ref<span class="required"></span>
+                                                                    </label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" class="form-control" placeholder="Buyer Ref" id="txtBuyRefNo">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Quantity<span style="color: red;"> *</span></label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="Quantity" id="txtQty" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Old Quantity</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="Old Quantity" id="txtOldQty" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Order Unit</label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                        <select id="ddlUom" class="col-md-3 col-sm-12 col-xs-12 form-control" onchange="LoadGarmConAdd();">
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add UOM" style="" class="btnadduom btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Base Unit</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="country" id="txtbasunit" class="form-control col-md-10" disabled>
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">System</label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                        <select id="ddlShipsystem" class="form-control"></select>
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add System" style="" class="btnaddsystem btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Shipment<span style="color: red;"> *</span></label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                        <select id="ddlShipMode" class="form-control"></select>
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add Shipment" style="" class="btnaddshipment btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Payment<span style="color: red;"> *</span></label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                        <select id="ddlPayment" class="form-control"></select>
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add Payment" style="" class="btnaddpayment btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Manager<span style="color: red;"> *</span></label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                        <select id="ddlManager" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add Employee" style="" class="btnaddemployee btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Merch<span style="color: red;"> *</span></label>
+                                                                    <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                        <select id="ddlMerch" class="form-control">
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-1 col-sm-1 col-xs-1">
+
+                                                                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add Employee" style="" class="btnaddemployee btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display: none;">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">BuyerDept</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <input type="text" name="country" id="txtBuyerDeptId" class="form-control col-md-10">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" style="width: 112px;">Parent Order No</label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                        <select id="ddlParOrderNo" class="form-control">
+                                                                        </select>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                              <div class="x_panel">
+                                                                 <div class="row">
+                                                                       <div class="col-md-6 col-sm-6 co-xs-12">
+                                                                <input type="checkbox" id="chkorderpost" class="col-md-1" name="ordpostchk" value="P"/>
+                                                                <label class="control-label col-md-10" style="color:#FF7D33; font-weight:700;"> Order Posting</label>
+                                                                         </div> 
+                                                                      <div class="col-md-6 col-sm-6 co-xs-12">
+                                                                <input type="checkbox" id="chkplanpost" class="col-md-1" name="planpostchk" value="P"/>
+                                                                <label class="control-label col-md-10" style="color:#ff006e; font-weight:700;"> Planning Posting</label>
+                                                            </div> 
+                                                                 </div>
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                            @*  <div class="row" style="margin: 0px;">
+                                                 <div class="x_panel" style="padding: 0px;">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <div class="maxl">
+                                                                 <label class="radio inline col-md-4 col-sm-4 col-xs-12" style="margin-left: 701px;">
+
+                                                                    <input id="" checked  name="PAType" type="radio" value="P" disabled>
+                                                                    <span>Pending </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-4 col-sm-4 col-xs-12" style="margin-left: 802px;margin-top: -32px;">
+                                                                    <input id="" name="PAType" type="radio" value="A" disabled>
+                                                                    <span>Approved </span>
+                                                                </label>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                     </div>
+                                             </div>*@
+                                            <div class="x_panel">
+                                                <div class="x_title col-md-6 col-sm-6 col-xs-12" style="background: #F2F5F7; width: 50%; display: block; border: none;">
+                                                    <a class="collapse-link" style="cursor: pointer;">
+                                                        <h2 style="margin-top: 5px; cursor: pointer">Nominated Supplier</h2>
+                                                        <i class="fa fa-chevron-up" style="margin-top: 7px; margin-left: 4px;"></i></a>
+
+                                                    <div class="clearfix"></div>
+                                                </div>
+
+                                                <div class="x_content" id="nom_model" style="display: none;">
+                                                    <div class="row">
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="x_panel">
+                                                                <h4 style="margin-top: -1px;"><b>Supplier</b></h4>
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                    <div class="form-group">
+                                                                        <table class="table table-bordered table-hover" border="1">
+                                                                            <tr>
+
+                                                                                <td>Supplier</td>
+
+                                                                                <td>&nbsp;</td>
+                                                                            </tr>
+                                                                            <tr class="mycontainer" id="maincomborow1">
+                                                                                <td>
+                                                                                    <select id="ddlSupp" style="width: 200px;" class="form-control">
+                                                                                    </select>
+
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <button class="btn btn-primary add_btn" style="" id="btnSuppadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                    <button class="btn btn-primary add_btn" style="display: none;" id="btnSuppupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <div id="CList1">
+                                                                            <table id="tblSupdetails">
+                                                                                <thead>
+                                                                                    <tr>
+
+                                                                                        <th>SupplierId
+                                                                                        </th>
+                                                                                        <th>Supplier
+                                                                                        </th>
+
+                                                                                        <td>&nbsp;</td>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                            </table>
+                                                                            <span id="orderItemError1" style="color: red"></span>
+                                                                        </div>
+                                                                        @*                                                                         <table id="example" class="display" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+    
+      <th>Supplier</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+     
+      <td>
+         <select id="ddlSuppTest" style="width: 200px;" class="form-control">
+          </select>
+      </td> 
+      <td><button type="button" id="removesupp"  onclick="deleteRow(this);" data-toggle="tooltip" data-placement="top" title="Remove" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" class="btnsupremove1 btn btn-round btn-danger"> <i class="fa fa-minus"></i> </button> </td>
+    </tr>
+  </tbody>
+</table>*@
+                                                                        <table id="tblCustomers" cellpadding="0" cellspacing="0" border="1" style="display: none;">
+                                                                            <thead>
+                                                                                <tr>
+
+                                                                                    <th>Supplier</th>
+                                                                                    <th>Action</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            </tbody>
+                                                                            <tfoot>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <select id="ddlSuppTest" style="width: 200px;" class="form-control">
+                                                                                        </select></td>
+
+                                                                                    <td>
+                                                                                        <input type="button" onclick="Add()" value="Add" /></td>
+                                                                                </tr>
+                                                                            </tfoot>
+                                                                        </table>
+                                                                        <br />
+
+                                                                        <button type="button" style="width: 70px; display: none;" class="btn btn-success" id="addRow" onclick="">Add</button>
+
+                                                                        <table id="newRow" style="display: none;">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <select id="ddlSuppTest1" style="width: 200px;" class="form-control">
+                                                                                        </select>
+
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <button type="button" data-toggle="tooltip" onclick="deleteRow(this);" data-placement="top" title="Remove" class="btnsupremove btn btn-danger"><i class="fa fa-minus"></i></button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="x_panel">
+                                                                <h4 style="margin-top: -1px;"><b>Item</b></h4>
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                    <div class="form-group">
+                                                                        <table class="table table-bordered table-hover" border="1">
+                                                                            <tr>
+
+                                                                                <td>Item</td>
+
+                                                                                <td>&nbsp;</td>
+                                                                            </tr>
+                                                                            <tr class="mycontainer" id="maincomborow">
+                                                                                <td>
+                                                                                    <select id="ddlIm" style="width: 200px;" class="form-control">
+                                                                                    </select>
+
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <button class="btn btn-primary add_btn" id="btnImadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                    <button class="btn btn-primary add_btn" style="display: none;" id="btnImupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <div id="CList">
+                                                                            <table id="tblimdetails">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>NsupId
+                                                                                        </th>
+                                                                                        <th>ItemId
+                                                                                        </th>
+                                                                                        <th>Item
+                                                                                        </th>
+                                                                                        <th>SuppId
+                                                                                        </th>
+                                                                                        <td>&nbsp;</td>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                            </table>
+                                                                            <span id="orderItemError" style="color: red"></span>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="border: none">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger" onclick="CClose();">Close</button>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- footer content -->
+
+
+                    <!-- /footer content -->
+                </div>
+                <div  class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 40%">
+                        <div class="modal-content">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Post Order</h2>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row" style="margin: 0;">
+                                    <div class="row" style="margin: 0;">
+
+                                        <div class="col-md-8 col-sm-8 col-xs-12">
+
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                                                        Options 
+                                                    </label>
+                                                    <div class="col-md-2 col-sm-2 col-xs-12" style="">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" id="selectall" value="">All
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                        <div class="multiselect">
+
+                                                            <select multiple="multiple" id='sbTwo' class="form-control" style="height: 100px;">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </form>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 0px; float: right;">
+                                    <div class="form-group">
+                                        <button class="btn btn-success" onclick="SubReport();">Submit</button>
+                                        <button class="btn btn-danger" onclick="backtomain();">Cancel</button>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  class="modal fade" style="overflow-y:scroll" id="myModal3" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="x_panel" style="width: 102%;">
+                            <div class="x_title">
+                                <h2>Add Buyer</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    @* <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>*@
+                                    @* <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            </li>
+                                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                            </li>
+                                        *@
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="modal-body row">
+                                <div class="x_panel">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">ID Name</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="BuyerID" placeholder="ID" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Buyer<span style="color: red;"> *</span> </label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="Name" placeholder="Buyer Name" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">LookUp<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtLookup" placeholder="LookUp" class="form-control col-md-10" maxlength="10">
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address1</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="add1" placeholder="Address1" class="form-control col-md-10" maxlength="40">
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address2</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="add2" placeholder="Address2" class="form-control col-md-10" maxlength="40">
+                                                        </div>
+
+                                                    </div>
+
+                                                </form>
+
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address3</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="add3" placeholder="Address3" class="form-control col-md-10" maxlength="40">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                            City <span style="color: red;">*</span>
+                                                        </label>
+                                                        <div class="col-md-7 col-sm-7 col-xs-11">
+                                                            <select id="ddlcity" class="form-control" onchange="LoadCountry();">
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-1 col-sm-1 col-xs-1">
+                                                            @*<select id="ddlCountry" class="form-control"></select>*@
+                                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Add City" class="btnaddcity btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                            Country 
+                                                        </label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtCountry" placeholder="Country" class="form-control col-md-10" disabled>
+                                                        </div>
+
+                                                        <div class="col-md-8 col-sm-8 col-xs-12" style="display: none;">
+                                                            <input type="text" id="txtCountryId" placeholder="CountryID" class="form-control col-md-10" disabled>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Zipcode</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="number" id="zipcode" placeholder="Zipcode" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <h2>Contact Details</h2>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Contact Person</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtConPer" placeholder="Contact Person" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Designation</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtDes" placeholder="Designation" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                            Status
+                                                    <br>
+                                                        </label>
+
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="Status" value="" style="margin-top: 0px;">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Phone</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="number" id="txtPhone" placeholder="Phone" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Email</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtEmail" placeholder="Email" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <h2>Order Details</h2>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Currency</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <select id="ddlcurrency" class="form-control" >
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">System</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <select id="ddlsystem" class="form-control" >
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Shipment</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <select id="ddlshipment" class="form-control" >
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Payment</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                     <select id="ddlPayment2" class="form-control" >
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                          @*  <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Manager</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <select id="ddlManager" class="form-control" >
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                             <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Merch</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                   <select id="ddlMerch" class="form-control" >
+                                                                    </select>
+                                                                </div>
+                                                            </div>*@
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                              <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Manager</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <select id="ddlManager2" class="form-control" >
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                             <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Merch</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                   <select id="ddlMerch2" class="form-control" >
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Port of Loading</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                     <select id="ddlPordload" class="form-control" >
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Port Of Destination<span style="color: red;"> *</span></label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <select id="ddlPorddest" class="form-control" >
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                             <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Allowance</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="number" id="txtAllowence" placeholder="Allowance" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                </div>
+
+
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                            </div>
+                            <div class="modal-footer" style="border: 0px solid">
+                                <button type="button" class="btn btn-success" id="btnBuyerAdd" onclick="return BuyAdd();">Save</button>
+
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  class="modal fade" style="overflow-y:scroll" id="myModal4" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 50%;">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Add Consignee</h2>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="modal-body row">
+                                <div class="x_panel">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">ID Name</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" id="ConsigneeID" placeholder="ID Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Consignee <span style="color: red;">*</span></label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="conName" placeholder="Consignee Name" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Look Up <span style="color: red;">*</span></label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="lookup" placeholder="Look Up" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address1 <span style="color: red;">*</span></label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="conadd1" placeholder="Address1" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address2</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="conadd2" placeholder="Address2" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+
+
+
+
+                                                </form>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address3</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="conadd3" placeholder="Address3" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                            City <span style="color: red;">*</span>
+                                                        </label>
+                                                        <div class="col-md-7 col-sm-7 col-xs-11">
+                                                            <select id="ddlconscity" class="form-control">
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-1 col-sm-1 col-xs-1">
+                                                            @*<select id="ddlCountry" class="form-control"></select>*@
+                                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Add City" class="btnaddcity btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Zipcode <span style="color: red;">*</span></label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="number" id="conzipcode" placeholder="Zipcode" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                            Status
+                                                    <br>
+                                                        </label>
+
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="conStatus" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <form>
+                                </form>
+                            </div>
+                            <div class="form-group">
+                                <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                            </div>
+                            <div class="modal-footer" style="border: 0px solid">
+                                <button type="button" class="btn btn-success" id="btnconsAdd" onclick="return ConsAdd();">Save</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div  class="modal fade" style="overflow-y:scroll" id="myModal5" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 50%;">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Add Agent</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    @*                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>*@
+                                    @* <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            </li>
+                                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                            </li>*@
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="modal-body row">
+                                <div class="x_panel">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">ID Name</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" id="AgentID" placeholder="ID Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Agent<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="agentName" placeholder="Agent Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address1</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="agentadd1" placeholder="Address1" class="form-control col-md-10" maxlength="40">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address2</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="agentadd2" placeholder="Address2" class="form-control col-md-10" maxlength="40">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address3</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="agentadd3" placeholder="Address3" class="form-control col-md-10" maxlength="40">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                            City <span style="color: red;">*</span>
+                                                        </label>
+                                                        <div class="col-md-7 col-sm-7 col-xs-11">
+                                                            <select id="ddlagentcity" class="form-control" onchange="agentLoadCountry();">
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                            Country 
+                                                        </label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtagentCountry" placeholder="Country" class="form-control col-md-10" disabled>
+                                                        </div>
+
+                                                        <div class="col-md-8 col-sm-8 col-xs-12" style="display: none;">
+                                                            <input type="text" id="txtagentCountryId" placeholder="CountryID" class="form-control col-md-10" disabled>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                            Type <span style="color: red;">*</span>
+                                                        </label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <select id="ddlagentType" class="form-control">
+                                                                <option value="0">--Select Agent Type--</option>
+                                                                <option value="B">BuyerAgent</option>
+                                                                <option value="S">ShippingAgent</option>
+
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Zipcode</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="number" id="agentzipcode" title="zipcd" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Mobile <span style="color: red;">*</span></label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="number" id="mobileno" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Contact <span style="color: red;">* </span></label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="contactname" placeholder="Contact Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                            Status
+                                                        </label>
+
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input style="margin-top: 0px;" type="checkbox" id="agentStatus" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                <form>
+                                </form>
+                            </div>
+                            <div class="form-group">
+                                <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                            </div>
+                            <div class="modal-footer" style="border: 0px solid">
+                                <button type="button" class="btn btn-success" id="btnagentAdd" onclick="return AgentAdd();">Save</button>
+
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div  class="modal fade" style="overflow-y:scroll" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 75%;">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Add Company</h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="modal-body row">
+                                <div class="x_panel">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="CompanyID" style="display: none;">ID</label>
+                                                <input type="text" class="form-control" id="CompanyId" placeholder="Id" disabled="disabled" style="display: none" />
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Company<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="compName" placeholder="Company Name" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Prefix<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="prefix" placeholder="Prefix" class="form-control col-md-10" maxlength="3">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Look Up<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="complookup" placeholder="Look Up" class="form-control col-md-10" maxlength="3">
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Address1<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="compadd1" placeholder="Address1" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Address2</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="compadd2" placeholder="Address2" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Address3</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="compadd3" placeholder="Address3" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Email</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="email" placeholder="Email" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Fax</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="fax" placeholder="Fax" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">
+                                                            City<span style="color: red;"> *</span>
+                                                        </label>
+                                                        <div class="col-md-8 col-sm-7 col-xs-11">
+                                                            <select id="ddlcompcity" class="form-control" onchange="LoadcompCountry();">
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Country<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtcompCountry" placeholder="Country" class="form-control col-md-10" disabled>
+                                                            <input type="text" name="Country" id="ddlcountry" placeholder="Country Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                        </div>
+
+
+
+                                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Zipcode</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="number" id="compzipcode" placeholder="Zipcode" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Mobile No <span style="color: red;">*</span></label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="number" id="mobno" placeholder="Mobile_No" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Contact Name</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="compcontactname" placeholder="Contact Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">TNGST No</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="tngstno" placeholder="Tngst No" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">CST No</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="cstno" placeholder="CST No" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">CST Date</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="cstdate" placeholder="CST Date" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">RBI Code</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="rbicode" placeholder="RBI Code" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Tin No</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="tinno" placeholder="Tin No" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Tin Date</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="tindate" placeholder="Tin Date" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">AEPC No</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="aepcno" placeholder="AEPC No" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">AEPC Date</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="aepcdate" placeholder="AEPC Date" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Logo Name</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="logoname" placeholder="Logo Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">EAN No</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="eanno" placeholder="EAN No" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">IEC No</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="iecno" placeholder="IEC No" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">RCMC No</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="rcmcno" placeholder="RCMC No" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">IE Code</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="iecode" placeholder="IE Code " class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">Telex</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="telex" placeholder="Telex" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">C Range</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="range" placeholder="C Range" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-4 col-xs-12">C Division</label>
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <input type="text" id="division" placeholder="c Division " class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-sm-4 col-xs-12 control-label">
+                                                            Status
+                                                    <br>
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="compStatus" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </form>
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <form>
+                                </form>
+                            </div>
+
+                            <div class="form-group">
+                                <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                            </div>
+                            <div class="modal-footer" style="border: 0px solid">
+                                <button type="button" class="btn btn-success" id="btncompAdd" onclick="return CompAdd();">Save</button>
+
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  class="modal fade" style="overflow-y:scroll" id="myModal7" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Add Garment Uom</h2>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content ">
+                                <div class="x_panel">
+                                    <div class="row">
+                                        <form class="form-horizontal form-label-left">
+                                            <div class="form-group" style="display: none;">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">GarmentUom ID</label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <input type="text" name="GUomID" id="txtGUomID" placeholder="GUom Id" class="form-control col-md-10">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                    Garment UOM
+
+                                                        <span style="color: red;">*</span></label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <input type="text" name="Name" id="txtGUom" placeholder="Garment Uom Name" class="form-control col-md-10">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                    Abbreviation
+
+                                                </label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <input type="text" name="Name" id="txtGUomLookUp" placeholder="Abbreviation" class="form-control col-md-10">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                    To Pieces
+
+                                                </label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <input type="text" name="Name" id="txtToBUom" placeholder="To BUom" class="form-control col-md-10">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                    Status
+                                                    <br>
+                                                </label>
+
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" id="garStatus" value="">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                            </div>
+
+                            <div class="modal-footer" style="border: 0px solid">
+                                <button type="button" class="btn btn-success" id="btngarAdd" onclick="return GarAdd();">Save</button>
+
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  class="modal fade" style="overflow-y:scroll" id="myModal8" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="min-width: 50%">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="x-title">Add Employee</h2>
+                            </div>
+                            <div class="x_panel">
+
+                                <div class="modal-body row">
+                                    <div class="x_panel">
+                                        <div class="row">
+                                            <div class="form-group" style="display: none;">
+                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">ID </label>
+                                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                                    <input type="text" class="form-control" id="txtEmployeeID" placeholder="Id">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Employee<span style="color: red;">*</span></label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" name="Employee" id="txtName" placeholder="Employee Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Employee No<span style="color: red;"> *</span> </label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" name="EmpNo" id="txtempno" placeholder="Employee Number" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Company Unit </label>
+                                                        <div class="col-md-7 col-sm-7 col-xs-11">
+                                                            <select id="ddlCompanyUnit" class="form-control"></select>
+                                                        </div>
+                                                        <div class="col-md-1 col-sm-1 col-xs-1">
+                                                            @*<select id="ddlCountry" class="form-control"></select>*@
+                                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Add Company Unit" class="btnaddcpnyunit btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Department</label>
+                                                        <div class="col-md-7 col-sm-7 col-xs-11">
+                                                            <select id="ddlDepartment" class="form-control"></select>
+                                                        </div>
+                                                        <div class="col-md-1 col-sm-1 col-xs-1">
+                                                            @*<select id="ddlCountry" class="form-control"></select>*@
+                                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Add Department" class="btnadddept btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Designation</label>
+                                                        <div class="col-md-7 col-sm-7 col-xs-11">
+                                                            <select id="ddlDesignation" class="form-control"></select>
+                                                        </div>
+                                                        <div class="col-md-1 col-sm-1 col-xs-1">
+                                                            @*<select id="ddlCountry" class="form-control"></select>*@
+                                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Add Designation" class="btnadddesgn btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address1</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" name="Address1" id="txtAdd1" placeholder="Address" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address2</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" name="Address2" id="txtAdd2" placeholder="Address" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address3</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" name="Address1" id="txtAdd3" placeholder="Address" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">City</label>
+                                                        <div class="col-md-7 col-sm-7 col-xs-11">
+                                                            <select id="ddlCity" class="form-control"></select>
+                                                        </div>
+                                                        <div class="col-md-1 col-sm-1 col-xs-1">
+                                                            @*<select id="ddlCountry" class="form-control"></select>*@
+                                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Add City" class="btnaddcity btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Email</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" name="Email" id="txtempEmail" placeholder="Email" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Phone No</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" name="PhoneNo" id="txtPhoneNo" placeholder="Phone No" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                            Piece Rate
+                                                    <br>
+                                                        </label>
+
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="chkPieceRate" style="margin-top: 0px;" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                            Production
+                                                    <br>
+                                                        </label>
+
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="chkprodemp" style="margin-top: 0px;" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                            Releived
+                                                    <br>
+                                                        </label>
+
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="chkrlvd" style="margin-top: 0px;" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                            Status
+                                                    <br>
+                                                        </label>
+
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="empStatus" style="margin-top: 0px;" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                                </div>
+                                <div class="modal-footer" style="border: 0px solid">
+                                    <button type="button" class="btn btn-success" id="btnempAdd" onclick="return EmpAdd();">Save</button>
+
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  class="modal fade" style="overflow-y:scroll" id="myModal9" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="x_panel" style="width: 103%;">
+                            <div class="x_title">
+                                <h2>Add Shipment System</h2>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="modal-body row">
+                                <div class="x_content">
+                                    <div class="x_panel">
+                                        <div class="row">
+                                            <form class="form-horizontal form-label-left">
+                                                <div class="form-group" style="display: none;">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Shipment System ID</label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" name="Shipment System" id="ShipmentSystemID" placeholder="Shipment System Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Shipment System <span style="color: red;">*</span></label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" name="Shipment System" id="shipName" placeholder="Shipment System Name" class="form-control col-md-10">
+                                                    </div>
+                                                </div>
+
+
+
+
+                                                <div class="form-group">
+                                                    <div class="maxl" style="margin-left: 10px;">
+                                                        <label class="radio inline">
+                                                            <input id="Free" class="flat" name="FreeOrCharge" type="radio" value="F" checked>
+                                                            <span>Free </span>
+                                                        </label>
+                                                        <label class="radio inline">
+                                                            <input id="Charge" class="flat" name="FreeOrCharge" type="radio" value="C">
+                                                            <span>Charge </span>
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                        Status                                                 
+                                                    </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" id="shipStatus" style="border-color: lightgrey;" value="">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                            </div>
+                            <div class="modal-footer" style="border: 0px solid">
+                                <button type="button" class="btn btn-success" id="btnshipAdd" onclick="return ShipAdd();">Save</button>
+
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  class="modal fade" style="overflow-y:scroll" id="myModal10" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="x_panel" style="width: 103%;">
+                            <div class="x_title">
+                                <h2>Add Shipment Mode</h2>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="modal-body row">
+                                <div class="x_content">
+                                    <div class="x_panel">
+                                        <div class="row">
+                                            <form class="form-horizontal form-label-left">
+                                                <div class="form-group" style="display: none;">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Shipment Mode ID</label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" name="Shipment Mode" id="ShipementModeID" placeholder="Shipment Mode Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Shipment Mode<span style="color: red;"> *</span></label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" name="Shipment Mode" id="modeName" placeholder="Shipment Mode Name" class="form-control col-md-10">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                        Status
+                                                 
+                                                    </label>
+
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" id="modeStatus" value="">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                            </div>
+                            <div class="modal-footer" style="border: 0px solid">
+                                <button type="button" class="btn btn-success" id="btnmodeAdd" onclick="return ModeAdd();">Save</button>
+
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  class="modal fade" style="overflow-y:scroll" id="myModal11" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="x_panel" style="min-width: 50%;">
+                            <div class="x_title">
+                                <h2>Add Payment Terms</h2>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="modal-body row">
+                                <div class="x_content">
+                                    <div class="x_panel">
+                                        <div class="row">
+                                            <form class="form-horizontal form-label-left">
+                                                <div class="form-group" style="display: none;">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Payment Terms ID</label>
+                                                    <div class="col-md-5 col-sm-9 col-xs-12">
+                                                        <input type="text" name="Payment Terms" id="PaymentTermsID" placeholder="Payment Terms Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Payment Terms<span style="color: red;"> *</span></label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" name="Payment Terms" id="termsName" placeholder="Payment Terms" class="form-control col-md-10">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                        Status
+                                                 
+                                                    </label>
+
+                                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" id="termsStatus" style="margin-top: 0px;" value="">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                            </div>
+                            <div class="modal-footer" style="border: 0px solid">
+                                <button type="button" class="btn btn-success" id="btntermsAdd" onclick="return TermsAdd();">Save</button>
+
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>

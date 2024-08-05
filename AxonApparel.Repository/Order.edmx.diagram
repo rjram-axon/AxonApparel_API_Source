@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="007784b5863b4ed2a5d55674bdb279f5" Name="Diagram1" ZoomLevel="44">
+        <EntityTypeShape EntityType="OrderModel.Buy_Ord_Det" Width="1.5" PointX="0.17331175141656385" PointY="19.618592152194395" />
+        <EntityTypeShape EntityType="OrderModel.Buy_Ord_Img" Width="1.5" PointX="5.4558462116196038" PointY="9.4130093946182214" />
+        <EntityTypeShape EntityType="OrderModel.Buy_ord_MeasureDet" Width="1.5" PointX="1.9189178710425823" PointY="0.91040962976888273" />
+        <EntityTypeShape EntityType="OrderModel.Buy_Ord_MeasureMas" Width="1.5" PointX="10.369468850255696" PointY="6.153855043535053" />
+        <EntityTypeShape EntityType="OrderModel.Buy_ord_MeasureSizedet" Width="1.5" PointX="0.49081761226561738" PointY="13.24278471490498" />
+        <EntityTypeShape EntityType="OrderModel.buy_ord_style" Width="1.5" PointX="1.3584909613050944" PointY="4.4025006910797675" />
+        <EntityTypeShape EntityType="OrderModel.BuyerAmendDetails" Width="1.5" PointX="7.8858918789242818" PointY="22.586199890163819" />
+        <EntityTypeShape EntityType="OrderModel.ComboColor" Width="1.5" PointX="11.505404205762503" PointY="28.995907081754837" />
+        <EntityTypeShape EntityType="OrderModel.ComboItem" Width="1.5" PointX="8.0347955059422169" PointY="17.668677680971417" />
+        <EntityTypeShape EntityType="OrderModel.Comboitem_Composition" Width="1.5" PointX="9.9416034323822728" PointY="25.2361606029962" />
+        <EntityTypeShape EntityType="OrderModel.Combosize" Width="1.5" PointX="2.7633569979869561" PointY="4.4127252718492995" />
+        <EntityTypeShape EntityType="OrderModel.NominatedSupplier" Width="1.5" PointX="7.2855905011694828" PointY="7.0396415475009206" />
+        <EntityTypeShape EntityType="OrderModel.NominatedSupplier_Amend" Width="1.5" PointX="4.5946886076567175" PointY="29.603803410010322" />
+        <EntityTypeShape EntityType="OrderModel.Sam_Ord_Type" Width="1.5" PointX="10.535303307015123" PointY="14.506530381043689" />
+        <EntityTypeShape EntityType="OrderModel.Sam_Ord_Type_Amend" Width="1.5" PointX="5.8272018441125759" PointY="30.622380598738037" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_Buy_Ord_Style" />
+        <AssociationConnector Association="OrderModel.FK_StyleRowItemImg" />
+        <AssociationConnector Association="OrderModel.fk_Buy_Ord_Measuredet_MeasureMasid" />
+        <AssociationConnector Association="OrderModel.fk_Buy_ord_MeasureSizedet_MeasureDetid" />
+        <AssociationConnector Association="OrderModel.fk_Buy_Ord_MeasureMas_StyleRowid" />
+        <AssociationConnector Association="OrderModel.fk_Buy_ord_MeasureSizedet_MeasureMasID" />
+        <AssociationConnector Association="OrderModel.FK_StyleRowColor" />
+        <AssociationConnector Association="OrderModel.FK_StyleRowId" />
+        <AssociationConnector Association="OrderModel.FK_StyleRowItem" />
+        <AssociationConnector Association="OrderModel.FK_StyleRowItemComposition" />
+        <EntityTypeShape EntityType="OrderModel.Buy_Ord_Det_Amend" Width="1.5" PointX="3.3830973223704364" PointY="23.856579210542414" />
+        <EntityTypeShape EntityType="OrderModel.Buy_Ord_Mas_Amend" Width="1.5" PointX="5.7788721089152952" PointY="28.063282741263176" />
+        <EntityTypeShape EntityType="OrderModel.Buy_Ord_OrderDet" Width="1.5" PointX="8.39628194477236" PointY="15.929825536874041" />
+        <EntityTypeShape EntityType="OrderModel.Buy_Ord_OrderDet_Amend" Width="1.5" PointX="5.3591981406133611" PointY="5.3312765086681" />
+        <EntityTypeShape EntityType="OrderModel.Buy_Ord_Ship" Width="1.5" PointX="10.435583201439858" PointY="13.884007609395313" />
+        <EntityTypeShape EntityType="OrderModel.Buy_Ord_Ship_Amend" Width="1.5" PointX="9.6066172130436716" PointY="23.102087657480542" />
+        <EntityTypeShape EntityType="OrderModel.OrderCity" Width="1.5" PointX="4.7363161727489516" PointY="0.23375853907026284" />
+        <EntityTypeShape EntityType="OrderModel.Finyear" Width="1.5" PointX="10.95034098762569" PointY="14.844622931836463" />
+        <EntityTypeShape EntityType="OrderModel.Job_Ord_Color" Width="1.5" PointX="8.5460574573586037" PointY="3.926987262408709" />
+        <EntityTypeShape EntityType="OrderModel.Job_Ord_Color_Amend" Width="1.5" PointX="3.1894247993777625" PointY="8.6164298842737583" />
+        <EntityTypeShape EntityType="OrderModel.Job_Ord_Det" Width="1.5" PointX="7.72651025267621" PointY="20.989389384626126" />
+        <EntityTypeShape EntityType="OrderModel.Job_Ord_Det_Amend" Width="1.5" PointX="5.1683377014325647" PointY="23.687352340522853" />
+        <EntityTypeShape EntityType="OrderModel.Job_Ord_Mas_Amend" Width="1.5" PointX="0.071381555903415" PointY="7.5092816834846889" />
+        <EntityTypeShape EntityType="OrderModel.Job_Ord_Sum" Width="1.5" PointX="10.935189915325115" PointY="7.5133109127698985" />
+        <EntityTypeShape EntityType="OrderModel.OrderPortofLoading" Width="1.5" PointX="1.8061003041482064" PointY="13.145386552971502" />
+        <EntityTypeShape EntityType="OrderModel.Program_Summary" Width="1.5" PointX="8.4804937972130681" PointY="2.6864663673036109" />
+        <EntityTypeShape EntityType="OrderModel.Program_Summary_Amend" Width="1.5" PointX="1.5829469457189305" PointY="11.76606335293784" />
+        <EntityTypeShape EntityType="OrderModel.OrderUnit_of_measurement" Width="1.5" PointX="7.8720656502396169" PointY="24.965762269201576" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_OrderDet_Buy_ord_ship" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Ship_PortofLoading" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Ship_am_PortofLoading" />
+        <AssociationConnector Association="OrderModel.fk_program_summary_Uomid" />
+        <AssociationConnector Association="OrderModel.fk_program_summaryAmend_Uomid" />
+        <EntityTypeShape EntityType="OrderModel.OrderItem" Width="1.5" PointX="0.073543014039072679" PointY="14.751252345159301" />
+        <EntityTypeShape EntityType="OrderModel.Job_Ord_BomDet" Width="1.5" PointX="5.5142670150447017" PointY="16.094844840511144" />
+        <EntityTypeShape EntityType="OrderModel.Job_Ord_BOMMas" Width="1.5" PointX="8.1901709289244238" PointY="12.626934876957412" />
+        <EntityTypeShape EntityType="OrderModel.MarkEnqMas" Width="1.5" PointX="11.856943013079903" PointY="16.26686433715134" />
+        <EntityTypeShape EntityType="OrderModel.OrderStyleHeader" Width="1.5" PointX="8.9184558041945365" PointY="19.194482797381692" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_Item" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_am_Item" />
+        <AssociationConnector Association="OrderModel.FK__Buy_ord_M__ITEMI__34C1E58C" />
+        <AssociationConnector Association="OrderModel.FK_Buy_ord_MeasureSizedet_CompItem" />
+        <AssociationConnector Association="OrderModel.FK_Buy_ord_MeasureSizedet_GarItem" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_OrderDet_Item" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_OrderDet_am_Item" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Ship_StyleHeader" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Ship_am_StyleHeader" />
+        <AssociationConnector Association="OrderModel.FK_Stylecons" />
+        <AssociationConnector Association="OrderModel.FK_ColorItemRef" />
+        <AssociationConnector Association="OrderModel.FK_StyleItem" />
+        <AssociationConnector Association="OrderModel.fk_am_item" />
+        <AssociationConnector Association="OrderModel.FK_BasUOMRef" />
+        <AssociationConnector Association="OrderModel.fk_item" />
+        <AssociationConnector Association="OrderModel.Fk_Job_Itemid" />
+        <AssociationConnector Association="OrderModel.FK_Job_Ord_Sum_Item" />
+        <AssociationConnector Association="OrderModel.FK_NominatedSupplier_am_Item" />
+        <AssociationConnector Association="OrderModel.FK_NominatedSupplier_Item" />
+        <AssociationConnector Association="OrderModel.fk_program_summary_Itemid" />
+        <AssociationConnector Association="OrderModel.fk_program_summaryAmend_Itemid" />
+        <AssociationConnector Association="OrderModel.Pur_Unit" />
+        <AssociationConnector Association="OrderModel.Sec_Unit" />
+        <AssociationConnector Association="OrderModel.fk_Job_ord_bomdet_buy_ord_bomid" />
+        <AssociationConnector Association="OrderModel.Fk_Job_ord_bomdet_pur_uomid" />
+        <AssociationConnector Association="OrderModel.Fk_Job_ord_bomdet_uomid" />
+        <AssociationConnector Association="OrderModel.fk_Job_Ord_BOMMas_styleid" />
+        <AssociationConnector Association="OrderModel.fk_program_summary_Styleid" />
+        <AssociationConnector Association="OrderModel.fk_program_summaryAmend_Styleid" />
+        <EntityTypeShape EntityType="OrderModel.Ord_styleTempDet" Width="1.5" PointX="2.5553688213952674" PointY="24.167154889631622" />
+        <EntityTypeShape EntityType="OrderModel.Ord_styleTempMas" Width="1.5" PointX="2.2505240935136213" PointY="6.9227750333597768" />
+        <EntityTypeShape EntityType="OrderModel.OrdCons_Mas" Width="1.5" PointX="3.7568824718505525" PointY="20.032203475028371" />
+        <EntityTypeShape EntityType="OrderModel.OrdCons_ProcSeq" Width="1.5" PointX="3.7778795025208405" PointY="23.722973283251271" />
+        <EntityTypeShape EntityType="OrderModel.OrdCons_YarnFab" Width="1.5" PointX="4.019153529787042" PointY="26.340645787464755" />
+        <EntityTypeShape EntityType="OrderModel.OrderSize" Width="1.5" PointX="5.902303020424351" PointY="6.7819133581509412" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_Size" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_am_Size" />
+        <AssociationConnector Association="OrderModel.fk_Buy_ord_MeasureSizedet_SizeId" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_OrderDet_Size" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_OrderDet_am_Size" />
+        <AssociationConnector Association="OrderModel.FK_SizeId" />
+        <AssociationConnector Association="OrderModel.FK_GarmentItemid" />
+        <AssociationConnector Association="OrderModel.FK_Ord_styleTempItemId" />
+        <AssociationConnector Association="OrderModel.FK_Ord_styleTempMas_GItemId" />
+        <AssociationConnector Association="OrderModel.FK_ordconsitemid" />
+        <AssociationConnector Association="OrderModel.Fk_Job_Ord_BOMDet_Sizeid" />
+        <AssociationConnector Association="OrderModel.fk_job_ord_color_Sizeid" />
+        <AssociationConnector Association="OrderModel.fk_job_ord_color_am_Sizeid" />
+        <AssociationConnector Association="OrderModel.FK_Job_Ord_Sum_Size" />
+        <AssociationConnector Association="OrderModel.FK_Ord_styleTempId" />
+        <AssociationConnector Association="OrderModel.FK_Ord_styleTempmasId" />
+        <AssociationConnector Association="OrderModel.FK_Ord_styleTempMas_style_ID" />
+        <AssociationConnector Association="OrderModel.FK_ordconsmasid" />
+        <AssociationConnector Association="OrderModel.fk_program_summary_sizeId" />
+        <AssociationConnector Association="OrderModel.fk_program_summaryAmend_sizeId" />
+        <EntityTypeShape EntityType="OrderModel.OrderCountry" Width="1.5" PointX="3.4004025493750363" PointY="12.472259348478289" />
+        <AssociationConnector Association="OrderModel.FK_Country" />
+        <AssociationConnector Association="OrderModel.FK_PortofLoading_Country" />
+        <EntityTypeShape EntityType="OrderModel.OrderPlanning_Mas" Width="1.5" PointX="9.250542415888301" PointY="16.18898838022211" />
+        <AssociationConnector Association="OrderModel.FK_Planning_Mas_Item" />
+        <AssociationConnector Association="OrderModel.FK_Planning_Mas_Style" />
+        <EntityTypeShape EntityType="OrderModel.buyordapptitle" Width="1.5" PointX="5.34300732116355" PointY="5.8554689166394382" />
+        <AssociationConnector Association="OrderModel.fk_buyordapptitle_styleid" />
+        <EntityTypeShape EntityType="OrderModel.Job_Ord_Mas" Width="1.5" PointX="6.918564110490756" PointY="31.020973979970893" />
+        <AssociationConnector Association="OrderModel.fk_Job_Ord_mas_stylerowid" />
+        <AssociationConnector Association="OrderModel.fk1_jom_style" />
+        <EntityTypeShape EntityType="OrderModel.OrderColor" Width="1.5" PointX="9.4046653534307456" PointY="0.76090534066823556" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_Color" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_ComboColor" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_OrdColor" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_am_Color" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_am_ComboColor" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_am_OrdColor" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_OrderDet_Color" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_OrderDet_am_Color" />
+        <AssociationConnector Association="OrderModel.FK_Colorref" />
+        <AssociationConnector Association="OrderModel.FK_ComboColorref" />
+        <AssociationConnector Association="OrderModel.Fk_Job_Ord_BOMDet_Colorid" />
+        <AssociationConnector Association="OrderModel.fk_job_ord_color_am_colorid" />
+        <AssociationConnector Association="OrderModel.fk_job_ord_color_colorid" />
+        <AssociationConnector Association="OrderModel.FK_Job_Ord_Sum_Color" />
+        <AssociationConnector Association="OrderModel.FK_Ord_styleTempColorId" />
+        <AssociationConnector Association="OrderModel.fk_program_summary_colorid" />
+        <AssociationConnector Association="OrderModel.fk_program_summaryAmend_colorid" />
+        <AssociationConnector Association="OrderModel.FK_StyleRowColorComposition" />
+        <EntityTypeShape EntityType="OrderModel.Buy_Ord_Mas" Width="1.5" PointX="7.0242733317540367" PointY="20.256203645959591" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Det_buy_ord_mas" />
+        <AssociationConnector Association="OrderModel.FK_buy_ord_mas_buyermasid" />
+        <AssociationConnector Association="OrderModel.fk_Buy_Ord_MeasureMas_BuyMasId" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Ship_Buy_Ord_Mas" />
+        <AssociationConnector Association="OrderModel.FK_Ord_styleTempMas_Ord_MasId" />
+        <AssociationConnector Association="OrderModel.FK_Planning_Mas_Buy_Ord_Mas" />
+        <EntityTypeShape EntityType="OrderModel.OrderBuyer" Width="1.5" PointX="5.9384962347981034" PointY="14.141339368252707" />
+        <AssociationConnector Association="OrderModel.FK_buy_ord_mas_buyer" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Mas_Buyer_Add" />
+        <AssociationConnector Association="OrderModel.FK_buy_ord_mas_am_buyer" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Mas_am_Buyer_Add" />
+        <AssociationConnector Association="OrderModel.FK_Buyer_ToCity" />
+        <AssociationConnector Association="OrderModel.FK_Buyer_ToCountry" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqMas_Buyer" />
+        <AssociationConnector Association="OrderModel.FK_Ord_styleTempMas_BuyerId" />
+        <AssociationConnector Association="OrderModel.FK_ToBuyer" />
+        <EntityTypeShape EntityType="OrderModel.OrderGarment_Uom" Width="1.5" PointX="1.1206341744962307" PointY="10.297725414064585" />
+        <EntityTypeShape EntityType="OrderModel.MarkEnqFabric" Width="1.5" PointX="0.19521435173005536" PointY="27.715586228163719" />
+        <EntityTypeShape EntityType="OrderModel.MarkEnqItemDet" Width="1.5" PointX="4.6702735650680367" PointY="20.34451585465321" />
+        <EntityTypeShape EntityType="OrderModel.MarkEnqStyle" Width="1.5" PointX="10.207846780404378" PointY="30.5718853914048" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Mas_GarmentUom" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Mas_GUom" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Mas_am_GarmentUom" />
+        <AssociationConnector Association="OrderModel.FK_Buy_Ord_Mas_am_GUom" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqFabric_Color" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqItemDet_Color" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqItemDet_Garment_Uom" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqStyle_Garment_Uom" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqFabric_Item" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqFabric_MarkEnqMas" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqFabric_Size" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqItemDet_MarkEnqMas" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqItemDet_Size" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqStyle_MarkEnqMas" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqStyle_Style" />
+        <EntityTypeShape EntityType="OrderModel.MarkEnqEmbPrint" Width="1.5" PointX="4.1393756978862806" PointY="23.453291427089503" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqEmbPrint_MarkEnqMas" />
+        <EntityTypeShape EntityType="OrderModel.OrderSupplier" Width="1.5" PointX="10.962976874300733" PointY="21.980239625079669" />
+        <AssociationConnector Association="OrderModel.FK_Supplier_ToCity" />
+        <AssociationConnector Association="OrderModel.FK_Supplier_ToCountry" />
+        <AssociationConnector Association="OrderModel.FK_NominatedSupplier_Supplier" />
+        <AssociationConnector Association="OrderModel.FK_NominatedSupplier_am_Supplier" />
+        <AssociationConnector Association="OrderModel.FK_Ord_styleTempSupplierId" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteAcc" Width="1.5" PointX="2.8647719579119104" PointY="4.8788734101126314" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteAcc_Amend" Width="1.5" PointX="7.5051123553445152" PointY="11.766670113320775" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteCMT" Width="1.5" PointX="11.410941028693198" PointY="26.534056973892291" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteCMT_Amend" Width="1.5" PointX="3.4459750184072062" PointY="27.994122458619124" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteCommercial" Width="1.5" PointX="4.4711959047574528" PointY="2.8356397761197947" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteCommercial_Amend" Width="1.5" PointX="6.1225119280268032" PointY="26.476992500236719" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteFab" Width="1.5" PointX="9.5414737712319351" PointY="25.257898819287259" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteFab_Amend" Width="1.5" PointX="0.43575046976830367" PointY="0.3167749793812516" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteMas_Amend" Width="1.5" PointX="0.91036755634023225" PointY="2.9996374561449688" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteProcess" Width="1.5" PointX="11.316205300072303" PointY="1.8295162924702821" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteProcess_Amend" Width="1.5" PointX="10.285133163577473" PointY="14.332458636878272" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteYarn" Width="1.5" PointX="8.827842038510294" PointY="27.926600826869997" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteYarn_Amend" Width="1.5" PointX="10.454655233051001" PointY="6.5527853102203393" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteMas_AmendBuyerid" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteAcc_AmendItemId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteAcc_ItemId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteFab_AmendComponentId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteFab_AmendItemId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteFab_ComponentId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteFab_ItemId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteProcess_AmendItemId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteProcess_ItemId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteYarn_AmendItemId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteYarn_ItemId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteAcc_UomId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteAcc_AmendUomId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteFab_UomId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteFab_AmendUomId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteYarn_SizeId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteYarn_AmendSizeId" />
+        <EntityTypeShape EntityType="OrderModel.OrderCategory" Width="1.5" PointX="1.5995224274692694" PointY="7.115938666796283" />
+        <EntityTypeShape EntityType="OrderModel.OrderCompany" Width="1.5" PointX="10.742945830683665" PointY="8.5525835494290021" />
+        <AssociationConnector Association="OrderModel.FK_buy_ord_mas_company" />
+        <AssociationConnector Association="OrderModel.FK_buy_ord_mas_am_company" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqStyle_Category" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteMas_AmendCategoryid" />
+        <AssociationConnector Association="OrderModel.FK_Company_City" />
+        <AssociationConnector Association="OrderModel.FK_Company_Country" />
+        <AssociationConnector Association="OrderModel.fk_Job_Ord_BOMMas_Companyid" />
+        <AssociationConnector Association="OrderModel.FK_MarkEnqMas_Company" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteMas_AmendCompanyid" />
+        <AssociationConnector Association="OrderModel.FK_Planning_Mas_Company" />
+        <AssociationConnector Association="OrderModel.FK_ToCompany" />
+        <EntityTypeShape EntityType="OrderModel.MarkQuoteMas" Width="1.5" PointX="3.9468333292504925" PointY="18.560176366269669" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteMas_Buyerid" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteMas_Categoryid" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteMas_Companyid" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteMas_EnquiryId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteMas_StyleId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteAcc_QuoteId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteCMT_QuoteId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteCommercial_QuoteId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteFab_QuoteId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteProcess_QuoteId" />
+        <AssociationConnector Association="OrderModel.fk_MarkQuoteYarn_QuoteId" />
+        <EntityTypeShape EntityType="OrderModel.Courier_Det" Width="1.5" PointX="0.72516755607219763" PointY="28.033849639833836" />
+        <EntityTypeShape EntityType="OrderModel.Courier_Mas" Width="1.5" PointX="0.95750344589236358" PointY="19.9854800794206" />
+        <EntityTypeShape EntityType="OrderModel.Ord_Mesurement_Img" Width="1.5" PointX="9.2965918431508321" PointY="16.346157454115414" />
+        <AssociationConnector Association="OrderModel.Fk_StyRowId" />
+        <AssociationConnector Association="OrderModel.FK_Courier_Det_Color" />
+        <AssociationConnector Association="OrderModel.FK_Courier_Mas_Company" />
+        <AssociationConnector Association="OrderModel.FK_Courier_Det_Courier_Mas" />
+        <AssociationConnector Association="OrderModel.FK_Courier_Det_Item" />
+        <AssociationConnector Association="OrderModel.FK_Courier_Det_Size" />
+        <AssociationConnector Association="OrderModel.FK_Courier_Det_Unit_of_Measurement" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

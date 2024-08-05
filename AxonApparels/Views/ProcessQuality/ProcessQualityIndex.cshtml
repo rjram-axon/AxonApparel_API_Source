@@ -1,0 +1,447 @@
+﻿@{
+    ViewBag.Title = "ProcessQualityIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #myModal1 {
+        overflow: auto;
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    #tblPaydetails_filter {
+        display: none;
+    }
+
+    #outputjodettab_filter {
+        display: none;
+    }
+
+    #inputsavestkdettab_wrapper {
+        display: none;
+    }
+
+    #inputsavejodettab_wrapper {
+        display: none;
+    }
+
+    #entrygridtab_paginate {
+        display: none;
+    }
+
+    #entrygridtab_info {
+        display: none;
+    }
+
+    #entrygridtab_length {
+        display: none;
+    }
+
+    #outputsavejodettab_wrapper {
+        display: none;
+    }
+
+    #tblmaindetails_paginate {
+        display: none;
+    }
+
+    #tblmaindetails_length {
+        display: none;
+    }
+
+    #tblmaindetails_info {
+        display: none;
+    }
+
+    #tblmaindetails_filter {
+        margin-top: -28px;
+    }
+
+    #outputitmtab_paginate {
+        display: none;
+    }
+
+    #outputitmtab_info {
+        display: none;
+    }
+
+    #outputitmtab_length {
+        display: none;
+    }
+
+    #outputitmtab_filter {
+        margin-top: -28px;
+    }
+
+    #outputjodettab_paginate {
+        display: none;
+    }
+
+    #outputjodettab_info {
+        display: none;
+    }
+
+    #outputjodettab_length {
+        display: none;
+    }
+
+    #outputjodettab_filter {
+        margin-top: -28px;
+    }
+
+    #inputitmtab_paginate {
+        display: none;
+    }
+
+    #inputitmtab_info {
+        display: none;
+    }
+
+    #inputitmtab_length {
+        display: none;
+    }
+
+    #inputitmtab_filter {
+        margin-top: -28px;
+    }
+
+    #inputstkdettab_paginate {
+        display: none;
+    }
+
+    #inputstkdettab_info {
+        display: none;
+    }
+
+    #inputstkdettab_length {
+        display: none;
+    }
+
+    #inputstkdettab_filter {
+        display: none;
+    }
+
+    #inputjodettab_paginate {
+        display: none;
+    }
+
+    #inputjodettab_info {
+        display: none;
+    }
+
+    #inputjodettab_length {
+        display: none;
+    }
+
+    #inputjodettab_filter {
+        display: none;
+    }
+</style>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtDeliDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Process/ProcessQuality.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+
+
+            @* Load datatable css *@
+
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+
+
+
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" style="margin-top: 10px;">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Quality No
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtOrderNo" class="form-control " placeholder="Quality No" disabled>
+                                        </div>
+                                    </div>
+                                     
+                                    <div class="form-group" style="display: none;">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Issue No
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtIssueNo" class="form-control " placeholder="Issue No" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Quality Date
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtQualityDate" class="form-control " placeholder="Date">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                     <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Process
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtProcess" class="form-control " placeholder="Process" disabled>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Processor
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtProcessor" class="form-control " placeholder="Processor" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Issue Id
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtIssueId" class="form-control " placeholder="Issue No" disabled>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            Unit
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtUnit" class="form-control " placeholder="Unit" disabled>
+                                        </div>
+                                    </div>
+                                       <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                           RecptNo
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtrecptno" class="form-control " placeholder="Refno" disabled>
+                                        </div>
+                                    </div>
+                                     <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                           Recpt/RefNo
+                                        </label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input type="text" id="txtrecptrefDate" class="form-control " placeholder="Refno" disabled>
+                                        </div>
+                                    </div>
+                                  
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="row">
+                <div class="col-md-12">
+                    <div class="x_panel" style="width: 97.8%; margin-left: 11px;">
+                        <h2 style="margin-top: -5px;">Quality Items</h2>
+                        <div class="col-md-12">
+                            <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                <div class="form-group">
+                                    <table class="table table-bordered table-hover" border="1" id="inputitmtab">
+                                        <thead>
+                                            <tr>
+                                                <th>SNo</th>
+                                                <th>Itemid</th>
+                                                <th>Item</th>
+                                                <th>Colorid</th>
+                                                <th>Category I</th>
+                                                <th>SIzeid</th>
+                                                <th>Category II</th>
+                                                <th>Recpt Qty</th>
+                                                <th>Debit Qty</th>
+                                                <th>Acpt Qty</th>
+                                                <th>Rate</th>
+                                                <th>Amount</th>
+                                                
+                                              
+
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                       
+                    
+                    </div>
+                </div>
+            </div>*@
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h2 style="margin-top: -5px;">Process Order Info</h2>
+                            <form class="form-horizontal form-label-left input_mask" style="margin-left: -10px;">
+                                <div class="form-group">
+                                    <table class="table table-bordered table-hover" border="1" id="Ordertab">
+                                        <thead>
+                                            <tr>
+                                                <th style="display: none;">SNo</th>
+                                                <th style="display: none;">Itemid</th>
+                                                <th>Output Item</th>
+                                                <th style="display: none;">Colorid</th>
+                                                <th>Category I</th>
+                                                <th style="display: none;">Sizeid</th>
+                                                <th>Category II</th>
+                                                <th>Debit Qty</th>
+                                                <th>ProcOrdNo</th>
+                                                <th>ProgNo</th>
+                                                <th>JobOrdNo</th>
+                                                <th>Lot</th>
+                                                
+                                                <th>Adj Qty</th>
+                                                <th>Acpt Qty</th>
+                                                <th>Rate</th>
+                                                <th>Amount</th>
+                                                @*<th>View</th>*@
+
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h2 style="margin-top: -5px;">Stock Info</h2>
+                            <form class="form-horizontal form-label-left input_mask" >
+                                <div class="form-group">
+                                    <table class="table table-bordered table-hover" border="1" id="stktab">
+                                        <thead>
+                                            <tr>
+                                                <th>Sno</th>
+                                                <th>DocumentNo</th>
+                                                <th>Itmid</th>
+                                                <th>Clrid</th>
+                                                <th>Sizeid</th>
+                                                <th>Date</th>
+                                                <td>Process</td>
+                                                <td>Supplier</td>
+                                                <td>Lot No</td>
+                                                <td>Stock Qty</td>                                                
+                                                <td>Rej Qty</td>                                             
+
+
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                    
+                                  
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="row" style="margin: 0px;">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="row" style="margin: 0px;">
+                                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                                    <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                        Remarks
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                         <textarea class="form-control" rows="4" placeholder="Remarks" id="txtremarks" ></textarea>
+                                    </div>
+                                </div>
+                              
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+
+            </div>
+
+
+
+
+
+            <div class="row" style="margin: 0px;">
+                <div class="modal-footer" style="border: none; display: inline-flex; float: right;">
+                    <button class="btn btn-success " id="btnAdd" onclick="Add();">Save</button>
+                    <button class="btn  btn-success " onclick="ChkUpdate();" id="btnUpdate">Update</button>
+                    <button class="btn btn-danger " onclick="ChkDelete();" id="btnDel">Delete</button>
+                    <button class="btn btn-danger " data-dismiss="modal" style="margin-right: 5px;">Close</button>
+                </div>
+            </div>
+             <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+

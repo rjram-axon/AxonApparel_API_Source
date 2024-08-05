@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c03742f019f3465fb2ec82ad9630d9c5" Name="Diagram1" ZoomLevel="22">
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Issue_Det" Width="1.5" PointX="7.42815829786852" PointY="31.772958293451442" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Issue_Jobdet" Width="1.5" PointX="9.1311486648075046" PointY="11.676610549761266" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Issue_Mas" Width="1.5" PointX="6.186956514691448" PointY="21.849547962588048" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Ord_AddLess" Width="1.5" PointX="1.6148252345690621" PointY="3.1073348685667548" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Ord_JobDet" Width="1.5" PointX="10.739298769617127" PointY="29.640238939616939" />
+        <AssociationConnector Association="ApparelMVCModel.FK_prod_iss_det_ProcessIssueDetId" />
+        <AssociationConnector Association="ApparelMVCModel.FK_prod_iss_det_ProcessIssueId" />
+        <AssociationConnector Association="ApparelMVCModel.FK_prod_iss_det_ProcessIssueIdde" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Recpt_Det" Width="1.5" PointX="3.5516161842046383" PointY="11.924026599118498" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Recpt_Mas" Width="1.5" PointX="0.42675818522775466" PointY="4.2396628429366565" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proc_Recpt_mas_Prod_Recpt_Masid" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Recpt_Return" Width="1.5" PointX="9.5742715548604131" PointY="25.47667382353762" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proc_Recpt_Prod_Recpt_Masid" />
+        <EntityTypeShape EntityType="ApparelMVCModel.ProcessBuy_Ord_Mas" Width="1.5" PointX="7.506614481800522" PointY="18.745712467816524" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Group_Prod_Prg_Det" Width="1.5" PointX="1.1707655606655245" PointY="6.844458523599644" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Group_Prod_Prg_Mas" Width="1.5" PointX="2.044873724712466" PointY="12.272041088096817" />
+        <EntityTypeShape EntityType="ApparelMVCModel.ProcessJob_Ord_Mas" Width="1.5" PointX="3.2019309286037139" PointY="9.1306911600430922" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Inv_Dc" Width="1.5" PointX="11.050367971440018" PointY="27.386727688548493" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Inv_Det" Width="1.5" PointX="2.632766337428599" PointY="28.762668474001188" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Inv_RateDiff" Width="1.5" PointX="5.2916537361646316" PointY="1.7703328438896373" />
+        <EntityTypeShape EntityType="ApparelMVCModel.ProcessProd_Prg_Det" Width="1.5" PointX="2.7433670697470043" PointY="0.51397557580563036" />
+        <EntityTypeShape EntityType="ApparelMVCModel.ProcessProd_Prg_Mas" Width="1.5" PointX="0.678701129126689" PointY="19.93306543861193" />
+        <AssociationConnector Association="ApparelMVCModel.FK__Group_Pro__Buy_O__01381FE5" />
+        <AssociationConnector Association="ApparelMVCModel.FK__Group_Pro__GrpPr__04148C90" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Inv_Dc_Process_Recpt_Mas" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Inv_Det_Process_recpt_Det" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Inv_Det_Process_recpt_Mas" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Inv_RateDiff_Process_recpt_det" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Prodprgid" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Qlty_det" Width="1.5" PointX="2.4700751949427997" PointY="3.6301495896792737" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Qlty_DrCr" Width="1.5" PointX="7.86306420148493" PointY="31.990060433740755" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Qlty_Jobdet" Width="1.5" PointX="10.580758982608447" PointY="3.4014654771431654" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Qlty_mas" Width="1.5" PointX="0.59877223921882561" PointY="26.331748304111766" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Qlty_Stock" Width="1.5" PointX="4.4082448782437691" PointY="5.6040173050034872" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Qlty_det_Process_Qlty_mas" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Qlty_Jobdet_Process_Qlty_det" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Qlty_DrCr_Process_qlty_Mas" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Qlty_jobDet" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Qlty_Jobdet_Process_Qlty_Mas" />
+        <EntityTypeShape EntityType="ApparelMVCModel.ProcessCost_Defn_Bom_First" Width="1.5" PointX="3.2079633954949509" PointY="9.6540921822442165" />
+        <EntityTypeShape EntityType="ApparelMVCModel.ProcessCost_Defn_Mas" Width="1.5" PointX="6.1487067612580528" PointY="6.75120045559071" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Cancel_det" Width="1.5" PointX="4.4074418416281427" PointY="27.175509465474406" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Cancel_jobdet" Width="1.5" PointX="1.7706006252069959" PointY="9.2041981114094131" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Cancel_mas" Width="1.5" PointX="7.3406625834017358" PointY="29.99377518798866" />
+        <AssociationConnector Association="ApparelMVCModel.FK__Process_C__Proce__3D807D68" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proc_Cancel_jobdet_ProcessOrdJobDetid" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Vw_PRCProcessRecptMain" Width="1.5" PointX="11.547587552828521" PointY="14.282463125084743" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Recpt_Lot" Width="1.5" PointX="6.99092401330868" PointY="27.024971765943324" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Recpt_Lot_proc_ord_jobdetid" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Recpt_Jobdet" Width="1.5" PointX="2.3922538619452407" PointY="9.3303429825838382" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proc_Recpt_JobDet_ProcessOrdJobDetID" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_ord_mas_Proc_Recpt_Detid" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Recpt_Lot_proc_recpt_jobdetid" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Ord_Mas" Width="1.5" PointX="3.8140946048377522" PointY="31.513599753153326" />
+        <AssociationConnector Association="ApparelMVCModel.FK__Process_C__Proce__34EB3767" />
+        <AssociationConnector Association="ApparelMVCModel.FK__Process_C__Proce__3C8C592F" />
+        <AssociationConnector Association="ApparelMVCModel.FK__Process_C__Proce__3F68C5DA" />
+        <AssociationConnector Association="ApparelMVCModel.FK__Process_C__Proce__49E6544D" />
+        <AssociationConnector Association="ApparelMVCModel.Fk_Proces_iss_Mas_ProcessOrdId" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proc_ord_jobdet_procordId" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proc_Recpt_mas_ProcessOrdId" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proc_Recpt_Ret_ProcessOrdId" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process" Width="1.5" PointX="3.1320857811402929" PointY="27.510602263505852" />
+        <AssociationConnector Association="ApparelMVCModel.fk_Cost_Defn_Bom_First_processid" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_ord_ProcessId" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Qlty_Jobdet_DbtProcessId" />
+        <AssociationConnector Association="ApparelMVCModel.FK_ProcessRef" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Issue_Stock" Width="1.5" PointX="5.0104559217628353" PointY="9.4444907500615773" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proces_Iss_Stock_JobID" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Ord_Det" Width="1.5" PointX="0.51297586621389535" PointY="7.67332338154005" />
+        <AssociationConnector Association="ApparelMVCModel.FK_process_cancel_det_procordId" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proc_Cancel_jobdet_ProcessOrdDetId" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proc_ord_det_processordid" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proc_ord_jobdet_ordId" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Proc_Recpt_JobDet_ProcessOrdDetID" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Inv_JobDet" Width="1.5" PointX="5.3612656599661639" PointY="24.618708890219548" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Inv_JobDet_Process_Inv_Det" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Inv_JobDet_Process_recpt_det" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Inv_AddLess" Width="1.5" PointX="3.9980980772516217" PointY="14.861386380559479" />
+        <EntityTypeShape EntityType="ApparelMVCModel.Process_Inv_Mas" Width="1.5" PointX="5.7288652051840279" PointY="31.298922776849437" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Inv_AddLess_Process_inv_mas" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Inv_Dc_Process_Inv_Mas" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Inv_Det_Process_Inv_Mas" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Inv_JobDet_Process_Inv_Mas" />
+        <AssociationConnector Association="ApparelMVCModel.FK_Process_Inv_RateDiff_Process_Inv_Mas" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

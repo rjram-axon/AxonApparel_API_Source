@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>AxonApparel.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{630143a9-b5bf-44c2-8d40-d8e66f045366}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>AxonApparel.Database</RootNamespace>
+    <AssemblyName>AxonApparel.Database</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo" />
+    <Folder Include="dbo\Master" />
+    <Folder Include="dbo\Master\Table" />
+    <Folder Include="dbo\OrderProcessing" />
+    <Folder Include="dbo\Planning" />
+    <Folder Include="Views" />
+    <Folder Include="dbo\Purchase" />
+    <Folder Include="dbo\Production" />
+    <Folder Include="dbo\Process" />
+    <Folder Include="dbo\HouseKeeping" />
+    <Folder Include="dbo\Budget" />
+    <Folder Include="dbo\Exception" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Master\Table\Mode_Of_Shipment.sql" />
+    <Build Include="dbo\Master\Table\Style_Group.sql" />
+    <Build Include="dbo\Master\Table\Item.sql" />
+    <Build Include="dbo\Master\Table\ShipmentSystem.sql" />
+    <Build Include="dbo\Master\Table\City.sql" />
+    <Build Include="dbo\Master\Table\Country.sql" />
+    <Build Include="dbo\Master\Table\Department.sql" />
+    <Build Include="dbo\Master\Table\Designation.sql" />
+    <Build Include="dbo\Master\Table\Employee.sql" />
+    <Build Include="dbo\Master\Table\CompanyUnit.sql" />
+    <Build Include="dbo\Master\Table\AddLess.sql" />
+    <Build Include="dbo\Master\Table\Approval.sql" />
+    <Build Include="dbo\Master\Table\Company.sql" />
+    <Build Include="dbo\Master\Table\Currency.sql" />
+    <Build Include="dbo\Master\Table\Payment_Terms.sql" />
+    <Build Include="dbo\Master\Table\Process.sql" />
+    <Build Include="dbo\Master\Table\ProcessSetup.sql" />
+    <Build Include="dbo\Master\Table\Reason.sql" />
+    <Build Include="dbo\Master\Table\Season.sql" />
+    <Build Include="dbo\Master\Table\Style.sql" />
+    <Build Include="dbo\OrderProcessing\buy_ord_mas.sql" />
+    <Build Include="dbo\Master\Table\Unit_of_measurement.sql" />
+    <Build Include="dbo\Master\Table\Agent.sql" />
+    <Build Include="dbo\Master\Table\Agent_Add.sql" />
+    <Build Include="dbo\OrderProcessing\MarkEnqMas.sql" />
+    <Build Include="dbo\Master\Table\Unit_Conversion.sql" />
+    <Build Include="dbo\OrderProcessing\NominatedSupplier.sql" />
+    <Build Include="dbo\Master\Table\Supplier.sql" />
+    <Build Include="dbo\OrderProcessing\MarkEnqStyle.sql" />
+    <Build Include="dbo\Master\Table\Category.sql" />
+    <Build Include="dbo\Master\Table\Garment_Uom.sql" />
+    <Build Include="dbo\OrderProcessing\MarkEnqItemDet.sql" />
+    <Build Include="dbo\Master\Table\Size.sql" />
+    <Build Include="dbo\Master\Table\ColorGroup.sql" />
+    <Build Include="dbo\OrderProcessing\MarkEnqFabric.sql" />
+    <Build Include="dbo\OrderProcessing\MarkEnqEmbPrint.sql" />
+    <Build Include="dbo\OrderProcessing\Courier_Mas.sql" />
+    <Build Include="dbo\Master\Table\Courier.sql" />
+    <Build Include="dbo\OrderProcessing\Courier_Det.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_Ord_Ship.sql" />
+    <Build Include="dbo\Master\Table\PortofLoading.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_Ord_OrderDet.sql" />
+    <Build Include="dbo\OrderProcessing\Communication.sql" />
+    <Build Include="dbo\OrderProcessing\QuotationHeader.sql" />
+    <Build Include="dbo\Master\Table\StyleDetail.sql" />
+    <Build Include="dbo\Master\Table\StyleHeader.sql" />
+    <Build Include="dbo\Master\Table\Buyer.sql" />
+    <Build Include="dbo\Master\Table\Buyer_Add.sql" />
+    <Build Include="dbo\Master\Table\Consignee.sql" />
+    <Build Include="dbo\Master\Table\Consignee_Add.sql" />
+    <Build Include="dbo\Master\Table\StoreSection.sql" />
+    <Build Include="dbo\Master\Table\StoreUnit.sql" />
+    <Build Include="dbo\Master\Table\ItemGroup.sql" />
+    <Build Include="dbo\Master\Table\WorkDivision.sql" />
+    <Build Include="dbo\OrderProcessing\buy_ord_style.sql" />
+    <Build Include="dbo\OrderProcessing\Combosize.sql" />
+    <Build Include="dbo\Planning\Planning_Mas.sql" />
+    <Build Include="Views\Vw_PlanningOrderDetails.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_Ord_Det.sql" />
+    <Build Include="dbo\OrderProcessing\ComboColor.sql" />
+    <Build Include="dbo\OrderProcessing\ComboItem.sql" />
+    <Build Include="dbo\OrderProcessing\Comboitem_Composition.sql" />
+    <Build Include="dbo\OrderProcessing\Followup.sql" />
+    <Build Include="dbo\Planning\Comp_Plan_Mas.sql" />
+    <Build Include="dbo\Planning\Con_Plan.sql" />
+    <Build Include="dbo\Planning\Program_Summary.sql" />
+    <Build Include="dbo\Master\Table\Bank.sql" />
+    <Build Include="dbo\Master\Table\ColorCode.sql" />
+    <Build Include="dbo\Planning\Fabric_Plan.sql" />
+    <Build Include="dbo\Planning\Fab_Plan_ProLoss.sql" />
+    <Build Include="dbo\Planning\Yarn_Plan_Mas.sql" />
+    <Build Include="dbo\Planning\Yarn_Plan_Det.sql" />
+    <Build Include="dbo\Planning\Yarn_Plan_Dyeing.sql" />
+    <Build Include="dbo\Planning\Yarn_Plan_ProLoss.sql" />
+    <Build Include="dbo\Planning\ProcessSeq.sql" />
+    <Build Include="dbo\Planning\ProcessSeq_Mas.sql" />
+    <Build Include="dbo\OrderProcessing\Job_Ord_Mas.sql" />
+    <Build Include="dbo\OrderProcessing\Sample_Ord_Mas.sql" />
+    <Build Include="dbo\OrderProcessing\Sample_Ord_Style.sql" />
+    <Build Include="dbo\Planning\Buy_Ord_BOMDet.sql" />
+    <Build Include="dbo\Planning\Buy_Ord_BOMMas.sql" />
+    <Build Include="dbo\OrderProcessing\CommunicationDoc.sql" />
+    <Build Include="dbo\Planning\VendorQuoteMas.sql" />
+    <Build Include="dbo\Planning\VendorQuoteDet.sql" />
+    <Build Include="dbo\Planning\Process_Quote.sql" />
+    <Build Include="dbo\Planning\Process_Quote_Det.sql" />
+    <Build Include="dbo\Planning\Process_QuotePro.sql" />
+    <Build Include="dbo\Planning\Prod_Prg_Mas.sql" />
+    <Build Include="dbo\Planning\Prod_Prg_Det.sql" />
+    <Build Include="dbo\Planning\Acc_Req_Det.sql" />
+    <Build Include="dbo\Planning\Acc_Req_Mas.sql" />
+    <Build Include="dbo\Planning\Acc_Req_Style.sql" />
+    <Build Include="dbo\Master\Table\Prefix.sql" />
+    <Build Include="dbo\Purchase\Pur_Ord_Mas.sql" />
+    <Build Include="dbo\Purchase\Pur_Ord_Det.sql" />
+    <Build Include="dbo\Purchase\Pur_Ord_BuyJob.sql" />
+    <Build Include="dbo\Purchase\Pur_Ord_AddLess.sql" />
+    <Build Include="dbo\Purchase\Pur_Ord_Pay.sql" />
+    <Build Include="dbo\Master\Table\State.sql" />
+    <Build Include="dbo\Planning\Categ_desc.sql" />
+    <Build Include="dbo\Planning\Commercialmas.sql" />
+    <Build Include="dbo\Planning\Cost_Defn_BOM.sql" />
+    <Build Include="dbo\Planning\Cost_Defn_Com.sql" />
+    <Build Include="dbo\Planning\Cost_Defn_Component.sql" />
+    <Build Include="dbo\Planning\Cost_Defn_Mas.sql" />
+    <Build Include="dbo\Planning\MisPath.sql" />
+    <Build Include="dbo\Planning\Component.sql" />
+    <Build Include="dbo\Planning\Comp_prg_mas.sql" />
+    <Build Include="dbo\Planning\Comp_Prg_det.sql" />
+    <Build Include="dbo\Planning\Special_Req_Det.sql" />
+    <Build Include="dbo\Planning\Special_Req_Mas.sql" />
+    <Build Include="dbo\OrderProcessing\Job_Ord_Color.sql" />
+    <Build Include="dbo\Production\Cutting_Order_Mas.sql" />
+    <Build Include="dbo\Production\AccIssueMas.sql" />
+    <Build Include="dbo\Purchase\Lot_Creation_Mas.sql" />
+    <Build Include="dbo\Purchase\Lot_Creation_Det.sql" />
+    <Build Include="dbo\Planning\Cost_Defn_BOM_Supplier.sql" />
+    <Build Include="dbo\Master\Table\ItemStock.sql" />
+    <Build Include="dbo\Production\Cutting_Order_Det.sql" />
+    <Build Include="dbo\Purchase\AccFormula.sql" />
+    <Build Include="dbo\OrderProcessing\Job_Ord_Det.sql" />
+    <Build Include="dbo\Purchase\Pur_Grn_Mas.sql" />
+    <Build Include="dbo\Purchase\Pur_Grn_Det.sql" />
+    <Build Include="dbo\Purchase\Pur_Grn_Order.sql" />
+    <Build Include="dbo\Purchase\Pur_Grn_AddLess.sql" />
+    <Build Include="dbo\Production\Cutting_Issue_Det.sql" />
+    <Build Include="dbo\Production\Cutting_Issue_Mas.sql" />
+    <Build Include="dbo\Production\Cutting_Issue_Stock.sql" />
+    <Build Include="dbo\Production\Cutting_Recpt_Bundle.sql" />
+    <Build Include="dbo\Production\Cutting_Recpt_Det.sql" />
+    <Build Include="dbo\Production\Cutting_Recpt_Mas.sql" />
+    <Build Include="dbo\Purchase\LotSplitMas.sql" />
+    <Build Include="dbo\Purchase\LotSplitDet.sql" />
+    <Build Include="dbo\Purchase\Pur_Cancel_Mas.sql" />
+    <Build Include="dbo\Purchase\Pur_Cancel_Det.sql" />
+    <Build Include="dbo\Purchase\Pur_Cancel_Order.sql" />
+    <Build Include="dbo\Planning\PlanBom.sql" />
+    <Build Include="dbo\Purchase\Pur_return_mas.sql" />
+    <Build Include="dbo\Purchase\Pur_Return_Det.sql" />
+    <Build Include="dbo\Production\Cutting_Return_Mas.sql" />
+    <Build Include="dbo\Production\Cutting_Return_det.sql" />
+    <Build Include="dbo\Production\Fixed_line_mas.sql" />
+    <Build Include="dbo\Master\Table\Shift.sql" />
+    <Build Include="dbo\Purchase\Stock_Audit_Mas.sql" />
+    <Build Include="dbo\Purchase\Stock_Audit_Det.sql" />
+    <Build Include="dbo\OrderProcessing\Sample_Ord_PlanMas.sql" />
+    <Build Include="dbo\Purchase\Unit_Grn_Mas.sql" />
+    <Build Include="dbo\Purchase\Unit_Grn_Det.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteAcc.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteCMT.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteMas.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteCommercial.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteFab.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteProcess.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteYarn.sql" />
+    <Build Include="dbo\Production\Component_Itemstock.sql" />
+    <Build Include="dbo\Production\Remainder_Status.sql" />
+    <Build Include="dbo\Production\ScheduleMas.sql" />
+    <Build Include="dbo\Production\ScheduleDetail.sql" />
+    <Build Include="dbo\Production\ScheduleStatus.sql" />
+    <Build Include="dbo\Production\Cutting_Recpt_Qlty.sql" />
+    <Build Include="dbo\Production\ProgramQuality.sql" />
+    <Build Include="dbo\Purchase\BillEntry.sql" />
+    <Build Include="dbo\Purchase\Stores_Issue_Det.sql" />
+    <Build Include="dbo\Purchase\Stores_Issue_Mas.sql" />
+    <Build Include="dbo\Purchase\Stores_Issue_Order.sql" />
+    <Build Include="dbo\Purchase\Stores_Issue_Stock.sql" />
+    <Build Include="dbo\Purchase\Op_Stock.sql" />
+    <Build Include="dbo\Purchase\StockTranMasNew.sql" />
+    <Build Include="dbo\Purchase\StockTranStock.sql" />
+    <Build Include="dbo\Purchase\Stores_Issue_ReturnMas.sql" />
+    <Build Include="dbo\Purchase\Stores_Issue_ReturnDet.sql" />
+    <Build Include="dbo\Purchase\OpenDebitMas.sql" />
+    <Build Include="dbo\Purchase\Ledger.sql" />
+    <Build Include="dbo\Purchase\Voucher.sql" />
+    <Build Include="dbo\Purchase\Open_Debit_Addless.sql" />
+    <Build Include="dbo\Purchase\OpenDebitItemDet.sql" />
+    <Build Include="dbo\Purchase\General_Memo_mas.sql" />
+    <Build Include="dbo\Purchase\General_Memo_det.sql" />
+    <Build Include="dbo\Purchase\JJForm.sql" />
+    <Build Include="dbo\Purchase\Gen_MemoRet_det.sql" />
+    <Build Include="dbo\Purchase\Gen_MemoRet_mas.sql" />
+    <Build Include="dbo\Purchase\GenIssueAddless.sql" />
+    <Build Include="dbo\Purchase\GenIssueDet.sql" />
+    <Build Include="dbo\Purchase\GenIssueMas.sql" />
+    <Build Include="dbo\Purchase\GenIssueStock.sql" />
+    <Build Include="dbo\Purchase\OpenInvoice_Mas.sql" />
+    <Build Include="dbo\Purchase\OpenInvoice_Det.sql" />
+    <Build Include="dbo\Purchase\OpenInvoice_Addless.sql" />
+    <Build Include="dbo\Purchase\pur_grn_qlty_det.sql" />
+    <Build Include="dbo\Production\Prod_Ord_Det.sql" />
+    <Build Include="dbo\Production\Prod_Ord_JobDet.sql" />
+    <Build Include="dbo\Production\Prod_Ord_Mas.sql" />
+    <Build Include="dbo\Production\Popup_Remainder_Mas.sql" />
+    <Build Include="dbo\Master\Table\UserGroup.sql" />
+    <Build Include="dbo\Master\Table\Username.sql" />
+    <Build Include="dbo\Purchase\Pur_Inv_Mas.sql" />
+    <Build Include="dbo\Purchase\Pur_Inv_Debit_Credit.sql" />
+    <Build Include="dbo\Purchase\Pur_Inv_Det.sql" />
+    <Build Include="dbo\Purchase\Pur_Inv_Dc.sql" />
+    <Build Include="dbo\Purchase\Pur_Inv_Addless.sql" />
+    <Build Include="dbo\Purchase\Pur_Inv_Ord_det.sql" />
+    <Build Include="dbo\Production\Prod_Recpt_Mas.sql" />
+    <Build Include="dbo\Production\Prod_Recpt_Det.sql" />
+    <Build Include="dbo\Production\Prod_iss_det.sql" />
+    <Build Include="dbo\Production\Prod_iss_JobDet.sql" />
+    <Build Include="dbo\Production\Prod_iss_mas.sql" />
+    <Build Include="dbo\Production\Prod_Iss_Qlty.sql" />
+    <Build Include="dbo\Production\Prod_Iss_Stock.sql" />
+    <Build Include="dbo\Production\LineIssueMas.sql" />
+    <Build Include="dbo\Production\Prod_Recpt_Reason.sql" />
+    <Build Include="dbo\Production\Prod_Recpt_Return.sql" />
+    <Build Include="dbo\Production\Prod_Recpt_Stock.sql" />
+    <Build Include="dbo\Production\ProdReturnDet.sql" />
+    <Build Include="dbo\Production\ProdReturnMas.sql" />
+    <Build Include="dbo\Production\LineAllocationDet.sql" />
+    <Build Include="dbo\Production\LineAllocationMas.sql" />
+    <Build Include="dbo\Production\DespatchDet.sql" />
+    <Build Include="dbo\Production\DespatchMas.sql" />
+    <Build Include="dbo\Production\DespatchStock.sql" />
+    <Build Include="dbo\Production\Production_Ord_Mas.sql" />
+    <Build Include="dbo\Production\Production_Ord_Det.sql" />
+    <Build Include="dbo\Production\Production_Ord_JobDet.sql" />
+    <Build Include="dbo\Production\Production_Ord_Stock.sql" />
+    <Build Include="dbo\Production\Production_Ord_AddLess.sql" />
+    <Build Include="dbo\Production\Production_Recpt_Mas.sql" />
+    <Build Include="dbo\Production\Production_Recpt_JobDet.sql" />
+    <Build Include="dbo\Production\Production_Recpt_Det.sql" />
+    <Build Include="dbo\Production\Production_Recpt_Return.sql" />
+    <Build Include="dbo\Purchase\Pur_Debit_Mas.sql" />
+    <Build Include="dbo\Purchase\Pur_Debit_ItemDet.sql" />
+    <Build Include="dbo\Purchase\Pur_Debit_Others.sql" />
+    <Build Include="dbo\Process\Process_Inv_Mas.sql" />
+    <Build Include="dbo\Process\Process_Inv_Det.sql" />
+    <Build Include="dbo\Purchase\DebitOrderDetail.sql" />
+    <Build Include="dbo\HouseKeeping\Process_Tolerance.sql" />
+    <Build Include="dbo\Process\Process_Issue_Det.sql" />
+    <Build Include="dbo\Process\Process_Recpt_Mas.sql" />
+    <Build Include="dbo\Process\Process_Issue_Jobdet.sql" />
+    <Build Include="dbo\Process\Process_Issue_Mas.sql" />
+    <Build Include="dbo\Process\Process_Issue_Stock.sql" />
+    <Build Include="dbo\Process\Process_Ord_AddLess.sql" />
+    <Build Include="dbo\Process\Process_Ord_Det.sql" />
+    <Build Include="dbo\Process\Process_Ord_JobDet.sql" />
+    <Build Include="dbo\Process\Process_Ord_Mas.sql" />
+    <Build Include="dbo\Process\Process_Recpt_Det.sql" />
+    <Build Include="dbo\Process\Process_Recpt_Jobdet.sql" />
+    <Build Include="dbo\Process\Process_Recpt_Return.sql" />
+    <Build Include="dbo\Budget\Cost_Defn_Bom_First.sql" />
+    <Build Include="dbo\Purchase\InvoiceLedger.sql" />
+    <Build Include="dbo\Process\Process_Inv_JobDet.sql" />
+    <Build Include="dbo\Process\Process_Inv_RateDiff.sql" />
+    <Build Include="dbo\Process\Process_Inv_AddLess.sql" />
+    <Build Include="dbo\Process\Process_Inv_Dc.sql" />
+    <Build Include="dbo\Process\Process_Qlty_mas.sql" />
+    <Build Include="dbo\Process\Process_Qlty_det.sql" />
+    <Build Include="dbo\Process\Process_Qlty_Jobdet.sql" />
+    <Build Include="dbo\Process\Process_Qlty_Stock.sql" />
+    <Build Include="dbo\Process\Process_Qlty_DrCr.sql" />
+    <Build Include="dbo\Production\ProductionInvoiceMas.sql" />
+    <Build Include="dbo\Production\ProductionInvoiceDet.sql" />
+    <Build Include="dbo\Production\ProductionInvoiceRateDiff.sql" />
+    <Build Include="dbo\Production\ProductionInvoiceAddless.sql" />
+    <Build Include="dbo\Production\ProductionInvoiceDc.sql" />
+    <Build Include="dbo\Production\ProductionInvoiceOrdDet.sql" />
+    <Build Include="dbo\Planning\Cost_Defn_addless.sql" />
+    <Build Include="dbo\Planning\Job_Recpt_Mas.sql" />
+    <Build Include="dbo\Planning\Job_Recpt_Det.sql" />
+    <Build Include="dbo\Planning\Job_Inv_Mas.sql" />
+    <Build Include="dbo\Planning\Job_Inv_Det.sql" />
+    <Build Include="dbo\Planning\Prod_OpenPrg_Remarks.sql" />
+    <Build Include="dbo\Master\Table\Color.sql" />
+    <Build Include="dbo\Planning\Sample_FabricPlan.sql" />
+    <Build Include="dbo\Planning\Sample_Ord_PlanDet.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_Ord_Img.sql" />
+    <Build Include="dbo\Exception\ExceptionLogging.sql" />
+    <Build Include="dbo\Planning\Job_Ord_BOMMas.sql" />
+    <Build Include="dbo\Planning\Job_Ord_BomDet.sql" />
+    <Build Include="dbo\OrderProcessing\BuyerAmendDetails.sql" />
+    <Build Include="dbo\Purchase\CSPReceiptMas.sql" />
+    <Build Include="dbo\Purchase\CSPReceiptDet.sql" />
+    <Build Include="dbo\Master\Table\Role_Mas.sql" />
+    <Build Include="dbo\Master\Table\Role_Det.sql" />
+    <Build Include="dbo\Master\Table\MenuList.sql" />
+    <Build Include="dbo\HouseKeeping\DocRights.sql" />
+    <Build Include="dbo\HouseKeeping\Report_Footer_Email.sql" />
+    <Build Include="dbo\HouseKeeping\Report_Footer_Process.sql" />
+    <Build Include="dbo\HouseKeeping\Report_Footer_Setup.sql" />
+    <Build Include="dbo\HouseKeeping\Report_option.sql" />
+    <Build Include="dbo\HouseKeeping\ReportPrefix.sql" />
+    <Build Include="dbo\Planning\Job_Ord_Sum.sql" />
+    <Build Include="dbo\Production\Job_Inv_addless.sql" />
+    <Build Include="dbo\Master\Table\TermMas.sql" />
+    <Build Include="dbo\Purchase\Pur_Ord_Term.sql" />
+    <Build Include="dbo\Master\Table\StyleTempDet.sql" />
+    <Build Include="dbo\Master\Table\StyleTempMas.sql" />
+    <Build Include="dbo\Master\Table\MerchTeamMas.sql" />
+    <Build Include="dbo\Master\Table\MerchTeamBuyer.sql" />
+    <Build Include="dbo\Master\Table\MerchTeamEmployee.sql" />
+    <Build Include="dbo\Purchase\StockAllocationMas.sql" />
+    <Build Include="dbo\Purchase\StockAllocationDet.sql" />
+    <Build Include="dbo\Purchase\StockAllocationSection.sql" />
+    <Build Include="dbo\Purchase\Indent_Mas.sql" />
+    <Build Include="dbo\Purchase\Indent_Det.sql" />
+    <Build Include="dbo\Purchase\Indent_BuyJob.sql" />
+    <Build Include="dbo\Master\Table\BuyerCharges.sql" />
+    <Build Include="dbo\Master\Table\Acc_GstTaxMaster.sql" />
+    <Build Include="dbo\Master\Table\Acc_HSNMaster.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_Ord_Mas_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\NominatedSupplier_Amend.sql" />
+    <Build Include="dbo\Planning\Cost_Defn_Mas_Amend.sql" />
+    <Build Include="dbo\Planning\Cost_Defn_BOM_Amend.sql" />
+    <Build Include="dbo\Planning\Cost_Defn_Com_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_Ord_Det_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_Ord_OrderDet_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_Ord_Ship_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\Job_Ord_Color_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\Job_Ord_Mas_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\Job_Ord_Det_Amend.sql" />
+    <Build Include="dbo\Planning\Comp_Plan_Mas_Amend.sql" />
+    <Build Include="dbo\Planning\Con_Plan_Amend.sql" />
+    <Build Include="dbo\Planning\Fab_Plan_ProLoss_Amend.sql" />
+    <Build Include="dbo\Planning\Fabric_Plan_Amend.sql" />
+    <Build Include="dbo\Planning\Planning_Mas_Amend.sql" />
+    <Build Include="dbo\Planning\Yarn_Plan_Det_Amend.sql" />
+    <Build Include="dbo\Planning\Yarn_Plan_Dyeing_Amend.sql" />
+    <Build Include="dbo\Planning\Yarn_Plan_Mas_Amend.sql" />
+    <Build Include="dbo\Planning\Yarn_Plan_ProLoss_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteAcc_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteCMT_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteCommercial_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteFab_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteMas_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteProcess_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\MarkQuoteYarn_Amend.sql" />
+    <Build Include="dbo\Planning\Acc_Req_Det_Amend.sql" />
+    <Build Include="dbo\Planning\Acc_Req_Mas_Amend.sql" />
+    <Build Include="dbo\Planning\Acc_Req_Style_Amend.sql" />
+    <Build Include="dbo\Planning\Buy_Ord_BOMDet_Amend.sql" />
+    <Build Include="dbo\Planning\Buy_Ord_BOMMas_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\buy_ord_style_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\ComboColor_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\ComboItem_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\Comboitem_Composition_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\ComboSize_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\P1Entry.sql" />
+    <Build Include="dbo\OrderProcessing\P2Entry.sql" />
+    <Build Include="dbo\OrderProcessing\P3Entry.sql" />
+    <Build Include="dbo\Master\Table\SampleTypeMaster.sql" />
+    <Build Include="dbo\Master\Table\TestingType.sql" />
+    <Build Include="dbo\OrderProcessing\Sam_Ord_Type.sql" />
+    <Build Include="dbo\OrderProcessing\Sam_Ord_Type_Amend.sql" />
+    <Build Include="dbo\OrderProcessing\S1SamplePhotoEntry.sql" />
+    <Build Include="dbo\OrderProcessing\S2PhotoSuit.sql" />
+    <Build Include="dbo\OrderProcessing\GatePassNo.sql" />
+    <Build Include="dbo\OrderProcessing\TestingDCDet.sql" />
+    <Build Include="dbo\OrderProcessing\TestingDCMas.sql" />
+    <Build Include="dbo\OrderProcessing\TestingDCReceiptDet.sql" />
+    <Build Include="dbo\OrderProcessing\TestingDCReceiptMas.sql" />
+    <Build Include="dbo\Process\Fabric_Requisition_Mas.sql" />
+    <Build Include="dbo\Process\Fabric_Requisition_Det.sql" />
+    <Build Include="dbo\Production\Box_Con_Mas.sql" />
+    <Build Include="dbo\Production\Box_Con_Det.sql" />
+    <Build Include="dbo\Production\Box_Con_Stock.sql" />
+    <Build Include="dbo\Planning\User_Print_Log.sql" />
+    <Build Include="dbo\Planning\Prod_Prg_Mas_Amend.sql" />
+    <Build Include="dbo\Planning\Prod_Prg_Det_Amend.sql" />
+    <Build Include="dbo\Planning\ProcessSeq_Amend.sql" />
+    <Build Include="dbo\Planning\ProcessSeq_Mas_Amend.sql" />
+    <Build Include="dbo\Planning\Program_Summary_Amend.sql" />
+    <Build Include="dbo\Master\Table\TermDet.sql" />
+    <Build Include="dbo\Production\Box_Despatch_Det.sql" />
+    <Build Include="dbo\Production\Box_Despatch_Mas.sql" />
+    <Build Include="dbo\Production\Box_Despatch_Stock.sql" />
+    <Build Include="dbo\OrderProcessing\Ord_styleTempDet.sql" />
+    <Build Include="dbo\OrderProcessing\Ord_styleTempMas.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_ord_Measuremas.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_ord_MeasureDet.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_ord_MeasureSizedet.sql" />
+    <Build Include="dbo\OrderProcessing\Buy_Ord_MeasureDoc.sql" />
+    <Build Include="dbo\OrderProcessing\OrdCons_Mas.sql" />
+    <Build Include="dbo\OrderProcessing\OrdCons_ProcSeq.sql" />
+    <Build Include="dbo\OrderProcessing\OrdCons_YarnFab.sql" />
+    <Build Include="dbo\HouseKeeping\User_Entry_Log.sql" />
+    <Build Include="dbo\OrderProcessing\PrecostFabDept_Fab.sql" />
+    <Build Include="dbo\OrderProcessing\PreCostFabDept_mas.sql" />
+    <Build Include="dbo\OrderProcessing\PrecostFabDept_Process.sql" />
+    <Build Include="dbo\OrderProcessing\PrecostFabDept_Yarn.sql" />
+    <Build Include="dbo\OrderProcessing\Precosting_Target_mas.sql" />
+    <Build Include="dbo\OrderProcessing\PreCostingEmbellishment_Det.sql" />
+    <Build Include="dbo\OrderProcessing\PreCostingFabric_Det.sql" />
+    <Build Include="dbo\OrderProcessing\PreCostingFabTrim_mas.sql" />
+    <Build Include="dbo\OrderProcessing\PreCostingTrim_Det.sql" />
+    <Build Include="dbo\Process\Process_Recpt_Lot.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="AxonApparel.Database.refactorlog" />
+  </ItemGroup>
+</Project>

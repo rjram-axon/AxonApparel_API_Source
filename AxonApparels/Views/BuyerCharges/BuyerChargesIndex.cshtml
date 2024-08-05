@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "BuyerChargesIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/AxonScripts/BuyerCharges.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<!-- page content -->
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Buyer Charges</h2>
+                        
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Add New BuyerCharges</button>
+                            <table id="tbody" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Buyer</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                @*<thead>
+                                    <tr>
+                                        <th style="visibility: hidden;">ID
+                                        </th>
+                                        <th>Country Name
+                                        </th>
+                                        <th>LookUp
+                                        </th>                                        
+                                        <th>Status
+                                        </th>
+                                        <th>Action
+                                        </th>
+                                    </tr>
+                                </thead>*@
+                                @*<tbody class="tbody">
+                                </tbody>*@
+                            </table>
+                        </div>
+                      @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+                         <div  class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false"  aria-hidden="true">
+                            <div class="modal-dialog" >
+                        
+                    <div class="x_panel">
+                        <div class="x_title">
+                                        <h2>Add Buyer charges</h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                         <div class="modal-body row">
+                                        <div class="x_panel">
+                                             <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">
+                                                                    Buyer<span style="color: red;"> *</span>
+                                                                </label>
+                                                                <div class="col-md-8 col-sm-7 col-xs-11">
+                                                                    <select id="ddlbuyer" class="form-control" onchange="valibuy();"  style="width:185px; max-height:24px;">                                                                       
+                                                                    </select>
+                                                                </div>
+                                                                
+                                                            </div>
+                        <div class="form-group">
+                            <div class="col-md-12" style="margin-left: -12px;">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12"><h2 style="margin-left:-9px">Charges Details</h2></div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                     
+                                    </div>
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <table class="table table-bordered table-hover" border="1">
+                                                <tr>
+                                                    
+                                                    <td>From Quantity</td>
+                                                    <td>To Quantity</td>
+                                                    <td>Shipping Expense</td>
+                                                    <td>CIF Expense</td>
+                                                    <td>Bank Expense</td>
+                                                  
+                                                    @*    <td>CompSlNo</td>*@
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr class="mycontainer" id="maincomborow">
+                                                    <td>
+                                                       <input type="text" id="txtfromqty" class="form-control" placeholder="From Qty">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="txttoqty" class="form-control" placeholder="To Qty">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="txtshipexp" class="form-control" placeholder="Ship Exp">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="txtcifexp" class="form-control" placeholder="CIF Exp">
+                                                    </td>
+                                                  
+                                                    <td>
+                                                        <input type="text" id="txtbankexp" class="form-control" placeholder="Bank Exp">
+                                                    </td>
+                                                   
+                                                    <td>
+                                                        <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btnchrgadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                        <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btnchrgupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+                                                        @*  <input type="button" class="btn btn-round btn-success" id="btncomponentadd" data-toggle="tooltip" data-placement="top" title="Add" value="Add" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;" class="btn btn-success" />
+                                                    <input type="button" class="btn btn-round btn-success" id="btncomponentupdate" data-toggle="tooltip" data-placement="top" title="Update" value="Update" style="width: 20px;padding: 0px;height: 20px;border-radius:10px;display: none;" class="btn btn-success" />*@
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div id="CompList">
+                                                <table class="table table-responsive" id="tblbuydetails">
+                                                    <thead>
+                                                        <tr>
+                                                             <th>SNo
+                                                            </th>
+                                                            <th>BuyerId</th>
+                                                            <th >From Quantity
+                                                            </th>
+                                                            <th>To Quantity
+                                                            </th>
+                                                            <th>Shipping Expense
+                                                            </th>
+
+                                                            <th>CIF Expense
+                                                            </th>
+                                                            <th>Bank Expense
+                                                            </th>
+                                                           
+
+                                                           
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="orderItemError" style="color: red"></span>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                                            
+                                  
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                         <button type="button" class="btn btn-success" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                            </div>
+                             </div>
+                    </div>
+</div>
+                             </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

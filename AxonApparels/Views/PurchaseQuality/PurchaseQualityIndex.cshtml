@@ -1,0 +1,383 @@
+﻿@{
+    ViewBag.Title = "PurchaseQualityIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #tblQltyOrdgrid_filter {
+        display: none;
+    }
+
+    #tbItemEntrygrid_info {
+        display: none;
+    }
+
+    #tblQltyOrdgrid_info {
+        display: none;
+    }
+
+   
+
+    #tbItemEntrygrid_filter {
+        margin-top: -31px;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtQltyDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        //$('#txtDate').datepicker();
+        //$('#txtFromDate').datepicker();
+        //$('#txtToDate').datepicker();
+    });
+</script>
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Purchase/PurchaseQuality.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Purchase Quality Entry</h2>
+                <div class="clearfix"></div>
+            </div>
+            @*<div class="x_panel">
+                <div class="x_content">
+                    <form class="form-inline">
+                        <div class="row">
+                            <div class="col-sm-1" style="display: none"></div>
+                            <div class="col-sm-2" style="margin-left: 17px;">
+                                <div class="form-group">
+                                    <label style="font-size: 19px; white-space: nowrap;">
+                                      Purchase Quality Entry
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="ex3">From Date</label>
+                                    &nbsp;
+                                    <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+                                    <label for="ex3">To Date</label>
+                                    &nbsp;
+                                    <input type="text" class="form-control " placeholder="Date" id="txtToDate">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                   &nbsp; <input type="button" style="margin-top: -5px;" class="btn btn-success" value="List" onclick="CMainlist();">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>*@
+            <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+                <div class="col-md-4">
+                    <form class="form-horizontal form-label-left input_mask">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-6 col-xs-12">
+                                Company
+                            </label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <input type="text" id="txtCompany" class="form-control " placeholder="Company" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-6 col-xs-12">
+                                Supplier
+                            </label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <input type="text" id="txtSupplier" class="form-control " placeholder="Supplier" disabled>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form class="form-horizontal form-label-left input_mask">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-9 col-xs-12">
+                                Qlty No/Date
+                            </label>
+                            <div class="col-md-6 col-sm-9 col-xs-12">
+                                <input type="text" id="txtQltyNo" class="form-control " placeholder="Quality No" disabled>
+                            </div>
+                            <div class="col-md-3 col-sm-9 col-xs-12">
+                                <input type="text" id="txtQltyDate" class="form-control " placeholder="Date">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-9 col-xs-12">
+                                GRN No
+                            </label>
+                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                <input type="text" id="txtGrnNo" style="width:235px" class="form-control " placeholder="Grn No" disabled>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form class="form-horizontal form-label-left input_mask">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Dc No
+                            </label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <input type="text" id="txtDcNo" class="form-control " placeholder="Dc No" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Qc Rpt No
+                            </label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <input type="text" id="txtQcRptNo" class="form-control " placeholder="QC Rpt No">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+ </div>
+         </div>
+                      @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+            <div class="x_panel">
+                <h2 style="margin-top:-3px;">Item Details</h2>
+                <form class="form-horizontal form-label-left input_mask">
+                    <table class="table table-responsive table-bordered" id="tbItemEntrygrid">
+                        <thead>
+                            <tr>
+
+                                <th style="display:none;">GrnDetid
+                                </th>
+                                <th>Item
+                                </th>
+                                <th>Color
+                                </th>
+                                <th>Size
+                                </th>
+                                <th>Unit
+                                </th>
+                                <th>Recv Qty
+                                </th>
+                                <th>Acept Qty
+                                </th>
+                                <th>Excess Qty
+                                </th>
+                                @* <th>Short Qty
+                                    </th>*@
+                                <th>RejectQty
+                                </th>
+                                <th>Return Qty
+                                </th>
+                                <th>Receiv Qty
+                                </th>
+                                <th>Debit Qty
+                                </th>
+                                <th>Return Qty
+                                </th>
+                                <th style="display: none">ItemId
+                                </th>
+                                <th style="display: none">ColorId
+                                </th>
+                                <th style="display: none">SizeId
+                                </th>
+                                <th style="display: none">Uomid
+                                </th>
+                                 <th style="display: none">EAcept Qty
+                                </th>
+                                <th style="display: none">EExcess Qty
+                                </th>                     
+                                <th style="display: none">ERejectQty
+                                </th>
+                                <th style="display: none">EReturn Qty
+                                </th>
+                                <th style="display: none">EReceiv Qty
+                                </th>
+                                <th style="display: none">EDebit Qty
+                                </th>
+                                <th style="display: none">EExReturn Qty
+                                </th>
+
+
+                               
+                            </tr>
+                        </thead>
+
+                    </table>
+
+
+                </form>
+                <div class="row">
+                    <h2 style="margin-left: 10px;">Quantity</h2>
+                    <div class="col-md-12">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="form-group">
+                                <table id="tblQltyOrdgrid" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="display: none">GrnDetId</th>
+                                            <th style="display: none">purorddetid</th>
+                                            <th style="display: none">purordbuyjobid</th>
+                                            <th>Purchase Order</th>
+                                            <th>Received</th>
+                                            <th>Accepted</th>
+                                            <th>Excess</th>
+                                            <th>Order No</th>
+                                            <th>Style</th>
+                                            <th>Order Bal</th>
+                                            <th>Accepted </th>
+                                            <th>Debit Qty</th>
+                                            <th>Receivable</th>
+                                            <th>Excess</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="form-group"  style="display:none;">
+                                <table id="tblQltyOrdSavegrid" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>GrnDetId</th>
+                                            <th>purorddetid</th>
+                                            <th>purordbuyjobid</th>
+                                            <th>Purchase Order</th>
+                                            <th>Received</th>
+                                            <th>Accepted</th>
+                                            <th>Excess</th>
+                                            <th>Order No</th>
+                                            <th>Style</th>
+                                            <th>Order Bal</th>
+                                            <th>Accepted </th>
+                                            <th>Debit Qty</th>
+                                            <th>Receivable</th>
+                                            <th>Excess</th>
+
+                                              <th>EAccepted </th>
+                                            <th>EDebit Qty</th>
+                                            <th>EReceivable</th>
+                                            <th>EExcess</th>
+
+
+                                            <th>ItemId
+                                            </th>
+                                            <th>ColorId
+                                            </th>
+                                            <th>SizeId
+                                            </th>
+                                            <th>Uomid
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <h2 style="margin-left: 10px;">Quality</h2>
+                    <div class="col-md-4">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="form-group">
+                                <table id="tblQgrid" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Purchase order</th>
+                                            <th>Excepted Mtr</th>
+                                            <th>Actual Mtr</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="form-group" style="margin-left: -10px">
+                                <label class="control-label col-md-12 col-sm-3 col-xs-12">
+                                    Item Remarks
+                                </label>
+                                <div class="col-md-12 col-sm-9 col-xs-12">
+                                    <textarea class="form-control" rows="4" placeholder="Item Remarks" id="txtItemRemarks" disabled></textarea>
+                                </div>
+                            </div>
+                          
+                        </form>
+                    </div>
+                    <div class="col-md-8">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="form-group">
+                                <table id="tblbillmaingrid" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Quality Title</th>
+                                            <th>Excepted Quality</th>
+                                            <th>Received Quality</th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                               <div class="form-group" style="margin-left: -10px">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Qlty Remarks
+                                </label>
+                                <div class="col-md-5 col-sm-5 col-xs-12">
+                                    <textarea class="form-control" rows="4" placeholder="Qlty Remarks" id="txtqltRemarks"></textarea>
+                                </div>
+                            </div>
+
+                           <div style="float:right;margin-right: 0px;">  
+                                <button type="button" class="btn btn-round btn-success" id="btnAdd" onclick="return QltySave();">Add</button>
+                                <button type="button" class="btn btn-success btn-round" id="btnUpdate" data-dismiss="modal" style="display: none;" onclick="QltyUpdate();">Update</button>
+                                <button type="button" class="btn btn-success btn-round" id="btnDelete" data-dismiss="modal" style="display: none;" onclick="QltyDelete();">Delete</button>
+                                <button type="button" class="btn btn-round btn-danger" style="margin-right: 14px;" onclick="ClearQlty();">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="border: none;">
+              
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>
+
+

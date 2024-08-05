@@ -1,0 +1,44 @@
+﻿@model List<AxonApparel.Domain.File>
+@{
+    Layout = null;
+    var IsAnyImage = Model.Any(x => new String[] { "jpg", "jpeg", "png", "gif" }.Contains(x.FileName.Split('.').Last()));
+}
+
+@if (Model.Any())
+{
+    @*<h6>Uploads</h6>*@
+    <div style="height:95px;overflow-y:scroll">
+    <table id="styleIm:" class="col-xs-12" >
+        <tr>
+            @if (IsAnyImage)
+            {
+                <th></th>
+            }
+            <th style="display:none">FileName</th>
+            <th></th>
+        </tr>
+        <tbody >
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td >
+                        <img style="width:75px;height:95px" id="imgid" src="@Url.Content(Model[i].FilePath)" />
+                    </td>
+
+                    <td style="text-align: center;display:none" title="XX">
+                        <a href="@Url.Content("~/Uploads/" + Model[i].FileName)" target="_blank">@Model[i].FileName</a>
+                    </td>
+
+                    <td >
+                        <img id="@Model[i].FileID" class="delUpload" onclick="deletefile(this.id);"  width="20" src="@Url.Content("~/Content/Images/delete.png")" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+}
+else
+{
+    <h3>No Uploads Found!</h3>
+}

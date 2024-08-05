@@ -1,0 +1,195 @@
+﻿@{
+    ViewBag.Title = "GreyPurchaseRecIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#dtRefDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#dtOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+
+<script src="~/AxonScripts/Statement/GreyPurchaseRecReport.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+            <div class="x_panel">
+                <div class="x_content">
+                    <form class="form-inline">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                </div>
+                                <div class="col-sm-4" >
+                                    <div class="form-group">
+                                        <label style="font-size: 19px; white-space: nowrap; text-align: center;">
+                                            Grey Purchase Receipt Report
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                 
+                <div class="col-md-12">
+                    <div class="x_panel">
+                        <h2 style="text-align: center; margin-top: -3px;"><b>Filter Options</b></h2>
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                       <div class="form-group">
+                                                                <label class="radio inline col-md-3 col-sm-2 col-xs-12">
+                                                                    <input id="Buyer" checked class="flat" name="OrdType" type="radio" value="B" onchange="LoadOrd();">
+                                                                    <span>Buyer Order </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-4 col-sm-2 col-xs-12">
+                                                                    <input id="Sample" class="flat" name="OrdType" type="radio" value="S" onchange="LoadOrd();">
+                                                                    <span>Sample Order </span>
+                                                                </label>
+                                                               @* <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="General" class="flat" name="OrdType" type="radio" value="G" onchange="LoadOrd();">
+                                                                    <span>General </span>
+                                                                </label>*@
+                                                                <label class="radio inline col-md-3 col-sm-2 col-xs-12">
+                                                                    <input id="All" class="flat" name="OrdType" type="radio" value="A" onchange="LoadOrd();">
+                                                                    <span>All </span>
+                                                                </label>
+
+                                                               
+                                                            </div>
+                                        <div class="form-group" style="margin-top: 13px;">
+                                            <label class="control-label col-md-2 col-sm-3 col-xs-12">
+                                                Order No
+                                            </label>
+                                            <div class="col-md-4 col-sm-9 col-xs-12">
+                                                <select id="ddlMOrderno" class="form-control">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                                                                <div class="form-group" >
+                                            <label class="control-label col-md-2 col-sm-3 col-xs-12">
+                                                Ref No
+                                            </label>
+                                            <div class="col-md-4 col-sm-9 col-xs-12">
+                                                <select id="ddlMRefno" class="form-control">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                                                                <div class="form-group" >
+                                            <label class="control-label col-md-2 col-sm-3 col-xs-12">
+                                                Supplier
+                                            </label>
+                                            <div class="col-md-4 col-sm-9 col-xs-12">
+                                                <select id="ddlMSupplier" class="form-control">
+                                                </select>
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <label class="control-label col-md-2 col-sm-1 col-xs-12">
+                                                Fabric
+                                            </label>
+                                            <div class="col-md-4 col-sm-9 col-xs-12">
+                                                <select id="ddlMFabric" class="form-control">
+                                                </select>
+                                            </div>
+                                        </div>
+                                          <div class="form-group">
+                                            <label class="control-label col-md-2 col-sm-1 col-xs-12">
+                                                Color
+                                            </label>
+                                            <div class="col-md-4 col-sm-9 col-xs-12">
+                                                <select id="ddlMColor" class="form-control">
+                                                </select>
+                                            </div>
+                                        </div>
+                                                                                  <div class="form-group">
+                                            <label class="control-label col-md-2 col-sm-1 col-xs-12">
+                                                Yarn
+                                            </label>
+                                            <div class="col-md-4 col-sm-9 col-xs-12">
+                                                <select id="ddlMSize" class="form-control">
+                                                </select>
+                                            </div>
+                                        </div>
+                                       <div class="form-group">
+
+                                        <label class="control-label col-md-2 col-sm-1 col-xs-12" for="ex3">From Date</label>
+                                        <div class="col-md-4 col-sm-9 col-xs-12">
+                                            <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                        </div>
+                                    </div>
+                                        <div class="form-group">
+
+                                        <label class="control-label col-md-2 col-sm-1 col-xs-12" for="ex3">To Date</label>
+                                        <div class="col-md-4 col-sm-9 col-xs-12">
+                                            <input type="text" id="txtToDate" class="form-control" placeholder="Date">
+                                        </div>
+                                                                                    <button type="button" class="btn btn-success" onclick="LoadReport();" style="margin-left: 294px;margin-top: -44px;">Report</button>
+
+                                    </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-6">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                                                           
+                                       
+                                      
+                                        
+                                        
+                                  
+                                        <div class="form-group">
+
+                                       
+                                    </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                
+            </div>
+
+
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+        </div>
+    </div>
+</div>
+
+
+

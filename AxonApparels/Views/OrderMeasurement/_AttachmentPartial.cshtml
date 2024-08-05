@@ -1,0 +1,47 @@
+﻿
+@model List<AxonApparel.Domain.File>
+@{
+    Layout = null;
+    var IsAnyImage = Model.Any(x => new String[] { "jpg", "jpeg", "png", "gif" }.Contains(x.FileName.Split('.').Last()));
+}
+
+@if (Model.Any())
+{
+    @*<h6>Uploads</h6>*@
+    <div style="height:95px;overflow-y:scroll">
+    <table id="styleIm:" class="col-xs-12 table table-responsive  no-footer dataTable" >
+        <thead><tr>
+          
+                <th>FileName </th>
+            
+            <th style="display:none">Image</th>
+            <th>Action</th>
+        </tr></thead>
+        <tbody style="">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                     <td style="" title="XX">
+                        <a href="@Url.Content("~/Uploads/" + Model[i].FileName)" target="_blank">@Model[i].FileName</a>
+                    </td>
+                    <td  style="display:none">
+                        <img style="width:75px;height:95px" id="imgid" src="@Url.Content(Model[i].FilePath)" />
+                    </td>
+
+                   
+
+                    <td >
+                        <button class="btn btn-success btn-round" id="@Model[i].FilePath" onclick="DownloadFile(this.id)" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" type="button"><i class="gg-software-download"></i></button>
+                        <img id="@Model[i].FileID" class="delUpload" onclick="deletefile(this.id);"  width="20" src="@Url.Content("~/Content/Images/delete.png")" />
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+}
+else
+{
+    <h3>No Uploads Found!</h3>
+}

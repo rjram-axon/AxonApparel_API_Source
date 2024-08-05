@@ -1,0 +1,191 @@
+﻿@{
+    ViewBag.Title = "PrecostingTargetIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/OrderProcessing/PrecostingTarget.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+
+             <div class="x_panel">
+                <div class="row">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        Company
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMCompany" class="form-control select2" onchange="List();"></select>
+                                    </div>
+                                </div>
+                                   <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Order No</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMOrderNo" class="form-control select2" onchange="List();">
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                      Buyer
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMBuyer" class="form-control select2" onchange="List();">
+                                        </select>
+                                    </div>
+                                </div>
+                                  @* <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">DC No</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMDcNo" class="form-control select2" onchange="DcMainList();">
+                                        </select>
+                                    </div>
+                                </div>*@
+                                
+                            </form>
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                      Target No
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlTargetNo" class="form-control select2" onchange="List();">
+                                        </select>
+                                    </div>
+                                </div>
+
+                             
+                                 <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12" for="ex3">
+                                       From Date
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                       <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                      <input type="button" class="btn btn-success" value="List" onclick="List();">
+                                    </div>
+                                </div>
+                                  
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+
+                            <form class="form-horizontal form-label-left input_mask">
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Ref No</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMRefNo" class="form-control select2" onchange="List();">
+                                        </select>
+                                    </div>
+                                </div>
+
+                             @*   <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">PO No</label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMPoNo" class="form-control select2" onchange="PoMainList();">
+                                        </select>
+                                    </div>
+                                </div>*@
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12" for="ex3">
+                                       To Date
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Date" id="txtToDate">
+                                    </div>
+                                </div>
+
+                              
+                            </form>
+                        </div>
+                        <div class="col-md-1">
+
+                            <form class="form-horizontal form-label-left input_mask">
+
+                               
+
+                                  <div class="form-group" style="margin-top:28px;">
+                            
+                        </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <input type="button" class="btn btn-primary" value="AddNew" onclick="LoadTargetAdd();">
+                        @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+            <div class="x_panel">
+                <div id="CompList">
+                                                <table class="table table-responsive" id="tblTargetlistdetails">
+                                                    <thead>
+                                                        <tr>
+                                                             <th style="display: none;">Targetmasid
+                                                            </th>
+                                                           
+                                                             <th>Target No
+                                                            </th>
+                                                            
+                                                            <th>EntryDate
+                                                            </th>
+                                                            <th style="display: none;">BMasid
+                                                            </th>
+                                                           
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="orderItemError" style="color: red"></span>
+                                            </div>
+            </div>
+
+           
+
+               </div>
+    </div>
+</div>

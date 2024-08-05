@@ -1,0 +1,423 @@
+﻿@{
+    ViewBag.Title = "BillEntryIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #tblbillmaingrid_length {
+    display:none; 
+    }
+    #tblbillmaingrid_info {
+    display:none; 
+    }
+    #tblbillmaingrid_paginate {
+    display:none; 
+    }
+    #tblbillmaingrid_filter {
+    
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtBillDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Purchase/BillEntry.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+         
+            <div class="x_panel">
+                <div class="row">
+                     <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <form class="form-horizontal form-label-left input_mask">
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                Company
+                            </label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <select id="ddlMCompany" class="form-control select2" onchange="CMainlist();"></select>
+                            </div>
+                        </div>
+                         <div class="form-group" style="margin-left: 12px;">
+                            <div class="maxl " style="margin-top: -6px;">
+                                <label class="radio inline">
+                                    <input type="radio" id="MP" name="optMPro" checked value="E" onchange="RadioMBClick();">
+                                    <span>External </span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" id="MW" name="optMPro" value="I" onchange="RadioMBClick();">
+                                    <span>Internal</span>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+
+                    <form class="form-horizontal form-label-left input_mask">
+                                    <div class="form-group" >
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                Supplier
+                            </label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <select id="ddlMSupplier" class="form-control select2" onchange="CMainlist();">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4"for="ex3">From Date</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                    </div>
+                                </div>
+                    </form>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <form class="form-horizontal form-label-left input_mask">
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                Bill No
+                            </label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <select id="ddlMBillNo" class="form-control select2" onchange="CMainlist();">
+                                </select>
+                            </div>
+                        </div>
+                         <div class="form-group" >
+                                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4"for="ex3">To Date</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <input type="text" class="form-control " placeholder="Date" id="txtToDate" >
+                                    </div>
+                                </div>
+                    </form>
+                </div>
+                     </div>
+                </div>
+             <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-sx-12">
+                    <div class="maxl" style="margin-left: 3px;margin-top: -9px;">
+                        <label class="radio inline">
+                            <input type="radio" id="optoutwrkord" name="optwrkord" checked value="B" onchange="CMainlist();">
+                            <span>Buyer Ord</span>
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" id="optoutsaemord" name="optwrkord" value="S" onchange="CMainlist();">
+                            <span>Sample Ord</span>
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" id="optouetsamord" name="optwrkord" value="G" onchange="CMainlist();">
+                            <span>General </span>
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" id="optoeutsamord" name="optwrkord" value="A" onchange="CMainlist();">
+                            <span>All</span>
+                        </label>
+                    </div>
+                </div>
+                         
+                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="text-align:right">
+                             <div class="form-group">
+                                  <input type="button" style="" class="btn btn-success" value="List" onclick="CMainlist();">
+                            </div>
+                         </div>
+              
+                </div>
+            </div>
+          @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+            <div class="x_panel">
+            <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="ClearTextbox();" @ViewBag.BillsAddFlg>Add New</button>
+              
+                <form class="form-horizontal form-label-left input_mask">
+                    <div class="form-group">
+                        <table id="tblbillmaingrid" class="table table-bordered table-hover">
+                            @*<thead>
+                                <tr>
+                                    <th>Company
+                                    </th>
+                                    <th>Supplier
+                                    </th>
+                                    <th>Bill No
+                                    </th>
+                                    <th>Date
+                                    </th>
+                                    <th>Sub Bill No
+                                    </th>
+.
+                                </tr>
+                            </thead>*@
+                        </table>
+                    </div>
+                </form>
+                </div>
+                 </div>
+            </div>
+            <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="min-width: 64%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Bill Entry</h4>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel" style="margin-top:10px;" >
+                            <div class="row">
+                                <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                                Company
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <select id="ddlCompany" class="form-control " onchange="chkcmpnyid();">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Supplier</label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" id="Ispp">
+                                                <select id="ddlSupplier" class="form-control ">
+                                                </select>
+                                            </div>
+                                               <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"id="Iwrk" >
+                                                <select id="ddlWorkDiv" class="form-control ">
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                          <div class="form-group">
+                            <div class="maxl " style="margin-top: -6px; margin-left: 10px;">
+                                <label class="radio inline">
+                                    <input type="radio" name="optPro" checked value="E" id="rdEx"onchange="RadioABClick();">
+                                    <span>External </span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" name="optPro" value="I" id="rdIn" onchange="RadioABClick();">
+                                    <span>Internal</span>
+                                </label>
+                            </div>
+                        </div>
+
+
+                                    </form>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                                Bill No
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                               <input type="text" id="txtBillNo" class="form-control" name="optwrkord" placeholder="Bill No" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Sub Bill No</label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                               <input type="text" id="txtSubBillNo" class="form-control" name="optwrkord" placeholder="Sub Bill No">
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                                Bill Date
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <input type="text" id="txtBillDate" class="form-control" placeholder="Bill Date">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Date</label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <input type="text" id="txtDate" class="form-control" placeholder="Date">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+ </div> </div>
+
+                            </div>
+                        </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel" style="padding: 0px;height: 30px;">
+                            <div class="" >
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                         <label style="font-size: 17px;white-space:  nowrap;">
+                                Order Type
+                                </label>
+                                    </div>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                <div class="maxl" style="margin-top: -6px;">
+                                <label class="radio inline"> 
+                                    <input type="radio" checked="" value="B"  name="MOType" onchange="RadioMBClick();">
+                                    <span>Buyer Order</span> 
+                                </label>
+                                <label class="radio inline"> 
+                                    <input type="radio" value="S"  name="MOType" onchange="RadioMBClick();">
+                                    <span>Sample Order </span> 
+                                </label>                             
+                                <label class="radio inline"> 
+                                    <input type="radio" value="G"  name="MOType" onchange="RadioMBClick();">
+                                    <span>General</span> 
+                                </label>
+                                 <label class="radio inline"> 
+                                    <input type="radio" value="A"  name="MOType" onchange="RadioMBClick();">
+                                    <span>All</span> 
+                                </label>
+                                </div>
+                            </div>
+                                  </div>
+                        </div>
+
+                        </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                       <div class="x_panel" style="padding: 0px;">
+                           <div >
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                         <label style="font-size: 17px;white-space:  nowrap;">
+                                Bill Type
+                                </label>
+                                    </div>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                <div class="maxl" style="margin-top: -6px;">
+                                <label class="radio inline"> 
+                                    <input type="radio" checked="" value="PU" id="optB" name="Type" onchange="TypeClick();">
+                                    <span>Purchase</span> 
+                                </label>
+                                <label class="radio inline"> 
+                                    <input type="radio" value="PR" id="optS" name="Type" onchange="TypeClick();">
+                                    <span>Process </span> 
+                                </label>                             
+                                <label class="radio inline"> 
+                                    <input type="radio" value="PD" id="optG" name="Type" onchange="TypeClick();">
+                                    <span>Production</span> 
+                                </label>
+                                 <label class="radio inline"> 
+                                    <input type="radio" value="OD" id="optR" name="Type" onchange="TypeClick();">
+                                    <span>Others</span> 
+                                </label>
+                                </div>
+                            </div>
+                              </div>  
+                        </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="row">
+<div class="row">
+                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                               Currency
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                               <select id="ddlCurrency" class="form-control" onchange="loadexcrate();">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Ex.Rate</label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                               <input type="text" id="txtExRate" class="form-control" name="optwrkord" placeholder="Ex.Rate" disabled>
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                                Amount
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                               <input type="text" id="txtAmount" class="form-control" name="optwrkord" placeholder="Amount">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Remarks</label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                             <textarea style="height:53px;" class="form-control" rows="4" placeholder="Remarks" id="txtremarks"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 enquiry_edit">
+                                                Department
+                                            </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                             <select id="ddlDepartment" class="form-control">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                 </div> </div>
+                            </div>
+                        </div>
+                             <link href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" rel="stylesheet">
+                        <div class="modal-footer">
+                            <button class="btn btn-success btn-round"  id="btnAdd" onclick="Add();">Save</button>
+                                                  <button class="btn  btn-success btn-round" onclick="Update();" id="btnUpdate">Update</button>
+                                                  <button class="btn btn-danger btn-round" onclick="deletebyid();" id="btnDel">Delete</button>
+                                                  <button class="btn btn-danger btn-round" onclick="backtomain();">Close</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>
+
+

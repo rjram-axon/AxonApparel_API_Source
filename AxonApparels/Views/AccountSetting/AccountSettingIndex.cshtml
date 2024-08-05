@@ -1,0 +1,563 @@
+﻿@{
+    ViewBag.Title = "AccountSettingIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tbody_filter
+    {
+    }
+
+    .add_btn
+    {
+        width: 20px;
+        padding: 2px;
+        height: 20px;
+        margin-left: -16px;
+    }
+
+
+    #tblSetdetails_filter
+    {
+        display: none;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        LoadEditDetails();
+        // $('#txtEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    });
+</script>
+
+
+
+@*<script src="~/AxonScripts/StoreSetup.js"></script>*@
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+<!-- page content -->
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Account Information</h2>
+                        <br />
+                        <div class="clearfix"></div>
+
+                        <div class="row">
+                            <div class="x_content">
+                                <form class="form-horizontal form-label-left">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">Allow Users MailSettings </label>
+
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="checkbox" id="chkallowmail" name="chkallowmail">
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">Account Name</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtAccName" class="form-control " placeholder="Name">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">Password</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="password" id="txtPassword" class="form-control " placeholder="Password">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">e-Mail ID</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtMailId" class="form-control " placeholder="Mail ID">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">Display Name</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtDisplayName" class="form-control " placeholder="Display Name">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6 col-sm-6col-xs-12">Encode Type</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <select id="ddlEncodeType" class="form-control select2">
+                                                    <option value=1>MIME</option>
+                                                    <option value=2>Unencode</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">Validate E-Mail ID </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="checkbox" id="chkvalidmail" name="chkvalidmail">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6 col-sm-6col-xs-12">SMTP HostValidation</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <select id="ddlSMTPvalidate" class="form-control select2">
+                                                    <option value=0>None</option>
+                                                    <option value=1>Syntax</option>
+                                                    <option value=2>Ping</option>
+                                                    <option value=3>DNS</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Mail Options</h2>
+                        <br />
+                        <div class="clearfix"></div>
+
+                        <div class="row">
+                            <div class="x_content">
+                                <form class="form-horizontal form-label-left">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">SMTP Host</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtSMTPhost" class="form-control " placeholder="SMTP Host">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6 col-sm-6 col-xs-12">POP3 Host</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtPop3host" class="form-control " placeholder="POP3 Host">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Use Authentication</label>
+
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                <input type="checkbox" id="chkUseAuth" name="chkUseAuth">
+                                            </div>
+                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Use POP Authentication</label>
+
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                <input type="checkbox" id="chkPopAuth" name="chkUseAuth">
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6 col-sm-6col-xs-12">Send Message as</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <select id="ddlMsgType" class="form-control select2">
+                                                    <option value=1>HTML</option>
+                                                    <option value=2>TEXT</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Connect Timeout</label>
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                <input type="text" id="txtContimeout" class="form-control " placeholder="">
+                                            </div>
+                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Message Timeout</label>
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                <input type="text" id="txtMsgtimeout" class="form-control " placeholder="">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Connect Retry</label>
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                <input type="text" id="txtConretry" class="form-control " placeholder="">
+                                            </div>
+                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Max Recipients</label>
+                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                <input type="text" id="txtMaxrecip" class="form-control " placeholder="">
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="button" id="btnTestmail" class="btn btn-primary" value="Test Mail">
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                     <div class="col-md-6 col-sm-6 col-xs-12">
+                                          <div class="form-group">
+                                          
+                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                <input type="text" id="txtSMTPhostPort" class="form-control " placeholder="Port">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                           
+                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                <input type="text" id="txtPop3hostPort" class="form-control " placeholder="Port">
+                                            </div>
+
+                                        </div>
+
+                                     </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group" style="float: right; margin-top: 10px; margin-right: 7px; border: none;">
+
+                    <button type="button" class="btn btn-success btn-round" id="btnApply" onclick="UpdateData();">Apply</button>
+
+
+                    <button type="button" class="btn btn-danger btn-round" id="btnclose" onclick="Close();">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+
+
+
+
+        $(document).ready(function () {
+            debugger;
+            MainFDate = $("#hdMainFromDate").data('value');
+            DCompid = $("#hdnDCompid").data('value');
+            Guserid = $("#hdnUserid").data('value');
+            //getDate();
+            //GenerateNumber();
+            //LoadCompanyDDL("#ddlMCompany");
+
+
+        });
+
+
+
+        jQuery(document).ready(function ($) {
+
+
+        });
+
+
+        function UpdateData() {
+            debugger;
+            var isValid = true;
+       
+                var isValid = true;
+
+                if ($('#txtAccName').val() == "") {
+                    $('#txtAccName').css('border-color', 'Red');
+                    isValid = false;
+                }
+                else {
+                    $('#txtAccName').css('border-color', 'lightgrey');
+                }
+
+                if ($('#txtPassword').val() == "") {
+                    $('#txtPassword').css('border-color', 'Red');
+                    isValid = false;
+                }
+                else {
+                    $('#txtPassword').css('border-color', 'lightgrey');
+                }
+                if ($('#txtMailId').val() == "") {
+                    $('#txtMailId').css('border-color', 'Red');
+                    isValid = false;
+                }
+                else {
+                    $('#txtMailId').css('border-color', 'lightgrey');
+                }
+
+                if ($('#txtDisplayName').val() == "") {
+                    $('#txtDisplayName').css('border-color', 'Red');
+                    isValid = false;
+                }
+                else {
+                    $('#txtDisplayName').css('border-color', 'lightgrey');
+                }
+
+                if ($('#txtSMTPhost').val() == "") {
+                    $('#txtSMTPhost').css('border-color', 'Red');
+                    isValid = false;
+                }
+                else {
+                    $('#txtSMTPhost').css('border-color', 'lightgrey');
+                }
+
+                if ($('#txtPop3host').val() == "") {
+                    $('#txtPop3host').css('border-color', 'Red');
+                    isValid = false;
+                }
+                else {
+                    $('#txtPop3host').css('border-color', 'lightgrey');
+                }
+
+                if ($('#txtSMTPhostPort').val() == "") {
+                    $('#txtSMTPhostPort').css('border-color', 'Red');
+                    isValid = false;
+                }
+                else {
+                    $('#txtSMTPhostPort').css('border-color', 'lightgrey');
+                }
+
+                if ($('#txtPop3hostPort').val() == "") {
+                    $('#txtPop3hostPort').css('border-color', 'Red');
+                    isValid = false;
+                }
+                else {
+                    $('#txtPop3hostPort').css('border-color', 'lightgrey');
+                }
+
+
+               
+
+
+             if (!isValid)
+            {
+                 return true;
+            }
+
+
+             var AllowUserMailSettings = '';
+                
+                if ($('#chkallowmail').is(":checked")) {
+                    AllowUserMailSettings = 'Y';
+                }
+                else {
+                    AllowUserMailSettings = 'N';
+                }
+               
+                var EmailValidation = '';
+               
+                if ($('#chkvalidmail').is(":checked")) {
+                    EmailValidation = 1;
+                }
+                else {
+                    EmailValidation = 0;
+                }
+
+                var UseAuthentication = '';
+                if ($('#chkUseAuth').is(":checked")) {
+                    UseAuthentication = 'Y';
+                }
+                else {
+                    UseAuthentication = 'N';
+                }
+           
+
+                var UsePOPAuthentication = '';
+              
+                if ($('#chkPopAuth').is(":checked")) {
+                    UsePOPAuthentication = 'Y';
+                }
+                else {
+                    UsePOPAuthentication = 'N';
+                }
+             
+            if (isValid) {
+
+                var obj = {
+
+                    Userid: Guserid,
+                    ToEmailID: "",
+                    CcEmailID: "",
+                    AllowMailing: 'Y',
+                    // AllowUserPopupSettings: $('#txtAccName').val(),
+                    AllowUserMailSettings: AllowUserMailSettings,
+                    AccountName: $('#txtAccName').val(),
+                    EMailPassword: $('#txtPassword').val(),
+                    FromEmailID: $('#txtMailId').val(),
+                    FromDisplayName: $('#txtDisplayName').val(),
+                    EmailValidation: EmailValidation,
+                    EncodeType: $('#ddlEncodeType').val(),
+                    SMTPHost: $('#txtSMTPhost').val(),
+                    SMTPPort: $('#txtSMTPhostPort').val(),
+                    POP3Host: $('#txtPop3host').val(),
+                    POP3Port: $('#txtPop3hostPort').val(),
+                    SMTPHostValidation: $('#ddlSMTPvalidate').val(),
+                    UseAuthentication: UseAuthentication,
+                    UsePOPAuthentication: UsePOPAuthentication,
+                    AsHtml: $('#ddlMsgType').val(),
+                    ConnectTimeout: $('#txtContimeout').val(),
+                    MessageTimeout: $('#txtMsgtimeout').val(),
+                    ConnectRetry: $('#txtConretry').val(),
+                    MaxRecipients: $('#txtMaxrecip').val(),
+
+                }
+
+                $("#btnApply").attr("disabled", true);
+                LoadingSymb();
+                $.ajax({
+                    url: "/AccountSetting/UpdateStatus",
+                    data: JSON.stringify(obj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.Value == true) {
+
+                            alert("Data Updated Sucessfully");
+                           
+                           
+                            window.location.href = "/AccountSetting/AccountSettingIndex";
+                               
+                           
+                        } else {
+
+                            window.location.href = "/Error/Index";
+
+
+                        }
+
+
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+
+
+
+
+
+            }
+        }
+
+
+        function LoadEditDetails() {
+            debugger;
+            $.ajax({
+                url: "/AccountSetting/GetSettingData",
+               // data: JSON.stringify({ Grn_MasId: GrnMasId }),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+
+                    var obj = result.Value;
+                    debugger;
+                    if (obj != undefined)  {
+
+                        $('#txtAccName').val(obj[0]["AccountName"]);
+                        $('#txtPassword').val(obj[0]["EMailPassword"]);
+                        $('#txtMailId').val(obj[0]["FromEmailID"]);
+                        $('#txtDisplayName').val(obj[0]["FromDisplayName"]);
+                       // EmailValidation: EmailValidation,
+                        $('#ddlEncodeType').val(obj[0]["EncodeType"]).trigger('change');
+                        $('#txtSMTPhost').val(obj[0]["SMTPHost"]);
+                        $('#txtSMTPhostPort').val(obj[0]["SMTPPort"]);
+                        $('#txtPop3host').val(obj[0]["POP3Host"]);
+                        $('#txtPop3hostPort').val(obj[0]["POP3Port"]);
+                        $('#ddlSMTPvalidate').val(obj[0]["SMTPHostValidation"]).trigger('change');
+                       // UseAuthentication: UseAuthentication,
+                       // UsePOPAuthentication: UsePOPAuthentication,
+                        $('#ddlMsgType').val(obj[0]["EncodeType"]).trigger('change');
+                        $('#txtContimeout').val(obj[0]["ConnectTimeout"]);
+                        $('#txtMsgtimeout').val(obj[0]["MessageTimeout"]);
+                        $('#txtConretry').val(obj[0]["ConnectRetry"]);
+                        $('#txtMaxrecip').val(obj[0]["MaxRecipients"]);
+
+
+
+                        if (obj[0]["AllowUserMailSettings"] == 'Y') {
+                            $('#chkallowmail').prop('checked', true);
+                           
+                        }
+                        if (obj[0]["EmailValidation"] == 1) {
+                            $('#chkvalidmail').prop('checked', true);
+                           
+                        }
+
+                        if (obj[0]["UseAuthentication"] == 'Y') {
+                            $('#chkUseAuth').prop('checked', true);
+
+                        }
+                        if (obj[0]["UsePOPAuthentication"] == 'Y') {
+                            $('#chkPopAuth').prop('checked', true);
+
+                        }
+                       
+                    }
+                    else {
+
+                    }
+                },
+
+                failure: function (errMsg) {
+                    alert(errMsg);
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>

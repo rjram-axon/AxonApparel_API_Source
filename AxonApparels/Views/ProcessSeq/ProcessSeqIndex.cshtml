@@ -1,0 +1,260 @@
+﻿@{
+    ViewBag.Title = "ProcessSeqIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<style>
+    #tPMbody_wrapper {
+        margin-top: -40px;
+    }
+
+    #tPMbody_info {
+        display: none;
+    }
+</style>
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Planning/ProcessSeq.js"></script>
+<script src="~/AxonScripts/Common/jquery-1.12.4.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+
+
+        <div class="">
+            <div class="">
+                <div class="x_panel">
+                    <div class="clearfix"></div>
+                    <div class="">
+                        <div class="x_panel">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-4 ">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-sm-6 col-xs-12">Company</label>
+                                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                                    <select id="ddlMCompany" class="form-control" onchange="McompList();">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                                    Buyer
+                                                </label>
+                                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                                    <select id="ddlMBuyer" class="form-control" onchange="BcompList();">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-sm-6 col-xs-12" for="ex3">
+                                                    From Date
+                                                </label>
+                                                <div class="col-md-8 col-sm-9 col-xs-12">
+
+                                                    <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="display: none;">
+                                                <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                                    ProcessId
+                                                </label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                    <input type="text" class="form-control" placeholder="ProcessId" id="txtProcessId">
+                                                </div>
+                                            </div>
+                                            @*<div class="form-group">
+                                        <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                            Style
+                                        </label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <select id="ddlMStyle" class="form-control">
+                                                <option value="0">--Select style--</option>
+                                              <option value="2">POLO-TSHIRT</option>
+
+                                            </select>
+                                        </div>
+                                    </div>*@
+                                        </form>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                    Order No
+                                                </label>
+                                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                                    <select id="ddlMOrdNo" class="form-control" onchange="OcompList();">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Ref No</label>
+                                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                                    <select id="ddlMRefNo" class="form-control" onchange="RcompList();">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-sm-6 col-xs-12" for="ex3">
+                                                    To Date
+                                                </label>
+                                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                                    <input type="text" class="form-control" placeholder="Date" id="txtToDate">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-4 ">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                    Job No
+                                                </label>
+                                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                                    <select id="ddlMJobNo" class="form-control" onchange="JcompList();">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4 col-sm-3 col-xs-12" for="txtEntryDate">Style</label>
+                                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                                    <select id="ddlMStyle" class="form-control" onchange="ScompList();">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="margin-right: 10px; text-align: right;">
+                                                <button type="button" style="width: 70px;" class="btn btn-success" onclick="List();">List</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="x_panel">
+                           <button type="button" class="btn btn-primary" data-toggle="modal" id="btnAdd" data-target="#myModal" onclick="save();">Add New </button>
+                        <div class="row">                           
+                            <div class="form-group col-md-10">
+                                <div class="maxl" style="margin-top: -8px;">
+                                    <label class="radio inline">
+                                        <input id="Work" class="Score" name="Order" type="radio" value="W" checked="checked" onchange="RadioWClick();">
+                                        <span>Work Order </span>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input id="Job" class="Score" name="Order" type="radio" value="J" onchange="RadioJClick();">
+                                        <span>Job Order </span>
+                                    </label>
+                                </div>
+
+                                @* <label for="Name">Sample Order</label>
+                                                <input id="Sample" class="Score" name="Order" type="radio" value="S" onchange="RadioSClick();">    *@
+                            </div>
+
+                             <div class="col-md-12"><table id="tPMbody" class="table table-striped table-bordered"></table></div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal fade" style="overflow-y:scroll" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width:40%">
+                                <div class="modal-content">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2>Program</h2>
+
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="row" style="margin: 0;">
+                                            <div class="row" style="margin: 0;">
+                                             
+
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+
+                                                    <form class="form-horizontal form-label-left input_mask">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                                                                Options 
+                                                            </label>
+                                                            <div class="col-md-2 col-sm-2 col-xs-12" style="">
+                                                                <div class="checkbox" style="margin-top: -4px;">
+                                                                    <label>
+                                                                        <input type="checkbox" id="selectall" value="">All
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                <div class="multiselect">
+
+                                                                    <select multiple="multiple" id='sbTwo' class="form-control" style="height:100px;">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                   <div class="row">
+                                                       <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                         
+                                                           </div>
+                                                       </div>
+                                                
+                                            </div>
+
+                                                    </form>
+                                                
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="margin: 0px; float: right;">
+                                            <div class="form-group">
+                                                <button class="btn btn-success" onclick="SubReport();">Submit</button>
+                                                <button class="btn btn-danger" onclick="backtomain();">Cancel</button>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                 @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+
+                <!-- /page content -->
+
+
+
+
+                <!-- footer content -->
+
+
+                <!-- /footer content -->
+            </div>
+        </div>
+    </div>
+</div>

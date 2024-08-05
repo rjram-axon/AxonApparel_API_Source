@@ -1,0 +1,245 @@
+﻿@{
+    ViewBag.Title = "PrecostingTrimsConsumptionIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tblgeneraldetails_filter {
+        display: none;
+    }
+
+    #tblgenshipdet_filter {
+        display: none;
+    }
+
+    #tblstyledetails_filter {
+        display: none;
+    }
+
+    #tblshipdet_filter {
+        display: none;
+    }
+
+    #tblcolordet_filter {
+        display: none;
+    }
+
+    #tblsizedetails_filter {
+        display: none;
+    }
+
+    #tblEntryItemdetails_filter {
+        display: none;
+    }
+    /*#tblshipmentdetails_filter
+    {
+        display: none;
+    }*/
+
+    #tblshipmentdetails_length {
+        display: none;
+    }
+
+    #tblshipmentdetails_info {
+        display: none;
+    }
+
+    #tblshipmentdetails_paginate {
+        display: none;
+    }
+
+    #tblcolordetails_wrapper {
+        display: none;
+    }
+
+
+    #tblEntrySizeItemdetails_filter {
+        display: none;
+    }
+
+    #tblEntryCompItemdetails_filter {
+        display: none;
+    }
+
+    #tblEntrySizeItemdetailsSave_filter {
+        display: none;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtBuyerOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+
+<script src="~/AxonScripts/OrderProcessing/PrecostTrimsconsumption.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Order Measurement</button>*@
+
+
+
+
+                @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+                <!-- /page content -->
+
+
+                <div class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog" style="min-width: 80%">
+                        <div class="modal-content">
+
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Precosting Trims  Consumption</h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="x_panel">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer Order No</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtOrderNo" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtBuyer" disabled>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Ref.No</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtRefNo" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Style</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtStyle" disabled>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4 ">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer Order Date</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder=" " id="txtBuyerOrderDate" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Entry Date</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder=" " id="txtEntryDate">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                     <div class="x_panel"> 
+                                         <div class="col-md-12" style="margin-top: -15px;margin-bottom: -10px;">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12"><h2 style="font-size:16px;font-weight:600;">Trims Details</h2></div>
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div id="TrimsList">
+                                                <table class="table table-responsive" id="tblTrimsdetails">
+                                                    <thead>
+                                                        <tr>
+                                                             <th style="display: none;">TrimsSlNo
+                                                            </th>
+                                                            <th style="display: none;">Trimsmasid
+                                                            </th>
+                                                            <th style="display: none;">Itemid
+                                                            </th>
+                                                             <th>Item
+                                                            </th>
+                                                            <th style="display: none;">Trimsid
+                                                            </th>
+                                                            <th>Trims
+                                                            </th>
+                                                            <th style="display: none;">Colorid
+                                                            </th>
+                                                            <th>Color
+                                                            </th>
+                                                            <th style="display: none;">Sizeid
+                                                            </th>
+                                                            <th>Size
+                                                            </th>
+                                                            <th style="display: none;">Uomid
+                                                            </th>
+                                                             <th>UOM
+                                                            </th>
+                                                             <th>Consumption
+                                                            </th>
+                                                            @*<td>&nbsp;</td>*@
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                                <span id="TrimsdetailsError" style="color: red"></span>
+                                            </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                                 </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-round btn-success" id="btnAdd" onclick="return Save();">Add</button>
+                                <button type="button" class="btn btn-round btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                <button type="button" class="btn btn-round btn-success" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                <button type="button" class="btn btn-round btn-danger" id="btnclose" onclick="Close();">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                             
+            </div>
+        </div>
+    </div>
+</div>
+

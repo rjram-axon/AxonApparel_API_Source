@@ -1,0 +1,677 @@
+﻿@{
+    ViewBag.Title = "CourierEntryIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    
+    #tbody_filter {
+        margin-top: -27px;
+    }
+
+    #tCbody_filter {
+        margin-top: -28px;
+    }
+    #tCbody_info {
+    display:none;
+    }
+    #tCbody_paginate {
+    display:none;
+    }
+    #tCbody_length {
+    display:none;
+    }
+    #tbody_filter {
+    display:none;
+    }
+    
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtAWBDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    })
+</script>
+
+
+<script src="~/AxonScripts/Common/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/modernizr.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/OrderProcessing/CourierEntry.js"></script>
+<script src="~/AxonScripts/Common/jquery-1.12.4.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+                    <div class="clearfix"></div>
+                    <div class="">
+
+                       @* <div class="x_panel">
+
+                            <div class="x_content">
+                                <form class="form-inline">
+                                    <div class="row">
+  <div class="row">
+                                        <div class="col-sm-2" style="margin-left: 10px;">
+                                            <div class="form-group">
+                                                <label style="font-size: 19px;">
+                                                    Courier Entry 
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label >From Date</label>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label >To Date</label>
+                                              
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                     </div>
+                                </form>
+
+                            </div>
+                        </div>*@
+
+
+                        <div class="x_panel">
+                            <div class="row">
+                                <div class="row">
+                                <div class="col-md-3">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">Company</label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlMCompany" class="form-control" onchange="CMainList();">
+                                                </select>
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12"  for="ex3">From Date</label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                            </div>
+                                        </div>
+
+
+                                        @*             <div class="form-group">
+                                        <label class="control-label col-md-2 col-sm-6 col-xs-12">
+                                            Courier
+                                        </label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <select id="ddlMCour" class="form-control">
+                                            
+
+                                            </select>
+                                        </div>
+                                    </div>*@
+
+
+
+
+                                    </form>
+
+
+
+
+                                </div>
+
+                                <div class="col-md-3">
+
+                                    <form class="form-horizontal form-label-left input_mask">
+
+                                        <div class="form-group" >
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                Entry No
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                <select id="ddlEntryNo" class="form-control" onchange="EMainList();">
+                                                </select>
+                                            </div>
+                                        </div>
+                                           <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-6 col-xs-12"  for="ex3">To Date</label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                 <input type="text" class="form-control" placeholder="Date" id="txtToDate">
+                                            </div>
+                                        </div>
+
+                                        @*  <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Ref No</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+
+                                            <select id="ddlRefNo" class="form-control">
+                                                
+                                            </select>
+                                        </div>
+                                    </div>*@
+
+                                    </form>
+                                </div>
+                                <div class="col-md-3">
+
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <div class="maxl" style="margin-top: -6px; width: 637px;">
+                                                <label class="radio inline">
+                                                    <input type="radio" checked value="B" id="optMB" name="MDType" onchange="LoadDBuyer();">
+                                                    <span>Buyer</span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input type="radio" value="S" id="optMS" name="MDType" onchange="LoadDSupplier();">
+                                                    <span>Supplier</span>
+                                                </label>
+                                                @*<label class="radio inline">
+                                                    <input type="radio" value="U" id="optMU" name="MDType" onchange="LoadDUnit();">
+                                                    <span>Unit</span>
+                                                </label>*@
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-3">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                <select id="ddlMDesLoc" class="form-control">
+                                                </select>
+                                            </div>
+                                        </div>
+                                         <div class="form-group" style="margin-right:66px;text-align:right;">
+                                        <button type="button" style="width:70px;" class="btn btn-success" onclick="List();">List</button>
+                                         
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                              </div>
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+                    <div class="x_panel">
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Add Courier Entry</button>
+
+                    <table id="tCbody" class="table table-striped table-bordered"></table>
+                    </div>
+
+                  
+
+                </div>
+
+                    @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+
+
+                <!-- /page content -->
+
+
+
+                <div class="modal fade " id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class=" modal-dialog" style="min-width: 74%;">
+                        <div class="modal-content">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Courier Entry</h2>
+                                    @* <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">Settings 1</a>
+                                                </li>
+                                                <li><a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>*@
+                                    <div class="clearfix"></div>
+                                </div>
+
+
+
+
+                                <div class="x_content">
+
+
+                                    <div class="x_panel">
+                                        <div class="row">
+                                              <div class="row">
+                                            <div class="col-md-4 ">
+
+                                                <form class="form-horizontal form-label-left input_mask">
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Company
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <select id="ddlCompany" class="form-control" onchange="GenerateNumber();">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Courier
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <select id="ddlCourier" class="form-control">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Entry No
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="Entry No" id="txtEntryNo" disabled>
+                                                        </div>
+                                                    </div>
+                                                   <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Despatch To
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                              <div class="maxl" style="width: 273px;margin-top: -5px;margin-left: 10px;">
+                                                                    <label class="radio inline">
+                                                                        <input type="radio" checked value="B" id="optB" name="DType" onclick="LoadDBuyer();">
+                                                                        <span>Buyer</span>
+                                                                    </label>
+                                                                    <label class="radio inline">
+                                                                        <input type="radio" value="S" id="optS" name="DType" onclick="LoadDSupplier();">
+                                                                        <span>Supplier</span>
+                                                                    </label>
+                                                                    <label class="radio inline" style="display:none">
+                                                                        <input type="radio" value="U" id="optU" name="DType" onclick="LoadDUnit();">
+                                                                        <span>Unit</span>
+                                                                    </label>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                </form>
+
+                                            </div>
+
+                                            <div class="col-md-4">
+
+                                                <form class="form-horizontal form-label-left input_mask">
+
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEntryDate">Entry Date</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="Entry Date" id="txtEntryDate">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Ref No
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="Ref No" id="txtCRefNo">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Date
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="Date" id="txtAWBDate">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                      <label class="control-label col-md-3 col-sm-3 col-xs-12" id="LabBuy">
+                                                            Buyer
+                                                        </label>
+                                                         <label class="control-label col-md-3 col-sm-3 col-xs-12 " id="LabSup" style="display:none;">
+                                                            Supplier
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                          <select id="ddlDesLoc"  class="form-control">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <form class="form-horizontal form-label-left input_mask" >
+                                                      <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" style="white-space: nowrap;">
+                                                            AVVB No
+                                                        </label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" id="txtAVBNo" class="form-control" placeholder=" " />
+                                                        </div>
+                                                    </div>
+                                                    
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" style="white-space: nowrap;">
+                                                            Contact Person
+                                                        </label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="Contact Person" id="txtConPerson">
+                                                        </div>
+                                                    </div>
+                                                     <div class="form-group" style="display:none;">
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" id="txtCourierMasId">
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+  </div>
+                                           
+                                        </div>
+                                    </div>
+
+
+                                    @*<div class="x_content" style="margin-top: -12px;">
+
+
+
+                                        <div class="x_panel">
+
+                                            <div class="x_content" style="margin-left:10px;">
+
+                                                <form class="form-inline">
+                                                    <div class="form-group col-sm-4">
+                                                        <label for="ex3">AVVB No</label>
+                                                        <input type="text" id="txtAVBNo" class="form-control" placeholder=" " />
+                                                    </div>
+
+
+                                                    <div class="form-group col-sm-3">
+                                                        <input type="text" class="form-control" placeholder="Date" id="txtAWBDate">
+                                                    </div>
+
+
+
+                                                    <div class="form-group col-sm-4">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                            Contact Person
+                                                        </label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="Contact Person" id="txtConPerson">
+                                                        </div>
+
+                                                    </div>                                              
+
+                                                    <div class="form-group" style="display:none;">
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" id="txtCourierMasId">
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>*@
+
+                                </div>
+                                <div class="">
+
+                                    <div class="x_content" style="margin-top: -3px;">
+
+
+                                        <div class="row">
+                                            <div class="">
+                                                <div class="x_panel">
+
+                                                    <div class="x_content">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-md-3" style="display:none;">
+                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">Add New Courier</button>
+                                                                </div></div>
+                                                                <table class="table table-bordered table-hover">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>Item</td>
+                                                                            <td>Color</td>
+                                                                            <td>Size</td>
+                                                                            <td>UOM</td>
+                                                                            <td>Quantity</td>
+                                                                            <td>&nstb</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <select id="ddlItem" class="form-control">
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <select id="ddlColor" class="form-control">
+                                                                                    </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <select id="ddlSize" class="form-control">
+                                                                                    </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <select id="ddluom" class="form-control">
+                                                                                    </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" name="Quantity" id="txtQuantity" class="form-control col-md-10">
+                                                                            </td>
+                                                                            <td>
+                                                                                <button class="btn btn-success btn-round" onclick="Add();" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btncourieradd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                <button class="btn btn-success btn-round" onclick="Update();" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: inline-block;display:none;" id="btncourierupdate" data-toggle="tooltip" data-placement="top" title="" type="button" data-original-title="Update" aria-describedby="tooltip315428"><i class="fa fa-refresh"></i></button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            
+
+                                                            <table id="tbody" class="table table-striped table-bordered"></table>
+                                                        </div>
+                                                        <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+
+                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        <h4 class="modal-title" id="myModalLabel">Add Courier</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form>
+                                                                            <div class="form-group col-sm-12">
+                                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Item</label>
+                                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+
+
+                                                                                    
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group col-sm-12">
+                                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Color</label>
+                                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group col-sm-12">
+                                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Size</label>
+                                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group col-sm-12">
+                                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Uom</label>
+                                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group col-sm-12">
+                                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Quantity</label>
+                                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                        <form>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-success btn-round" id="btnAdd" onclick="return ">Add</button>
+                                                                        <button type="button" class="btn btn-success btn-round" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                                                        <button type="button" class="btn btn-danger btn-round" onclick="Close();">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+                                <div class="x_panel" style="margin-top: 5px;">
+
+                                    <div class="x_content">
+
+
+                                        <div class="row">
+                                             @*<div class="form-group">*@
+
+                                            @*<div class="col-md-3 col-sm-3 col-xs-6">
+                                                <select class="form-control">
+                                                    <option>Courier mode</option>
+                                                    <option>Option one</option>
+                                                    <option>Option two</option>
+                                                    <option>Option three</option>
+                                                    <option>Option four</option>
+                                                </select>
+                                            </div>*@
+                                                @* <div class="col-md-3 col-sm-3 col-xs-3">
+                                                     <select class="form-control select2">
+                                                         <option>InWard</option>
+                                                         <option>OutWard</option>
+                                                     </select>
+                                                 </div>*@
+                                                 
+                                                 
+                                        @*</div>*@
+                                       
+                                            <div class="form-group">
+                                                
+                                             <div class="col-md-3 col-sm-3 col-xs-3">
+                                                <div class="checkbox" style="margin-top: -5px;">
+                                                    
+                                            <label>
+                                                <input type="checkbox" id="Return" name="Return">
+                                                Returnable Status on
+                                            </label> 
+                                        </div>
+                                        </div>
+                                             <div class="col-md-3 col-sm-3 col-xs-3">
+                                                          <select id="CourType" class="form-control">
+                                                              <option value="I">InWard</option>
+                                                              <option value="O">OutWard</option>
+                                                            </select>
+                                                        </div>
+                                                 
+                                            </div>
+                                        </div>
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="modal-footer" style="border:none;">
+                                <button type="button" class="btn btn-success btn-round" id="btnMAdd" onclick="save();">Add</button>
+                                <button type="button" class="btn btn-success btn-round" id="btnMUpdate" style="display: none;" onclick="MUpdate();">Update</button>
+                                <button type="button" class="btn btn-danger btn-round" data-dismiss="modal" onclick="MClose();">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- footer content -->
+
+                 <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                <!-- /footer content -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /page content -->

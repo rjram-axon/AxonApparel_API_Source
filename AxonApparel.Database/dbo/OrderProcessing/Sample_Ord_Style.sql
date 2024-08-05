@@ -1,0 +1,33 @@
+﻿CREATE TABLE [dbo].[Sample_Ord_Style]
+(
+
+[order_no] [varchar](20) NOT NULL,
+	[Styleid] [int] NOT NULL,
+	[categoryid] [int] NULL,
+	[category_descid] [int] NULL,
+	[quantity] [numeric](9, 0) NULL,
+	[price] [numeric](15, 5) NULL,
+	[value] [numeric](15, 5) NULL,
+	[gsm] [varchar](10) NULL,
+	[finish_qty] [numeric](8, 0) NULL,
+	[job_qty] [numeric](8, 0) NULL,
+	[StyleRowid] [int] IDENTITY(1,1) NOT NULL primary key,
+	[LongDesc] [varchar](2000) NULL,
+	[styleentdate] [datetime] NULL,
+	[AllowancePer] [numeric](9, 2) NULL,
+	[ProductionQty] [numeric](9, 0) NULL,
+	[Sample_Job_No] [varchar](20) NULL,
+	[Company_Unitid] [int] NULL,
+	[Despatch_Qty] [numeric](9, 0) NULL,
+	[Despatch_Closed] [varchar](1) NULL,
+	[Unit_Type] [char](1) NULL,
+	[Enquiryid] [int] NULL,
+	[BuyerArt] [varchar](40) NULL,
+	[buyerItem] [varchar](40) NULL,
+	[SeasonId] [int] NULL,
+	[CreatedBy] [int] NULL,
+	
+	CONSTRAINT [fk_sample_ord_style_Company_Unitid] FOREIGN KEY([Company_Unitid])REFERENCES [dbo].[CompanyUnit] ([Id]),
+	CONSTRAINT [FK_Sample_ord_Style_CreatedBy] FOREIGN KEY([CreatedBy])REFERENCES [dbo].[Employee] ([EmployeeId]),
+	CONSTRAINT [fk_sample_ord_style_order_no] FOREIGN KEY([order_no])REFERENCES [dbo].[Sample_Ord_Mas] ([Order_No]),
+	CONSTRAINT [fk_sample_ord_style_styleid] FOREIGN KEY([Styleid]) REFERENCES [dbo].[StyleHeader] ([StyleId]))

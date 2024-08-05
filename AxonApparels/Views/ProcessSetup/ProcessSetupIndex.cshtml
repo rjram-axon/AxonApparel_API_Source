@@ -1,0 +1,334 @@
+﻿@{
+    ViewBag.Title = "ProcessSetupIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*margin-top: -28px;*@
+<style>
+    #tbody_filter {
+    }
+
+    .add_btn {
+        width: 20px;
+        padding: 2px;
+        height: 20px;
+        margin-left: -18px;
+    }
+</style>
+<script src="~/AxonScripts/ProcessSetup.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<!-- page content -->
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Process Setup</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+                            @if (ViewBag.ProcessSetupAddFlg == "true")
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Add New Process Setup</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" disabled>Add New Process Setup</button>
+                            }
+
+                            <table id="tbody" class="table table-bordered table-hover">
+                                @*<thead>
+                                    <tr>
+                                        <th style="visibility: hidden;">ID
+                                        </th>
+                                        <th>Country Name
+                                        </th>
+                                        <th>LookUp
+                                        </th>                                        
+                                        <th>Status
+                                        </th>
+                                        <th>Action
+                                        </th>
+                                    </tr>
+                                </thead>*@
+                                @*<tbody class="tbody">
+                                </tbody>*@
+                            </table>
+                        </div>
+                        @* Load datatable css *@
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="x_panel" style="width: 110%;">
+                                    <div class="x_title">
+                                        <h2>Add Process Setup</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+                                                <div class="row">
+                                                    <form class="form-horizontal form-label-left">
+                                                        <div class="form-group" style="display: none;">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Process Setup ID</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" name="Process Setup" id="ProcessSetupID" placeholder="Process Setup Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group" style="margin-left: 13px;">
+                                                            <label class="control-label col-md-2 col-sm-3 col-xs-12">Process <span style="color: red;">*</span></label>
+                                                            <div class="col-md-5 col-sm-8 col-xs-9">
+                                                                <select id="ddlProcess" class="form-control"></select>
+                                                            </div>
+                                                            <div class="col-md-1 col-sm-1 col-xs-1">
+                                                                @*<select id="ddlCountry" class="form-control"></select>*@
+                                                                <button type="button" data-toggle="tooltip" data-placement="top" title="Add Process" class="btnaddprocess btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="maxl">
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="Checking" checked class="flat" name="ProcessType" type="radio" value="H">
+                                                                    <span>Checking </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="Cutting" class="flat" name="ProcessType" type="radio" value="C">
+                                                                    <span>Cutting </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="Ironing" class="flat" name="ProcessType" type="radio" value="I">
+                                                                    <span>Ironing </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-3 col-sm-2 col-xs-12">
+                                                                    <input id="Compacting" class="flat" name="ProcessType" type="radio" value="M">
+                                                                    <span>Compacting </span>
+                                                                </label>
+
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="YarnDyeing" class="flat" name="ProcessType" type="radio" value="Y">
+                                                                    <span>YarnDyeing </span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="maxl">
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="Packing" class="flat" name="ProcessType" type="radio" value="P">
+                                                                    <span>Packing </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="Printing" class="flat" name="ProcessType" type="radio" value="R">
+                                                                    <span>Printing </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="Sewing" class="flat" name="ProcessType" type="radio" value="S">
+                                                                    <span>Sewing </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-3 col-sm-2 col-xs-12">
+                                                                    <input id="Fabric Dyeing" class="flat" name="ProcessType" type="radio" value="F">
+                                                                    <span>Fabric Dyeing </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="Knitting" class="flat" name="ProcessType" type="radio" value="K">
+                                                                    <span>Knitting </span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                         <div class="col-md-12">
+                                                            <div class="maxl">
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="Washing" class="flat" name="ProcessType" type="radio" value="W">
+                                                                    <span>Washing </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="HeatSetting" class="flat" name="ProcessType" type="radio" value="T">
+                                                                    <span>Heat Setting </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="Raiseing" class="flat" name="ProcessType" type="radio" value="E">
+                                                                    <span>Raiseing </span>
+                                                                </label>
+                                                                   <label class="radio inline col-md-3 col-sm-3 col-xs-12">
+                                                                    <input id="PanelCutting" class="flat" name="ProcessType" type="radio" value="B">
+                                                                    <span>Panel Process </span>
+                                                                </label>
+                                                                <label class="radio inline col-md-2 col-sm-2 col-xs-12">
+                                                                    <input id="Others" class="flat" name="ProcessType" type="radio" value="O">
+                                                                    <span>Others </span>
+                                                                </label>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="x_panel" style="width: 100%;">
+                                    <div class="x_title">
+                                        <h2>Add Process</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+
+                                                <form class="form-horizontal form-label-left">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Process ID</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="Process" id="ProcessID" placeholder="Process Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Process<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-7 col-sm-7 col-xs-12">
+                                                            <input type="text" name="Process" id="Name" placeholder="Process Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                                        <div class="form-group">
+                                                            <div class="maxl">
+                                                                <label class="radio inline">
+                                                                    <input type="radio" class="flat" checked id="Process" name="ProcessType" value="1">
+                                                                    <span>Process </span>
+                                                                </label>
+                                                                <label class="radio inline">
+                                                                    <input type="radio" class="flat" id="Production" name="ProcessType" value="2">
+                                                                    <span>Production </span>
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="checkbox" style="margin-left: 22px;">
+
+                                                                <input type="checkbox" class="flat" checked="checked" id="IsComponentProcess">
+                                                                Is Component Process
+                           
+                                                            </div>
+                                                            <div class="checkbox" style="margin-left: 22px;">
+
+                                                                <input type="checkbox" class="flat" checked="checked" id="InpOutPro">
+                                                                Input/Output Is Proportion
+                           
+                                                            </div>
+                                                            <div class="checkbox" style="margin-left: 22px;">
+
+                                                                <input type="checkbox" class="flat" checked="checked" id="AllLotNum">
+                                                                Allow Lot Number Generation
+                           
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" style="margin-left: -10px">
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                                Program Input
+                                                            </label>
+                                                            <div class="col-md-7 col-sm-7 col-xs-12">
+                                                                <select id="ddlinput" class="form-control">
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="form-group" style="margin-left: -10px">
+                                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                                Program Output
+                                                            </label>
+                                                            <div class="col-md-7 col-sm-7 col-xs-12">
+                                                                <select id="ddloutput" class="form-control">
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 col-xs-12 control-label" style="margin-top: 5px;">
+                                                                Status
+                                                 
+                                                            </label>
+
+                                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" id="Status" value="">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAddprocess" onclick="return Addprocess();">Save</button>
+                                        @*<button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>*@
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- page content -->

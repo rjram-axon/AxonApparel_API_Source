@@ -1,0 +1,368 @@
+﻿@{
+    ViewBag.Title = "PurchaseCancelIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #tblEntryCanItemdetails_filter {
+        margin-top: -12px;
+    }
+    #tblEntryCanOrderdetails_filter {
+        margin-top: -31px;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtPurDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtCancelDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+
+
+
+<script src="~/AxonScripts/Purchase/PurchaseCancelEntry.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Purchase Returns</h2>
+                @*<ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>*@
+                <div class="clearfix"></div>
+            </div>
+            
+            <div class="x_panel">
+                <div class="row">
+                        <div class="row">
+                    <div class="col-md-4">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                    Supplier
+                                </label>
+                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                     <input type="text" id="txtSupplier" class="form-control" placeholder="Supplier">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                    Cancelled By
+                                </label>
+                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                    <input type="text" id="txtCancelledBy" class="form-control" placeholder="CancelledBy">
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                    Pur Ord No 
+                                </label>
+                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                     <input type="text" class="form-control" placeholder="Pur Ord No" id="txtPurOrdNo" disabled>
+                                </div>
+                               
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                    Cancel No 
+                                </label>
+                                <div class="col-md-8 col-sm-9 col-xs-12">
+                                     <input type="text" class="form-control" placeholder="Cancel No" id="txtCancelNo" disabled>
+                                </div>
+                              
+
+                            </div>
+
+                                  <div class="form-group" style="display:none;">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                   CancelledId
+                                </label>
+                                <div class="col-md-4 col-sm-9 col-xs-12">
+                                     <input type="text" class="form-control" placeholder="CancelledId" id="txtEmpCanId" disabled>
+                                </div>
+                               
+
+                            </div>
+                              <div class="form-group" style="display:none;">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                   CompId
+                                </label>
+                                <div class="col-md-4 col-sm-9 col-xs-12">
+                                     <input type="text" class="form-control" placeholder="CompId" id="txtCompId" disabled>
+                                </div>
+                               
+
+                            </div>
+                                 <div class="form-group" style="display:none;">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                   PurCanId
+                                </label>
+                                <div class="col-md-4 col-sm-9 col-xs-12">
+                                     <input type="text" class="form-control" placeholder="PurCnId" id="txtPurCanId" disabled>
+                                </div>
+                               
+
+                            </div>
+                        </form>
+                    </div>
+                            <div class="col-md-4">
+                                
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                    Pur Ord Date
+                                </label>
+                                 <div class="col-md-8 col-sm-9 col-xs-12">
+                                    <input type="text" id="txtPurDate" class="form-control" placeholder="Date">
+                                </div>
+                                </div>
+                             <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                   Cancel Date
+                                </label>
+
+                                  <div class="col-md-8 col-sm-9 col-xs-12">
+                                    <input type="text" id="txtCancelDate" class="form-control" placeholder="Date">
+                                </div>
+                                </div>
+                            </form>
+                            </div>
+  </div>
+
+
+                </div>
+            </div>
+
+
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+            <div class="x_panel">
+                <h2 style="margin-top: -3px;">Item Details</h2>
+                <div class="">
+                    <div class="" style="margin-top:-20px;">
+                        <form class="form-horizontal form-label-left input_mask">
+                                          <div id="CanList">
+                                                            <table class="table table-responsive" id="tblEntryCanItemdetails">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="display:none;">PurOrdDetId</th>
+                                                                      <th style="display:none;">CancelId</th>
+                                                                         <th style="display:none;">CancelDetId</th>
+                                                                        <th>Item
+                                                                        </th>
+                                                                        <th>Color
+                                                                        </th>
+                                                                        <th>Size
+                                                                        </th>
+                                                                        <th>PurUnit
+                                                                        </th>
+                                                                        <th>OrdBal
+                                                                        </th>                                                           
+                                                                        <th>CanQty
+                                                                        </th>
+                                                                        
+                                                                        <th style="display:none;">Itemid
+                                                                        </th>
+                                                                        <th style="display:none;">Colorid
+                                                                        </th>
+                                                                        <th style="display:none;">Sizeid
+                                                                        </th>
+                                                                        <th style="display:none;">PurUomId
+                                                                        </th>                                                                       
+                                                                        
+                                                                    </tr>
+                                                                </thead>
+
+                                                            </table>
+                                              
+
+                                                            <span id="orderItemError1" style="color: red"></span>
+                                                        </div>
+
+                        </form>
+
+
+                    </div>
+                    <div class="">
+                          <h2 >Order Details</h2>
+                        <form class="form-horizontal form-label-left input_mask">
+                   <div id="CanListOrder">
+                                                            <table class="table table-responsive" id="tblEntryCanOrderdetails">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="display:none;">PurOrdDetId</th>
+                                                                         <th style="display:none;">CancelId</th>
+                                                                         <th style="display:none;">CancelDetId</th>
+                                                                         <th style="display:none;">CancelOrdId</th>
+                                                                        <th>OrderNo
+                                                                        </th>
+                                                                        <th>RefNo
+                                                                        </th>
+                                                                        <th>Style
+                                                                        </th>
+                                                                        <th>OrdQty
+                                                                        </th>                                                                                                                            
+                                                                        <th>CanQty
+                                                                        </th>                                                                        
+                                                                        <th style="display:none;">StyleId
+                                                                        </th>
+                                                                        <th style="display:none;">PurOrdBuyId
+                                                                        </th>      
+                                                                         <th style="display:none;">Itemid
+                                                                        </th>
+                                                                        <th style="display:none;">Colorid
+                                                                        </th>
+                                                                        <th style="display:none;">Sizeid
+                                                                        </th>
+                                                                        <th style="display:none;">PurUomId
+                                                                        </th>                                                                                                                                                
+                                                                       @* <td>&nbsp;</td>*@
+                                                                    </tr>
+                                                                </thead>
+
+                                                            </table>
+                                                           
+                                                         
+
+                                                            <span id="orderItemError" style="color: red"></span>
+                                                        </div>
+
+                            
+                        </form>
+
+
+                    </div>
+                     <div class="" style="display:none;">
+                          <h2>Order Details Save</h2>
+                    <div class="">
+                        <form class="form-horizontal form-label-left input_mask">
+                    <div id="CanListOrderSave">
+                                                            <table class="table table-responsive" id="tblEntryCanOrderdetailsSave">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>PurOrdDetId</th>
+                                                                          <th>CancelId</th>
+                                                                         <th >CancelDetId</th>
+                                                                         <th >CancelOrdId</th>
+                                                                        <th>OrderNo
+                                                                        </th>
+                                                                        <th>RefNo
+                                                                        </th>
+                                                                        <th>Style
+                                                                        </th>
+                                                                        <th>OrdQty
+                                                                        </th>                                                                                                                            
+                                                                        <th>CanQty
+                                                                        </th>                                                                        
+                                                                        <th>StyleId
+                                                                        </th>
+                                                                        <th>PurOrdBuyId
+                                                                        </th>   
+                                                                         <th>Itemid
+                                                                        </th>
+                                                                        <th>Colorid
+                                                                        </th>
+                                                                        <th>Sizeid
+                                                                        </th>
+                                                                        <th>PurUomId
+                                                                        </th>                                                                                                                                                   
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                </thead>
+
+                                                            </table>
+                                                           
+                                                         
+
+                                                            <span id="orderItemErrorsave" style="color: red"></span>
+                                                        </div>
+
+
+                            
+                        </form>
+
+
+                    </div>
+                </div>
+                     <div class="row">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12 col-sm-3 col-xs-12" for="txtEntryDate">Remarks</label>
+                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                        <textarea id="txtRemarks" required="" class="form-control" name="message"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-4">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div style="float: right;margin-top: 54px;margin-right: 19px;">  
+                                                   <button type="button" class="btn btn-round btn-success" id="Add" onclick="return save();">Add</button>
+                                                <button type="button" class="btn btn-round btn-success" id="Update" style="display: none;" onclick="CancelUpdate();">Update</button>
+
+                                                <button type="button" class="btn btn-round btn-success" id="Delete" style="display: none;" onclick="CanDelete();">Delete</button>
+                                                <button type="button" class="btn btn-round btn-danger" onclick="Close();">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>                    
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+           
+
+
+        </div>
+    </div>
+</div>

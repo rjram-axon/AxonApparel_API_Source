@@ -1,0 +1,244 @@
+﻿@model List<AxonApparel.Domain.BuyOrdImg>
+
+@{
+    ViewBag.Title = "StyleGalleryIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/AxonScripts/OrderProcessing/StyleGallery.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<style>
+    /*.carousel-inner img
+    {
+        width: 100%;
+        height: 30%;
+    }*/
+
+    .dataTables_filter
+    {
+        display:none;
+    }
+
+
+    * {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+/* Style the counter cards */
+.card {
+  /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    padding: 13px;
+    text-align: center;
+    background-color: #ffffff;
+     margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right:5px;
+    border-radius: 8px;
+}
+
+    .dataTables_scrollBody
+    {
+    
+    max-height:200px;
+    }
+
+</style>
+
+<script type="text/javascript">
+   @* $(document).ready(function () {
+        $("#partialView").load('@Url.Content("/StyleGallery/StyleGalleryPartial")');
+    });*@
+</script>
+
+<div class="right_col" role="main" >
+    <div class="">
+        <div class="clearfix"></div>
+          <h2>Style Gallery</h2>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                 @for (int i = 0; i < Model.Count; i++)
+                  {
+                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+
+                 <div class="card "> 
+                     <div><img style="width:150px;height:150px;" id="imgid" src="@Url.Content(Model[i].Imgpath)" onclick="Loadord(@Model[i].Imgtitle);" />
+                         
+                       <div>  <label id="stylename" >@Model[i].Imgtitle</label></div>
+
+                     </div>
+                  @*   <div><p>Desc</p></div>*@
+                 </div>
+                         </div>
+
+                 }
+
+              @*  <table class="col-md-12 col-sm-12 col-xs-12">
+      
+        <tbody class="col-md-12 col-sm-12 col-xs-12">
+
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+
+
+                if (i == 0) {
+                <td style="text-align: center;" class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+
+                        <div class="card col-lg-3 col-md-3 col-sm-6 col-xs-12"> <img style="width:224px;height:150px;" id="imgid" src="@Url.Content(Model[i].Imgpath)" /></div>
+
+                       
+                    </td>
+                
+                }
+                else{  
+                
+                
+             if ((i % 4) == 0)
+               {
+                <tr></tr>
+             
+                    <td style="text-align: center;" class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+
+                        <div class="card col-lg-3 col-md-3 col-sm-6 col-xs-12"> <img style="width:224px;height:150px;" id="imgid" src="@Url.Content(Model[i].Imgpath)" /></div>
+
+                       
+                    </td>
+               
+            }else {
+                 
+             <td style="text-align: center;" class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+
+                        <div class="card col-lg-3 col-md-3 col-sm-6 col-xs-12"> <img style="width:224px;height:150px;" id="imgid" src="@Url.Content(Model[i].Imgpath)" /></div>
+
+                       
+                    </td>
+            }
+            
+            
+            }
+            
+            
+            }
+        </tbody>
+    </table>*@
+
+
+            </div>
+
+
+
+               <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+
+
+              <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 80%">
+                                <div class="x_panel">
+                                   <div class="x_title">
+                                        <h2>Style Details</h2>
+                                        
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body"> 
+                                        <form class="form-horizontal form-label-left">
+                                            <div><label id="lblstyle"></label> &nbsp <label id="lblOrder"></label></div>
+                                              <div id="uploadsContainer" ></div>
+                                             <div class="x_panel">
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                               <label >STYLE DESCRIPTION : </label>  <textarea id="stydesc"></textarea> </div>
+                                             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <label >FABRIC DETAILS : </label> &nbsp; &nbsp; <textarea id="fabdet"></textarea> </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                              <label >CURRENCY SUMMARY :</label>  <textarea id="cursum"></textarea></div>
+                                                 </div>
+                                            <div class="x_panel">
+                                             <div id="List" style="margin-top:10px;">
+                                                                                            <table class="table table-responsive" id="tblOrderdetails" cellspacing="0" style="margin-top:20px;">
+                                                                                                <thead>
+                                                                                                    <tr>    
+                                                                                                        <th>Buyer
+                                                                                                        </th>
+                                                                                                        <th>OrderNo
+                                                                                                        </th>
+                                                                                                        <th>RefNo
+                                                                                                        </th>
+                                                                                                        <th>Rate
+                                                                                                        </th>
+                                                                                                        <th>Currency
+                                                                                                        </th>
+                                                                                                        <th>Ord Qty
+                                                                                                        </th>
+                                                                                                         <th>Desp Qty
+                                                                                                        </th>
+                                                                                                    </tr>
+                                                                                                </thead>
+
+                                                                                            </table>
+                                                                                            <span id="SizeorderItemError" style="color: red"></span>
+                                                                                        </div>
+                                                </div>
+                                          
+                                        </form>
+
+                                        <div class="modal-footer">
+                                           @* <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
+                                            <button type="button" class="btn btn-primary" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>*@
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+        </div>
+    </div>
+</div>
+

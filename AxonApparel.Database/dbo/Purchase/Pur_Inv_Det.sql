@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[Pur_Inv_Det]
+(
+    [Pur_inv_Detid] [int] IDENTITY(1,1) NOT NULL, 
+	[Pur_inv_id] [int], 
+	[Pur_grn_detid] [int] NULL,
+	[Rate] [numeric](15, 5) NOT NULL DEFAULT (0),
+	[InvoiceQty] [numeric](15, 3) NOT NULL DEFAULT (0),
+	[pur_inv_dcid] [int] NULL,
+	[closed] [char](1) NULL,
+	[Rate_Diff] [numeric](15, 5) NOT NULL DEFAULT (0),
+	[Excess_Qty] [numeric](15, 3) NOT NULL DEFAULT (0),
+	[pur_ord_detid] [int] NULL,
+	[balance_qty] [numeric](15, 3) NOT NULL DEFAULT (0),
+	[CGSTAMt] [numeric](18, 3) NULL,
+	[SGSTAMT] [numeric](18, 3) NULL,
+	[IGSTAMT] [numeric](18, 3) NULL,
+	[CGST] [numeric](18, 3) NULL,
+	[SGST] [numeric](18, 3) NULL,
+	[IGST] [numeric](18, 3) NULL,
+	[HSNCODE] [varchar](50) NULL,
+    [pur_grn_masid] [int] NULL,
+    CONSTRAINT [PK_Pur_Inv_Det] PRIMARY KEY ([Pur_inv_Detid]), 
+    CONSTRAINT [FK_Pur_Inv_Det_Pur_grn_det] FOREIGN KEY ([Pur_grn_detid]) REFERENCES [Pur_grn_det]([grn_detid]), 
+	CONSTRAINT [FK_Pur_Inv_Det_Pur_Inv_Mas] FOREIGN KEY ([Pur_inv_id]) REFERENCES [Pur_Inv_Mas]([Pur_invid]), 
+	CONSTRAINT [FK_Pur_Inv_Det_Pur_Inv_Dc] FOREIGN KEY ([pur_inv_dcid]) REFERENCES [Pur_Inv_Dc]([pur_inv_dcid]), 
+	CONSTRAINT [FK_Pur_Inv_Det_Pur_Ord_Det] FOREIGN KEY ([pur_ord_detid]) REFERENCES [Pur_Ord_Det]([Pur_Ord_Detid]),
+	CONSTRAINT [FK_Pur_Inv_Det_Pur_Grn_Mas] FOREIGN KEY ([pur_grn_masid]) REFERENCES [Pur_grn_Mas]([grn_masid])
+)

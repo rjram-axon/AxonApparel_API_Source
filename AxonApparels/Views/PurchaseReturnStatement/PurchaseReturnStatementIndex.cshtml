@@ -1,0 +1,349 @@
+﻿@{
+    ViewBag.Title = "PurchaseReturnStatementIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtDeliDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+
+
+<script src="~/AxonScripts/Production/ProductionOrder.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="x_panel">
+            <div class="x_panel">
+                <div class="x_content">
+                    <form class="form-inline">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                </div>
+                                <div class="col-sm-4" style="margin-left: 10px;">
+                                    <div class="form-group">
+                                        <label style="font-size: 19px; white-space: nowrap; text-align: center;">
+                                            Approved Price List
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="x_panel">
+                        <h2 style="text-align: center; margin-top: -3px;"><b>Filter Options</b></h2>
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                                Supplier
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlMSupplier" class="form-control" onchange="CMainlist();"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                Item Group
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlMItemGroup" class="form-control" onchange="CMainlist();">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                Item Type
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlItemType" class="form-control" onchange="CMainlist();">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-6">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                                Item
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlItem" class="form-control" onchange="CMainlist();"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                Color
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlColor" class="form-control" onchange="CMainlist();">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                Size
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                <select id="ddlsize" class="form-control" onchange="CMainlist();">
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                    </form>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="">
+                                <div class="col-md-4">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-success">Report</button>
+
+                                            <button type="button" class="btn btn-danger">Close</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="col-md-4">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="form-group">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-4">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="">
+                </div>
+            </div>
+            @*<div class="col-md-6">
+                     <div class="x_panel" style="height:275px;">
+                        <h2 style="text-align:center;margin-top: -3px;"><b>Display Options</b></h2>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                        Item
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMItem" class="form-control" onchange="CMainlist();"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <table id="tblmaindetails" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>A</th>
+                                    <th>Item</th>
+                                    
+                                </tr>
+                            </thead>
+                        </table>
+                                </div>
+                                 
+                               
+                                 
+                               
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form class="form-horizontal form-label-left input_mask">
+                                   <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Color
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMColor" class="form-control" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Merchandise
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                        <select id="ddlMerchandise" class="form-control" onchange="CMainlist();">
+                                        </select>
+                                    </div>
+                                </div>
+                             
+                              
+                                
+                                
+                              
+                            </form>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <h2 style="width:100px;">Order By</h2>
+                            </div>
+                             <div class="col-md-10">
+                                 <form class="form-horizontal form-label-left input_mask">
+
+                                <div class="form-group">
+                                    <div class="maxl " style="margin-left: 10px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="P" name="proctype" onchange="CMainlist();">
+                                            <span>Company</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="W" name="proctype" onchange="CMainlist();">
+                                            <span>Supplier</span>
+                                        </label>
+                                       
+                                    </div>
+                                </div>
+                                        
+                              </form>
+                            </div>
+                             
+                        </div>
+                    </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <h2 style="width:100px;">Print</h2>
+                            </div>
+                             <div class="col-md-10">
+                                 <form class="form-horizontal form-label-left input_mask">
+                                <div class="form-group">
+                                    <div class="maxl " style="margin-left: 10px;">
+                                        <label class="radio inline">
+                                            <input type="radio" checked value="P" name="proctype" onchange="CMainlist();">
+                                            <span>Order No</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" value="W" name="proctype" onchange="CMainlist();">
+                                            <span>Ref No</span>
+                                        </label>
+                                    </div>
+                                </div>                                        
+                              </form>
+                            </div>                             
+                        </div>
+                    </div>
+                      <div class="row">
+                           <div class="row">
+                        <div class="col-md-12"> 
+                                 <form class="form-horizontal form-label-left input_mask">
+                                  <div class="col-sm-6">
+                                      <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                From Date
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                 <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                            </div>
+                                    </div>                                    
+                                </div>
+                            <div class="col-sm-6">
+                                      <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                                To Date
+                                            </label>
+                                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                                 <input type="text" id="txtFromDate" class="form-control " placeholder="Date">
+                                            </div>
+                                    </div>                                    
+                                </div>
+                              </form>
+                             
+                        </div>
+                    </div>
+                     </div>&nbsp;
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <form class="form-horizontal form-label-left input_mask">
+                              <div class="form-group">
+                            <button type="button" class="btn btn-primary">Report</button>
+                          
+                            <button type="button" class="btn btn-danger">Close</button>
+                        </div>
+                             
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form class="form-horizontal form-label-left input_mask">
+                                   <div class="form-group">
+                          
+                            <div class="col-md-12 col-sm-9 col-xs-12" style="width: 200px;margin-top: 7px;">
+                               <input type="checkbox" name="vehicle" value="Bike">  Print In Condensed Mode
+                            </div>
+                        </div>
+                            </form>
+                        </div>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+                </div>*@
+        </div>
+
+
+            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+            @* Load datatable js *@
+            @section Scripts{
+
+                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                <script>
+                                           
+                </script>
+
+            }
+
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,732 @@
+﻿@{
+    ViewBag.Title = "OrderMeasurementIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+     .gg-software-upload {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 16px;
+    height: 6px;
+    border: 2px solid;
+    border-top: 0;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    margin-top: 13px
+}
+.gg-software-upload::after {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-left: 2px solid;
+    border-top: 2px solid;
+    transform: rotate(45deg);
+    left: 2px;
+    bottom: 4px
+}
+.gg-software-upload::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 3px;
+    width: 2px;
+    height: 10px;
+    background: currentColor;
+    left: 5px;
+    bottom: 3px
+}
+     .btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+.gg-software-download {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    left:1px;
+    transform: scale(var(--ggs,0.8));
+    width: 16px;
+    height: 6px;
+    border: 2px solid;
+    border-top: 0;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    margin-top: 8px
+}
+.gg-software-download::after {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-left: 2px solid;
+    border-bottom: 2px solid;
+    transform: rotate(-45deg);
+    left: 2px;
+    bottom: 4px
+}
+.gg-software-download::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 3px;
+    width: 2px;
+    height: 10px;
+    background: currentColor;
+    left: 5px;
+    bottom: 5px
+}
+    #tblgeneraldetails_filter {
+        display: none;
+    }
+
+    #tblgenshipdet_filter {
+        display: none;
+    }
+
+    #tblstyledetails_filter {
+        display: none;
+    }
+
+    #tblshipdet_filter {
+        display: none;
+    }
+
+    #tblcolordet_filter {
+        display: none;
+    }
+
+    #tblsizedetails_filter {
+        display: none;
+    }
+
+    #tblEntryItemdetails_filter {
+        display: none;
+    }
+    /*#tblshipmentdetails_filter
+    {
+        display: none;
+    }*/
+
+    #tblshipmentdetails_length {
+        display: none;
+    }
+
+    #tblshipmentdetails_info {
+        display: none;
+    }
+
+    #tblshipmentdetails_paginate {
+        display: none;
+    }
+
+    #tblcolordetails_wrapper {
+        display: none;
+    }
+
+
+    #tblEntrySizeItemdetails_filter {
+        display: none;
+    }
+
+    #tblEntryCompItemdetails_filter {
+        display: none;
+    }
+
+    #tblEntrySizeItemdetailsSave_filter {
+        display: none;
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtEntryDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtBuyerOrderDate').datepicker({ dateFormat: 'dd/mm/yy' });
+
+    })
+</script>
+
+<script src="~/AxonScripts/OrderProcessing/BulkOrderMeasurement.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Order Measurement</button>*@
+
+
+
+
+                @* Load datatable css *@
+
+                <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                @* Load datatable js *@
+                @section Scripts{
+
+                    <script src="~/build/js/jquery.dataTables.min.js"></script>
+                    <script>
+                                           
+                    </script>
+
+                }
+                <!-- /page content -->
+
+
+                <div class="modal fade" style="overflow-y:scroll" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog" style="min-width: 80%">
+                        <div class="modal-content">
+
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Order Measurement</h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="x_panel">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer Order No</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtOrderNo" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtBuyer" disabled>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Ref.No</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtRefNo" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Style</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="" id="txtStyle" disabled>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4 ">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Buyer Order Date</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder=" " id="txtBuyerOrderDate" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtEntryDate">Entry Date</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder=" " id="txtEntryDate">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+
+
+                                    <div class="x_panel">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="x_panel">
+                                                    <form class="form-horizontal form-label-left input_mask">
+                                                        <div class="card-header">
+                                                            <b style="font-size: 12pt;">Item List</b>
+                                                        </div>
+                                                        <div>
+                                                            <table class="table table-responsive" id="tblEntryItemdetails">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="display: none;">ItemId</th>
+                                                                        <th>Item
+                                                                        </th>
+
+                                                                    </tr>
+                                                                </thead>
+
+                                                            </table>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7 col-sm-12 col-xs-12">
+                                                <div class="x_panel">
+                                                    <form class="form-horizontal form-label-left input_mask">
+                                                        <div class="card-header">
+                                                            <b style="font-size: 12pt;">Component List</b>
+                                                        </div>
+                                                        <div class="col-md-12 col-sm-12 col-xs-12" style="overflow:scroll">
+<table class="table table-bordered table-hover" border="1">
+                                                            <tr>
+                                                                <td>Components</td>
+                                                                <td>Look Up</td>
+                                                                <td>Tolerance</td>
+                                                                <td>Increament</td>
+
+                                                                <td>&nbsp;</td>
+                                                            </tr>
+                                                            <tr class="mycontainer" id="maincomborow">
+                                                                <td >
+                                                                    <select id="ddlComponent" class="form-control select2">
+                                                                    </select>
+
+                                                                </td>
+                                                                <td style="width: 75px">
+                                                                    <input type="text" id="txtLook" class="form-control" placeholder="Look Up">
+                                                                </td>
+                                                                <td style="width: 150px">
+                                                                    <input type="text" id="txtTolerance" class="form-control" placeholder="Tolerance">
+                                                                </td>
+                                                                <td style="width: 75px">
+                                                                    <input type="text" id="txtIncreament" class="form-control" placeholder="Increament">
+                                                                </td>
+
+                                                                <td style="width: 40px">
+                                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btncomponentadd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                    <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px; display: none;" id="btncomponentupdate" data-toggle="tooltip" data-placement="top" title="Update" type="button"><i class="fa fa-refresh"></i></button>
+
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        </div>
+                                                            <table class="table table-responsive " id="tblEntryCompItemdetails">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="display: none;">CompItemId</th>
+
+                                                                    <th>Component Name
+                                                                    </th>
+                                                                    <th>Look Up
+                                                                    </th>
+                                                                    <th>Tolerance
+                                                                    </th>
+                                                                    <th>Increament
+                                                                    </th>
+                                                                    <td>&nbsp;</td>
+                                                                </tr>
+                                                            </thead>
+
+                                                        </table>
+                                                        
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="x_panel">
+                                                    <form class="form-horizontal form-label-left input_mask">
+
+                                                        <table class="table table-responsive" id="tblEntrySizeItemdetails">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="display: none;">MeasureDetId</th>
+                                                                    <th style="display: none;">MeasureMasId</th>
+                                                                    <th>Size
+                                                                    </th>
+                                                                    @*<th>Look Up
+                                                                        </th>                                                                       
+                                                                        <th>Tolerance
+                                                                        </th>
+                                                                        <th>Increament
+                                                                        </th>*@
+                                                                    <th>Qty
+                                                                    </th>
+
+                                                                    <th style="display: none;">SizeId
+                                                                    </th>
+                                                                    <th style="display: none;">gitemid
+                                                                    </th>
+                                                                    <th style="display: none;">citemid
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+
+                                                        </table>
+
+                                                        <table class="table table-responsive" id="tblEntrySizeItemdetailsSave" style="display: none;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>MeasureDetId</th>
+                                                                    <th>MeasureMasId</th>
+                                                                    <th>Size
+                                                                    </th>
+                                                                    <th>Qty
+                                                                    </th>
+
+                                                                    <th>SizeId
+                                                                    </th>
+                                                                    <th>gitemid
+                                                                    </th>
+                                                                    <th>citemid
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+
+                                                        </table>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="x_panel">
+                                        <div class="x_title col-lg-3 col-md-6 col-sm-6 col-xs-12" style="background: #F2F5F7; width: 49%; display: block; border: none;">
+                                                    <a class="collapse-link" style="cursor: pointer;">
+                                                        <h2 style="margin-top: 5px; cursor: pointer">Attachment</h2>
+                                                        <i class="fa fa-chevron-up" style="margin-top: 7px; margin-left: 4px;">
+                                                        </i>
+                                                    </a>
+                                            <div class="clearfix">
+                                            </div>
+                                        </div> 
+                                        <div class="x_content" id="nom_model" style="display: none;">
+                                            @*<div class="row col-lg-6">
+                                                <table class="table table-responsive" id="TableIma">
+                                                    <tBody>
+                                                        <tr>
+                                                            <th>
+                                                                <input type="text" id="txttitle" name="TitleVal" class="form-control" placeholder="Title">
+                                                            </th>
+                                                            <th>
+                                                                <span class="btn  btn-file" style="color:#fff;background:linear-gradient(0deg,  #48b1bf,#06beb6);border-radius:20px;">Browse...
+                                                                    <input type="file" id="uploadFile" name="file" data-val="true" class="form-control" data-val-required="please select a file" />
+                                                                </span>
+                                                                <span id="validityMessages" style="color: Red;"></span></th>
+                                                            <th> 
+                                                                <button class="button2 accept-btn" onclick="" >
+                                                                Add</button>
+                                                            </th>
+                                                        </tr>
+                                                    </tBody>
+                                                </table>
+                                            </div>*@
+                                            <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
+                                                                        <div class="">
+
+                                                                            @*<div class="row" style="margin: 0;">
+                                                                                <h4>Style Image</h4>
+                                                                            </div>*@
+                                                                            @using (Html.BeginForm("Upload", "StyleEntry", FormMethod.Post,
+                                                                                    new
+                                                                                    {
+                                                                                        enctype = "multipart/form-data",
+                                                                                        id = "ImgForm",
+                                                                                        name = "ImgForm",
+                                                                                        target = "UploadTarget"
+
+
+                                                                                    }))
+                                                                            { 
+@* DataBase Record ID as Hidden Field against which we are uplaoding file  *@
+                                                                                       
+                                                                                @Html.Hidden("ID", 1)
+                                                                                    
+@* <div style="width: 100px; margin: auto; float: left; line-height: 30px; font-weight: bold;">File</div>*@
+
+                                                                                <div class="">
+                                                                                    <div class="row" style="">
+                                                                                        <form class="form-horizontal form-label-left input_mask">
+                                                                                            <div class="form-group" style="margin-bottom: 15px;">
+                                                                                                <div class="col-lg-12 col-md-10 col-sm-10 col-xs-12">
+                                                                                                    <table class="table table-responsive" id="tblEntrySizeItemdailsSav">
+                                                                                                        <tbody>
+                                                                                                            <tr>
+                                                                                                                <th>
+                                                                                                                    <input type="text" id="txttitle" name="TitleVal" class="form-control" placeholder="Title">
+                                                                                                                </th>
+                                                                                                                <th>
+                                                                                                                    <span class="btn  btn-file" style="color:#fff;background:linear-gradient(0deg,  #48b1bf,#06beb6);border-radius:20px;">Browse...<input type="file" id="uploadFile" name="file" data-val="true" class="form-control" data-val-required="please select a file" /></span><span id="validityMessages" style="color: Red;"></span>
+                                                                                                                    
+                                                                                                                    
+                                                                                                                </th>
+                                                                                                                <th>
+                                                                                                                    <i id="upload"  onclick="UploadImage();" class="gg-software-upload"></i>
+                                                                                                                </th>
+                                                                                                            </tr>
+                                                            </tbody>
+
+                                                        </table>
+                                                                                                    
+                                                                                                </div>
+                                                                                                @*<div class="col-md-5 col-sm-5 col-xs-12">
+                                                                                                    
+                                                                                                </div>*@
+                                                                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                                                                    @*<input id="upload" type="button"  onclick="UploadImage();" class="gg-software-upload" />*@
+                                                                                                    
+                                                                                                </div>
+                                                                                                <br />
+                                                                                            </div>
+                                                                                        </form>
+                                                                                        
+                                                                                    </div>
+                                                                                </div>
+
+@*  <div style="clear: both;"></div>*@
+
+@*<div style="width: auto; margin-top: 3%;">
+                                                                                            <div style="margin: 5% 18%;">
+                                                                                                <input id="upload" type="button" value="Upload" name="Upload" onclick="UploadImage();" />
+                                                                                                <span id="uploadLoader" style="display: none;">
+                                                                                                    <img id="searchLoader" src="@Url.Content("~/Content/Images/loader.gif")" />Uploading Please Wait</span>
+                                                                                            </div>
+                                                                                        </div>*@
+
+@*<div id="uploadsContainer"></div>
+                                                                                        <iframe id="UploadTarget" name="UploadTarget" onload="UploadImage_Complete();" style="position: absolute; left: -999em; top: -999em;"></iframe>*@
+                                                                            }
+                                                                      
+                                                                               
+                                                                                <div class="row">
+                                                                                            <div id="uploadsContainer" style=""></div>
+                                                                                            <iframe id="UploadTarget" name="UploadTarget" onload="UploadImage_Complete();" style="position: absolute; left: -999em; top: -999em;"></iframe>
+                                                                                        </div>
+                                                                                  
+                                                                            </div>
+                                                                         </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2 col-sm-6 col-xs-12 enquiry_edit" style="white-space: nowrap;">
+                                                    Remarks
+                                                </label>
+                                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                                    <textarea id="txtRemark" required="" class="form-control" name="message"></textarea>
+                                                </div>
+                                            </div>
+                                                </div>
+                                        <div class="col-md-2" style="margin-top: 2em;">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-9 col-sm-6 col-xs-12 enquiry_edit" style="white-space: nowrap;">
+                                                   Check Instruction
+                                                </label>
+                                                <div class="col-md-3">
+                                                     <input type="checkbox" id="Status"/>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4"  >
+                                            <div class="form-group" style="float: right;margin-top: 2em;">
+                                        <button type="button" class="btn btn-round btn-success" id="btnSave" onclick="return Add();">Save</button>
+                                        <button type="button" class="btn btn-round btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                        <button type="button" class="btn btn-round btn-success" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                        <button type="button" class="btn btn-round btn-danger" id="btnclose" onclick="Close();">Close</button>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            @*<div class="modal-footer">
+                                <button type="button" class="btn btn-round btn-success" id="btnAdd" onclick="return Add();">Add</button>
+                                <button type="button" class="btn btn-round btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                <button type="button" class="btn btn-round btn-success" id="btnDelete" style="display: none;" onclick="Delete();">Delete</button>
+                                <button type="button" class="btn btn-round btn-danger" id="btnclose">Close</button>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        debugger;
+        $('.delUpload').on('click', function () {
+            var Id = this.id;
+            var url = "/StyleEntry/AttachDeleteFile";
+            url = url + "?id=" + Id
+            $.get(url, function (response) {
+                $('#uploadsContainer').html(response);
+            });
+        });
+    });
+
+    function deletefile(id) {
+        debugger;
+        var Id = id;
+        var url = "/StyleEntry/AttachDeleteFile";
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            $('#uploadsContainer').html(response);
+            nametxt = GetFilelist();
+        });
+
+        //var filterlst = $.grep(nametxt, function (item) {
+        //    return item.FileID != id;
+        //});
+
+        //nametxt = filterlst;
+
+    }
+    //function Viewfile(id) {
+    //    debugger;
+    //    var Id = id.toString();
+    //    var imgid=Id.SubString(4);
+    //    var url = "/StyleEntry/DeleteFile";
+    //    url = url + "?id=" + Id
+    //    $.get(url, function (response) {
+    //        $('#uploadsContainer').html(response);
+    //        nametxt = GetFilelist();
+    //    });
+
+
+    //}
+</script>
+<script type="text/javascript">
+    var isFirstLoad = true;
+    var nametxt = [];
+    var title = [];
+
+    function UploadImage() {
+        debugger;
+        if ($('#txttitle').val().trim() == "") {
+            alert('Please fill the title...');
+            return true;
+        }
+        // check for size of file not greater than 1MB
+        if ($("#uploadFile").val()) {
+
+            var iSize = ($("#uploadFile")[0].files[0].size / 1024);
+            iSize = (Math.round((iSize / 1024) * 100) / 100);
+            if (iSize > 4) {
+                alert("File must be less than 4MB");
+                $('span#validityMessages').html("File must be less than 4MB");
+                return;
+            }
+            else {
+                // on form post showing Busy Indicator
+                $('#uploadLoader').show();
+                $("#ImgForm").submit();
+                console.log(iSize + "Mb");
+                var fd = $("#uploadFile")[0].files[0].name;
+
+                //nametxt.push(fd);
+                title.push($('#txttitle').val());
+            }
+        }
+            // check for no file selected for upload
+        else {
+            $('span#validityMessages').html("Please select a File of size less than 4MB!");
+            return;
+        }
+
+    }
+
+    function UploadImage_Complete() {
+        debugger;
+        //Check to see if this is the first load of the iFrame
+        if (isFirstLoad == true) {
+            isFirstLoad = false;
+            // if first ajax call for getting uploads if any exists on server against this id 
+        }
+
+        // after successfull upload refreshing partial view to get the latest uploads
+        $('#uploadLoader').hide();
+
+        //Reset the image form so the file won't get uploaded again
+        document.getElementById("ImgForm").reset();
+
+        //if (!isFirstLoad)
+        //    GetFiles();
+        nametxt = GetFilelist();
+        GetFiles();
+
+    }
+
+
+
+    function GetFiles() {
+        debugger;
+
+        var url = "/StyleEntry/AttachGetFiles";
+        var Id = $('input#ID').val();
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            $('#uploadsContainer').html(response);
+        });
+    }
+
+    function GetFilelist() {
+        debugger;
+        var url = "/StyleEntry/GetFilelist";
+        var Id = $('input#ID').val();
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            debugger;
+            nametxt = response;
+        });
+    }
+
+</script>

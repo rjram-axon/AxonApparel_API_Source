@@ -1,0 +1,21 @@
+﻿CREATE TABLE [dbo].[ProdReturnMas]
+(
+	ReturnID INT IDENTITY(1,1) NOT NULL,
+	[ReturnNo] [varchar](20) NULL,
+	[ReturnDate] [datetime] NULL,
+	[RefNo] [varchar](25) NULL,
+	[RefDate] [datetime] NULL,
+	[CompanyId] [int] NULL,
+	[ProcessID] [int] NULL,
+	[WorkDivID] [int] NULL,
+	[Emp_SuppID] [int] NULL,
+	[Remarks] [varchar](500) NULL,
+	[EmpOrSupp] [varchar](1) NULL,
+	[InternalOrExternal] [char](1) NOT NULL Default('I'),
+	[StoreUnitID] [int] NULL,
+	[CreatedBy] [int] NULL,
+	[IssueType] [varchar](2) NULL,
+	CONSTRAINT [PK_ProdReturnRefid] PRIMARY KEY (ReturnID),
+	CONSTRAINT [FK_ProdRetMasStoreUnitRefid] FOREIGN KEY ([StoreUnitID]) REFERENCES [StoreUnit]([StoreUnitId]),
+	CONSTRAINT [FK_ProdRetMasEmployeeRefid] FOREIGN KEY ([CreatedBy]) REFERENCES Employee(EmployeeId),
+)

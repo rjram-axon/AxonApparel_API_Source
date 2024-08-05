@@ -1,0 +1,1634 @@
+﻿@{
+    ViewBag.Title = "MISSettingIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
+            e.preventDefault();
+            $(this).siblings('a.active').removeClass("active");
+            $(this).addClass("active");
+            var index = $(this).index();
+            $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+            $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+        });
+    });
+
+</script>
+<style>
+     /*<section class="main-container">
+      <div class="tab-nav-bar">
+      <div class="tab-navigation">
+     <ul class="tab-menu">
+      <li class="tab-btn">Ord Management</li>*/
+    section {
+        position: relative;
+        margin: 0px 0px;
+        transition: 0.5s ease;
+    }
+    .main-container {
+    position:relative;
+    }
+    .tab-menu {
+    color:lightblue;
+    list-style:none;
+    max-width:800px;
+    padding:4px;
+    white-space:nowrap;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    border-radius:50px;
+    box-shadow:initial;
+    overflow-x:auto;
+    user-select:none;
+    scroll-behavior:smooth;
+    }
+        .tab-menu::-webkit-scrollbar {
+            display:none;
+        }
+    .tab-btn {
+    color:black;
+    display:inline-block;
+    font-size:1em;
+    font-weight:400;
+    margin:0 2px;
+    padding:10px 20px;
+    border-radius:30px;
+    cursor:pointer;
+    user-select:none;
+    transition:0.3s ease;
+    }
+    .tab-btn:hover {
+        background-color:lightgrey;
+    }
+    .tab-btn.active {
+        background-color:lightblue;
+    }
+    .tab-nav-bar {
+    /*position:relative;*/
+    /*padding:65px 10px 40px 10px;*/
+    }
+    .tab-navigation {
+    position:relative;
+    /*display:flex;*/
+    justify-content:center;
+    align-items:center;
+    max-width:initial;
+    margin:0 auto;
+    }
+    .left-btn, .right-btn {
+    position:absolute;
+    color:darkblue;
+    font-size:1.8em;
+    padding:7px 7px;
+    cursor:pointer;
+    }
+    .left-btn {
+    left:0;
+    background:linear-gradient(90deg,#a3ddd8,transparent);
+    border-top-left-radius:30px;
+    border-bottom-left-radius:30px;
+    display:none;
+    margin-right:2px;
+    }
+    .right-btn {
+    right:0;
+    background:linear-gradient(270deg,#a3ddd8,transparent);
+    border-top-right-radius:30px;
+    border-bottom-right-radius:30px;
+    margin-left:2px;
+    }
+    .tab-content {
+    
+    width:100%;
+    }
+    .tab {
+    max-width:100%;
+    padding:0px 0px;
+    top:0;
+    bottom:0;
+    right:auto;
+    left:auto;
+    transform:translateX(25px);
+    content-visibility:hidden;
+    opacity:0;
+    }
+        .tab.active {
+    transform:translateX(0);
+    content-visibility:visible;
+    opacity:1;
+        }
+        .tab.tab_row {
+        width:100%;
+        display:flex;
+        justify-content:center;
+        aligh_items:center;
+        margin:50px 0;
+        gap:30px;
+        }
+</style>
+<script>
+    $(document).ready(function () {
+
+        var btnleft = document.querySelector(".left-btn");
+        var btnright = document.querySelector(".right-btn");
+        var tabmenu = document.querySelector(".tab-menu");
+        //btnright.addEventListener('click',() => {
+        //    tabmenu.sc
+        //});
+        debugger;
+        $(document).on('click', '.right-btn', function () {
+            tabmenu.scrollLeft += 150;
+            //IconVisibl();
+            setTimeout(() => IconVisibl(),50);
+        });
+        $(document).on('click', '.left-btn', function () {
+            tabmenu.scrollLeft -= 150;
+            //IconVisibl();
+            setTimeout(() => IconVisibl(),50);
+        });
+
+    //    var activeDrag=false;
+    //    tabmenu.addEventListener("mousemove",(drag) => {
+    //        if(!activeDrag)return;
+    //    tabmenu.scrollLeft -=drag.movementX;
+    //});
+    //tabmenu.addEventListener("mousedown",() =>{
+    //    activeDrag=true;
+        //});
+        var tabs=document.querySelectorAll(".tab")
+        var tabBtns=document.querySelectorAll(".tab-btn")
+        var tab_nav= function(tabBtnClick){
+            tabBtns.forEach((tabBtn)=>{
+                tabBtn.classList.remove("active");
+
+        });
+        tabs.forEach((tab)=>{
+            tab.classList.remove("active");
+    });
+        tabBtns[tabBtnClick].classList.add("active");
+        tabs[tabBtnClick].classList.add("active");
+        }
+        tabBtns.forEach((tabBtn,i)=>{
+            tabBtn.addEventListener("click",()=>{
+                tab_nav(i);
+            });
+        });
+    });
+    window.onload = function(){
+        var btnleft = document.querySelector(".left-btn");
+        var btnright = document.querySelector(".right-btn");
+        var tabmenu = document.querySelector(".tab-menu");
+        btnright.style.display=tabmenu.scrollWidth > tabmenu.clientWidth || tabmenu.scrollWidth >= window.innerWidth ? "":"";
+        btnleft.style.display=tabmenu.scrollWidth >= window.innerWidth ? "":"none";
+    }
+    window.onresize = function(){
+        var btnleft = document.querySelector(".left-btn");
+        var btnright = document.querySelector(".right-btn");
+        var tabmenu = document.querySelector(".tab-menu");
+        btnright.style.display=tabmenu.scrollWidth > tabmenu.clientWidth || tabmenu.scrollWidth >= window.innerWidth ? "block":"none";
+        btnleft.style.display=tabmenu.scrollWidth >= window.innerWidth ? "":"none";
+
+        var scrollLeftValue = Math.round(tabmenu.scrollLeft);
+
+        btnleft.style.display = scrollLeftValue > 0?"block":"none";
+    }
+    function IconVisibl() {
+        var btnleft = document.querySelector(".left-btn");
+        var btnright = document.querySelector(".right-btn");
+        var tabmenu = document.querySelector(".tab-menu");
+
+        var scrollLeftValue = Math.ceil(tabmenu.scrollLeft);
+        //console.log("1.", scrollLeftValue);
+
+        var scrollableWidth = tabmenu.scrollWidth - tabmenu.clientWidth;
+        //console.log("2.", scrollableWidth);
+
+        btnleft.style.display = scrollLeftValue > 0 ? "block" : "none";
+        btnright.style.display = scrollableWidth > scrollLeftValue ? "block" : "none";
+    }
+</script>
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/HouseKeeping/MisSetting.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bhoechie-tab-container">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 bhoechie-tab-menu">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item active text-center">
+                                    <h4>Path Setup</h4>
+                                </a>
+                                <a href="#" class="list-group-item text-center">
+                                    <h4>Default Settings</h4>
+                                </a>
+                                <a href="#" class="list-group-item text-center">
+                                    <h4>Optional Settings</h4>
+                                </a>
+                                <a href="#" class="list-group-item text-center">
+                                    <h4>Selection Settings</h4>
+                                </a>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 bhoechie-tab">
+                            <!-- flight section -->
+                            <div class="bhoechie-tab-content active">
+                                <div class="x_panel" style="border-radius:10px">
+                                    <div class="row" >
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <h2 style="margin-left: 10px; color: #000;">As a Query Path</h2>
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 enquiry_edit">
+                                                        Asp Vitual Path
+                                                    </label>
+                                                    <div class="col-md-7 col-sm-7 col-xs-8">
+                                                        <input type="text" class="form-control" placeholder="Asp Vitual Path" id="txtToDate">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">Asp Shared Path</label>
+                                                    <div class="col-md-7 col-sm-7 col-xs-8">
+                                                        <input type="text" class="form-control" placeholder="Asp Shared Path" id="txtToDate">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">Data Base Path</label>
+                                                    <div class="col-md-7 col-sm-7 col-xs-8">
+                                                        <input type="text" class="form-control" placeholder="DataBase Path" id="txtDbPath">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <h2 style="margin-left: 10px; color: #000;">Document Save Path</h2>
+                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                <div class="form-group">
+
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <input type="text" class="form-control" placeholder="Document Save Path" id="txtToDate">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <h2 style="margin-left: 10px; color: #000;">Crystal Report File Path</h2>
+                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                <div class="form-group">
+
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <input type="text" class="form-control" placeholder="Crystal Report File Path" id="txtToDate">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <!-- train section -->
+                            <div class="bhoechie-tab-content">
+                                <div class="x_panel" style="border-radius:10px">
+                                    <div  class="row" >
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <h2 style="margin-left: 10px; color: #000;">Currency</h2>
+                                            <form class="form-horizontal form-label-left input_mask">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4 enquiry_edit">
+                                                        Email Id
+                                                    </label>
+                                                    <div class="col-md-7 col-sm-7 col-xs-8">
+                                                        <input type="text" class="form-control" placeholder="Email Id" id="txtToDate">
+                                                    </div> 
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-4">Local Currency</label>
+                                                    <div class="col-md-7 col-sm-7 col-xs-8">
+                                                        <select id="ddlCurrency" class="form-control" onchange="CMainlist();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+                                            <h2 style="margin-left: 10px; color: #000;">Company</h2>
+                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5 col-sm-5 col-xs-5">Default Company</label>
+                                                    <div class="col-md-7 col-sm-7 col-xs-7">
+                                                        <select id="ddlCompany" class="form-control">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display: none;">
+                                                    <label class="control-label col-md-5 col-sm-5 col-xs-5">MisId</label>
+                                                    <div class="col-md-7 col-sm-7 col-xs-7">
+                                                        <input type="text" class="form-control" placeholder="MisId" id="txtMisId">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5 col-sm-5 col-xs-5">Default Company Unit</label>
+                                                    <div class="col-md-7 col-sm-7 col-xs-7">
+                                                        <select id="ddlCompUnit" class="form-control">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5 col-sm-5 col-xs-5">Default Supplier</label>
+                                                    <div class="col-md-7 col-sm-7 col-xs-7">
+                                                        <select id="ddlSupplier" class="form-control">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5 col-sm-5 col-xs-5">Stock Audit Excess %</label>
+                                                    <div class="col-md-7 col-sm-7 col-xs-7">
+                                                        <input type="text" class="form-control" placeholder="Stock Audit Excess %" id="txtToDate">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                            <h2 style="margin-left: 10px; color: #000; visibility: hidden;">Company</h2>
+                                            <form class="form-horizontal form-label-left input_mask">
+
+
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-5 col-sm-5 col-xs-4">Asst Year</label>
+                                                    <div class="col-lg-8 col-md-7 col-sm-7 col-xs-8">
+                                                        <input type="text" class="form-control" placeholder="Asst Year" id="txtAssYear">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-5 col-sm-5 col-xs-4">Financial Year</label>
+                                                    <div class="col-lg-8 col-md-7 col-sm-7 col-xs-8">
+                                                        <input type="text" class="form-control" placeholder="Financial Year" id="txtFinYear">
+                                                    </div>
+                                                </div>
+                                                   <div class="form-group">
+                                                    <label class="control-label col-lg-4 col-md-5 col-sm-5 col-xs-4">BaseColor</label>
+                                                    <div class="col-lg-8 col-md-7 col-sm-7 col-xs-8">
+                                                        <select id="ddlbasecolor" class="form-control">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <h2 style="margin-left:10px; color: #000;">Avatar</h2>
+                                            <form class="form-horizontal form-label-left input_mask" >
+                                                <div class="col-lg-3 col-md-4 col-sm-8 col-xs-8">
+                                                    <div class="form-group">
+                                                        <select id="ddlMaleFemale" class="form-control select2" style="width:140px;" onchange="SelectAvatar();">
+                                                            <option value="M">Male</option>
+                                                            <option value="F">Female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <div class="form-group">
+                                                        <img id="SetFemale" src="~/images/GIF Avatar/DefaultSetAvatar/MISsetAvatar_Female.gif" style="margin-top: -40px;height: 101px;" />
+                                                        <img id="SetMale" src="~/images/GIF Avatar/DefaultSetAvatar/MISsetAvatar_Male.gif" style="margin-top: -40px;height: 101px;" />
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- hotel search -->
+                            <div class="bhoechie-tab-content" style="width: 100%;">
+                                
+                                <div class="x_content">
+                                    <div class="">
+                                    <section class="main-container">
+                                        <div class="tab-nav-bar">
+                                            <div class="tab-navigation">
+                                                <i class="uil uil-angle-left left-btn"></i>
+                                                <i class="uil uil-angle-right right-btn"></i>
+                                                <ul class="tab-menu">
+                                                    <li class="tab-btn active" ><a  id="hometab" role="tab" data-toggle="tab" aria-expanded="true">Ord Management</a></li>
+                                                    <li class="tab-btn"><a  role="tab" id="-tab" data-toggle="tab" aria-expanded="false">Planning</a>
+                                                    <li class="tab-btn"><a role="tab" id="-tab2" data-toggle="tab" aria-expanded="false">Stores</a></li>
+                                                    <li class="tab-btn">Process</li>
+                                                    <li class="tab-btn">Production</li>
+                                                    <li class="tab-btn">General</li>
+                                                    <li class="tab-btn">Mis Query</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    <div class="tab-content col-md-12 col-sm-12 col-xs-12 ">
+                                        <div class="tab active col-md-12 col-sm-12 col-xs-12" role="tabpanel">
+                                            <div class="tab_row">
+                                                <div class="x_panel" style="border-radius:10px">
+                                                <h2 style="margin-left: 10px; color: #000;">Order Management</h2>
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-5 col-md-6 col-sm-6 col-xs-12">Shipment Assortment Column Caption</label>
+                                                            <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                                                                <input type="text" class="form-control" placeholder="Financial Year" id="txtToDate">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike">
+                                                            Allow Manual Quanity in WorkOrder
+                                                        </div>
+                                                          <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="1" id="chkBuyerDetAtm">
+                                                            Allow Buyer Details Automate
+                                                        </div>
+                                                        <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkEnbJobRate">
+                                                            Enable Job Order Rate
+                                                        </div>
+                                                    </div>
+
+                                                </form></div>
+                                            </div>
+                                        </div>
+                                        <div class="tab col-md-12 col-sm-12 col-xs-12" role="tabpanel">
+                                            <div class="tab_row">
+                                                <div class="x_panel " style="border-radius:10px">
+                                                <h2 style="margin-left: 10px; color: #000;">Planning</h2>
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike">
+                                                            Allow Manual Quanity in WorkOrder
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" id="chkgaficharges">
+                                                            Include Gafi Charges
+                                                        </div>
+                                                    </div>
+                                                     <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" id="chkbuyerwisecosting">
+                                                            Buyer Wise Costing
+                                                        </div>
+                                                    </div>
+                                                </form></div>
+                                            </div>
+                                        </div>
+                                        <div class="tab col-md-12 col-sm-12 col-xs-12">
+                                            <div class="tab_row">
+                                                <div class="x_panel" style="border-radius:10px">
+                                                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                                    <ul id="myTab1" class="nav nav-tabs bar_tabs" role="tablist">
+                                                        <li role="presentation" class="active"><a href="#page3" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Page One</a>
+                                                        </li>
+                                                        <li role="presentation" class=""><a href="#page4" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Page Two</a>
+                                                        </li>
+
+                                                    </ul>
+                                                    <div id="myTabContent2" class="tab-content">
+                                                        <div role="tabpanel" class="tab-pane fade active in" id="page3" aria-labelledby="home-tab">
+
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                   <h2 style="margin-left: 10px; color: #000;">Stores</h2>
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudget" value="1" id="chkPurBudApp">
+                                                                        Validate Budget Rate in Purchase Order(Job & Work)
+                                                                    </div>
+                                                                </div>
+                                                                 <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudget" value="1" id="chkPurBudAppSam">
+                                                                        Validate Budget Rate in Purchase Order(Sample)
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePO" value="1" id="chkPurOrdApp">
+                                                                        Validate Purchase Order Approval
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePOInd" value="1" id="chkPurOrdInd">
+                                                                        Validate Purchase Order Against Indent
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePOInd" value="1" id="chkHsnCode">
+                                                                        Validate GST Against HsnCode
+                                                                    </div>
+                                                                </div>
+                                                                 <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBillsToInvoiceEntry" value="1" id="OptchkBillsToInvoiceEntry">
+                                                                        Check Bills To Invoice Entry
+                                                                    </div>
+                                                                </div>
+                                                                  <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBillsToComInvoiceEntry" value="1" id="OptchkBillsToComInvoiceEntry">
+                                                                        Check Bills To Commercial Invoice Entry
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateStoreEntry" value="1" id="OptchkStoreEntry">
+                                                                       Validate Store
+                                                                    </div>
+                                                                </div>
+                                                                  <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateProgramQtyinTransfer" value="1" id="chkValidateProgramQtyinTransfer">
+                                                                       Validate Program Qty in Stock Transfer
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                            </div>
+
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                      <h2 style="margin-left: 10px; color: #000;">Accounts</h2>
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudgetinvoice" value="1" id="chkValidateBudgetrateBulk">
+                                                                        Validate Budget Rate in Purchase Invoice(Bulk)
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudgetinvoice" value="1" id="chkValidateBudgetrateSample">
+                                                                         Validate Budget Rate in Purchase Invoice(Sample)
+                                                                    </div>
+                                                                </div>
+                                                                  <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePurchaseGRNqty" value="1" id="chkValidatePurchaseGRNqty">
+                                                                         Validate Purchase GRN quantity in Purchase Invoice
+                                                                    </div>
+                                                                </div>
+                                                             
+                                                            </form>
+                                                            </div>
+                                                            @*<h2 style="margin-left: 10px; color: #000;">Stores</h2>*@
+                                                            @*<form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudget" value="1" id="chkPurBudApp">
+                                                                        Validate Budget Rate in Purchase Order(Job & Work)
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePO" value="1" id="chkPurOrdApp">
+                                                                        Validate Purchase Order Approval
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePOInd" value="1" id="chkPurOrdInd">
+                                                                        Validate Purchase Order Against Indent
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePOInd" value="1" id="chkHsnCode">
+                                                                        Validate GST Against HsnCode
+                                                                    </div>
+                                                                </div>
+                                                                 <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBillsToInvoiceEntry" value="1" id="OptchkBillsToInvoiceEntry">
+                                                                        Check Bills To Invoice Entry
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateStoreEntry" value="1" id="OptchkStoreEntry">
+                                                                       Validate Store
+                                                                    </div>
+                                                                </div>
+                                                            </form>*@
+                                                        </div>
+                                                        <div role="tabpanel" class="tab-pane fade" id="page4" aria-labelledby="profile-tab">
+                                                            <h2 style="margin-left: 10px; color: #000;">Production</h2>
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-8 col-sm-8 col-xs-12">
+                                                                        <input type="checkbox" name="vehicle" value="Bike">
+                                                                        Allowance Tolerance for Fabric Delivery to Cutting Section In Quantity
+                                                                    </label>
+                                                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                                                        <input type="text" class="form-control" @*placeholder="Financial Year"*@ id="txtToDate">
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab col-md-12 col-sm-12 col-xs-12">
+                                            <div class="tab_row">
+                                                <div class="x_panel" style="border-radius:10px">
+                                                     <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <h2 style="margin-left: 10px; color: #000;">Process</h2>
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike">
+                                                            List Quality Made Items In Process Issue
+                                                        </div>
+                                                    </div>
+                                                       <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkProcessBudApp">
+                                                             Validate Budget Rate in Process Order(Job & Work)
+                                                        </div>
+                                                                                                                 
+                                                    </div>
+                                                     <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkProcessBudAppSam">
+                                                             Validate Budget Rate in Process Order(Sample)
+                                                        </div>
+                                                                                                                 
+                                                    </div>
+                                                    <div class="form-group">
+                                                       
+                                                            <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkOpenProgRaiseDc">
+                                                             Validate Approval for Open Program to Raise Process Order
+                                                        </div>
+                                                    </div>
+                                                        
+                                                            <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkStoreinProcess">
+                                                             Validate Store
+                                                        </div>
+                                                    </div>
+                                                        <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkProcessIssueLocation">
+                                                             Issue Location showing to Process printout
+                                                        </div>
+                                                    </div>
+                                                        <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkProcessOrderApproval">
+                                                             Validate Process order Approval
+                                                        </div>
+                                                    </div>
+                                                         
+                                                    </div>
+                                                </form>
+                                                     </div>
+
+                                                   <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                      <h2 style="margin-left: 10px; color: #000;">Accounts</h2>
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudgetinvoice" value="1" id="chkValidateBudgetrateProcBulk">
+                                                                        Validate Budget Rate in Process Invoice(Bulk)
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudgetinvoice" value="1" id="chkValidateBudgetrateProcSample">
+                                                                         Validate Budget Rate in Process Invoice(Sample)
+                                                                    </div>
+                                                                </div>
+                                                             
+                                                                  <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateProcessGRNqty" value="1" id="chkValidateProcessGRNqty">
+                                                                        Validate Process receipt quantity in Process Invoice
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                            </form>
+                                                            </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab col-md-12 col-sm-12 col-xs-12">
+                                            <div class="tab_row">
+                                                <div class="x_panel" style="border-radius:10px">
+                                                     <ul id="myTab2" class="nav nav-tabs bar_tabs" role="tablist">
+                                                    <li role="presentation" class="active"><a href="#page1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Page One</a>
+                                                    </li>
+                                                    <li role="presentation" class=""><a href="#page2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Page Two</a>
+                                                    </li>
+                                                </ul>
+                                                <div id="myTabContent3" class="tab-content">
+                                                    <div role="tabpanel" class="tab-pane fade active in" id="page1" aria-labelledby="home-tab">
+                                                        <h2 style="margin-left: 10px; color: #000;">Production</h2>
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-4 col-xs-12">
+                                                                    In Cutting Issue Allow
+                                                                </label>
+                                                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                                                    <div class="maxl" style="margin-top: -5px;">
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" checked value="P" name="proctype" onchange="CMainlist();">
+                                                                            <span>All Stock</span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" value="W" name="proctype" onchange="CMainlist();">
+                                                                            <span>Only SIS Stock</span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" value="W" name="proctype" onchange="CMainlist();">
+                                                                            <span>Only FDL Stock</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" name="vehicle" value="Bike">
+                                                                    Generate Separate No For Bulk and Sample Order Despatch
+                                                                </div>
+
+                                                                 <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                     <label class="control-label col-md-4 col-sm-4 col-xs-5">
+                                                                      Cutting Tolerance
+                                                                     </label>
+                                                                    <div class="col-md-8 col-sm-8 col-xs-7">
+                                                                        <input type="text" id="txtCuttTole" class="form-control " placeholder="Qty">
+                                                                    </div>
+                                                                </div>
+
+                                                            
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" value="1" id="chkCutBudApp">
+                                                                    Validate Budget Rate in Issue(Bulk)
+                                                                </div>
+                                                                     <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" value="1" id="chkCutBudAppSam">
+                                                                    Validate Budget Rate in Issue(Sample)
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" value="1" id="chkSewingBudApp">
+                                                                    Validate Budget Rate in Prod Invoice (Bulk)
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" value="1" id="chkSewingBudAppSam">
+                                                                    Validate Budget Rate in Prod Invoice (Sample)
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" value="1" id="chkComProdIssBudApp">
+                                                                    Validate GRN Qty in  Production Invoice (Bulk)
+                                                                </div>
+                                                             @*    <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                    <input type="checkbox" value="1" id="chkComProdIssBudAppSam">
+                                                                    Validate Budget Rate in Common Production Issue Sample
+                                                                </div>*@
+                                                            </div>
+                                                               <div class="form-group">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" value="1" id="chkStoreinProduction">
+                                                                    Validate Store
+                                                                </div>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" value="1" id="chkInvoiceBillProducion">
+                                                                    Validate Bill To Invoice 
+                                                                </div>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" value="1" id="chkSalesInvoiceDespatch">
+                                                                    Validate SalesInvoice To Despatch 
+                                                                </div>
+                                                                   <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" value="1" id="chkFabricDeliveryIssue">
+                                                                    Validate Fabric Delivery Issue
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane fade" id="page2" aria-labelledby="profile-tab">
+                                                        <h2 style="margin-left: 10px; color: #000;">Production</h2>
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="checkbox" name="vehicle" value="Bike">
+                                                                    Allowance Tolerance for Fabric Delivery to Cutting Section In Quantity
+                                                                </label>
+                                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                                    <input type="text" class="form-control"  id="txtToDate">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab col-md-12 col-sm-12 col-xs-12">
+                                            <div class="tab_row">
+                                                <div class="x_panel" style="border-radius:10px">
+                                                    <ul id="myTab3" class="nav nav-tabs bar_tabs" role="tablist">
+                                                    <li role="presentation" class="active"><a href="#page5" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Page One</a>
+                                                    </li>
+                                                    <li role="presentation" class=""><a href="#page6" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Page Two</a>
+                                                    </li>
+                                                </ul>
+                                                <div id="myTabContent4" class="tab-content">
+                                                    <div role="tabpanel" class="tab-pane fade active in" id="page5" aria-labelledby="home-tab">
+                                                        <h2 style="margin-left: 10px; color: #000;">General</h2>
+                                                        <form class="form-horizontal form-label-left input_mask">
+
+                                                            <div class="form-group">
+                                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                    <input type="checkbox" name="vehicle" value="Bike">
+                                                                    Generate Separate No For Bulk and Sample Order Despatch
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                    <input type="checkbox" name="vehicle" value="Enable Transcation Date" id="chkEnableTransDate">
+                                                                   Enable Transcation Date
+                                                                </div>
+                                                            </div>
+                                                              <div class="form-group">
+                                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                    <input type="checkbox" name="vehicle" value="Enable Assort Details Rate" id="chkEnableAssortRate">
+                                                                    Enable Assort Details Rate
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="SupplierProcessSetup" id="chkSupplierProcessSetup">
+                                                             Supplier Setup
+                                                        </div>
+                                                    </div>
+
+                                                            <div class="form-group">
+                                                                
+                                                                 <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" value="1" id="chkBarcode">
+                                                                    Barcode
+                                                                </div>
+                                                                  </div>
+                                                                 <div class="form-group">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" value="1" id="chkQRcode">
+                                                                    QRcode
+                                                                </div>
+                                                              </div>    
+
+                                                        </form>
+                                                        <h2 style="margin-left: 10px; color: #000;">Windows Print Out Settings</h2>
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-4">Font Type</label>
+                                                                <div class="col-md-4 col-sm-4 col-xs-8">
+                                                                    <select id="ddlMCompany" class="form-control" onchange="CMainlist();">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-4">Font Size</label>
+                                                                <div class="col-md-4 col-sm-4 col-xs-8">
+                                                                    <select id="ddlMCompany" class="form-control" onchange="CMainlist();">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane fade" id="page6" aria-labelledby="profile-tab">
+                                                        <h2 style="margin-left: 10px; color: #000;">General</h2>
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-5 col-sm-5 col-xs-8">
+                                                                    <input type="checkbox" name="vehicle" value="Bike">
+                                                                    Start Up Alert For Rejections
+                                                                </label>
+                                                                <div class="col-md-3 col-sm-3 col-xs-4">
+                                                                    <input type="text" class="form-control" placeholder="Rejection" id="txtToDate">
+                                                                </div>
+                                                            </div>
+                                                            &nbsp;                      
+                                                  
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab col-md-12 col-sm-12 col-xs-12">
+                                            <div class="tab_row">
+                                                <div class="x_panel" style="border-radius:10px">
+                                                     <h2 style="margin-left: 10px; color: #000;">MIS Query</h2>
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike">
+                                                            Show Profit and Loss In Budget Query
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                        </div>
+                                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                        @*<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                            <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Ord Management</a>
+                                            </li>
+                                            <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Planning</a>
+                                            </li>
+                                            <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Stores</a>
+                                            </li>
+                                            <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Process</a>
+                                            </li>
+                                            <li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Production</a>
+                                            </li>
+                                            <li role="presentation" class=""><a href="#tab_content6" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">General</a>
+                                            </li>
+                                            <li role="presentation" class=""><a href="#tab_content7" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Mis Query</a>
+                                            </li>
+                                        </ul>*@
+                                        
+                                        <div id="myTabContent" class="tab-content">
+                                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                                @*<h2 style="margin-left: 10px; color: #000;">Order Management</h2>*@
+                                                @*<form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-5 col-sm-6 col-xs-12">Shipment Assortment Column Caption</label>
+                                                            <div class="col-md-5 col-sm-9 col-xs-12">
+                                                                <input type="text" class="form-control" placeholder="Financial Year" id="txtToDate">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike">
+                                                            Allow Manual Quanity in WorkOrder
+                                                        </div>
+                                                          <div class="col-md-6 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="1" id="chkBuyerDetAtm">
+                                                            Allow Buyer Details Automate
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkEnbJobRate">
+                                                            Enable Job Order Rate
+                                                        </div>
+                                                    </div>
+
+                                                </form>*@
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                                <h2 style="/*margin-left: 10px; color: #000;*/">Planning</h2>
+                                                @*<form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike">
+                                                            Allow Manual Quanity in WorkOrder
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" id="chkgaficharges">
+                                                            Include Gafi Charges
+                                                        </div>
+                                                    </div>
+                                                     <div class="form-group">
+                                                        <div class="col-md-6 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" id="chkbuyerwisecosting">
+                                                            Buyer Wise Costing
+                                                        </div>
+                                                    </div>
+                                                </form>*@
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                                    @*<ul id="myTab1" class="nav nav-tabs bar_tabs" role="tablist">
+                                                        <li role="presentation" class="active"><a href="#page3" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Page One</a>
+                                                        </li>
+                                                        <li role="presentation" class=""><a href="#page4" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Page Two</a>
+                                                        </li>
+
+                                                    </ul>*@
+                                                    <div id="myTabContent2" class="tab-content">
+                                                        <div role="tabpanel" class="tab-pane fade active in" id="page3" aria-labelledby="home-tab">
+
+                                                            <div class="col-md-6 col-sm-9 col-xs-12">
+                                                                   <h2 style="/*margin-left: 10px; color: #000;*/">Stores</h2>
+                                                            @*<form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudget" value="1" id="chkPurBudApp">
+                                                                        Validate Budget Rate in Purchase Order(Job & Work)
+                                                                    </div>
+                                                                </div>
+                                                                 <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudget" value="1" id="chkPurBudAppSam">
+                                                                        Validate Budget Rate in Purchase Order(Sample)
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePO" value="1" id="chkPurOrdApp">
+                                                                        Validate Purchase Order Approval
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePOInd" value="1" id="chkPurOrdInd">
+                                                                        Validate Purchase Order Against Indent
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePOInd" value="1" id="chkHsnCode">
+                                                                        Validate GST Against HsnCode
+                                                                    </div>
+                                                                </div>
+                                                                 <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBillsToInvoiceEntry" value="1" id="OptchkBillsToInvoiceEntry">
+                                                                        Check Bills To Invoice Entry
+                                                                    </div>
+                                                                </div>
+                                                                  <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBillsToComInvoiceEntry" value="1" id="OptchkBillsToComInvoiceEntry">
+                                                                        Check Bills To Commercial Invoice Entry
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateStoreEntry" value="1" id="OptchkStoreEntry">
+                                                                       Validate Store
+                                                                    </div>
+                                                                </div>
+                                                                  <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateProgramQtyinTransfer" value="1" id="chkValidateProgramQtyinTransfer">
+                                                                       Validate Program Qty in Stock Transfer
+                                                                    </div>
+                                                                </div>
+                                                            </form>*@
+
+                                                            </div>
+
+                                                            <div class="col-md-6 col-sm-9 col-xs-12">
+                                                                      <h2 style="/*margin-left: 10px; color: #000;*/">Accounts</h2>
+                                                            @*<form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudgetinvoice" value="1" id="chkValidateBudgetrateBulk">
+                                                                        Validate Budget Rate in Purchase Invoice(Bulk)
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudgetinvoice" value="1" id="chkValidateBudgetrateSample">
+                                                                         Validate Budget Rate in Purchase Invoice(Sample)
+                                                                    </div>
+                                                                </div>
+                                                                  <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePurchaseGRNqty" value="1" id="chkValidatePurchaseGRNqty">
+                                                                         Validate Purchase GRN quantity in Purchase Invoice
+                                                                    </div>
+                                                                </div>
+                                                             
+                                                            </form>*@
+                                                            </div>
+                                                            @*<h2 style="margin-left: 10px; color: #000;">Stores</h2>*@
+                                                            @*<form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudget" value="1" id="chkPurBudApp">
+                                                                        Validate Budget Rate in Purchase Order(Job & Work)
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePO" value="1" id="chkPurOrdApp">
+                                                                        Validate Purchase Order Approval
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePOInd" value="1" id="chkPurOrdInd">
+                                                                        Validate Purchase Order Against Indent
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidatePOInd" value="1" id="chkHsnCode">
+                                                                        Validate GST Against HsnCode
+                                                                    </div>
+                                                                </div>
+                                                                 <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBillsToInvoiceEntry" value="1" id="OptchkBillsToInvoiceEntry">
+                                                                        Check Bills To Invoice Entry
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateStoreEntry" value="1" id="OptchkStoreEntry">
+                                                                       Validate Store
+                                                                    </div>
+                                                                </div>
+                                                            </form>*@
+                                                        </div>
+                                                        <div role="tabpanel" class="tab-pane fade" id="page4" aria-labelledby="profile-tab">
+                                                            <h2 style="/*margin-left: 10px; color: #000;*/">Production</h2>
+                                                            @*<form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-8 col-sm-3 col-xs-12">
+                                                                        <input type="checkbox" name="vehicle" value="Bike">
+                                                                        Allowance Tolerance for Fabric Delivery to Cutting Section In Quantity
+                                                                    </label>
+                                                                    <div class="col-md-2 col-sm-9 col-xs-12">
+                                                                        <input type="text" class="form-control"  id="txtToDate">
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>*@
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+
+                                                 @*<div class="col-md-6 col-sm-9 col-xs-12">
+                                                <h2 style="margin-left: 10px; color: #000;">Process</h2>
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike">
+                                                            List Quality Made Items In Process Issue
+                                                        </div>
+                                                    </div>
+                                                       <div class="form-group">
+                                                        <div class="col-md-12 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkProcessBudApp">
+                                                             Validate Budget Rate in Process Order(Job & Work)
+                                                        </div>
+                                                                                                                 
+                                                    </div>
+                                                     <div class="form-group">
+                                                        <div class="col-md-12 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkProcessBudAppSam">
+                                                             Validate Budget Rate in Process Order(Sample)
+                                                        </div>
+                                                                                                                 
+                                                    </div>
+                                                    <div class="form-group">
+                                                       
+                                                            <div class="form-group">
+                                                        <div class="col-md-12 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkOpenProgRaiseDc">
+                                                             Validate Approval for Open Program to Raise Process Order
+                                                        </div>
+                                                    </div>
+                                                        
+                                                            <div class="form-group">
+                                                        <div class="col-md-12 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike" id="chkStoreinProcess">
+                                                             Validate Store
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </form>
+                                                     </div>*@
+
+                                                   @*<div class="col-md-6 col-sm-9 col-xs-12">
+                                                                      <h2 style="margin-left: 10px; color: #000;">Accounts</h2>
+                                                            <form class="form-horizontal form-label-left input_mask">
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudgetinvoice" value="1" id="chkValidateBudgetrateProcBulk">
+                                                                        Validate Budget Rate in Process Invoice(Bulk)
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateBudgetinvoice" value="1" id="chkValidateBudgetrateProcSample">
+                                                                         Validate Budget Rate in Process Invoice(Sample)
+                                                                    </div>
+                                                                </div>
+                                                             
+                                                                  <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                        <input type="checkbox" name="ValidateProcessGRNqty" value="1" id="chkValidateProcessGRNqty">
+                                                                        Validate Process receipt quantity in Process Invoice
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                            </form>
+                                                            </div>*@
+
+
+
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
+                                                @*<ul id="myTab2" class="nav nav-tabs bar_tabs" role="tablist">
+                                                    <li role="presentation" class="active"><a href="#page1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Page One</a>
+                                                    </li>
+                                                    <li role="presentation" class=""><a href="#page2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Page Two</a>
+                                                    </li>
+                                                </ul>*@
+                                                @*<div id="myTabContent3" class="tab-content">
+                                                    <div role="tabpanel" class="tab-pane fade active in" id="page1" aria-labelledby="home-tab">
+                                                        <h2 style="margin-left: 10px; color: #000;">Production</h2>
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                                    In Cutting Issue Allow
+                                                                </label>
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <div class="maxl" style="margin-top: -5px;">
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" checked value="P" name="proctype" onchange="CMainlist();">
+                                                                            <span>All Stock</span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" value="W" name="proctype" onchange="CMainlist();">
+                                                                            <span>Only SIS Stock</span>
+                                                                        </label>
+                                                                        <label class="radio inline">
+                                                                            <input type="radio" value="W" name="proctype" onchange="CMainlist();">
+                                                                            <span>Only FDL Stock</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input type="checkbox" name="vehicle" value="Bike">
+                                                                    Generate Separate No For Bulk and Sample Order Despatch
+                                                                </div>
+
+                                                                 <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                     <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                                                      Cutting Tolerance
+                                                                     </label>
+                                                                    <div class="col-md-8 col-sm-9 col-xs-12">
+                                                                        <input type="text" id="txtCuttTole" class="form-control " placeholder="Qty">
+                                                                    </div>
+                                                                </div>
+
+                                                            
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                    <input type="checkbox" value="1" id="chkCutBudApp">
+                                                                    Validate Budget Rate in Issue(Bulk)
+                                                                </div>
+                                                                     <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                    <input type="checkbox" value="1" id="chkCutBudAppSam">
+                                                                    Validate Budget Rate in Issue(Sample)
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                    <input type="checkbox" value="1" id="chkSewingBudApp">
+                                                                    Validate Budget Rate in Prod Invoice (Bulk)
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                    <input type="checkbox" value="1" id="chkSewingBudAppSam">
+                                                                    Validate Budget Rate in Prod Invoice (Sample)
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                    <input type="checkbox" value="1" id="chkComProdIssBudApp">
+                                                                    Validate GRN Qty in  Production Invoice (Bulk)
+                                                                </div>
+                                                            </div>
+                                                               <div class="form-group">
+                                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                    <input type="checkbox" value="1" id="chkStoreinProduction">
+                                                                    Validate Store
+                                                                </div>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                    <input type="checkbox" value="1" id="chkInvoiceBillProducion">
+                                                                    Validate Bill To Invoice 
+                                                                </div>
+                                                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                    <input type="checkbox" value="1" id="chkSalesInvoiceDespatch">
+                                                                    Validate SalesInvoice To Despatch 
+                                                                </div>
+                                                                   <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                    <input type="checkbox" value="1" id="chkFabricDeliveryIssue">
+                                                                    Validate Fabric Delivery Issue
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane fade" id="page2" aria-labelledby="profile-tab">
+                                                        <h2 style="margin-left: 10px; color: #000;">Production</h2>
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-8 col-sm-3 col-xs-12">
+                                                                    <input type="checkbox" name="vehicle" value="Bike">
+                                                                    Allowance Tolerance for Fabric Delivery to Cutting Section In Quantity
+                                                                </label>
+                                                                <div class="col-md-2 col-sm-9 col-xs-12">
+                                                                    <input type="text" class="form-control"  id="txtToDate">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>*@
+
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab">
+                                                @*<ul id="myTab3" class="nav nav-tabs bar_tabs" role="tablist">
+                                                    <li role="presentation" class="active"><a href="#page5" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Page One</a>
+                                                    </li>
+                                                    <li role="presentation" class=""><a href="#page6" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Page Two</a>
+                                                    </li>
+                                                </ul>*@
+                                                @*<div id="myTabContent4" class="tab-content">
+                                                    <div role="tabpanel" class="tab-pane fade active in" id="page5" aria-labelledby="home-tab">
+                                                        <h2 style="margin-left: 10px; color: #000;">General</h2>
+                                                        <form class="form-horizontal form-label-left input_mask">
+
+                                                            <div class="form-group">
+                                                                <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                    <input type="checkbox" name="vehicle" value="Bike">
+                                                                    Generate Separate No For Bulk and Sample Order Despatch
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                    <input type="checkbox" name="vehicle" value="Enable Transcation Date" id="chkEnableTransDate">
+                                                                   Enable Transcation Date
+                                                                </div>
+                                                            </div>
+                                                              <div class="form-group">
+                                                                <div class="col-md-12 col-sm-9 col-xs-12">
+                                                                    <input type="checkbox" name="vehicle" value="Enable Assort Details Rate" id="chkEnableAssortRate">
+                                                                    Enable Assort Details Rate
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        <h2 style="margin-left: 10px; color: #000;">Windows Print Out Settings</h2>
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-6 col-xs-12">Font Type</label>
+                                                                <div class="col-md-4 col-sm-9 col-xs-12">
+                                                                    <select id="ddlMCompany" class="form-control" onchange="CMainlist();">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-6 col-xs-12">Font Size</label>
+                                                                <div class="col-md-4 col-sm-9 col-xs-12">
+                                                                    <select id="ddlMCompany" class="form-control" onchange="CMainlist();">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane fade" id="page6" aria-labelledby="profile-tab">
+                                                        <h2 style="margin-left: 10px; color: #000;">General</h2>
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                                    <input type="checkbox" name="vehicle" value="Bike">
+                                                                    Start Up Alert For Rejections
+                                                                </label>
+                                                                <div class="col-md-2 col-sm-9 col-xs-12">
+                                                                    <input type="text" class="form-control" placeholder="Rejection" id="txtToDate">
+                                                                </div>
+                                                            </div>
+                                                            &nbsp;                      
+                                                  
+                                                        </form>
+                                                    </div>
+
+                                                </div>*@
+
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content7" aria-labelledby="profile-tab">
+                                                <h2 style="/*margin-left: 10px; color: #000;*/">MIS Query</h2>
+                                                @*<form class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-sm-9 col-xs-12">
+                                                            <input type="checkbox" name="vehicle" value="Bike">
+                                                            Show Profit and Loss In Budget Query
+                                                        </div>
+                                                    </div>
+
+                                                </form>*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="bhoechie-tab-content" >
+                                <div class="x_panel" style="border-radius:10px">
+                                <h2 style="margin-left: 10px; color: #000;">Selection Settings</h2>
+
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 col-sm-6 col-xs-6">Select Ket To List</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                    <input type="text" class="form-control" placeholder="Select Ket To List" id="txtToDate">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 col-sm-6 col-xs-6">Main Listing From Days</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                    <input type="text" class="form-control" placeholder="Main Listing From Days" id="txtMainFDays">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                                <input type="checkbox" name="vehicle" value="Bike">
+                                                After Selection Focus To Next Control
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 col-sm-6 col-xs-6">UOM For kilo grams</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                    <select id="ddlMCompany" class="form-control" onchange="CMainlist();">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 col-sm-6 col-xs-6">UOM For Pieces</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                    <select id="ddlMCompany" class="form-control" onchange="CMainlist();">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 col-sm-6 col-xs-6">Alert Before Days</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                    <input type="text" class="form-control" placeholder="Main Listing From Days" id="txtToDate">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                                <div style="display:none;">
+                                <h2 style="margin-left: 10px; color: #000;">Process Lot Number Setup</h2>
+
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 col-sm-6 col-xs-12">Lot Number Prefix</label>
+                                                <div class="col-md-6 col-sm-9 col-xs-12">
+                                                    <input type="text" class="form-control" placeholder="Lot Number Prefix" id="txtToDate">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 col-sm-6 col-xs-12">Lot Number Starts</label>
+                                                <div class="col-md-6 col-sm-9 col-xs-12">
+                                                    <input type="text" class="form-control" placeholder="Lot Number Starts" id="txtToDate">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-7 col-sm-6 col-xs-12">Supplier Lot Number Prefix</label>
+                                                <div class="col-md-5 col-sm-9 col-xs-12">
+                                                    <input type="text" class="form-control" placeholder="Main Listing From Days" id="txtToDate">
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                </form>
+                                <h2 style="margin-left: 10px; color: #000;">Lot Number Generation</h2>
+
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="row">
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <div class="maxl" style="margin-top: -5px;">
+                                                <label class="radio inline" style="margin-left: 10px;">
+                                                    <input type="radio" checked value="P" name="proctype" onchange="CMainlist();">
+                                                    <span>Generate Lot Numbers in Process Order/Issue</span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input type="radio" value="W" name="proctype" onchange="CMainlist();">
+                                                    <span>Generate Lot Numbers in Process Receipt</span>
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                                    </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div style="float: right; display: inline-flex;">
+
+
+                                <button type="button" class="btn btn-round btn-success" id="Update" onclick="Update();">Apply</button>
+                                <button type="button" class="btn btn-round btn-danger" onclick="Close();">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+            <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    </div>
+</div>

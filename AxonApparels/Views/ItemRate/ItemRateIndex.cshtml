@@ -1,0 +1,228 @@
+﻿@{
+    ViewBag.Title = "ItemRateIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/ItemRate.js"></script>
+<script src="~/AxonScripts/Common/jquery-3.3.1.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<script src="~/AxonScripts/Common/dataTables.scroller.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/AxonScripts/Common/scroller.dataTables.min.css" rel="stylesheet" />
+
+<style>
+    @* margin-top: -29px !important;*@
+    #tbody_filter {
+       
+    }
+    .add_btn {
+    width: 20px; padding: 2px; height: 20px;margin-left: -16px;
+    }
+</style>
+
+@*<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#cstdate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#tindate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#aepcdate').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>*@
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Item Rate</h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="container">
+                            <button data-toggle="modal" data-target="#myModal" onclick="clearTextBox();" id="btnAddComp" value="Reset" class="enabled btn btn-primary">Add New Item Rate</button>
+
+                            <table id="tbody" class="table table-bordered table-hover">
+                            </table>
+
+                        </div>
+                        @* Load datatable css *@
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 90%">
+                                <div class="modal-content">
+                                    <div class="x_panel">
+                                        <div class="x_title" style="margin-top: 10px;">
+                                            <h2>Add Item Rate Template</h2>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="x_content">
+                                            <div class="row">
+                                                <div class="modal-body" style="width: 100%;">
+                                                    <div class="x_panel">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-3 col-xs-3">
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                    <div class="form-group">
+                                                                      
+
+                                                                        <label class="control-label col-md-2 col-sm-6 col-xs-12 enquiry_edit">Buyer</label>
+                                                                        <div class="col-md-2 col-sm-5 col-xs-5">
+                                                                            <select id="ddlbuy" class="form-control" onchange="myBuyer(this.value);">
+                                                                            </select>
+                                                                        </div>
+                                                                       
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class=" form-group" id="divcolor">
+                                                                    <div class="x_panel" style="height: 400px">
+                                                                        <div class="x_content">
+                                                                            <form class="form-horizontal form-label-left input_mask">
+                                                                                <div class="form-group">
+                                                                                    <table class="table table-bordered table-hover" border="1">
+                                                                                        <tr>
+                                                                                            <td style="width: 150px;">Supplier Name</td>
+                                                                                            <td style="width: 180px;">Item</td>
+                                                                                            <td style="width: 130px;">Color</td>
+                                                                                            <td style="width: 90px;">Size</td>
+                                                                                      
+                                                                                            <td style="width: 90px;">Rate</td>
+                                                                                           @* <td style="width: 130px;">GColor</td>*@
+                                                                                       
+                                                                                            <td style="width: 60px;">&nbsp;</td>
+                                                                                        </tr>
+                                                                                        <tr class="mycontainer" id="maincomborow">
+                                                                                            <td>
+                                                                                                <select id="ddlsup" class="form-control">
+                                                                                                </select>
+                                                                                                
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <select id="ddlitem" class="form-control" onchange="getbyItemID(this.value)">
+                                                                                                </select>
+                                                                                                <span class="error">Select Item</span>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <select id="ddlcolor" class="form-control" onchange="myColor(this.value);">
+                                                                                                </select>
+                                                                                                <span class="error">Select Color</span>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <select id="ddlsize" class="form-control" onchange="mySize(this.value);">
+                                                                                                </select>
+                                                                                                <span class="error">Select Size</span>
+                                                                                            </td>
+                                                                                        
+                                                                                            <td>
+                                                                                                <input type="text" id="txtrate" class="form-control" placeholder="Rate">
+                                                                                                @*<span class="error">Select Color</span>*@
+                                                                                            </td>
+                                                                                          @*  <td>
+                                                                                                <select id="ddlGarcolor" class="form-control" disabled="disabled">
+                                                                                                </select>
+                                                                                                <span class="error">Select GColor</span>
+                                                                                            </td>*@
+                                                                                          
+                                                                                            <td>
+                                                                                                <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btncoloradd" data-toggle="tooltip" data-placement="top" title="Add" type="button"><i class="fa fa-plus"></i></button>
+                                                                                                <button class="btn btn-success btn-round" style="width: 20px; padding: 0px; height: 20px; border-radius: 10px;" id="btncolorupdate" type="button" data-toggle="tooltip" data-placement="top" title="Update"><i class="fa fa-refresh"></i></button>
+                                                                                                @*<input type="button" id="btncoloradd" value="Add" style="width: 80px" class="btn btn-success btn-round" />
+                                                                                <input type="button" id="btncolorupdate" value="Update" style="width: 80px" class="btn btn-success btn-round" />*@
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                    <div id="ColorList">
+                                                                                        <table class="table table-responsive" id="tblcolordetails">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th style="display: none;">Sno
+                                                                                                    </th>
+                                                                                                    <th style="display: none;">RateId
+                                                                                                    </th>
+                                                                                                    <th style="display: none;">SupplierId
+                                                                                                    </th>
+                                                                                                    <th>Supplier Name
+                                                                                                    </th>
+                                                                                                    <th style="display: none;">ItemId
+                                                                                                    </th>
+                                                                                                    <th>Item
+                                                                                                    </th>
+                                                                                                    <th style="display: none;">ColorId
+                                                                                                    </th>
+                                                                                                    <th>Color
+                                                                                                    </th>
+                                                                                                    <th style="display: none;">SizeId
+                                                                                                    </th>
+                                                                                                    <th>Size
+                                                                                                    </th>
+                                                                                                
+                                                                                                    <th>Rate
+                                                                                                    </th>
+                                                                                               
+                                                                                                    <th>Action
+                                                                                                    </th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                        </table>
+                                                                                        <span id="orderItemError" style="color: red"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row" style="float: right;">
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <button type="button" class="btn btn-success " id="btnAdd" onclick="return Add();">Add</button>
+                                                                <button type="button" class="btn btn-success " id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                                                <button type="button" class="btn btn-success" id="btnmainDelete" style="display: none;" onclick="StyleDelete();">Delete</button>
+                                                                <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#myModal" onclick="btnCloseSubmit();">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

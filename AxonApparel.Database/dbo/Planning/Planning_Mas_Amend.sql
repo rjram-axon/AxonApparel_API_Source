@@ -1,0 +1,32 @@
+﻿CREATE TABLE [dbo].[Planning_Mas_Amend]
+(
+	[PlanAmndId] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	[PlanID] [int]   NULL, 
+	[CompanyID] [int] NOT NULL,
+	[Buy_Ord_MasId] [int] NOT NULL,
+	[Order_No] [varchar](20) NOT NULL,
+	[StyleID] [int] NOT NULL,
+	[ItemID] [int] NOT NULL,
+	[Con_Plan] [char](1) NOT NULL DEFAULT ('N'),
+	[Fabric_Plan] [char](1) NOT NULL DEFAULT ('N'),
+	[Yarn_Plan] [char](1) NOT NULL DEFAULT ('N'),
+	[Acc_Plan] [char](1) NOT NULL DEFAULT ('N'),
+	[Pack_Plan] [char](1) NOT NULL,
+	[Fab_plan_Remarks] [varchar](150) NULL,
+	[CreatedBy] [int] NULL,
+	[IsApproved] [char](1) NULL,
+	[LockPlanning] [bit] NULL,
+	[LockCon] [int] NULL,
+	[LockFab] [int] NULL,
+	[LockYarn] [int] NULL,
+	[LockAccs] [int] NULL,
+	[LockPack] [int] NULL,
+	[PA] [char](1) NULL DEFAULT ('P'),
+    
+	CONSTRAINT [FK_Planning_Mas_am_Company] FOREIGN KEY ([CompanyID]) REFERENCES [Company]([CompanyId]), 
+    CONSTRAINT [FK_Planning_Mas_am_Employee] FOREIGN KEY([CreatedBy])REFERENCES [dbo].[Employee] ([EmployeeId]), 
+	CONSTRAINT [FK_Planning_Mas_am_Item] FOREIGN KEY([ItemID])REFERENCES [dbo].[Item] ([ItemId]), 
+	CONSTRAINT [FK_Planning_Mas_am_Style] FOREIGN KEY([StyleID])REFERENCES [dbo].[StyleHeader] ([StyleId]), 
+    --CONSTRAINT [FK_Planning_Mas_am_Buy_Ord_Mas] FOREIGN KEY ([Buy_Ord_MasId]) REFERENCES [Buy_Ord_Mas]([Buy_Ord_MasId]),
+	
+)

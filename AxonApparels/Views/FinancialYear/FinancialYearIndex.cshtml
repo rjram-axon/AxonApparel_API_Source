@@ -1,0 +1,236 @@
+﻿
+@{
+    ViewBag.Title = "FinancialYearIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #tPMbody_wrapper {
+        margin-top: -40px;
+    }
+
+    #tPMbody_info {
+        display: none;
+    }
+
+    .Box {
+        height: 20px;
+        width: 50px;
+        border: 1px solid #e89d12;
+        background-color: #e89d12;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#txtFromDate').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('#txtToDate').datepicker({ dateFormat: 'dd/mm/yy' });
+    })
+</script>
+
+<script>
+    $("#mySelect").select2({
+        //here my options
+    }).on("select2:opening", 
+     function(){
+         $("#myModal").removeAttr("tabindex", "-1");
+     }).on("select2:close", 
+     function(){ 
+         $("#myModal").attr("tabindex", "-1");
+     }
+   // });
+</script>
+
+
+
+<script src="~/AxonScripts/HouseKeeping/FinancialYear.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/AxonScripts/Common/jquery-1.12.4.js"></script>
+<script src="~/AxonScripts/Common/jquery.dataTables.min.js"></script>
+<link href="~/AxonScripts/Common/jquery.dataTables.min.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+                    <div class="se-pre-con"></div>
+                    <div class="x_title">
+                        <h2>Master Listing </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="">
+                        <div class="x_panel">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <form class="form-horizontal form-label-left input_mask">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Add New FinancialYear</button>
+                                            </div>
+
+                                           
+
+                                        </form>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                    </div>
+                                    <div class="col-md-4">
+                                       
+
+                                    </div>
+                                    <div class="col-md-1">
+                                        
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="x_panel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                
+
+                                    <table id="tPMbody" class="table table-striped table-bordered"></table>
+                                </div>
+                            </div>
+
+
+
+                            <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                            @* Load datatable js *@
+                            @section Scripts{
+
+                                <script src="~/build/js/jquery.dataTables.min.js"></script>
+                                <script>
+                                           
+                                </script>
+
+                            }                 
+
+                        </div>
+
+
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 75%">
+                                <div class="modal-content">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="x_panel">
+                                            <div class="x_title">
+                                                <h2>Financial Year Setup</h2>
+
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="">
+
+
+
+                                                <div class="x_panel">
+                                                    <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <form class="form-horizontal form-label-left input_mask">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4 col-sm-6 col-xs-12">Description</label>
+                                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                            <input type="text" class="form-control" id="txtDescp" value=""  placeholder="" />
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Start Date</label>
+                                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                          <input type="text" id="txtFromDate" class="form-control" placeholder="Date">
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+
+                                                                <form class="form-horizontal form-label-left input_mask">
+
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                                            Prefix seperator
+                                                                        </label>
+                                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                            <input type="text" class="form-control" id="txtpreseperator"  value="" placeholder="" />
+                                                                            @*<select id="ddlOrderNo" class="form-control">
+                                                            <option value="0">--Select Buyer No--</option>
+                                                            <option value="1">AXN@ION00001</option>
+                                                        </select>*@
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-5 col-sm-6 col-xs-12">
+                                                                            End Date
+                                                                        </label>
+                                                                        <div class="col-md-7 col-sm-7 col-xs-12">
+                                                                            <input type="text" id="txtToDate" class="form-control" placeholder="Date">
+                                                                        </div>
+                                                                       
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+
+                                                                <form class="form-horizontal form-label-left input_mask">
+
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4 col-sm-6 col-xs-12">
+                                                                           Database Name
+                                                                        </label>
+                                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                            <input type="text" class="form-control" id="txtDBname"  value="" placeholder="" />
+
+                                                                        </div>
+                                                                        
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="checkbox" id="Defaultyear" class="editor-active Defaultyear"  style="width:15px;" />
+                                                                        <span>Set as Default Financial Year</span>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            
+                                            <button type="button" class="btn btn-round btn-danger" onclick="finyrclose()" style="float: right; margin-right: 20px;">Close</button>
+                                            <button type="button" class="btn btn-round btn-success" id="btnUpdate" style="float: right;" onclick="return finyrUpdate();">Update</button>
+                                            <button type="button" class="btn btn-round btn-success" id="btnAdd" style="float: right;" onclick="return finyrAdd();">Add</button>
+                                            @*<table id="tMbody" class="table table-striped table-bordered"></table>*@
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

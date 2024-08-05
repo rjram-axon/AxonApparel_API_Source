@@ -1,0 +1,849 @@
+﻿@{
+    ViewBag.Title = "EmployeeIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@* margin-top: -28px;*@
+<style>
+    #tbody_filter {
+    }
+
+    .add_btn {
+        width: 20px;
+        padding: 2px;
+        height: 20px;
+        margin-left: -18px;
+    }
+</style>
+<script src="~/AxonScripts/employee.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        @*<div class="page-title">
+            <div class="title_left">
+                <h3>Department</h3>
+            </div>
+
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Employee</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="container">
+                            @*<h2>Departments Record</h2>*@
+                            @if (ViewBag.EmployeeAddFlg == "true")
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="clearTextBox();">Add New Employee</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" disabled>Add New Employee</button>
+                            }
+
+                            <table id="tbody" class="table table-bordered table-hover">
+                                @*<thead>
+                                    <tr>
+                                        <th style="visibility: hidden;">ID
+                                        </th>
+                                        <th>Employee Name
+                                        </th>
+                                        <th>LookUp
+                                        </th>                                        
+                                        <th>Status
+                                        </th>
+                                        <th>Action
+                                        </th>
+                                    </tr>
+                                </thead>*@
+                                @*<tbody class="tbody">
+                                </tbody>*@
+                            </table>
+                        </div>
+                        @* Load datatable css *@
+
+                        <link href="~/build/Login/jquery.dataTables.min.css" rel="stylesheet">
+                        @* Load datatable js *@
+                        @section Scripts{
+
+                            <script src="~/build/js/jquery.dataTables.min.js"></script>
+                            <script>
+                                           
+                            </script>
+
+                        }
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 50%">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="x-title">Add Employee</h2>
+                                    </div>
+                                    <div class="x_panel">
+
+                                        <div class="modal-body row">
+                                            <div class="x_panel">
+                                                <div class="row">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-4 col-sm-3 col-xs-12">ID </label>
+                                                        <div class="col-md-8 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" id="txtEmployeeID" placeholder="Id">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Employee<span style="color: red;">*</span></label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" name="Employee" id="txtName" placeholder="Employee Name" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Employee No<span style="color: red;"> *</span> </label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" name="EmpNo" id="txtempno" placeholder="Employee Number" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Company Unit </label>
+                                                                <div class="col-md-7 col-sm-7 col-xs-11">
+                                                                    <select id="ddlCompanyUnit" class="form-control"></select>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                                                    @*<select id="ddlCountry" class="form-control"></select>*@
+                                                                    <button type="button" data-toggle="tooltip" data-placement="top" title="Add Company Unit" class="btnaddcpnyunit btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Department</label>
+                                                                <div class="col-md-7 col-sm-7 col-xs-11">
+                                                                    <select id="ddlDepartment" class="form-control"></select>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                                                    @*<select id="ddlCountry" class="form-control"></select>*@
+                                                                    <button type="button" data-toggle="tooltip" data-placement="top" title="Add Department" class="btnadddept btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Designation</label>
+                                                                <div class="col-md-7 col-sm-7 col-xs-11">
+                                                                    <select id="ddlDesignation" class="form-control"></select>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                                                    @*<select id="ddlCountry" class="form-control"></select>*@
+                                                                    <button type="button" data-toggle="tooltip" data-placement="top" title="Add Designation" class="btnadddesgn btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Address1</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" name="Address1" id="txtAdd1" placeholder="Address" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Address2</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" name="Address2" id="txtAdd2" placeholder="Address" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Address3</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" name="Address1" id="txtAdd3" placeholder="Address" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <form class="form-horizontal form-label-left input_mask">
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">City</label>
+                                                                <div class="col-md-7 col-sm-7 col-xs-11">
+                                                                    <select id="ddlCity" class="form-control"></select>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                                                    @*<select id="ddlCountry" class="form-control"></select>*@
+                                                                    <button type="button" data-toggle="tooltip" data-placement="top" title="Add City" class="btnaddcity btn btn-primary add_btn"><i class="fa fa-plus"></i></button>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Email</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" name="Email" id="txtEmail" placeholder="Email" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Phone No</label>
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <input type="text" name="PhoneNo" id="txtPhoneNo" placeholder="Phone No" class="form-control col-md-10">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                                    Piece Rate
+                                                    <br>
+                                                                </label>
+
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            <input type="checkbox" id="chkPieceRate" style="margin-top: 0px;" value="">
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                                    Production
+                                                    <br>
+                                                                </label>
+
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            <input type="checkbox" id="chkprodemp" style="margin-top: 0px;" value="">
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                                    Releived
+                                                    <br>
+                                                                </label>
+
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            <input type="checkbox" id="chkrlvd" style="margin-top: 0px;" value="">
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                                    Status
+                                                    <br>
+                                                                </label>
+
+                                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            <input type="checkbox" id="Status" style="margin-top: 0px;" value="">
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                         
+
+
+                                                        </form>
+                                                    </div>
+
+                                                       
+                                                </div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12" style="border: 1px solid #dacfcf;">
+
+                                                                            <div class="row" style="margin: 0;">
+                                                                                <h4>DIGITAL SIGNATURE</h4>
+                                                                            </div>
+                                                                            @using (Html.BeginForm("Upload", "StyleEntry", FormMethod.Post,
+                                                                                    new
+                                                                                    {
+                                                                                        enctype = "multipart/form-data",
+                                                                                        id = "ImgForm",
+                                                                                        name = "ImgForm",
+                                                                                        target = "UploadTarget"
+
+
+                                                                                    }))
+                                                                            { 
+@* DataBase Record ID as Hidden Field against which we are uplaoding file  *@
+                                                                                       
+                                                                                @Html.Hidden("ID", 1)
+                                                                                    
+@* <div style="width: 100px; margin: auto; float: left; line-height: 30px; font-weight: bold;">File</div>*@
+
+                                                                                <div class="x_panel">
+                                                                                    <div class="row" style="float: left;">
+                                                                                        <form class="form-horizontal form-label-left input_mask">
+                                                                                            <div class="form-group" style="margin-bottom: 15px;">
+                                                                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                                                                    <input type="text" id="txttitle" name="TitleVal" class="form-control" placeholder="Title">
+                                                                                                </div>
+                                                                                                <div class="col-md-5 col-sm-5 col-xs-12">
+                                                                                                    <input type="file" id="uploadFile" name="file" data-val="true" class="form-control" data-val-required="please select a file" />
+                                                                                                    <span id="validityMessages" style="color: Red;"></span>
+                                                                                                </div>
+                                                                                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                                                    <input id="upload" type="button" value="Upload" name="Upload" onclick="UploadImage();" class="btn btn-primary" />
+                                                                                                </div>
+                                                                                                <br />
+                                                                                            </div>
+                                                                                        </form>
+                                                                                        <div class="row">
+                                                                                            <div id="uploadsContainer" style="margin-left: 22px;"></div>
+                                                                                            <iframe id="UploadTarget" name="UploadTarget" onload="UploadImage_Complete();" style="position: absolute; left: -999em; top: -999em;"></iframe>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+@*  <div style="clear: both;"></div>*@
+
+@*<div style="width: auto; margin-top: 3%;">
+                                                                                            <div style="margin: 5% 18%;">
+                                                                                                <input id="upload" type="button" value="Upload" name="Upload" onclick="UploadImage();" />
+                                                                                                <span id="uploadLoader" style="display: none;">
+                                                                                                    <img id="searchLoader" src="@Url.Content("~/Content/Images/loader.gif")" />Uploading Please Wait</span>
+                                                                                            </div>
+                                                                                        </div>*@
+
+@*<div id="uploadsContainer"></div>
+                                                                                        <iframe id="UploadTarget" name="UploadTarget" onload="UploadImage_Complete();" style="position: absolute; left: -999em; top: -999em;"></iframe>*@
+                                                                            }
+                                                                        </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                                        </div>
+                                        <div class="modal-footer" style="border: 0px solid">
+                                            <button type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">Save</button>
+                                            <button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 40%;">
+                                <div class="x_panel" style="width: 80%;">
+                                    <div class="x_title">
+                                        <h2>Add Designation</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+
+                                                <form class="form-horizontal form-label-left">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Designation ID</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="Designation" id="txtDesigID" placeholder="Designation Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Designation<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="Designation" id="txtDesignation" placeholder="Designation Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Status
+                                                 
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="Statusdesgn" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdddesgn" onclick="return Adddesgn();">Save</button>
+                                        @*<button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>*@
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="x_panel" style="min-width: 40%;">
+                                    <div class="x_title">
+                                        <h2>Add Department</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+
+                                                <form class="form-horizontal form-label-left">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Department ID</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="Departmentid" id="DepartmentID" placeholder="Department Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Department<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="Departmentid" id="Name" placeholder="Department Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Status
+                                                 
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="Statusdept" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAdddept" onclick="return Adddept();">Save</button>
+                                        @*<button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>*@
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 52%;">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Add Company Unit</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="x_panel">
+                                            <div class="form-group">
+                                                <label for="txtCompID" style="display: none;">ID</label>
+                                                <input type="text" class="form-control" id="txtCompID" placeholder="Id" disabled="disabled" style="display: none" />
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Company Unit<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtcmpunitName" placeholder="Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Company</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <select id="ddlCompany" class="form-control">
+                                                            </select>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Look Up</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtlookup" placeholder="Look Up" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address1</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtaddress1" placeholder="Address1" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address2</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtaddress2" placeholder="Address2" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <form class="form-horizontal form-label-left input_mask">
+
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Address3</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtaddress3" placeholder="Address3" class="form-control col-md-10">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                                                            City
+                                                        </label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <select id="ddlCityname" class="form-control">
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Zipcode</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <input type="text" id="txtzipcode" placeholder="Zipcode" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="ddltounit" class="control-label col-md-4 col-sm-4 col-xs-12">Type of Unit</label>
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <select id="ddltounit" class="form-control">
+                                                                <option value="" selected>--Select Type--</option>
+                                                                <option value="1">Internal</option>
+                                                                <option value="2">External</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 col-xs-12 control-label">
+                                                            Status
+                                                    <br>
+                                                        </label>
+
+                                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="Statuscu" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span> Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAddcmpnyunit" onclick="return Addcmpnyunit();">Save</button>
+                                        @*<button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>*@
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" style="overflow-y:scroll" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="min-width: 45%;">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Add City</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="x_content">
+                                            <div class="x_panel">
+
+                                                <form class="form-horizontal form-label-left">
+                                                    <div class="form-group" style="display: none;">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">City ID</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="City" id="txtCityID" placeholder="City Id" disabled="disabled" style="display: none" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">City<span style="color: red;"> *</span></label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" name="City" id="txtcitName" placeholder="City Name" class="form-control col-md-10">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                            Country
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <select id="ddlCoun" class="form-control"></select>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Status
+                                                 
+                                                        </label>
+
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="Statuscit" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted"><em><span style="color: red;">*</span>Indicates required field</em></span>
+                                    </div>
+                                    <div class="modal-footer" style="border: 0px solid">
+                                        <button type="button" class="btn btn-success" id="btnAddcit" onclick="return Addcity();">Save</button>
+                                        @*<button type="button" class="btn btn-success" id="btnUpdate" style="display: none;" onclick="Update();">Update</button>*@
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: -30px;">
+                            <div class="modal-dialog" style="min-width: 160px">
+                                <div class="row">
+                                    
+                                    <div></div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                        <div id="dvUserdetails" class="col-md-8 col-sm-8 col-xs-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        debugger;
+        $('.delUpload').on('click', function () {
+            var Id = this.id;
+            var url = "/StyleEntry/DeleteFile";
+            url = url + "?id=" + Id
+            $.get(url, function (response) {
+                $('#uploadsContainer').html(response);
+            });
+        });
+    });
+
+    function deletefile(id) {
+        debugger;
+        var Id = id;
+        var url = "/StyleEntry/DeleteFile";
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            $('#uploadsContainer').html(response);
+            nametxt = GetFilelist();
+        });
+
+        //var filterlst = $.grep(nametxt, function (item) {
+        //    return item.FileID != id;
+        //});
+
+        //nametxt = filterlst;
+
+    }
+    //function Viewfile(id) {
+    //    debugger;
+    //    var Id = id.toString();
+    //    var imgid=Id.SubString(4);
+    //    var url = "/StyleEntry/DeleteFile";
+    //    url = url + "?id=" + Id
+    //    $.get(url, function (response) {
+    //        $('#uploadsContainer').html(response);
+    //        nametxt = GetFilelist();
+    //    });
+
+
+    //}
+</script>
+
+
+
+<script type="text/javascript">
+    var isFirstLoad = true;
+    var nametxt = [];
+    var title = [];
+
+    function UploadImage() {
+        debugger;
+        if ($('#imgid').attr('src') != undefined) {
+            alert('Please Remove Old Logo...');
+            return true;
+        }
+        if ($('#txttitle').val().trim() == "") {
+            alert('Please fill the title...');
+            return true;
+        }
+        // check for size of file not greater than 1MB
+        if ($("#uploadFile").val()) {
+
+            var iSize = ($("#uploadFile")[0].files[0].size / 1024);
+            iSize = (Math.round((iSize / 1024) * 100) / 100);
+            if (iSize > 4) {
+                alert("File must be less than 4MB");
+                $('span#validityMessages').html("File must be less than 4MB");
+                return;
+            }
+            else {
+                // on form post showing Busy Indicator
+                $('#uploadLoader').show();
+                $("#ImgForm").submit();
+                console.log(iSize + "Mb");
+                var fd = $("#uploadFile")[0].files[0].name;
+
+                //nametxt.push(fd);
+                title.push($('#txttitle').val());
+            }
+        }
+            // check for no file selected for upload
+        else {
+            $('span#validityMessages').html("Please select a File of size less than 4MB!");
+            return;
+        }
+
+    }
+
+    function UploadImage_Complete() {
+        debugger;
+        //Check to see if this is the first load of the iFrame
+        if (isFirstLoad == true) {
+            isFirstLoad = false;
+            // if first ajax call for getting uploads if any exists on server against this id 
+        }
+
+        // after successfull upload refreshing partial view to get the latest uploads
+        $('#uploadLoader').hide();
+
+        //Reset the image form so the file won't get uploaded again
+        document.getElementById("ImgForm").reset();
+
+        //if (!isFirstLoad)
+        //    GetFiles();
+        nametxt = GetFilelist();
+        GetFiles();
+
+    }
+
+
+
+    function GetFiles() {
+        debugger;
+
+        var url = "/StyleEntry/GetFiles";
+        var Id = $('input#ID').val();
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            $('#uploadsContainer').html(response);
+        });
+    }
+
+    function GetFilelist() {
+        debugger;
+        var url = "/StyleEntry/GetFilelist";
+        var Id = $('input#ID').val();
+        url = url + "?id=" + Id
+        $.get(url, function (response) {
+            debugger;
+            nametxt = response;
+        });
+    }
+
+</script>
+<!-- /page content -->
