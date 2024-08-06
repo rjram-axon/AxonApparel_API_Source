@@ -157,7 +157,7 @@ namespace AxonApparels.ApiControllers
                                     Unit = reader.GetString(reader.GetOrdinal("UOM")),
                                     ProgramQuantity = reader.GetDecimal(reader.GetOrdinal("Prog_Op_Qty")),
                                     InOrOut = reader.GetString(reader.GetOrdinal("InorOut")),
-                                    Approved = reader.GetString(reader.GetOrdinal("Approved"))
+                                    Approved = reader.GetString(reader.GetOrdinal("approved"))
                                 };
 
                                 processprgedit.Add(processprgedititem);
