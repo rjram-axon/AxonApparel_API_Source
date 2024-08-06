@@ -55,7 +55,7 @@ namespace AxonApparels.ApiControllers
                                     Refno = reader.GetString(reader.GetOrdinal("ref_no")),
                                     Style = reader.IsDBNull(reader.GetOrdinal("Style")) ? null : reader.GetString(reader.GetOrdinal("Style")),
                                     Quantity = reader.GetDecimal(reader.GetOrdinal("Quantity")),
-                                    Approved = reader.GetString(reader.GetOrdinal("Approved"))
+                                    Approved = reader.GetString(reader.GetOrdinal("approved"))
                                 };
 
                                 processprglist.Add(processprg);
