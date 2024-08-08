@@ -20,6 +20,7 @@ namespace AxonApparel.Contract.Api
     public class ApiProcessQuotationedit
     {
         public int Quoteid { get; set; }
+        public int Process_Quote_detid { get; set; }
         public string BuyordNo { get; set; }
         public string Item { get; set; }
         public string Color { get; set; }

@@ -91,6 +91,7 @@ namespace AxonApparels.ApiControllers
                                 var processquoteappedit = new ApiProcessQuotationedit
                                 {
                                     Quoteid = reader.GetInt32(reader.GetOrdinal("Quoteid")),
+                                    Process_Quote_detid = reader.GetInt32(reader.GetOrdinal("Process_Quote_detid")),
                                     BuyordNo = reader.IsDBNull(reader.GetOrdinal("Order_No")) ? null : reader.GetString(reader.GetOrdinal("Order_No")),
                                     Item = reader.GetString(reader.GetOrdinal("Item")),
                                     Color = reader.GetString(reader.GetOrdinal("Color")),
@@ -101,8 +102,6 @@ namespace AxonApparels.ApiControllers
                                     MinQty = reader.GetDecimal(reader.GetOrdinal("MinQty")),
                                     ApprovedStatus = reader.GetString(reader.GetOrdinal("ApprovedStatus")),
                                     Image = reader.IsDBNull(reader.GetOrdinal("Imgpath")) ? null : reader.GetString(reader.GetOrdinal("Imgpath")),
-
-
                                 };
 
                                 processquoteedit.Add(processquoteappedit);
@@ -118,6 +117,40 @@ namespace AxonApparels.ApiControllers
                 message = processquoteedit.Any() ? null : "No purchases found for the specified parameters.",
                 processquoteedit
             });
+        }
+        [HttpPut]
+        [Route("api/updateprocessquoteapproval/{Quoteid}")]
+        public IHttpActionResult UpdateProcessQuoteApproval(int Quoteid, [FromBody] JObject requestBody)
+        {
+            var quoteDetid = (int)requestBody["QuoteDetid"];
+            var newApprate = (decimal)requestBody["NewApprate"];
+            var isApproved = requestBody["isApproved"].ToString();
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = new SqlCommand("UpdateProcessquote", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProcessQuoteDetid", quoteDetid);
+                    command.Parameters.AddWithValue("@ProcessQuoteid", Quoteid);
+                    command.Parameters.AddWithValue("@NewApprate", newApprate);
+                    command.Parameters.AddWithValue("@NewApprovedStatus", isApproved);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        return Ok(new { success = true, message = "PurchaseQuote approval updated successfully." });
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+            }
         }
     }
 }

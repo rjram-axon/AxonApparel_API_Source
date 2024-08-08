@@ -108,6 +108,7 @@ namespace AxonApparels.ApiControllers
                                 var purchasequote = new ApiPurchaseQuotationedit
                                 {
                                     Quoteid = reader.GetInt32(reader.GetOrdinal("Quoteid")),
+                                    Process_Quote_detid = reader.GetInt32(reader.GetOrdinal("QuoteDetid")),
                                     BuyordNo = reader.IsDBNull(reader.GetOrdinal("Buy_ord_no")) ? null : reader.GetString(reader.GetOrdinal("Buy_ord_no")),
                                     Item = reader.GetString(reader.GetOrdinal("Item")),
                                     Color = reader.GetString(reader.GetOrdinal("Color")),
@@ -117,7 +118,9 @@ namespace AxonApparels.ApiControllers
                                     Apprate = reader.GetDecimal(reader.GetOrdinal("Apprate")),
                                     MinQty = reader.GetDecimal(reader.GetOrdinal("MinQty")),
                                     MaxQty =reader.GetDecimal(reader.GetOrdinal("MaxQty")),
-                                    ApprovedStatus = reader.GetString(reader.GetOrdinal("ApprovedStatus"))
+                                    ApprovedStatus = reader.GetString(reader.GetOrdinal("ApprovedStatus")),
+                                    Image = reader.IsDBNull(reader.GetOrdinal("Imgpath")) ? null : reader.GetString(reader.GetOrdinal("Imgpath")),
+
 
                                 };
 
@@ -136,22 +139,24 @@ namespace AxonApparels.ApiControllers
         }
         [HttpPut]
         [Route("api/updatepurchasequoteapproval/{Quoteid}")]
-        public IHttpActionResult UpdatePurchaseApproval(string Quoteid, [FromBody] JObject requestBody)
+        public IHttpActionResult UpdatePurchasequoteApproval(int Quoteid, [FromBody] JObject requestBody)
         {
+            var quoteDetid = (int)requestBody["QuoteDetid"];
+            var newApprate = (decimal)requestBody["NewApprate"];
             var isApproved = requestBody["isApproved"].ToString();
-
-            string sqlQuery = @"UPDATE VendorQuoteMas 
-                        SET ApprovedStatus = @IsApproved
-                        WHERE Quoteid = @Quoteid";
 
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
-                using (var command = new SqlCommand(sqlQuery, connection))
+                using (var command = new SqlCommand("UpdatePurchasequote", connection))
                 {
-                    command.Parameters.AddWithValue("@IsApproved", isApproved);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@QuoteDetid", quoteDetid);
                     command.Parameters.AddWithValue("@Quoteid", Quoteid);
+                    command.Parameters.AddWithValue("@NewApprate", newApprate);
+                    command.Parameters.AddWithValue("@NewApprovedStatus", isApproved);
 
                     int rowsAffected = command.ExecuteNonQuery();
 
@@ -166,6 +171,7 @@ namespace AxonApparels.ApiControllers
                 }
             }
         }
+
 
     }
 }

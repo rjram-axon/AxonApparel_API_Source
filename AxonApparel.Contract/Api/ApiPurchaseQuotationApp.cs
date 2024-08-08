@@ -21,6 +21,8 @@ namespace AxonApparel.Contract.Api
     public class ApiPurchaseQuotationedit
     {
         public int Quoteid { get; set; }
+        public int Process_Quote_detid { get; set; }
+
         public string BuyordNo { get; set; }
         public string Item { get; set; }
         public string Color { get; set; }
@@ -31,6 +33,8 @@ namespace AxonApparel.Contract.Api
         public Decimal MinQty { get; set; }
         public Decimal MaxQty { get; set; }
         public string ApprovedStatus { get; set; }
+        public string Image { get; set; }
+
 
     }
 
