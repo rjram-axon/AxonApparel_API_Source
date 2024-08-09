@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -119,7 +120,7 @@ namespace AxonApparels.ApiControllers
                                     MinQty = reader.GetDecimal(reader.GetOrdinal("MinQty")),
                                     MaxQty =reader.GetDecimal(reader.GetOrdinal("MaxQty")),
                                     ApprovedStatus = reader.GetString(reader.GetOrdinal("ApprovedStatus")),
-                                    Image = reader.IsDBNull(reader.GetOrdinal("Imgpath")) ? null : reader.GetString(reader.GetOrdinal("Imgpath")),
+                                    Image = reader.IsDBNull(reader.GetOrdinal("Imgpath")) ? null : Path.GetFileName(reader.GetString(reader.GetOrdinal("Imgpath"))),
 
 
                                 };
