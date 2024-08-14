@@ -17,9 +17,16 @@ namespace AxonApparel.Repository
         public string Username1 { get; set; }
         public int EmployeeId { get; set; }
         public int Roleid { get; set; }
+        public string RoleName { get; set; }
         public string LoginStatus { get; set; }
         public string LoginPC { get; set; }
         public int UnitId { get; set; }
         public int Multiple { get; set; }
+        public int MenuId { get; set; }
+        public int Allflag { get; set; }
+        public int Addflag { get; set; }
+        public int Editflag { get; set; }
+        public int Deleteflag { get; set; }
+        public int Printflag { get; set; }
     }
 }

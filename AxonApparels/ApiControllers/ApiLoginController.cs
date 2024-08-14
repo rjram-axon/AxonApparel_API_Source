@@ -7,48 +7,80 @@ using System.Web.Http;
 using AxonApparel.Business;
 using AxonApparel.Domain;
 using System.Web.Http.Cors;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AxonApparels.ApiControllers
 {
     public class ApiLoginController : ApiController
     {
+        private readonly string connectionString = ConfigurationManager.ConnectionStrings["AxonConnectionString"].ConnectionString;
+
         IApiLoginBusiness Idata = new ApiLoginBusiness();
-        // GET api/apilogin
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-        //// GET api/apilogin/       
-
-        //public string  Get(int id)
-        //{
-        //    return "";
-        //}
-
-
-        // POST api/apilogin
-        //[HttpPost]
-        //[EnableCors(origins: "*", headers: "*", methods: "*")] // Apply CORS to the action
-        //public UserName Post([FromBody]UserName user)
-        //{
-        //    var result = Idata.GetUserdetails(user);
-        //    return result;
-
-        //}
-
-        // GET api/apilogin?username=xxx&password=xxx
         [HttpGet]
         [Route("api/apilogin")]
-        [EnableCors(origins: "*", headers: "*", methods: "*")] // Apply CORS to the action
-        public UserName Get(string username, string password)
+        public IHttpActionResult Login()
         {
-            // Assuming GetUserdetails returns a UserName object based on username and password
-            var user = new UserName { Username = username, Password = password };
-            var result = Idata.GetUserdetails(user);
-            return result;
-        }
+            // Read query string parameters Username and Password
+            var queryParams = Request.GetQueryNameValuePairs().ToDictionary(q => q.Key.ToLower(), q => q.Value);
+            var username = queryParams.ContainsKey("username") ? queryParams["username"] : null;
+            var password = queryParams.ContainsKey("password") ? queryParams["password"] : null;
 
-        // PUT api/apilogin/5
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                // Handle missing parameters
+                return BadRequest("Missing Username or Password parameter.");
+            }
+
+            string sqlQuery = "Proc_Apparel_LoginUserPass"; // Stored Procedure name
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = new SqlCommand(sqlQuery, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.Parameters.AddWithValue("@Pass", Help.Encrypt(password)); // Encrypt the password
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            var users = new List<UserName>();
+
+                            while (reader.Read())
+                            {
+                                var user = new UserName
+                                {
+                                    UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
+                                    Username = reader.GetString(reader.GetOrdinal("Username")),
+                                    Rolename = reader.GetString(reader.GetOrdinal("RoleName")),
+                                    LoginStatus = reader.GetString(reader.GetOrdinal("LoginStatus")),
+                                    LoginPC = reader.IsDBNull(reader.GetOrdinal("LoginPC")) ? null : reader.GetString(reader.GetOrdinal("LoginPC")),
+                                    UnitId = reader.GetInt32(reader.GetOrdinal("UnitId")),
+                                    MenuId = reader.GetInt32(reader.GetOrdinal("MenuId")),
+                                    Allflag = reader.GetInt32(reader.GetOrdinal("AllFlg")),
+                                    Addflag = reader.GetInt32(reader.GetOrdinal("AddFlg")),
+                                    Editflag = reader.GetInt32(reader.GetOrdinal("EditFlg")),
+                                    Deleteflag = reader.GetInt32(reader.GetOrdinal("DeleteFlg")),
+                                    Printflag = reader.GetInt32(reader.GetOrdinal("PrintFlg"))
+                                };
+
+                                users.Add(user);
+                            }
+
+                            return Ok(new { success = true, users });
+                        }
+                        else
+                        {
+                            return Ok(new { success = false, message = "Invalid Username or Password." });
+                        }
+                    }
+                }
+            }
+        }
         public void Put(int id, [FromBody]string value)
         {
         }

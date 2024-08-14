@@ -112,6 +112,7 @@ namespace AxonApparel.Repository
                             UserId = Lg.UserId,
                             Username = Lg.Username1,
                             Roleid = Lg.Roleid,
+                            Rolename = Lg.RoleName,
                             EmployeeId = Lg.EmployeeId,
                             LoginStatus = Lg.LoginStatus,
                             LoginPC = Lg.LoginPC,

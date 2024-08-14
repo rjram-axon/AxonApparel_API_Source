@@ -1,31 +1,116 @@
-﻿using AxonApparel.Common;
-using AxonApparel.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AxonApparel.Domain;
+using AxonApparel.Common;
+using AxonApparel.Repository;
 
 namespace AxonApparel.Business
 {
     public class ApiLoginBusiness : IApiLoginBusiness
     {
+        IApiLoginRepository repologin = new ApiLoginRepository();
+
         ILoginBusiness lbus = new LoginBusiness();
-        public UserName GetUserdetails(UserName users)
+        public Response<IList<Domain.MenuList>> GetMenuList()
         {
-            Response<UserName> result = lbus.GetDataUserDetails(users.Username, users.Password);
-
-            if (result != null && result.Value != null)
+            try
             {
-                // Assuming `Help.Encrypt` method is working as expected
-                result.Value.Username = Help.Encrypt(result.Value.Username);
-                result.Value.Password = Help.Encrypt(users.Password);
+                var MenuDt = repologin.GetMenuNumber().ToList();
 
-                // Assuming `lbus.UpdateLoginStatus` method needs to be called
-                // lbus.UpdateLoginStatus(result.Value);
+                return new Response<IList<Domain.MenuList>>(MenuDt, Status.SUCCESS, "Fetched Successfully");
             }
+            catch (Exception)
+            {
+                return new Response<IList<Domain.MenuList>>(null, Status.ERROR, "OOPS error occured. Plase try again");
+            }
+        }
 
-            return result?.Value; // Return null if result is null
+        public Common.Response<bool> IsValid(string Username, string Password)
+        {
+            try
+            {
+                bool login = false;
+                login = repologin.IsValid(Username, Password);
+                return new Response<bool>(login, Status.SUCCESS, "Fetched Successfully");
+            }
+            catch (Exception)
+            {
+                return new Response<bool>(repologin.IsValid(Username, Password), Status.ERROR, "OOPS error occured. Plase try again");
+            }
+        }
+
+
+        //public Response<UserName> GetDataUserDetails(string Username, string Password)
+        //{
+        //    try
+        //    {
+        //        var CurDetList = repologin.GetUser(Username, Password);
+
+        //        return new Response<UserName>(CurDetList, Status.SUCCESS, "Fetched Successfully");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new Response<UserName>(null, Status.ERROR, "OOPS error occured. Plase try again");
+        //    }
+        //}
+        public Common.Response<bool> UpdateloginUnit(string Username, string Password, int UnitId)
+        {
+            try
+            {
+                var CurDetList = repologin.UpdateloginUnit(Username, Password, UnitId);
+                return new Response<bool>(CurDetList, Status.SUCCESS, "Fetched Successfully");
+            }
+            catch (Exception ex)
+            {
+                return new Response<bool>(repologin.UpdateloginUnit(Username, Password, UnitId), Status.ERROR, "OOPS error occured. Plase try again");
+            }
+        }
+        public Common.Response<bool> UpdateLoginStatus(string Username, string Password, string LoginStatus, string MachineName)
+        {
+            try
+            {
+                bool CurDetList = false;
+                CurDetList = repologin.UpdateLoginStatus(Username, Password, LoginStatus, MachineName);
+
+                return new Response<bool>(CurDetList, Status.SUCCESS, "Updated Successfully");
+            }
+            catch (Exception ex)
+            {
+                return new Response<bool>(repologin.UpdateLoginStatus(Username, Password, LoginStatus, MachineName), Status.ERROR, "OOPS error occured. Plase try again");
+            }
+        }
+
+        public Common.Response<bool> CheckLicenceUser()
+        {
+            try
+            {
+                bool CurDetList = false;
+                CurDetList = repologin.CheckLicenceUser();
+
+                return new Response<bool>(CurDetList, Status.SUCCESS, "Checked Successfully");
+            }
+            catch (Exception ex)
+            {
+                return new Response<bool>(repologin.CheckLicenceUser(), Status.ERROR, "OOPS error occured. Plase try again");
+            }
+        }
+
+        public Response<IQueryable<ExchangeRates>> GetDataExchangeDetails(int compid)
+        {
+            try
+            {
+                var ProdutWO = repologin.GetRepExRates(compid);
+
+                return new Response<IQueryable<ExchangeRates>>(ProdutWO, Status.SUCCESS, "Fetched Successfully");
+
+            }
+            catch (Exception)
+            {
+                return new Response<IQueryable<ExchangeRates>>(null, Status.ERROR, "OOPS error occured. Plase try again");
+            }
         }
     }
 }

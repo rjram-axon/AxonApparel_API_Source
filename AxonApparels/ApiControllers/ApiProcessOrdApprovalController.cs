@@ -80,8 +80,7 @@ namespace AxonApparels.ApiControllers
         [Route("api/appparelprocordereditoutitemdet")]
         public IHttpActionResult GetApparelProcOrdEditOutItemDet(int procid)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["AxonConnectionString"].ConnectionString; // Replace with your connection string
-            List<ApparelProcOrdEditOutItemDet> result = new List<ApparelProcOrdEditOutItemDet>();
+           List<ApparelProcOrdEditOutItemDet> result = new List<ApparelProcOrdEditOutItemDet>();
 
             string sqlQuery = "EXEC Proc_Apparel_ProcOrdEditOutItem @procid";
 
