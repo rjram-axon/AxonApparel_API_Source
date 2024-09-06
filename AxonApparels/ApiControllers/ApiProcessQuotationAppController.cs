@@ -92,7 +92,7 @@ namespace AxonApparels.ApiControllers
                                 {
                                     Quoteid = reader.GetInt32(reader.GetOrdinal("Quoteid")),
                                     Process_Quote_detid = reader.GetInt32(reader.GetOrdinal("Process_Quote_detid")),
-                                    BuyordNo = reader.IsDBNull(reader.GetOrdinal("Order_No")) ? null : reader.GetString(reader.GetOrdinal("Order_No")),
+                                    //BuyordNo = reader.IsDBNull(reader.GetOrdinal("Order_No")) ? null : reader.GetString(reader.GetOrdinal("Order_No")),
                                     Item = reader.GetString(reader.GetOrdinal("Item")),
                                     Color = reader.GetString(reader.GetOrdinal("Color")),
                                     size = reader.GetString(reader.GetOrdinal("size")),
@@ -122,35 +122,62 @@ namespace AxonApparels.ApiControllers
         [Route("api/updateprocessquoteapproval/{Quoteid}")]
         public IHttpActionResult UpdateProcessQuoteApproval(int Quoteid, [FromBody] JObject requestBody)
         {
-            var quoteDetid = (int)requestBody["QuoteDetid"];
-            var newApprate = (decimal)requestBody["NewApprate"];
-            var isApproved = requestBody["isApproved"].ToString();
-
-            using (var connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
-
-                using (var command = new SqlCommand("UpdateProcessquote", connection))
+                if (requestBody == null)
                 {
-                    command.CommandType = CommandType.StoredProcedure;
+                    return BadRequest("Request body cannot be null.");
+                }
 
-                    command.Parameters.AddWithValue("@ProcessQuoteDetid", quoteDetid);
-                    command.Parameters.AddWithValue("@ProcessQuoteid", Quoteid);
-                    command.Parameters.AddWithValue("@NewApprate", newApprate);
-                    command.Parameters.AddWithValue("@NewApprovedStatus", isApproved);
+                // Validating the required properties
+                if (!requestBody.ContainsKey("QuoteDetid") ||
+                    !requestBody.ContainsKey("NewApprate") ||
+                    !requestBody.ContainsKey("isApproved"))
+                {
+                    return BadRequest("Missing required fields.");
+                }
 
-                    int rowsAffected = command.ExecuteNonQuery();
+                var quoteDetid = (int)requestBody["QuoteDetid"];
+                var newApprate = (decimal)requestBody["NewApprate"];
+                var isApproved = requestBody["isApproved"].ToString();
 
-                    if (rowsAffected > 0)
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    using (var command = new SqlCommand("UpdateProcessquote", connection))
                     {
-                        return Ok(new { success = true, message = "PurchaseQuote approval updated successfully." });
-                    }
-                    else
-                    {
-                        return NotFound();
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@ProcessQuoteDetid", quoteDetid);
+                        command.Parameters.AddWithValue("@ProcessQuoteid", Quoteid);
+                        command.Parameters.AddWithValue("@NewApprate", newApprate);
+                        command.Parameters.AddWithValue("@NewApprovedStatus", isApproved);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            return Ok(new { success = true, message = "PurchaseQuote approval updated successfully." });
+                        }
+                        else
+                        {
+                            return NotFound();
+                        }
                     }
                 }
             }
+            catch (SqlException sqlEx)
+            {
+                // Log the SQL exception details
+                return InternalServerError(sqlEx);
+            }
+            catch (Exception ex)
+            {
+                // Log the general exception details
+                return InternalServerError(ex);
+            }
         }
+
     }
 }

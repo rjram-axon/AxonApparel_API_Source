@@ -118,6 +118,68 @@ namespace AxonApparels.ApiControllers
             }
         }
 
+        [HttpPut]
+        [Route("api/revertbudgetapproval")]
+        public IHttpActionResult RevertupdateBudget([FromBody] List<BudgetApprovedetails> budgetDetails)
+        {
+            if (budgetDetails == null)
+            {
+                return BadRequest("Request body cannot be null");
+            }
+
+            foreach (var detail in budgetDetails)
+            {
+                // Log or inspect the values
+                Console.WriteLine($"cost_defn_bomid: {detail.cost_defn_bomid}, AppRate: {detail.AppRate}, AppQty: {detail.AppQty}");
+            }
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    foreach (var budget in budgetDetails)
+                    {
+                        
+                            string sqlQuery = @"UPDATE Cost_Defn_BOM 
+                                        SET AppRate = 0.0 , AppQty = @AppQty 
+                                        WHERE Cost_Defn_BOMid = @Cost_Defn_BOMid";
+
+                            using (var command = new SqlCommand(sqlQuery, connection))
+                            {
+                                //command.Parameters.AddWithValue("@AppRate", budget.AppRate);
+                                command.Parameters.AddWithValue("@AppQty", budget.AppQty);
+                                command.Parameters.AddWithValue("@Cost_Defn_BOMid", budget.cost_defn_bomid);
+
+                                int rowsAffected = command.ExecuteNonQuery();
+
+                                if (rowsAffected == 0)
+                                {
+                                    // Collect a message or flag for the failed update
+                                    Console.WriteLine($"No record found for Cost_Defn_BOMid = {budget.cost_defn_bomid}");
+                                }
+                            }
+                        //}
+                        //else
+                        //{
+                        //    // Collect a message or flag for invalid AppRate
+                        //    Console.WriteLine($"Invalid AppRate for Cost_Defn_BOMid = {budget.cost_defn_bomid}");
+                        //}
+                    }
+                }
+
+                // After processing all items, return a consolidated success message
+                return Ok(new { success = true, message = "All budget details processed." });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details for debugging
+                Console.WriteLine($"Exception: {ex.Message}");
+                // Return a generic error message
+                return NotFound();
+            }
+        }
+
 
 
 

@@ -10,6 +10,8 @@ namespace AxonApparel.Contract.Api
     {
         public int ID { get; set; }
         public string Orderno { get; set; }
+        public string ProdPrgNo { get; set; }
+
         public string Refno { get; set; }
         public string Style { get; set; }
         public Decimal Quantity { get; set; }

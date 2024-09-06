@@ -52,6 +52,7 @@ namespace AxonApparels.ApiControllers
                                 {
                                     ID = reader.GetInt32(reader.GetOrdinal("id")),
                                     Orderno = reader.IsDBNull(reader.GetOrdinal("order_no")) ? null : reader.GetString(reader.GetOrdinal("order_no")),
+                                    ProdPrgNo = reader.IsDBNull(reader.GetOrdinal("ProdPrgNo")) ? null : reader.GetString(reader.GetOrdinal("ProdPrgNo")),
                                     Refno = reader.GetString(reader.GetOrdinal("ref_no")),
                                     Style = reader.IsDBNull(reader.GetOrdinal("Style")) ? null : reader.GetString(reader.GetOrdinal("Style")),
                                     Quantity = reader.GetDecimal(reader.GetOrdinal("Quantity")),
@@ -206,5 +207,40 @@ namespace AxonApparels.ApiControllers
                 }
             }
         }
+        [HttpPut]
+        [Route("api/updateprocessprgapprovaloverlay/{id}")]
+        public IHttpActionResult UpdateProcessprgOverlayApproval(int id, [FromBody] JObject requestBody)
+        {
+            var approved = requestBody["Approved"].ToString();
+            var currentStatus = requestBody["CurrentStatus"].ToString();
+
+            string sqlProcedure = "UpdateProcessprgApprovalStatus";
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = new SqlCommand(sqlProcedure, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ID", id);
+                    command.Parameters.AddWithValue("@NewApprovedStatus", approved);
+                    command.Parameters.AddWithValue("@CurrentStatus", currentStatus);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        return Ok(new { success = true, message = "Process Program approval updated successfully." });
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+        }
+
     }
 }
