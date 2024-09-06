@@ -32,7 +32,7 @@ namespace AxonApparels.ApiControllers
                 return BadRequest("Missing Username or Password parameter.");
             }
 
-            string sqlQuery = "Proc_Apparel_LoginUserPass"; // Stored Procedure name
+            string sqlQuery = "Proc_Apparel_APILogin"; // Stored Procedure name
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -56,6 +56,7 @@ namespace AxonApparels.ApiControllers
                                 {
                                     UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
                                     Username = reader.GetString(reader.GetOrdinal("Username")),
+                                    Password = reader.GetString(reader.GetOrdinal("pass")),
                                     Rolename = reader.GetString(reader.GetOrdinal("RoleName")),
                                     LoginStatus = reader.GetString(reader.GetOrdinal("LoginStatus")),
                                     LoginPC = reader.IsDBNull(reader.GetOrdinal("LoginPC")) ? null : reader.GetString(reader.GetOrdinal("LoginPC")),
