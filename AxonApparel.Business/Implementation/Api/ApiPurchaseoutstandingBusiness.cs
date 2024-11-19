@@ -16,10 +16,10 @@ namespace AxonApparel.Business.Implementation.Api
         IApiPurchaseoutstandingRepository IApipur = new ApiPurchaseoutstandingRepository();
         List<string> data = new List<string>();
        
-        public List<string> GetPurchaseoutstangindetails(int supplierid, string orderno, int styleid, string fromdate, string todate)
+        public List<string> GetPurchaseoutstangindetails()
         {
             data.Clear();
-            data.Add(JsonConvert.SerializeObject(IApipur.GetPurchaseoutstanding(supplierid,orderno,styleid,fromdate,todate).ToList()));
+            data.Add(JsonConvert.SerializeObject(IApipur.GetPurchaseoutstanding()));
             return data;
         }
 

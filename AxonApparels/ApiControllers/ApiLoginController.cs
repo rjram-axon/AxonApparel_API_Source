@@ -55,6 +55,7 @@ namespace AxonApparels.ApiControllers
                                 var user = new UserName
                                 {
                                     UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
+                                    Roleid = reader.GetInt32(reader.GetOrdinal("Roleid")),
                                     Username = reader.GetString(reader.GetOrdinal("Username")),
                                     Password = reader.GetString(reader.GetOrdinal("pass")),
                                     Rolename = reader.GetString(reader.GetOrdinal("RoleName")),

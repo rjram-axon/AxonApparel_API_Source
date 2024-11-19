@@ -29,6 +29,7 @@ namespace AxonApparel.Repository.Implementation.Api
             var query = (from a in entities.Proc_GetStyleDetails(styleid)
                          select new Repository.Proc_GetStyleDetails_Result
                          {
+                             buyer = a.buyer,
                              order_no = a.order_no,
                              Ref_No = a.Ref_No,
                              style = a.style,

@@ -13,6 +13,7 @@ namespace AxonApparel.Repository
     
     public partial class Proc_GetStyleDetails_Result
     {
+        public string buyer { get; set; }
         public string order_no { get; set; }
         public string Ref_No { get; set; }
         public string style { get; set; }

@@ -10,10 +10,10 @@ namespace AxonApparel.Repository.Implementation.Api
     public class ApiPurchaseoutstandingRepository : IApiPurchaseoutstandingRepository
     {
         OrderEntities Apiorder = new OrderEntities();
-        public IQueryable<Proc_Apparel_ApiSupplierOutstandingPurchase_Result> GetPurchaseoutstanding(int supplierid, string orderno, int styleid, string fromdate, string todate)
+        public IQueryable<Proc_Apparel_ApiSupplierOutstandingPurchase_Result> GetPurchaseoutstanding()
         {
             
-            var query = (from data in Apiorder.Proc_Apparel_ApiSupplierOutstandingPurchase(supplierid, orderno, styleid, fromdate, todate)
+            var query = (from data in Apiorder.Proc_Apparel_ApiSupplierOutstandingPurchase()
                          select new Proc_Apparel_ApiSupplierOutstandingPurchase_Result
                          {
                              supplierid = data.supplierid,
@@ -30,7 +30,7 @@ namespace AxonApparel.Repository.Implementation.Api
 
         public IQueryable<Proc_Apparel_ApiSupplierOutstandingPurchasedetails_Result> GetPurchasesupplierdetails(int supplierid)
         {
-            var query = (from data in Apiorder.Proc_Apparel_ApiSupplierOutstandingPurchasedetails(supplierid, null, null, null, null)
+            var query = (from data in Apiorder.Proc_Apparel_ApiSupplierOutstandingPurchasedetails(supplierid)
                          select new Proc_Apparel_ApiSupplierOutstandingPurchasedetails_Result
                          {
                              supplier = data.supplier,

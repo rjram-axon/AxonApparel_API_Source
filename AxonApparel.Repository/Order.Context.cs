@@ -1880,54 +1880,39 @@ namespace AxonApparel.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Proc_Apparel_ApiSupplieroutstandingProduction_Result>("Proc_Apparel_ApiSupplieroutstandingProduction", supplieridParameter, ordernoParameter, styleidParameter, fromdateParameter, todateParameter);
         }
     
-        public virtual ObjectResult<Proc_Apparel_ApiSupplierOutstandingPurchase_Result> Proc_Apparel_ApiSupplierOutstandingPurchase(Nullable<int> supplierid, string orderno, Nullable<int> styleid, string fromdate, string todate)
+        public virtual ObjectResult<Proc_Apparel_ApiSupplierOutstandingPurchase_Result> Proc_Apparel_ApiSupplierOutstandingPurchase()
         {
-            var supplieridParameter = supplierid.HasValue ?
-                new ObjectParameter("supplierid", supplierid) :
-                new ObjectParameter("supplierid", typeof(int));
+            //var supplieridParameter = supplierid.HasValue ?
+            //    new ObjectParameter("supplierid", supplierid) :
+            //    new ObjectParameter("supplierid", typeof(int));
     
-            var ordernoParameter = orderno != null ?
-                new ObjectParameter("orderno", orderno) :
-                new ObjectParameter("orderno", typeof(string));
+            //var ordernoParameter = orderno != null ?
+            //    new ObjectParameter("orderno", orderno) :
+            //    new ObjectParameter("orderno", typeof(string));
     
-            var styleidParameter = styleid.HasValue ?
-                new ObjectParameter("styleid", styleid) :
-                new ObjectParameter("styleid", typeof(int));
+            //var styleidParameter = styleid.HasValue ?
+            //    new ObjectParameter("styleid", styleid) :
+            //    new ObjectParameter("styleid", typeof(int));
     
-            var fromdateParameter = fromdate != null ?
-                new ObjectParameter("fromdate", fromdate) :
-                new ObjectParameter("fromdate", typeof(string));
+            //var fromdateParameter = fromdate != null ?
+            //    new ObjectParameter("fromdate", fromdate) :
+            //    new ObjectParameter("fromdate", typeof(string));
     
-            var todateParameter = todate != null ?
-                new ObjectParameter("todate", todate) :
-                new ObjectParameter("todate", typeof(string));
+            //var todateParameter = todate != null ?
+            //    new ObjectParameter("todate", todate) :
+            //    new ObjectParameter("todate", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Proc_Apparel_ApiSupplierOutstandingPurchase_Result>("Proc_Apparel_ApiSupplierOutstandingPurchase", supplieridParameter, ordernoParameter, styleidParameter, fromdateParameter, todateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Proc_Apparel_ApiSupplierOutstandingPurchase_Result>("Proc_Apparel_ApiSupplierOutstandingPurchase");
         }
     
-        public virtual ObjectResult<Proc_Apparel_ApiSupplierOutstandingPurchasedetails_Result> Proc_Apparel_ApiSupplierOutstandingPurchasedetails(Nullable<int> supplierid, string orderno, Nullable<int> styleid, string fromdate, string todate)
+        public virtual ObjectResult<Proc_Apparel_ApiSupplierOutstandingPurchasedetails_Result> Proc_Apparel_ApiSupplierOutstandingPurchasedetails(Nullable<int> supplierid)
         {
             var supplieridParameter = supplierid.HasValue ?
                 new ObjectParameter("supplierid", supplierid) :
                 new ObjectParameter("supplierid", typeof(int));
     
-            var ordernoParameter = orderno != null ?
-                new ObjectParameter("orderno", orderno) :
-                new ObjectParameter("orderno", typeof(string));
     
-            var styleidParameter = styleid.HasValue ?
-                new ObjectParameter("styleid", styleid) :
-                new ObjectParameter("styleid", typeof(int));
-    
-            var fromdateParameter = fromdate != null ?
-                new ObjectParameter("fromdate", fromdate) :
-                new ObjectParameter("fromdate", typeof(string));
-    
-            var todateParameter = todate != null ?
-                new ObjectParameter("todate", todate) :
-                new ObjectParameter("todate", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Proc_Apparel_ApiSupplierOutstandingPurchasedetails_Result>("Proc_Apparel_ApiSupplierOutstandingPurchasedetails", supplieridParameter, ordernoParameter, styleidParameter, fromdateParameter, todateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Proc_Apparel_ApiSupplierOutstandingPurchasedetails_Result>("Proc_Apparel_ApiSupplierOutstandingPurchasedetails", supplieridParameter);
         }
     
         public virtual ObjectResult<proc_apparel_apiworkinprogress_Result> proc_apparel_apiworkinprogress(Nullable<int> supplierid)

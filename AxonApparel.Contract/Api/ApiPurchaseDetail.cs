@@ -24,4 +24,16 @@ namespace AxonApparel.Contract.Api
         public string Supplier { get; set; }
         public string IsApproved { get; set; }
     }
+
+    public class PurchaseOuststanding
+    {
+        public int PurOrdId { get; set; }
+        public string PO_Number { get; set; }
+        public string Item { get; set; }
+        public Decimal Receivedquantity { get; set; }
+        public Decimal Balancequantity { get; set; }
+
+        //public int SupplierId { get; set; }
+        public string Supplier { get; set; }
+    }
 }

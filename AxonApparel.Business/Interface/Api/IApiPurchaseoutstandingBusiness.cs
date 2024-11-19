@@ -8,7 +8,7 @@ namespace AxonApparel.Business.Interface.Api
 {
     public interface IApiPurchaseoutstandingBusiness
     {
-        List<string> GetPurchaseoutstangindetails(int supplierid,string orderno,int styleid,string fromdate,string todate);
+        List<string> GetPurchaseoutstangindetails();
         List<string> GetPurchaseoutstandingbasedupllier(int supplierid);
 
     }
